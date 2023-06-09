@@ -1,12 +1,11 @@
-import React from "react";
+import NavBar from "./app/components/ui/navBar";
 
-function App() {
+const App = () => {
   return (
     <>
-      <h1>App</h1>
-      <button className="btn btn-primary">Button</button>
+      <NavBar />
     </>
   );
-}
+};
 
 export default App;
