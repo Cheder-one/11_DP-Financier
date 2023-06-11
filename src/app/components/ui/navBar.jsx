@@ -1,63 +1,28 @@
+import NavDropdown from "./navDropdown";
 import { Link } from "react-router-dom";
+import { Container, Navbar, Nav } from "react-bootstrap";
 
 const NavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        <Link to={"/"} className="navbar-brand">
+    <Navbar bg="body-tertiary" expand="sm">
+      <Container>
+        <Navbar.Brand as={Link} to={"/"}>
           Financier
-        </Link>
-        <div className="collapse navbar-collapse" id="navbarScroll">
-          <ul
-            className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-            style={{ bsScrollHeight: "100px" }}
-          >
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
-
-            <li className="nav-item">
-              <a className="nav-link disabled">Link</a>
-            </li>
-          </ul>
-          <div className="btn-group">
-            <button
-              type="button"
-              className="btn btn-light dropdown-toggle"
-              data-bs-toggle="dropdown"
-              data-bs-display="static"
-              aria-expanded="false"
-            >
-              {"Username"}
-            </button>
-            <ul className="dropdown-menu dropdown-menu-lg-end">
-              <li>
-                <Link to={"/profile"} className="dropdown-item">
-                  Профиль
-                </Link>
-              </li>
-              <li>
-                <Link to={"/settings"} className="dropdown-item">
-                  Настройки
-                </Link>
-              </li>
-              <li>
-                <Link to={"/exit"} className="dropdown-item">
-                  Выйти
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+        </Navbar.Brand>
+        <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "100px" }}>
+          <Nav.Link as={Link} to={"/main"}>
+            Главная
+          </Nav.Link>
+          <Nav.Link as={Link} to={"/analysis"}>
+            Анализ
+          </Nav.Link>
+          <Nav.Link disabled as={Link} to={"/history"}>
+            История
+          </Nav.Link>
+        </Nav>
+        <NavDropdown />
+      </Container>
+    </Navbar>
   );
 };
 
