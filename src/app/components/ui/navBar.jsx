@@ -1,21 +1,12 @@
+import { Link } from "react-router-dom";
+
 const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Navbar scroll
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarScroll"
-          aria-controls="navbarScroll"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        <Link to={"/"} className="navbar-brand">
+          Financier
+        </Link>
         <div className="collapse navbar-collapse" id="navbarScroll">
           <ul
             className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
@@ -31,52 +22,39 @@ const NavBar = () => {
                 Link
               </a>
             </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Link
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-            </li>
+
             <li className="nav-item">
               <a className="nav-link disabled">Link</a>
             </li>
           </ul>
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
+          <div className="btn-group">
+            <button
+              type="button"
+              className="btn btn-light dropdown-toggle"
+              data-bs-toggle="dropdown"
+              data-bs-display="static"
+              aria-expanded="false"
+            >
+              {"Username"}
             </button>
-          </form>
+            <ul className="dropdown-menu dropdown-menu-lg-end">
+              <li>
+                <Link to={"/profile"} className="dropdown-item">
+                  Профиль
+                </Link>
+              </li>
+              <li>
+                <Link to={"/settings"} className="dropdown-item">
+                  Настройки
+                </Link>
+              </li>
+              <li>
+                <Link to={"/exit"} className="dropdown-item">
+                  Выйти
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
