@@ -1,39 +1,38 @@
 import PropTypes from "prop-types";
 import { Dropdown, DropdownButton, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useMemo } from "react";
 import SwitchTheme from "../switchers/switcher";
 import getAvatar from "../../../utils/getAvatar";
 
-const NavDropdown = ({ onToggleTheme }) => {
-  const handleSelect = (eventKey, e) => {
-    if (eventKey === "2") {
-      console.log("2");
+const profileIcon = (
+  <Image src={getAvatar()} className="me-2" id="avatar-icon" />
+);
+
+const NavDropdown = () => {
+  const handleItemSelect = (eventKey) => {
+    console.log(eventKey);
+
+    if (eventKey === "2_switchTheme") {
     }
   };
 
-  const icon = useMemo(
-    () => <Image src={getAvatar()} className="me-2" id="avatar-icon" />,
-    []
-  );
-
   return (
     <DropdownButton
-      title={<>{icon} Username</>}
       variant="light"
-      onSelect={handleSelect}
+      title={<>{profileIcon} Username</>}
+      onSelect={handleItemSelect}
     >
-      <Dropdown.Item eventKey="1" as={Link} to={"/profile"}>
+      <Dropdown.Item eventKey="1_profile" as={Link} to={"/profile"}>
         Профиль
       </Dropdown.Item>
-      <Dropdown.Item eventKey="2">
-        <SwitchTheme label="Ночь" onClick={onToggleTheme} />
+      <Dropdown.Item eventKey="2_switchTheme">
+        <SwitchTheme label="Ночь" isChecked={}/>
       </Dropdown.Item>
-      <Dropdown.Item eventKey="3" as={Link} to={"/settings"}>
+      <Dropdown.Item eventKey="3_settings" as={Link} to={"/settings"}>
         Настройки
       </Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item eventKey="4" as={Link} to={"/exit"}>
+      <Dropdown.Item eventKey="4_exit" as={Link} to={"/exit"}>
         Выйти
       </Dropdown.Item>
     </DropdownButton>
@@ -41,7 +40,7 @@ const NavDropdown = ({ onToggleTheme }) => {
 };
 
 NavDropdown.propTypes = {
-  onToggleTheme: PropTypes.func.isRequired
+  onToggleTheme: PropTypes.func
 };
 
 export default NavDropdown;

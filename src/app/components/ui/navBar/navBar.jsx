@@ -10,7 +10,7 @@ const NavBar = ({ onToggleTheme }) => {
         <Navbar.Brand as={Link} to={"/"}>
           Financier
         </Navbar.Brand>
-        <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "100px" }}>
+        <Nav className="me-auto my-2 my-lg-0">
           <Nav.Link as={Link} to={"/main"}>
             Главная
           </Nav.Link>
@@ -28,7 +28,7 @@ const NavBar = ({ onToggleTheme }) => {
 };
 
 NavBar.propTypes = {
-  onToggleTheme: PropTypes.func.isRequired
+  onToggleTheme: PropTypes.func
 };
 
 export default NavBar;
