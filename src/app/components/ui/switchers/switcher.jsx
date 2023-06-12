@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 
 const Switcher = ({ label, onClick }) => {
   return (
-    <Form onClick={onClick}>
-      <Form.Check type="switch" label={label} />
+    <Form className="d-flex" onClick={onClick}>
+      <label className="me-2" htmlFor="theme-switcher">
+        {label}
+      </label>
+      <Form.Check type="switch" id="theme-switcher" />
     </Form>
   );
 };

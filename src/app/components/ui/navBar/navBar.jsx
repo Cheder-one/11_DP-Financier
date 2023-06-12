@@ -1,8 +1,9 @@
+import PropTypes from "prop-types";
 import NavDropdown from "./navDropdown";
 import { Link } from "react-router-dom";
 import { Container, Navbar, Nav } from "react-bootstrap";
 
-const NavBar = () => {
+const NavBar = ({ onToggleTheme }) => {
   return (
     <Navbar bg="body-tertiary" expand="sm">
       <Container>
@@ -20,10 +21,14 @@ const NavBar = () => {
             История
           </Nav.Link>
         </Nav>
-        <NavDropdown />
+        <NavDropdown {...{ onToggleTheme }} />
       </Container>
     </Navbar>
   );
+};
+
+NavBar.propTypes = {
+  onToggleTheme: PropTypes.func.isRequired
 };
 
 export default NavBar;

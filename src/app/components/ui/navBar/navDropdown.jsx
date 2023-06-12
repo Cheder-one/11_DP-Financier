@@ -1,34 +1,47 @@
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import PropTypes from "prop-types";
+import { Dropdown, DropdownButton, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
 import SwitchTheme from "../switchers/switcher";
+import getAvatar from "../../../utils/getAvatar";
 
-const NavDropdown = () => {
-  function handleSelect(eventKey, e) {
-    console.log(eventKey); // выведет "1"
-    console.log(e.target.textContent); // выведет "Профиль"
-  }
-
-  const handleSwitchToggle = (e) => {
-    e.stopPropagation();
+const NavDropdown = ({ onToggleTheme }) => {
+  const handleSelect = (eventKey, e) => {
+    if (eventKey === "2") {
+      console.log("2");
+    }
   };
 
+  const icon = useMemo(
+    () => <Image src={getAvatar()} className="me-2" id="avatar-icon" />,
+    []
+  );
+
   return (
-    <DropdownButton title={"Username"} variant="light" onSelect={handleSelect}>
+    <DropdownButton
+      title={<>{icon} Username</>}
+      variant="light"
+      onSelect={handleSelect}
+    >
       <Dropdown.Item eventKey="1" as={Link} to={"/profile"}>
         Профиль
       </Dropdown.Item>
-      <Dropdown.Item eventKey="3">
-        <SwitchTheme label="Toggle theme" onClick={handleSwitchToggle} />
+      <Dropdown.Item eventKey="2">
+        <SwitchTheme label="Ночь" onClick={onToggleTheme} />
       </Dropdown.Item>
-      <Dropdown.Item eventKey="4" as={Link} to={"/settings"}>
+      <Dropdown.Item eventKey="3" as={Link} to={"/settings"}>
         Настройки
       </Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item eventKey="5" as={Link} to={"/exit"}>
+      <Dropdown.Item eventKey="4" as={Link} to={"/exit"}>
         Выйти
       </Dropdown.Item>
     </DropdownButton>
   );
+};
+
+NavDropdown.propTypes = {
+  onToggleTheme: PropTypes.func.isRequired
 };
 
 export default NavDropdown;

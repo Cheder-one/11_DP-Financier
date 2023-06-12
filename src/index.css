@@ -14,3 +14,13 @@ body {
   -moz-osx-font-smoothing: grayscale !important;
   -webkit-text-size-adjust: 100% !important;
 }
+
+#avatar-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.form-check-input {
+  box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
