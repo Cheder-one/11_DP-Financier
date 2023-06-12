@@ -3,16 +3,17 @@ import { Dropdown, DropdownButton, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SwitchTheme from "../switchers/switcher";
 import getAvatar from "../../../utils/getAvatar";
+import { useMemo } from "react";
 
-const profileIcon = (
-  <Image src={getAvatar()} className="me-2" id="avatar-icon" />
-);
+const NavDropdown = ({ onToggleTheme }) => {
+  const profileIcon = useMemo(
+    () => <Image src={getAvatar()} className="me-2" id="avatar-icon" />,
+    []
+  );
 
-const NavDropdown = () => {
   const handleItemSelect = (eventKey) => {
-    console.log(eventKey);
-
     if (eventKey === "2_switchTheme") {
+      onToggleTheme();
     }
   };
 
@@ -26,7 +27,7 @@ const NavDropdown = () => {
         Профиль
       </Dropdown.Item>
       <Dropdown.Item eventKey="2_switchTheme">
-        <SwitchTheme label="Ночь" isChecked={}/>
+        <SwitchTheme label="Ночь" />
       </Dropdown.Item>
       <Dropdown.Item eventKey="3_settings" as={Link} to={"/settings"}>
         Настройки

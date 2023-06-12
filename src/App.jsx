@@ -12,6 +12,10 @@ import themeConfig from "./app/utils/data/themeConfig";
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
 
+  const handleToggleTheme = () => {
+    setDarkTheme((prev) => !prev);
+  };
+
   useEffect(() => {
     if (darkTheme) {
       enableDarkMode(themeConfig);
@@ -22,7 +26,7 @@ const App = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar onToggleTheme={handleToggleTheme} />
       <div className="d-flex flex-column min-vh-100">
         <div className="flex-grow-1">
           <Switch>
