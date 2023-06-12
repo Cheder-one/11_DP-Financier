@@ -1,9 +1,9 @@
 import { Route, Switch } from "react-router-dom";
-import NavBar from "./app/components/ui/navBar";
-import Welcome from "./app/layout/welcome";
+import NavBar from "./app/components/ui/navBar/navBar";
+import WelcomePage from "./app/components/page/welcomePage";
 import {
-  enable as enableDarkMode
-  // disable as disableDarkMode
+  enable as enableDarkMode,
+  disable as disableDarkMode
 } from "darkreader";
 import Footer from "./app/components/ui/footer";
 
@@ -14,6 +14,8 @@ const App = () => {
     sepia: 0
   });
 
+  disableDarkMode();
+
   return (
     <>
       <NavBar />
@@ -22,9 +24,10 @@ const App = () => {
           <Switch>
             <Route path="/profile" />
             <Route path="/settings" />
-            <Route path="/exit" />
+            <Route path="/history" />
+            <Route path="/analysis" />
             <Route path="/main" />
-            <Route path="/" component={Welcome} />
+            <Route path="/" component={WelcomePage} />
           </Switch>
         </div>
         <Route path="/" component={Footer} />

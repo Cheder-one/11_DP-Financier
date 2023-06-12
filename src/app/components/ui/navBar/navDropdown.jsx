@@ -1,6 +1,6 @@
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SwitchTheme from "../../layout/switcher";
+import SwitchTheme from "../switchers/switcher";
 
 const NavDropdown = () => {
   function handleSelect(eventKey, e) {
@@ -8,7 +8,7 @@ const NavDropdown = () => {
     console.log(e.target.textContent); // выведет "Профиль"
   }
 
-  const handleClick = (e) => {
+  const handleSwitchToggle = (e) => {
     e.stopPropagation();
   };
 
@@ -18,7 +18,7 @@ const NavDropdown = () => {
         Профиль
       </Dropdown.Item>
       <Dropdown.Item eventKey="3">
-        <SwitchTheme label="Toggle theme" onClick={handleClick} />
+        <SwitchTheme label="Toggle theme" onClick={handleSwitchToggle} />
       </Dropdown.Item>
       <Dropdown.Item eventKey="4" as={Link} to={"/settings"}>
         Настройки
