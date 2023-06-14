@@ -6,21 +6,26 @@ import { eyeFill, eyeSlash } from "../../../assets/show-hide-pass-svg";
 const TextField = ({ label, type, name, value, onChange, error }) => {
   const [showPass, setShowPass] = useState(false);
 
+  const handleClick = () => {
+    setShowPass((prev) => !prev);
+  };
+
   return (
     <>
-      <Form.Group>
+      <Form.Group className="mb-2">
         <Form.Label htmlFor={name}>{label}</Form.Label>
         <InputGroup hasValidation>
           <Form.Control
-            // className={getInputClasses()}
             type={showPass ? "text" : type}
             id={name}
             name={name}
             value={value}
             onChange={onChange}
+            isValid={!error}
+            isInvalid={!!error}
           />
           {type === "password" && (
-            <Button variant="outline-secondary">
+            <Button variant="outline-secondary" onClick={handleClick}>
               {showPass ? eyeSlash : eyeFill}
             </Button>
           )}

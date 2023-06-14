@@ -1,37 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import TextField from "../../common/form/textField";
+import validationSchema from "../../../utils/validators/validationSchema";
 
 const LoginForm = () => {
-  const [formControl, setFormControl] = useState({
+  const [inputsData, setInputsData] = useState({
     email: "",
     password: ""
   });
 
   const [errors, setErrors] = useState({});
+  console.log(errors);
 
   const handleControlChange = ({ target }) => {
     const { name, value } = target;
 
-    setFormControl((prev) => ({
+    setInputsData((prev) => ({
       ...prev,
       [name]: value
     }));
   };
+
+  useEffect(() => {
+    validationSchema
+      .validate(inputsData, { abortEarly: false })
+      .then(setErrors({}))
+      .catch(({ inner }) => {
+        for (const error of inner) {
+          setErrors((prev) => ({
+            ...prev,
+            [error.path]: error.message
+          }));
+        }
+      });
+  }, [inputsData]);
 
   return (
     <Form>
       <TextField
         label={"Email"}
         name={"email"}
-        value={formControl.email}
+        value={inputsData.email}
         onChange={handleControlChange}
         error={errors.email}
       />
       <TextField
         label={"Password"}
         name={"password"}
-        value={formControl.password}
+        value={inputsData.password}
         type={"password"}
         onChange={handleControlChange}
         error={errors.password}
