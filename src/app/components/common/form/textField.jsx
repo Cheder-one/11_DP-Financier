@@ -5,9 +5,14 @@ import { eyeFill, eyeSlash } from "../../../assets/show-hide-pass-svg";
 
 const TextField = ({ label, type, name, value, onChange, error }) => {
   const [showPass, setShowPass] = useState(false);
+  const [isBlur, setIsBlur] = useState(false);
 
   const handleClick = () => {
     setShowPass((prev) => !prev);
+  };
+
+  const handleBlur = () => {
+    console.log("Input field blurred");
   };
 
   return (
@@ -21,6 +26,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
             value={value}
             type={showPass ? "text" : type}
             onChange={onChange}
+            onBlur={handleBlur}
             isValid={!error}
             isInvalid={!!error}
           />

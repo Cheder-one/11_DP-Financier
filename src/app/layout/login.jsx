@@ -7,14 +7,14 @@ const Login = () => {
   console.log(type);
 
   return (
-    <Container className="mb-5">
+    <Container className="mt-3">
       <Row>
         <Col
           md={{ span: 7 }}
           className="shadow p-4"
           style={{ maxWidth: "500px" }}
         >
-          <h3 className="mb-4 fw-bold">Login</h3>
+          {/* <h3 className="mb-4 fw-bold">Login</h3> */}
           <LoginForm />
         </Col>
       </Row>
