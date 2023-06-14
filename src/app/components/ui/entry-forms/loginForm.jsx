@@ -10,7 +10,6 @@ const LoginForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-  console.log(errors);
 
   const handleControlChange = ({ target }) => {
     const { name, value } = target;

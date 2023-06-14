@@ -5,7 +5,7 @@ import Login from "./login";
 const Welcome = () => {
   return (
     <>
-      <Container className="d-flex">
+      <Container>
         <Row>
           <Col>
             <WelcomePage />

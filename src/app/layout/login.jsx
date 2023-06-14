@@ -3,9 +3,13 @@ import LoginForm from "../components/ui/entry-forms/loginForm";
 
 const Login = () => {
   return (
-    <Container className="mt-3">
+    <Container className="mb-5">
       <Row>
-        <Col className="shadow p-4">
+        <Col
+          md={{ span: 7 }}
+          className="shadow p-4"
+          style={{ maxWidth: "500px" }}
+        >
           <h3 className="mb-4 fw-bold">Login</h3>
           <LoginForm />
         </Col>
