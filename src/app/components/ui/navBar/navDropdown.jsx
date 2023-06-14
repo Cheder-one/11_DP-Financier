@@ -3,7 +3,7 @@ import { Dropdown, DropdownButton, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import getAvatar from "../../../utils/getAvatar";
 import { useMemo } from "react";
-import SwitchForm from "../../common/form/switchForm.jsx";
+import SwitchForm from "../../common/form/switchField.jsx";
 
 const NavDropdown = ({ onToggleTheme, darkTheme }) => {
   const profileIcon = useMemo(

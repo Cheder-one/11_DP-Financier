@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 
-function MainPage() {
+function WelcomePage() {
   return (
     <Container>
       <Row className="my-5">
@@ -13,4 +13,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default WelcomePage;

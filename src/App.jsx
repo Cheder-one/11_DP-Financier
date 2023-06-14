@@ -8,6 +8,7 @@ import {
 import Footer from "./app/components/ui/footer";
 import { useEffect, useState } from "react";
 import themeConfig from "./app/utils/data/themeConfig";
+import Welcome from "./app/layout/welcome";
 
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
@@ -35,7 +36,7 @@ const App = () => {
             <Route path="/history" />
             <Route path="/analysis" />
             <Route path="/main" />
-            <Route path="/" component={WelcomePage} />
+            <Route path="/" component={Welcome} />
           </Switch>
         </div>
         <Route path="/" component={Footer} />
