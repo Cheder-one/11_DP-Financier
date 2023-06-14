@@ -1,6 +1,5 @@
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./app/components/ui/navBar/navBar";
-import WelcomePage from "./app/components/page/welcomePage";
 import {
   enable as enableDarkMode,
   disable as disableDarkMode

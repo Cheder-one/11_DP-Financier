@@ -3,7 +3,7 @@ import LoginForm from "../components/ui/entry-forms/loginForm";
 
 const Login = () => {
   return (
-    <Container className="mt-5">
+    <Container className="mt-3">
       <Row>
         <Col className="shadow p-4">
           <h3 className="mb-4 fw-bold">Login</h3>
