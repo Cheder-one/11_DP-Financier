@@ -3,7 +3,7 @@ import NavDropdown from "./navDropdown";
 import { Link } from "react-router-dom";
 import { Container, Navbar, Nav } from "react-bootstrap";
 
-const NavBar = ({ onToggleTheme }) => {
+const NavBar = ({ onToggleTheme, darkTheme }) => {
   return (
     <Navbar bg="body-tertiary" expand="sm">
       <Container>
@@ -21,14 +21,15 @@ const NavBar = ({ onToggleTheme }) => {
             История
           </Nav.Link>
         </Nav>
-        <NavDropdown {...{ onToggleTheme }} />
+        <NavDropdown {...{ onToggleTheme, darkTheme }} />
       </Container>
     </Navbar>
   );
 };
 
 NavBar.propTypes = {
-  onToggleTheme: PropTypes.func
+  onToggleTheme: PropTypes.func,
+  darkTheme: PropTypes.bool
 };
 
 export default NavBar;

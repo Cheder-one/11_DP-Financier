@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <>
-      <NavBar onToggleTheme={handleToggleTheme} />
+      <NavBar onToggleTheme={handleToggleTheme} darkTheme={darkTheme} />
       <div className="d-flex flex-column min-vh-100">
         <div className="flex-grow-1">
           <Switch>

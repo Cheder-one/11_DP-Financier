@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import { Dropdown, DropdownButton, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SwitchTheme from "../switchers/switcher";
 import getAvatar from "../../../utils/getAvatar";
 import { useMemo } from "react";
+import SwitchForm from "../../common/form/switchForm.jsx";
 
-const NavDropdown = ({ onToggleTheme }) => {
+const NavDropdown = ({ onToggleTheme, darkTheme }) => {
   const profileIcon = useMemo(
     () => <Image src={getAvatar()} className="me-2" id="avatar-icon" />,
     []
@@ -27,7 +27,7 @@ const NavDropdown = ({ onToggleTheme }) => {
         Профиль
       </Dropdown.Item>
       <Dropdown.Item eventKey="2_switchTheme">
-        <SwitchTheme label="Ночь" />
+        <SwitchForm label="Ночь" darkTheme={darkTheme} />
       </Dropdown.Item>
       <Dropdown.Item eventKey="3_settings" as={Link} to={"/settings"}>
         Настройки
@@ -41,7 +41,8 @@ const NavDropdown = ({ onToggleTheme }) => {
 };
 
 NavDropdown.propTypes = {
-  onToggleTheme: PropTypes.func
+  onToggleTheme: PropTypes.func,
+  darkTheme: PropTypes.bool
 };
 
 export default NavDropdown;
