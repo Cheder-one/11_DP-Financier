@@ -1,7 +1,11 @@
 import { Col, Container, Row } from "react-bootstrap";
 import LoginForm from "../components/ui/entry-forms/loginForm";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const Login = () => {
+  const { type } = useParams();
+  console.log(type);
+
   return (
     <Container className="mb-5">
       <Row>

@@ -13,7 +13,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
   return (
     <>
       <Form.Group className="mb-2 ">
-        <Form.Label htmlFor={name}>{label}</Form.Label>
+        <label htmlFor={name}>{label}</label>
         <InputGroup hasValidation>
           <Form.Control
             id={name}

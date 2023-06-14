@@ -8,6 +8,7 @@ import Footer from "./app/components/ui/footer";
 import { useEffect, useState } from "react";
 import themeConfig from "./app/utils/data/themeConfig";
 import Welcome from "./app/layout/welcome";
+import Login from "./app/layout/login";
 
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
@@ -30,6 +31,7 @@ const App = () => {
       <div className="d-flex flex-column min-vh-100">
         <div className="flex-grow-1">
           <Switch>
+            <Route path="/login/:type?" component={Login} />
             <Route path="/profile" />
             <Route path="/settings" />
             <Route path="/history" />

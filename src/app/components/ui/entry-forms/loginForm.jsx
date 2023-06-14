@@ -1,9 +1,10 @@
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import TextField from "../../common/form/textField";
 import validationSchema from "../../../utils/validators/validationSchema";
 
-const LoginForm = () => {
+const LoginForm = ({ entryBtnText }) => {
   const [inputsData, setInputsData] = useState({
     email: "",
     password: ""
@@ -56,10 +57,18 @@ const LoginForm = () => {
         variant="primary"
         onClick={() => console.log("Primary")}
       >
-        Entry
+        {entryBtnText}
       </Button>
     </Form>
   );
+};
+
+LoginForm.defaultProps = {
+  entryBtnText: "Войти"
+};
+
+LoginForm.propTypes = {
+  entryBtnText: PropTypes.string
 };
 
 export default LoginForm;
