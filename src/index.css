@@ -24,3 +24,8 @@ body {
 .form-check-input {
   box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
 }
+
+.dark-theme-true.dropdown-item {
+  background-color: white !important;
+  color: black !important;
+}

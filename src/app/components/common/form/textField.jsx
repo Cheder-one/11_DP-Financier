@@ -1,9 +1,10 @@
 import { Button, Form, InputGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { eyeFill, eyeSlash } from "../../../assets/show-hide-pass-svg";
 
-const TextField = ({ label, type, name, value, onChange, error }) => {
+const TextField = ({ label, type, name, onChange, error }) => {
+  const [value, setValue] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
 
@@ -12,8 +13,16 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
   };
 
   const handleBlur = () => {
-    console.log("Input field blurred");
+    setIsBlur(true);
   };
+
+  const handleInputChange = useCallback(
+    (event) => {
+      setValue(event.target.value);
+      onChange(event);
+    },
+    [onChange]
+  );
 
   return (
     <>
@@ -25,10 +34,10 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
             name={name}
             value={value}
             type={showPass ? "text" : type}
-            onChange={onChange}
+            onChange={handleInputChange}
             onBlur={handleBlur}
-            isValid={!error}
-            isInvalid={!!error}
+            isValid={!error && isBlur}
+            isInvalid={!!error && isBlur}
           />
           {type === "password" && (
             <Button variant="outline-secondary" onClick={handleClick}>

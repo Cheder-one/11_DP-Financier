@@ -20,7 +20,10 @@ yup.setLocale({
 });
 
 const validationSchema = yup.object().shape({
-  email: yup.string().required().email(),
+  email: yup
+    .string()
+    .required()
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, `Некорректный email`),
   password: yup
     .string()
     .required()

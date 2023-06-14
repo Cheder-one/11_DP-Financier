@@ -3,13 +3,10 @@ import { Dropdown, DropdownButton, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import getAvatar from "../../../utils/getAvatar";
 import { useMemo } from "react";
-import SwitchForm from "../../common/form/switchField.jsx";
+import SwitchForm from "../../common/form/switchField";
 
 const NavDropdown = ({ onToggleTheme, darkTheme }) => {
-  const profileIcon = useMemo(
-    () => <Image src={getAvatar()} className="me-2" id="avatar-icon" />,
-    []
-  );
+  const avatarSrc = useMemo(() => getAvatar(), []);
 
   const handleItemSelect = (eventKey) => {
     if (eventKey === "2_switchTheme") {
@@ -20,7 +17,12 @@ const NavDropdown = ({ onToggleTheme, darkTheme }) => {
   return (
     <DropdownButton
       variant="light"
-      title={<>{profileIcon} Username</>}
+      title={
+        <>
+          <Image src={avatarSrc} className="me-2" id="avatar-icon" />
+          Username
+        </>
+      }
       onSelect={handleItemSelect}
     >
       <Dropdown.Item eventKey="1_profile" as={Link} to={"/profile"}>

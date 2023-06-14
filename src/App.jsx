@@ -11,19 +11,19 @@ import Welcome from "./app/layout/welcome";
 import Login from "./app/layout/login";
 
 const App = () => {
-  const [darkTheme, setDarkTheme] = useState(false);
+  const isDarkThemeEnabled = JSON.parse(localStorage.getItem("darkTheme"));
+
+  const [darkTheme, setDarkTheme] = useState(isDarkThemeEnabled);
 
   const handleToggleTheme = () => {
-    setDarkTheme((prev) => !prev);
+    const newDarkThemeValue = !darkTheme;
+    setDarkTheme(newDarkThemeValue);
+    localStorage.setItem("darkTheme", JSON.stringify(newDarkThemeValue));
   };
 
   useEffect(() => {
-    if (darkTheme) {
-      enableDarkMode(themeConfig);
-    } else {
-      disableDarkMode();
-    }
-  }, [darkTheme]);
+    isDarkThemeEnabled ? enableDarkMode(themeConfig) : disableDarkMode();
+  }, [isDarkThemeEnabled]);
 
   return (
     <>
