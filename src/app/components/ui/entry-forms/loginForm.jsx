@@ -12,6 +12,7 @@ const LoginForm = () => {
     password: "",
     stayOn: false
   });
+
   const [errors, setErrors] = useState({});
   const [rememberMe, setRememberMe] = useState(true);
 
@@ -55,27 +56,27 @@ const LoginForm = () => {
     console.log(inputFields);
   };
 
-  // Обработчик события загрузки страницы
+  // Проверить наличие сохраненных данных в localStorage
   useEffect(() => {
-    // Проверить наличие сохраненных данных в localStorage
     const savedEmail = localStorage.getItem("email");
     const savedPassword = localStorage.getItem("password");
     if (savedEmail && savedPassword) {
-      setInputFields({
+      setInputFields((prev) => ({
+        ...prev,
         email: savedEmail,
         password: savedPassword
-      });
+      }));
       setRememberMe(true);
     }
   }, []);
 
   const handleForgotPassword = () => {
-    // здесь ваш код для восстановления пароля
+    // код для восстановления пароля
     console.log("Запрос на восстановление пароля");
   };
 
   const handleRegistration = () => {
-    // здесь ваш код для регистрации
+    // код для регистрации
     console.log("Регистрация");
   };
 

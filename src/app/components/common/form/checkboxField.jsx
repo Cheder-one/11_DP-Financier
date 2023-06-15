@@ -6,9 +6,12 @@ const CheckboxField = ({ label, name, value, onChange, error }) => {
     <Form.Check
       className="m-0"
       label={label}
+      name={name}
+      value={value}
       type="checkbox"
       id="default-checkbox"
       style={{ fontSize: "15px" }}
+      onChange={onChange}
     />
   );
 };
