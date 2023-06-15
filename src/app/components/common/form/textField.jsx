@@ -1,28 +1,23 @@
 import { Button, Form, InputGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { eyeFill, eyeSlash } from "../../../assets/show-hide-pass-svg";
 
-const TextField = ({ label, type, name, onChange, error }) => {
-  const [value, setValue] = useState("");
+const TextField = ({ label, type, name, value, onChange, error }) => {
   const [showPass, setShowPass] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
-
-  const handleClick = () => {
-    setShowPass((prev) => !prev);
-  };
 
   const handleBlur = () => {
     setIsBlur(true);
   };
 
-  const handleInputChange = useCallback(
-    (event) => {
-      setValue(event.target.value);
-      onChange(event);
-    },
-    [onChange]
-  );
+  const handleClick = () => {
+    setShowPass((prev) => !prev);
+  };
+
+  const handleInputChange = (e) => {
+    onChange(e);
+  };
 
   return (
     <>
