@@ -41,7 +41,7 @@ export function makeServer({ environment = "development" } = {}) {
         (schema) => {
           return schema.users.all();
         },
-        { timing: 2000 }
+        { timing: 1000 }
       );
 
       this.post("/users/:id", (schema, request) => {

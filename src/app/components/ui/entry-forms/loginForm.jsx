@@ -9,11 +9,9 @@ const LoginForm = ({ entryBtnText }) => {
     email: "",
     password: ""
   });
-
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleControlChange = ({ target }) => {
+  const handleInputChange = ({ target }) => {
     const { name, value } = target;
 
     setInputFields((prev) => ({
@@ -40,32 +38,8 @@ const LoginForm = ({ entryBtnText }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Получение пользователей
-    const response = await fetch("/api/users");
-    const users = await response.json();
-    console.log(users);
-
-    // Изменение пользователя с id = 1
-    const user = { name: "Новое имя" };
-    await fetch("/api/users/1", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(user)
-    });
-
     if (!hasErrors) {
-      console.log(true);
-      try {
-        // здесь ваш код для отправки данных формы на сервер
-        console.log(inputFields);
-      } catch (error) {
-        console.error(error);
-        setErrors({ server: "Ошибка сервера" });
-      } finally {
-        setIsLoading(false);
-      }
+      console.log(inputFields);
     }
   };
 
@@ -90,7 +64,7 @@ const LoginForm = ({ entryBtnText }) => {
         label={"Email"}
         name={"email"}
         value={inputFields.email}
-        onChange={handleControlChange}
+        onChange={handleInputChange}
         error={errors.email}
         tabIndex="1"
       />
@@ -99,7 +73,7 @@ const LoginForm = ({ entryBtnText }) => {
         name={"password"}
         value={inputFields.password}
         type={"password"}
-        onChange={handleControlChange}
+        onChange={handleInputChange}
         error={errors.password}
         tabIndex="2"
       />
@@ -112,9 +86,9 @@ const LoginForm = ({ entryBtnText }) => {
         className="w-100 mx-auto mt-3"
         variant="primary"
         type="submit"
-        disabled={hasErrors || isLoading}
+        disabled={hasErrors}
       >
-        {isLoading ? "Загрузка..." : entryBtnText}
+        {entryBtnText}
       </Button>
       <div className="text-center mt-3">
         <Button variant="link" onClick={handleRegistration}>

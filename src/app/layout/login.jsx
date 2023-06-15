@@ -14,7 +14,6 @@ const Login = () => {
           className="shadow p-4"
           style={{ maxWidth: "500px" }}
         >
-          {/* <h3 className="mb-4 fw-bold">Login</h3> */}
           <LoginForm />
         </Col>
       </Row>
