@@ -3,13 +3,17 @@ import { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import TextField from "../../common/form/textField";
 import validationSchema from "../../../utils/validators/validationSchema";
+import CheckboxField from "../../common/form/checkboxField";
+import ContentBetween from "../../common/typography/contentBetween";
 
-const LoginForm = ({ entryBtnText }) => {
+const LoginForm = () => {
   const [inputFields, setInputFields] = useState({
     email: "",
-    password: ""
+    password: "",
+    stayOn: false
   });
   const [errors, setErrors] = useState({});
+  const [rememberMe, setRememberMe] = useState(true);
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
@@ -38,10 +42,32 @@ const LoginForm = ({ entryBtnText }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!hasErrors) {
-      console.log(inputFields);
+    if (hasErrors) return;
+
+    if (rememberMe) {
+      localStorage.setItem("email", inputFields.email);
+      localStorage.setItem("password", inputFields.password);
     }
+
+    // Выполнить вход в систему
+    // login(inputFields.email, inputFields.password);
+
+    console.log(inputFields);
   };
+
+  // Обработчик события загрузки страницы
+  useEffect(() => {
+    // Проверить наличие сохраненных данных в localStorage
+    const savedEmail = localStorage.getItem("email");
+    const savedPassword = localStorage.getItem("password");
+    if (savedEmail && savedPassword) {
+      setInputFields({
+        email: savedEmail,
+        password: savedPassword
+      });
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleForgotPassword = () => {
     // здесь ваш код для восстановления пароля
@@ -77,30 +103,36 @@ const LoginForm = ({ entryBtnText }) => {
         error={errors.password}
         tabIndex="2"
       />
-      <div className="d-flex justify-content-end mb-3">
-        <Button variant="link" onClick={handleForgotPassword}>
+      <ContentBetween className="my-3">
+        <CheckboxField
+          label="Оставаться в системе"
+          name="stayOn"
+          value={inputFields.stayOn}
+          onChange={handleInputChange}
+        />
+        <Button
+          variant="link"
+          className="btn-sm p-0"
+          onClick={handleForgotPassword}
+        >
           Забыли пароль?
         </Button>
-      </div>
+      </ContentBetween>
       <Button
-        className="w-100 mx-auto mt-3"
+        className="w-100 mx-auto "
         variant="primary"
         type="submit"
         disabled={hasErrors}
       >
-        {entryBtnText}
+        Войти
       </Button>
-      <div className="text-center mt-3">
+      <div className="text-center mt-2">
         <Button variant="link" onClick={handleRegistration}>
           Регистрация
         </Button>
       </div>
     </Form>
   );
-};
-
-LoginForm.defaultProps = {
-  entryBtnText: "Войти"
 };
 
 LoginForm.propTypes = {
