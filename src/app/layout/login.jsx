@@ -1,20 +1,19 @@
 import { Col, Container, Row } from "react-bootstrap";
 import LoginForm from "../components/ui/entry-forms/loginForm";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useLocation,
+  useParams
+} from "react-router-dom/cjs/react-router-dom.min";
 import RegisterForm from "../components/ui/entry-forms/registerForm";
 
 const Login = () => {
-  const { type } = useParams();
-  console.log(type);
+  const location = useLocation();
+  console.log(location);
 
   return (
     <Container className="mt-3">
       <Row>
-        <Col
-          md={{ span: 7 }}
-          className="shadow p-4"
-          style={{ maxWidth: "500px" }}
-        >
+        <Col md="7" className="shadow p-4" style={{ maxWidth: "500px" }}>
           <LoginForm />
           {/* <RegisterForm/> */}
         </Col>

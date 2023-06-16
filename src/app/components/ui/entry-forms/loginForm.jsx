@@ -2,9 +2,10 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import TextField from "../../common/form/textField";
-import validationSchema from "../../../utils/validators/validationSchema";
+import validationSchema from "../../common/typography/validationSchema";
 import CheckboxField from "../../common/form/checkboxField";
 import ContentBetween from "../../common/typography/contentBetween";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const LoginForm = () => {
   const [inputFields, setInputFields] = useState({
@@ -78,11 +79,6 @@ const LoginForm = () => {
     console.log("Запрос на восстановление пароля");
   };
 
-  const handleRegistration = () => {
-    // код для регистрации
-    console.log("Регистрация");
-  };
-
   return (
     <Form onSubmit={handleSubmit}>
       {errors.server && (
@@ -129,7 +125,7 @@ const LoginForm = () => {
         Войти
       </Button>
       <div className="text-center mt-2">
-        <Button variant="link" onClick={handleRegistration}>
+        <Button as={Link} to="/registration" variant="link">
           Регистрация
         </Button>
       </div>

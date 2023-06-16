@@ -3,10 +3,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif !important;
-  /* 
-  color-scheme: light dark !important;
-  color: rgba(255, 255, 255, 0.87) !important;
-  background-color: #242424 !important; */
 
   font-synthesis: none !important;
   text-rendering: optimizeLegibility !important;
