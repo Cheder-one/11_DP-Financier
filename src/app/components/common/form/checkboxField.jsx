@@ -17,7 +17,6 @@ const CheckboxField = ({ label, name, value, onChange, error }) => {
       className="position-relative"
       controlId={`form-group-${name}-id`}
     >
-      {/* <InputGroup hasValidation> */}
       <Form.Check
         name={name}
         label={label}
@@ -28,7 +27,6 @@ const CheckboxField = ({ label, name, value, onChange, error }) => {
         feedbackTooltip
         style={{ fontSize: "15px" }}
       />
-      {/* </InputGroup> */}
     </Form.Group>
   );
 };

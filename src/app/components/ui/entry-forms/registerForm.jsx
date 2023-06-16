@@ -1,165 +1,185 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import TextField from "../../common/form/textField";
-import { validate } from "../../../utils/validators/default/validate";
-import { loginSchema } from "../../../utils/validators/default/validationSchema";
-import API from "../../../api/index.api";
-import SelectField from "../../common/form/selectField";
-import RadioField from "../../common/form/radioField";
-import MultiSelectField from "../../common/form/multiSelectField";
-import { genderOptions } from "../../../utils/data/fieldsOptions";
-import CheckboxField from "../../common/form/checkboxField";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Row from "react-bootstrap/Row";
+import { Formik } from "formik";
+import * as yup from "yup";
 
-const RegisterForm = ({ entryBtnText }) => {
-  const [inputFields, setInputFields] = useState({
-    email: "",
-    password: "",
-    profession: "",
-    gender: "other",
-    qualities: [],
-    privacyPolicy: false
+function FormExample() {
+  const schema = yup.object().shape({
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    username: yup.string().required(),
+    city: yup.string().required(),
+    state: yup.string().required(),
+    zip: yup.string().required(),
+    file: yup.mixed().required(),
+    terms: yup.bool().required().oneOf([true], "terms must be accepted")
   });
-  const [errors, setErrors] = useState({});
-  const [professions, setProfessions] = useState([]);
-  const [qualities, setQualities] = useState([]);
-
-  useEffect(() => {
-    API.professions.fetchAll().then((profs) => {
-      const professionsList = Object.keys(profs).map((profName) => ({
-        label: profs[profName].name,
-        value: profs[profName]._id
-      }));
-      setProfessions(professionsList);
-    });
-    API.qualities.fetchAll().then((quals) => {
-      const qualitiesList = Object.keys(quals).map((profName) => ({
-        label: quals[profName].name,
-        value: quals[profName]._id,
-        color: quals[profName].color
-      }));
-      setQualities(qualitiesList);
-    });
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInputFields((prevState) => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  useEffect(() => {
-    const foundErrors = validate(inputFields, loginSchema);
-    setErrors(foundErrors);
-  }, [inputFields]);
-
-  const hasErrors = Object.keys(errors).length !== 0;
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (hasErrors) return;
-    const { profession: profId, qualities: selectedQuals } = inputFields;
-
-    console.log({
-      ...inputFields,
-      profession: getProfessionById(profId),
-      qualities: getQualities(selectedQuals)
-    });
-  };
-
-  const getProfessionById = (id) => {
-    for (const prof of professions) {
-      if (prof.value === id) {
-        return { _id: prof.value, name: prof.label };
-      }
-    }
-  };
-
-  const getQualities = (elements) => {
-    const qualitiesArray = [];
-    for (const elem of elements) {
-      for (const quality in qualities) {
-        if (elem.value === qualities[quality].value) {
-          qualitiesArray.push({
-            _id: qualities[quality].value,
-            name: qualities[quality].label,
-            color: qualities[quality].color
-          });
-        }
-      }
-    }
-    return qualitiesArray;
-  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        label={"Email:"}
-        type="text"
-        name="email"
-        value={inputFields.email}
-        onChange={handleInputChange}
-        error={errors.email}
-      />
-      <TextField
-        label={"Пароль:"}
-        type="password"
-        name="password"
-        value={inputFields.password}
-        onChange={handleInputChange}
-        error={errors.password}
-      />
-      <SelectField
-        label="Ваша профессия:"
-        name="profession"
-        value={inputFields.profession}
-        onChange={handleInputChange}
-        options={professions}
-        error={errors.profession}
-      />
-      <RadioField
-        label="Ваш пол:"
-        name="gender"
-        value={inputFields.gender}
-        options={genderOptions}
-        onChange={handleInputChange}
-        error={errors.gender}
-      />
-      <MultiSelectField
-        label={"Ваши качества:"}
-        name="qualities"
-        defaultValue={inputFields.qualities}
-        options={qualities}
-        onChange={handleInputChange}
-        className="basic-multi-select"
-        classNamePrefix="select"
-      />
-      <CheckboxField
-        name="privacyPolicy"
-        value={inputFields.privacyPolicy}
-        onChange={handleInputChange}
-        error={errors.privacyPolicy}
-      >
-        Согласен с <a href="#">политикой конфиденциальности</a>
-      </CheckboxField>
-      <button
-        disabled={hasErrors}
-        className={"btn btn-primary w-100 mx-auto"}
-        type="submit"
-      >
-        {entryBtnText}
-      </button>
-    </form>
+    <Formik
+      validationSchema={schema}
+      onSubmit={console.log}
+      initialValues={{
+        firstName: "Mark",
+        lastName: "Otto",
+        username: "",
+        city: "",
+        state: "",
+        zip: "",
+        file: null,
+        terms: false
+      }}
+    >
+      {({ handleSubmit, handleChange, values, touched, errors }) => (
+        <Form noValidate onSubmit={handleSubmit}>
+          <Row className="mb-3">
+            <Form.Group
+              as={Col}
+              md="4"
+              controlId="validationFormik101"
+              className="position-relative"
+            >
+              <Form.Label>First name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstName"
+                value={values.firstName}
+                onChange={handleChange}
+                isValid={touched.firstName && !errors.firstName}
+              />
+              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group
+              as={Col}
+              md="4"
+              controlId="validationFormik102"
+              className="position-relative"
+            >
+              <Form.Label>Last name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastName"
+                value={values.lastName}
+                onChange={handleChange}
+                isValid={touched.lastName && !errors.lastName}
+              />
+
+              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationFormikUsername2">
+              <Form.Label>Username</Form.Label>
+              <InputGroup hasValidation>
+                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  aria-describedby="inputGroupPrepend"
+                  name="username"
+                  value={values.username}
+                  onChange={handleChange}
+                  isInvalid={!!errors.username}
+                />
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.username}
+                </Form.Control.Feedback>
+              </InputGroup>
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group
+              as={Col}
+              md="6"
+              controlId="validationFormik103"
+              className="position-relative"
+            >
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="City"
+                name="city"
+                value={values.city}
+                onChange={handleChange}
+                isInvalid={!!errors.city}
+              />
+
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.city}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group
+              as={Col}
+              md="3"
+              controlId="validationFormik104"
+              className="position-relative"
+            >
+              <Form.Label>State</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="State"
+                name="state"
+                value={values.state}
+                onChange={handleChange}
+                isInvalid={!!errors.state}
+              />
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.state}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group
+              as={Col}
+              md="3"
+              controlId="validationFormik105"
+              className="position-relative"
+            >
+              <Form.Label>Zip</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Zip"
+                name="zip"
+                value={values.zip}
+                onChange={handleChange}
+                isInvalid={!!errors.zip}
+              />
+
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.zip}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+          <Form.Group className="position-relative mb-3">
+            <Form.Label>File</Form.Label>
+            <Form.Control
+              type="file"
+              required
+              name="file"
+              onChange={handleChange}
+              isInvalid={!!errors.file}
+            />
+            <Form.Control.Feedback type="invalid" tooltip>
+              {errors.file}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="position-relative mb-3">
+            <Form.Check
+              required
+              name="terms"
+              label="Agree to terms and conditions"
+              onChange={handleChange}
+              isInvalid={!!errors.terms}
+              feedback={errors.terms}
+              feedbackType="invalid"
+              id="validationFormik106"
+              feedbackTooltip
+            />
+          </Form.Group>
+          <Button type="submit">Submit form</Button>
+        </Form>
+      )}
+    </Formik>
   );
-};
+}
 
-RegisterForm.defaultProps = {
-  entryBtnText: "Регистрация"
-};
-
-RegisterForm.propTypes = {
-  entryBtnText: PropTypes.string
-};
-
-export default RegisterForm;
+export default FormExample;
