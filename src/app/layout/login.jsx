@@ -1,24 +1,28 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Nav, Row } from "react-bootstrap";
 import LoginForm from "../components/ui/entry-forms/loginForm";
-import {
-  useLocation,
-  useParams
-} from "react-router-dom/cjs/react-router-dom.min";
 import RegisterForm from "../components/ui/entry-forms/registerForm";
 import { useState } from "react";
 
-const Login = () => {
-  const location = useLocation();
-  console.log(location);
-
-  const [formType, setFormType] = useState("");
-
+const Login = ({ formType, setFormType }) => {
   return (
     <Container className="mt-3">
       <Row>
         <Col md="7" className="shadow p-4" style={{ maxWidth: "500px" }}>
-          <LoginForm />
-          {/* <RegisterForm/> */}
+          <Nav
+            fill
+            variant="tabs"
+            defaultActiveKey="login"
+            activeKey={formType}
+            onSelect={(selectedKey) => setFormType(selectedKey)}
+          >
+            <Nav.Item>
+              <Nav.Link eventKey="login">Login</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="register">Register</Nav.Link>
+            </Nav.Item>
+          </Nav>
+          {formType === "login" ? <LoginForm /> : <RegisterForm />}
         </Col>
       </Row>
     </Container>

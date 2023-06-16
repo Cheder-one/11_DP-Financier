@@ -32,7 +32,7 @@ const App = () => {
       <StickyFooter
         body={
           <Switch>
-            <Route path="/login/:type?" component={Login} />
+            <Route path="/login/:type?" component={Welcome} />
             <Route path="/profile" />
             <Route path="/settings" />
             <Route path="/history" />
