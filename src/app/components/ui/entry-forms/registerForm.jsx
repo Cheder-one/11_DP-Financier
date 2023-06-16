@@ -31,6 +31,7 @@ function RegisterForm() {
               value={values.firstName}
               onChange={handleChange}
               error={errors.firstName}
+              isInvalid={touched.firstName && !errors.firstName}
             />
             <TextField
               as={Col}
