@@ -9,9 +9,17 @@ const NavDropdown = ({ onToggleTheme, darkTheme }) => {
   const avatarSrc = useMemo(() => getAvatar(), []);
 
   const handleItemSelect = (eventKey) => {
-    if (eventKey === "2_switchTheme") {
-      onToggleTheme();
+    switch (eventKey) {
+      case "2_switchTheme":
+        onToggleTheme();
+        return;
+      case "4_exit":
+        localStorage.removeItem("email");
+        localStorage.removeItem("password");
     }
+    // if (eventKey === "2_switchTheme") {
+    //   onToggleTheme();
+    // }
   };
 
   return (
@@ -35,7 +43,7 @@ const NavDropdown = ({ onToggleTheme, darkTheme }) => {
         Настройки
       </Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item eventKey="4_exit" as={Link} to={"/exit"}>
+      <Dropdown.Item eventKey="4_exit" href={"/"}>
         Выйти
       </Dropdown.Item>
     </DropdownButton>

@@ -5,10 +5,13 @@ import {
   useParams
 } from "react-router-dom/cjs/react-router-dom.min";
 import RegisterForm from "../components/ui/entry-forms/registerForm";
+import { useState } from "react";
 
 const Login = () => {
   const location = useLocation();
   console.log(location);
+
+  const [formType, setFormType] = useState("");
 
   return (
     <Container className="mt-3">

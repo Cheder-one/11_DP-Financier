@@ -60,7 +60,6 @@ const LoginForm = () => {
     // login(inputFields.email, inputFields.password);
   };
 
-  // Проверить наличие сохраненных данных в localStorage
   useEffect(() => {
     const savedEmail = localStorage.getItem("email");
     const savedPassword = localStorage.getItem("password");
@@ -68,9 +67,9 @@ const LoginForm = () => {
       setInputFields((prev) => ({
         ...prev,
         email: savedEmail,
-        password: savedPassword
+        password: savedPassword,
+        stayOn: true
       }));
-      setInputFields((prev) => ({ ...prev, stayOn: true }));
     }
   }, []);
 
