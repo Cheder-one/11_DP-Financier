@@ -13,20 +13,22 @@ const CheckboxField = ({ label, name, value, onChange, error }) => {
   };
 
   return (
-    <Form.Group controlId="form-group-stayOn-id">
-      <InputGroup hasValidation>
-        <Form.Check
-          checked={value}
-          className="m-0"
-          label={label}
-          name={name}
-          type="checkbox"
-          style={{ fontSize: "15px" }}
-          onChange={handleChange}
-          isInvalid={!!error}
-        />
-        <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
-      </InputGroup>
+    <Form.Group
+      className="position-relative"
+      controlId={`form-group-${name}-id`}
+    >
+      {/* <InputGroup hasValidation> */}
+      <Form.Check
+        name={name}
+        label={label}
+        onChange={handleChange}
+        isInvalid={!!error}
+        feedback={error}
+        feedbackType="invalid"
+        feedbackTooltip
+        style={{ fontSize: "15px" }}
+      />
+      {/* </InputGroup> */}
     </Form.Group>
   );
 };
