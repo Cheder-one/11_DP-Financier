@@ -101,11 +101,12 @@ const LoginForm = () => {
       />
       <ContentBetween className="my-3">
         <CheckboxField
-          label="Оставаться в системе"
           name="stayOn"
           value={inputFields.stayOn}
           onChange={handleInputChange}
-        />
+        >
+          <span style={{ fontSize: "15px" }}>Оставаться в системе</span>
+        </CheckboxField>
         <Button
           variant="link"
           className="btn-sm p-0"

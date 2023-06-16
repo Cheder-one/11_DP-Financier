@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { eyeFill, eyeSlash } from "../../../assets/show-hide-pass-svg";
 
-const TextField = ({ label, type, name, value, onChange, error }) => {
+const TextField = ({ label, type, name, value, onChange, error, as, md }) => {
   const [showPass, setShowPass] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
 
@@ -13,7 +13,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
 
   return (
     <>
-      <Form.Group className="my-3">
+      <Form.Group as={as} md={md} className="mb-3">
         <Form.Label htmlFor={name}>{label}</Form.Label>
         {/* <label htmlFor={name}>{label}</label> */}
 
@@ -50,7 +50,9 @@ TextField.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  error: PropTypes.string
+  error: PropTypes.string,
+  as: PropTypes.object,
+  md: PropTypes.string
 };
 
 export default TextField;

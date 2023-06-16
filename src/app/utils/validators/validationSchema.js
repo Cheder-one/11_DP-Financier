@@ -36,6 +36,8 @@ export const loginSchema = yup.object().shape({
 });
 
 export const registerSchema = yup.object().shape({
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
   email: yup
     .string()
     .required()

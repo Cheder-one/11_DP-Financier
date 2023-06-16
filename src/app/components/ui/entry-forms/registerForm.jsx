@@ -4,6 +4,8 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { Formik } from "formik";
+import TextField from "../../common/form/textField";
+import CheckboxField from "../../common/form/checkboxField";
 
 function RegisterForm() {
   return (
@@ -13,91 +15,61 @@ function RegisterForm() {
       initialValues={{
         firstName: "",
         lastName: "",
+        email: "",
+        password: "",
         terms: false
       }}
     >
       {({ handleSubmit, handleChange, values, touched, errors }) => (
         <Form noValidate onSubmit={handleSubmit}>
-          <Row className="mb-3">
-            <Form.Group
+          <Row>
+            <TextField
               as={Col}
               md="6"
-              controlId="validationFormik101"
-              className="position-relative"
-            >
-              <Form.Label>First name</Form.Label>
-              <Form.Control
-                type="text"
-                name="firstName"
-                value={values.firstName}
-                onChange={handleChange}
-                isValid={touched.firstName && !errors.firstName}
-              />
-              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group
-              as={Col}
-              md="6"
-              controlId="validationFormik102"
-              className="position-relative"
-            >
-              <Form.Label>Last name</Form.Label>
-              <Form.Control
-                type="text"
-                name="lastName"
-                value={values.lastName}
-                onChange={handleChange}
-                isValid={touched.lastName && !errors.lastName}
-              />
-              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group
-              controlId="validationFormik101"
-              className="position-relative"
-            >
-              <Form.Label>First name</Form.Label>
-              <Form.Control
-                type="text"
-                name="firstName"
-                value={values.firstName}
-                onChange={handleChange}
-                isValid={touched.firstName && !errors.firstName}
-              />
-              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group
-              controlId="validationFormik101"
-              className="position-relative"
-            >
-              <Form.Label>First name</Form.Label>
-              <Form.Control
-                type="text"
-                name="firstName"
-                value={values.firstName}
-                onChange={handleChange}
-                isValid={touched.firstName && !errors.firstName}
-              />
-              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-
-          <Form.Group className="position-relative mb-3">
-            <Form.Check
-              required
-              name="terms"
-              label="Agree to terms and conditions"
+              label={"First Name"}
+              name={"firstName"}
+              value={values.firstName}
               onChange={handleChange}
-              isInvalid={!!errors.terms}
-              feedback={errors.terms}
-              feedbackType="invalid"
-              id="validationFormik106"
-              feedbackTooltip
+              error={errors.firstName}
             />
-          </Form.Group>
+            <TextField
+              as={Col}
+              md="6"
+              label={"Last Name"}
+              name={"lastName"}
+              value={values.lastName}
+              onChange={handleChange}
+              error={errors.lastName}
+            />
+          </Row>
+          <Row>
+            <TextField
+              label={"Email"}
+              name={"email"}
+              value={values.email}
+              onChange={handleChange}
+              error={errors.email}
+            />
+          </Row>
+          <Row>
+            <TextField
+              label={"Password"}
+              name={"password"}
+              type={"password"}
+              value={values.password}
+              onChange={handleChange}
+              error={errors.password}
+            />
+          </Row>
+          <CheckboxField
+            name="terms"
+            value={values.terms}
+            onChange={handleChange}
+          >
+            <button className="btn btn-link p-0" href="#">
+              Agree to terms and conditions
+            </button>
+          </CheckboxField>
           <Button type="submit">Submit form</Button>
         </Form>
       )}
