@@ -10,16 +10,13 @@ const NavDropdown = ({ onToggleTheme, darkTheme }) => {
 
   const handleItemSelect = (eventKey) => {
     switch (eventKey) {
-      case "2_switchTheme":
+      case "switchTheme":
         onToggleTheme();
         return;
-      case "4_exit":
+      case "exit":
         localStorage.removeItem("email");
         localStorage.removeItem("password");
     }
-    // if (eventKey === "2_switchTheme") {
-    //   onToggleTheme();
-    // }
   };
 
   return (
@@ -36,14 +33,14 @@ const NavDropdown = ({ onToggleTheme, darkTheme }) => {
       <Dropdown.Item eventKey="1_profile" as={Link} to={"/profile"}>
         Профиль
       </Dropdown.Item>
-      <Dropdown.Item eventKey="2_switchTheme">
+      <Dropdown.Item eventKey="switchTheme">
         <SwitchForm label="Ночь" darkTheme={darkTheme} />
       </Dropdown.Item>
       <Dropdown.Item eventKey="3_settings" as={Link} to={"/settings"}>
         Настройки
       </Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item eventKey="4_exit" href={"/"}>
+      <Dropdown.Item eventKey="exit" href={"/"}>
         Выйти
       </Dropdown.Item>
     </DropdownButton>

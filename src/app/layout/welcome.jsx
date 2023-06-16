@@ -8,7 +8,7 @@ const Welcome = () => {
   return (
     <>
       <WelcomePage />
-      <Login formType={formType} setFormType={setFormType} />
+      <Login {...{ formType, setFormType }} />
     </>
   );
 };

@@ -2,10 +2,9 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import TextField from "../../common/form/textField";
-import validationSchema from "../../../utils/validators/validationSchema";
+import { loginSchema } from "../../../utils/validators/validationSchema";
 import CheckboxField from "../../common/form/checkboxField";
 import ContentBetween from "../../common/typography/contentBetween";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const LoginForm = () => {
   const [inputFields, setInputFields] = useState({
@@ -26,7 +25,7 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    validationSchema
+    loginSchema
       .validate(inputFields, { abortEarly: false })
       .then(setErrors({}))
       .catch(({ inner }) => {
@@ -119,7 +118,7 @@ const LoginForm = () => {
         className="w-100 mx-auto "
         variant="primary"
         type="submit"
-        disabled={hasErrors}
+        // disabled={hasErrors}
       >
         Войти
       </Button>

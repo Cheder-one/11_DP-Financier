@@ -7,16 +7,8 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
   const [showPass, setShowPass] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
 
-  const handleBlur = () => {
-    setIsBlur(true);
-  };
-
   const handleClick = () => {
     setShowPass((prev) => !prev);
-  };
-
-  const handleInputChange = (e) => {
-    onChange(e);
   };
 
   return (
@@ -31,8 +23,8 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
             name={name}
             value={value}
             type={showPass ? "text" : type}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
+            onChange={(e) => onChange(e)}
+            onBlur={() => setIsBlur(true)}
             isValid={!error && isBlur}
             isInvalid={!!error && isBlur}
           />

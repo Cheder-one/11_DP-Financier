@@ -8,7 +8,6 @@ import Footer from "./app/components/ui/footer";
 import { useEffect, useState } from "react";
 import themeConfig from "./app/utils/data/themeConfig";
 import Welcome from "./app/layout/welcome";
-import Login from "./app/layout/login";
 import StickyFooter from "./app/components/common/typography/stickyFooter";
 
 const App = () => {
@@ -32,7 +31,6 @@ const App = () => {
       <StickyFooter
         body={
           <Switch>
-            <Route path="/login/:type?" component={Welcome} />
             <Route path="/profile" />
             <Route path="/settings" />
             <Route path="/history" />

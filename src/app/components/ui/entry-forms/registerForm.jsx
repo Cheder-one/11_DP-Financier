@@ -1,33 +1,18 @@
+import { registerSchema } from "../../../utils/validators/validationSchema";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import { Formik } from "formik";
-import * as yup from "yup";
 
 function RegisterForm() {
-  const schema = yup.object().shape({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    city: yup.string().required(),
-    state: yup.string().required(),
-    zip: yup.string().required(),
-    file: yup.mixed().required(),
-    terms: yup.bool().required().oneOf([true])
-  });
-
   return (
     <Formik
-      validationSchema={schema}
+      validationSchema={registerSchema}
       onSubmit={console.log}
       initialValues={{
-        firstName: "Mark",
-        lastName: "Otto",
-        city: "",
-        state: "",
-        zip: "",
-        file: null,
+        firstName: "",
+        lastName: "",
         terms: false
       }}
     >
@@ -36,7 +21,7 @@ function RegisterForm() {
           <Row className="mb-3">
             <Form.Group
               as={Col}
-              md="4"
+              md="6"
               controlId="validationFormik101"
               className="position-relative"
             >
@@ -52,7 +37,7 @@ function RegisterForm() {
             </Form.Group>
             <Form.Group
               as={Col}
-              md="4"
+              md="6"
               controlId="validationFormik102"
               className="position-relative"
             >
@@ -69,57 +54,37 @@ function RegisterForm() {
           </Row>
           <Row className="mb-3">
             <Form.Group
-              as={Col}
-              md="6"
-              controlId="validationFormik103"
+              controlId="validationFormik101"
               className="position-relative"
             >
-              <Form.Label>City</Form.Label>
+              <Form.Label>First name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="City"
-                name="city"
-                value={values.city}
+                name="firstName"
+                value={values.firstName}
                 onChange={handleChange}
-                isInvalid={!!errors.city}
+                isValid={touched.firstName && !errors.firstName}
               />
-              <Form.Control.Feedback type="invalid" tooltip>
-                {errors.city}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group
-              as={Col}
-              md="3"
-              controlId="validationFormik104"
-              className="position-relative"
-            >
-              <Form.Label>State</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="State"
-                name="state"
-                value={values.state}
-                onChange={handleChange}
-                isInvalid={!!errors.state}
-              />
-              <Form.Control.Feedback type="invalid" tooltip>
-                {errors.state}
-              </Form.Control.Feedback>
+              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
             </Form.Group>
           </Row>
-          <Form.Group className="position-relative mb-3">
-            <Form.Label>File</Form.Label>
-            <Form.Control
-              type="file"
-              required
-              name="file"
-              onChange={handleChange}
-              isInvalid={!!errors.file}
-            />
-            <Form.Control.Feedback type="invalid" tooltip>
-              {errors.file}
-            </Form.Control.Feedback>
-          </Form.Group>
+          <Row className="mb-3">
+            <Form.Group
+              controlId="validationFormik101"
+              className="position-relative"
+            >
+              <Form.Label>First name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstName"
+                value={values.firstName}
+                onChange={handleChange}
+                isValid={touched.firstName && !errors.firstName}
+              />
+              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
           <Form.Group className="position-relative mb-3">
             <Form.Check
               required

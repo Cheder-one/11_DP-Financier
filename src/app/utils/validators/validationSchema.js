@@ -22,7 +22,7 @@ yup.setLocale({
   }
 });
 
-const validationSchema = yup.object().shape({
+export const loginSchema = yup.object().shape({
   email: yup
     .string()
     .required()
@@ -35,4 +35,15 @@ const validationSchema = yup.object().shape({
   // stayOn: yup.boolean().oneOf([true]).required()
 });
 
-export default validationSchema;
+export const registerSchema = yup.object().shape({
+  email: yup
+    .string()
+    .required()
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, INCORRECT_EMAIL),
+  password: yup
+    .string()
+    .required()
+    .min(MIN_PASSWORD_LENGTH)
+    .matches(/(?=.*[A-ZА-Я])(?=.*[a-zа-я])(?=.*\d)/g, INCORRECT_PASSWORD)
+  // stayOn: yup.boolean().oneOf([true]).required()
+});

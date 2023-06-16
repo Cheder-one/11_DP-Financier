@@ -22,7 +22,7 @@ const Login = ({ formType, setFormType }) => {
               <Nav.Link eventKey="register">Register</Nav.Link>
             </Nav.Item>
           </Nav>
-          <div className="mt-2">
+          <div className="mt-3">
             {formType === "login" ? <LoginForm /> : <RegisterForm />}
           </div>
         </Col>

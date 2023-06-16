@@ -14,9 +14,9 @@ const CheckboxField = ({ label, name, value, onChange, error }) => {
   return (
     <Form.Group controlId={`form-group-${name}-id`}>
       <Form.Check
+        label={label}
         name={name}
         checked={value}
-        label={label}
         onChange={handleChange}
         isInvalid={!!error}
         feedback={error}
