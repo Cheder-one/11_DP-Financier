@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import themeConfig from "./app/utils/data/themeConfig";
 import Welcome from "./app/layout/welcome";
 import Login from "./app/layout/login";
-import StickyFooter from "./archive/stickyFooter";
+import StickyFooter from "./app/components/common/typography/stickyFooter";
 
 const App = () => {
   const isDarkThemeEnabled = JSON.parse(localStorage.getItem("darkTheme"));
