@@ -14,7 +14,6 @@ const LoginForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [rememberMe, setRememberMe] = useState(true);
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
@@ -39,21 +38,23 @@ const LoginForm = () => {
   }, [inputFields]);
 
   const hasErrors = Object.keys(errors).length;
+  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (hasErrors) return;
 
-    if (rememberMe) {
+    if (inputFields.stayOn) {
       localStorage.setItem("email", inputFields.email);
       localStorage.setItem("password", inputFields.password);
     }
 
+    // Отправка на сервер
+    console.log(inputFields);
+
     // Выполнить вход в систему
     // login(inputFields.email, inputFields.password);
-
-    console.log(inputFields);
   };
 
   // Проверить наличие сохраненных данных в localStorage
@@ -66,7 +67,7 @@ const LoginForm = () => {
         email: savedEmail,
         password: savedPassword
       }));
-      setRememberMe(true);
+      setInputFields((prev) => ({ ...prev, stayOn: true }));
     }
   }, []);
 
@@ -93,7 +94,6 @@ const LoginForm = () => {
         value={inputFields.email}
         onChange={handleInputChange}
         error={errors.email}
-        tabIndex="1"
       />
       <TextField
         label={"Password"}
@@ -102,14 +102,15 @@ const LoginForm = () => {
         type={"password"}
         onChange={handleInputChange}
         error={errors.password}
-        tabIndex="2"
       />
       <ContentBetween className="my-3">
+        {console.log(inputFields.stayOn)}
         <CheckboxField
           label="Оставаться в системе"
           name="stayOn"
           value={inputFields.stayOn}
           onChange={handleInputChange}
+          error={errors.stayOn}
         />
         <Button
           variant="link"
