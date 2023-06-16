@@ -25,7 +25,7 @@ const TextField = ({ label, type, name, value, onChange, error, as, md }) => {
             type={showPass ? "text" : type}
             onChange={(e) => onChange(e)}
             onBlur={() => setIsBlur(true)}
-            // isValid={!error && isBlur}
+            isValid={!error && isBlur}
             isInvalid={!!error && isBlur}
           />
           {type === "password" && (
