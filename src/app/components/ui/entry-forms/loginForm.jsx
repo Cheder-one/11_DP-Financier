@@ -38,7 +38,6 @@ const LoginForm = () => {
   }, [inputFields]);
 
   const hasErrors = Object.keys(errors).length;
-  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,6 +47,9 @@ const LoginForm = () => {
     if (inputFields.stayOn) {
       localStorage.setItem("email", inputFields.email);
       localStorage.setItem("password", inputFields.password);
+    } else {
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
     }
 
     // Отправка на сервер
@@ -104,13 +106,11 @@ const LoginForm = () => {
         error={errors.password}
       />
       <ContentBetween className="my-3">
-        {console.log(inputFields.stayOn)}
         <CheckboxField
           label="Оставаться в системе"
           name="stayOn"
           value={inputFields.stayOn}
           onChange={handleInputChange}
-          error={errors.stayOn}
         />
         <Button
           variant="link"

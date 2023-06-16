@@ -31,8 +31,8 @@ const validationSchema = yup.object().shape({
     .string()
     .required()
     .min(MIN_PASSWORD_LENGTH)
-    .matches(/(?=.*[A-ZА-Я])(?=.*[a-zа-я])(?=.*\d)/g, INCORRECT_PASSWORD),
-  stayOn: yup.boolean().oneOf([true]).required()
+    .matches(/(?=.*[A-ZА-Я])(?=.*[a-zа-я])(?=.*\d)/g, INCORRECT_PASSWORD)
+  // stayOn: yup.boolean().oneOf([true]).required()
 });
 
 export default validationSchema;

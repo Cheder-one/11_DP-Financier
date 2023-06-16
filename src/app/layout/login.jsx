@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import LoginForm from "../components/ui/entry-forms/loginForm";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import RegisterForm from "../components/ui/entry-forms/registerForm";
 
 const Login = () => {
   const { type } = useParams();
@@ -15,6 +16,7 @@ const Login = () => {
           style={{ maxWidth: "500px" }}
         >
           <LoginForm />
+          {/* <RegisterForm/> */}
         </Col>
       </Row>
     </Container>

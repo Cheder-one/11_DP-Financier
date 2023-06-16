@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import { Form, InputGroup } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 const CheckboxField = ({ label, name, value, onChange, error }) => {
-  console.log(error);
   const handleChange = ({ target }) => {
     onChange({
       target: {
@@ -13,18 +12,16 @@ const CheckboxField = ({ label, name, value, onChange, error }) => {
   };
 
   return (
-    <Form.Group
-      className="position-relative"
-      controlId={`form-group-${name}-id`}
-    >
+    <Form.Group controlId={`form-group-${name}-id`}>
       <Form.Check
         name={name}
+        checked={value}
         label={label}
         onChange={handleChange}
         isInvalid={!!error}
         feedback={error}
         feedbackType="invalid"
-        feedbackTooltip
+        className="m-0"
         style={{ fontSize: "15px" }}
       />
     </Form.Group>
