@@ -8,7 +8,7 @@ yup.setLocale({
   mixed: {
     default: `Некорректное значение`,
     required: `Обязательное поле`,
-    oneOf: `Поле должно быть отмечено`
+    oneOf: `Необходимо согласие`
   },
   string: {
     length: `Должно быть длиной в \${length} символов`,
@@ -36,12 +36,9 @@ export const loginSchema = yup.object().shape({
 });
 
 export const registerSchema = yup.object().shape({
-  firstName: yup.string().required("Required"),
-  lastName: yup.string().required("Required"),
-  email: yup.string().email("Invalid email").required("Required"),
-  password: yup
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .required("Required"),
-  terms: yup.bool().oneOf([true], "You must accept the terms and conditions")
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().min(8).required(),
+  terms: yup.bool().oneOf([true])
 });

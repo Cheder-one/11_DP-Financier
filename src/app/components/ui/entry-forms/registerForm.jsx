@@ -1,16 +1,7 @@
 import { Formik, Field as FormikField, Form as FormikForm } from "formik";
-import * as Yup from "yup";
-import { Button, Form, Row, Col, InputGroup } from "react-bootstrap";
-
-const RegisterSchema = Yup.object().shape({
-  firstName: Yup.string().required("Required"),
-  lastName: Yup.string().required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
-    .required("Required"),
-  terms: Yup.bool().oneOf([true], "You must accept the terms and conditions")
-});
+import { Button, Form, Row, Col } from "react-bootstrap";
+import CheckboxField from "../../common/form/checkboxField";
+import { registerSchema } from "../../../utils/validators/validationSchema";
 
 const RegisterForm = () => {
   return (
@@ -22,21 +13,19 @@ const RegisterForm = () => {
         password: "",
         terms: false
       }}
-      validationSchema={RegisterSchema}
+      validationSchema={registerSchema}
       onSubmit={console.log}
     >
-      {({ errors, touched }) => {
+      {({ errors, touched, values, handleChange }) => {
         const getClass = (name) => {
           return `form-control ${
             errors[name] && touched[name] ? "is-invalid" : ""
           }`;
         };
 
-        const getErrorDiv = (name, isCheckbox = false) => {
-          const getClass = () => (isCheckbox ? "" : "invalid-feedback");
-
+        const getErrorDiv = (name) => {
           return errors[name] && touched[name] ? (
-            <div className={getClass()}>{errors[name]}</div>
+            <div className="invalid-feedback">{errors[name]}</div>
           ) : null;
         };
 
@@ -81,28 +70,22 @@ const RegisterForm = () => {
               {getErrorDiv("password")}
             </Form.Group>
 
-            <Form.Group controlId="terms" className="my-3">
-              <InputGroup hasValidation>
-                <FormikField
-                  id="terms"
-                  type="checkbox"
-                  name="terms"
-                  as={Form.Check.Input}
-                />
-                <label htmlFor="terms" className="ps-2">
-                  Согласен с условиями
-                </label>
-              </InputGroup>
-              {getErrorDiv("terms", true)}
-            </Form.Group>
-
-            {/* <div className="form-check p-0 my-3">
-              <label className="form-check-label">
-                <FormikField type="checkbox" name="terms" />
-                <span className="p-1">Согласен с условиями</span>
-              </label>
-              {getErrorDiv("terms")}
-            </div> */}
+            <CheckboxField
+              as={FormikField}
+              name="terms"
+              value={values.terms}
+              onChange={handleChange}
+              error={errors.terms}
+            >
+              Я согласен с{" "}
+              <a
+                href="https://www.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                условиями
+              </a>
+            </CheckboxField>
 
             <Button type="submit" className="w-100">
               Submit

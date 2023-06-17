@@ -2,12 +2,14 @@ import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 
 const CheckboxField = ({
+  as,
   name,
   value,
   onChange,
   error,
   children,
-  className
+  className,
+  style
 }) => {
   const handleChange = ({ target }) => {
     onChange({
@@ -21,7 +23,8 @@ const CheckboxField = ({
   return (
     <Form.Group controlId={`form-group-${name}-id`}>
       <Form.Check
-        label={children}
+        as={as}
+        label={<div style={{ ...style }}>{children}</div>}
         name={name}
         checked={value}
         onChange={handleChange}
@@ -34,6 +37,10 @@ const CheckboxField = ({
   );
 };
 
+CheckboxField.defaultProps = {
+  style: { fontSize: "15px" }
+};
+
 CheckboxField.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -44,7 +51,9 @@ CheckboxField.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  className: PropTypes.string
+  className: PropTypes.string,
+  as: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  style: PropTypes.object
 };
 
 export default CheckboxField;
