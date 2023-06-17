@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import { Formik } from "formik";
 import TextField from "../../common/form/textField";
 import CheckboxField from "../../common/form/checkboxField";
+import { InputGroup } from "react-bootstrap";
 
 function RegisterForm() {
   return (
@@ -23,6 +24,26 @@ function RegisterForm() {
       {({ handleSubmit, handleChange, values, touched, errors }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Row>
+            <Form.Group>
+              {/* <Form.Label htmlFor={name}>{label}</Form.Label> */}
+              <label htmlFor={"name"}>{"label"}</label>
+              <InputGroup hasValidation>
+                <Form.Control
+                  id={"firstName"}
+                  name={"firstName"}
+                  value={values.firstName}
+                  // type={showPass ? "text" : type}
+                  onChange={handleChange}
+                  // onBlur={handleBlur}
+                  isValid={!errors.firstName}
+                  isInvalid={!!errors.firstName}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  {"error"}
+                </Form.Control.Feedback>
+              </InputGroup>
+            </Form.Group>
             <TextField
               as={Col}
               md="6"
@@ -31,7 +52,6 @@ function RegisterForm() {
               value={values.firstName}
               onChange={handleChange}
               error={errors.firstName}
-              isInvalid={touched.firstName && !errors.firstName}
             />
             <TextField
               as={Col}
@@ -66,12 +86,19 @@ function RegisterForm() {
             name="terms"
             value={values.terms}
             onChange={handleChange}
+            className="mb-3"
           >
-            <button className="btn btn-link p-0" href="#">
+            <button
+              className="btn btn-link p-0"
+              style={{ fontSize: "15px" }}
+              href="#"
+            >
               Agree to terms and conditions
             </button>
           </CheckboxField>
-          <Button type="submit">Submit form</Button>
+          <Button type="submit" className="w-100">
+            Submit form
+          </Button>
         </Form>
       )}
     </Formik>

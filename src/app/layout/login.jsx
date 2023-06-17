@@ -4,6 +4,11 @@ import LoginForm from "../components/ui/entry-forms/loginForm";
 import RegisterForm from "../components/ui/entry-forms/registerForm";
 
 const Login = ({ formType, setFormType }) => {
+  const handleSelect = (selectedKey) => {
+    setFormType(selectedKey);
+    console.log(selectedKey);
+  };
+
   return (
     <Container className="mt-3">
       <Row>
@@ -13,7 +18,7 @@ const Login = ({ formType, setFormType }) => {
             variant="tabs"
             defaultActiveKey="login"
             activeKey={formType}
-            onSelect={(selectedKey) => setFormType(selectedKey)}
+            onSelect={handleSelect}
           >
             <Nav.Item>
               <Nav.Link eventKey="login">Login</Nav.Link>

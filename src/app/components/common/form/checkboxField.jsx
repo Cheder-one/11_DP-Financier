@@ -1,7 +1,14 @@
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 
-const CheckboxField = ({ name, value, onChange, error, children }) => {
+const CheckboxField = ({
+  name,
+  value,
+  onChange,
+  error,
+  children,
+  className
+}) => {
   const handleChange = ({ target }) => {
     onChange({
       target: {
@@ -21,7 +28,7 @@ const CheckboxField = ({ name, value, onChange, error, children }) => {
         isInvalid={!!error}
         feedback={error}
         feedbackType="invalid"
-        className="m-0"
+        className={className}
       />
     </Form.Group>
   );
@@ -36,7 +43,8 @@ CheckboxField.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ])
+  ]),
+  className: PropTypes.string
 };
 
 export default CheckboxField;
