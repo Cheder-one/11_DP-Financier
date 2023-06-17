@@ -36,16 +36,12 @@ export const loginSchema = yup.object().shape({
 });
 
 export const registerSchema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  email: yup
-    .string()
-    .required()
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, INCORRECT_EMAIL),
+  firstName: yup.string().required("Required"),
+  lastName: yup.string().required("Required"),
+  email: yup.string().email("Invalid email").required("Required"),
   password: yup
     .string()
-    .required()
-    .min(MIN_PASSWORD_LENGTH)
-    .matches(/(?=.*[A-ZА-Я])(?=.*[a-zа-я])(?=.*\d)/g, INCORRECT_PASSWORD)
-  // stayOn: yup.boolean().oneOf([true]).required()
+    .min(8, "Password must be at least 8 characters")
+    .required("Required"),
+  terms: yup.bool().oneOf([true], "You must accept the terms and conditions")
 });

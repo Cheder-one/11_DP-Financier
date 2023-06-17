@@ -25,3 +25,7 @@ body {
   background-color: white !important;
   color: black !important;
 }
+
+form > div {
+  margin-bottom: 1rem;
+}

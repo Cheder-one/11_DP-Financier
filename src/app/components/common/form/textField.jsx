@@ -31,12 +31,12 @@ const TextField = ({
 
   return (
     <>
-      <Form.Group as={as} md={md} className={className}>
-        {/* <Form.Label htmlFor={name}>{label}</Form.Label> */}
-        <label htmlFor={name}>{label}</label>
+      <Form.Group controlId={name} as={as} md={md} className={className}>
+        <Form.Label>{label}</Form.Label>
+        {/* <label htmlFor={name}>{label}</label> */}
         <InputGroup hasValidation>
           <Form.Control
-            id={name}
+            // id={name}
             name={name}
             value={value}
             type={showPass ? "text" : type}
