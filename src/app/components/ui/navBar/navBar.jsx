@@ -10,7 +10,7 @@ const NavBar = ({ onToggleTheme, darkTheme }) => {
       <HeaderContainer className="mx-4">
         <Navbar.Brand as={Link} to={"/"}>
           <Image
-            className="mb-1 me-2"
+            className="mb-1 me-1"
             src="src/app/assets/logo-8406819701_0d0145e2-be71-48bb-8c56-b618324b44eb.webp"
             style={{ width: "30px", borderRadius: "50%" }}
           />

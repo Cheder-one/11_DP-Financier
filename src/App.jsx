@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import themeConfig from "./app/utils/data/themeConfig";
 import Welcome from "./app/layout/welcome";
 import StickyFooter from "./app/components/common/typography/stickyFooter";
+import Main from "./app/layout/main";
 
 const App = () => {
   const isDarkThemeEnabled = JSON.parse(localStorage.getItem("darkTheme"));
@@ -35,7 +36,7 @@ const App = () => {
             <Route path="/settings" />
             <Route path="/history" />
             <Route path="/analysis" />
-            <Route path="/main" />
+            <Route path="/main" component={Main} />
             <Route path="/" component={Welcome} />
           </Switch>
         }
