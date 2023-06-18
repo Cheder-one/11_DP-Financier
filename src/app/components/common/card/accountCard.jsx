@@ -1,18 +1,45 @@
 import _ from "lodash";
-import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
-import CardNavBar from "./cardNavBar";
+import {
+  Button,
+  ListGroup,
+  ListGroupItem,
+  OverlayTrigger,
+  Table,
+  Tooltip
+} from "react-bootstrap";
+import CardHeder from "./cardHeder";
+import Divider from "../typography/divider";
+import CardBody from "./cardBody";
 
 const AccountCard = () => {
-  const cardList = _.times(10);
+  const cardElements = _.times(10);
 
   return (
     <>
+      <OverlayTrigger
+        placement="bottom"
+        overlay={<Tooltip id="tooltip">Full text goes here...</Tooltip>}
+      >
+        <div
+          className="container"
+          style={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis"
+          }}
+        >
+          Some long text goes here and it will be truncated if it exceeds 100px
+          width.
+        </div>
+      </OverlayTrigger>
+
+      {/* <CardHeder />
+      <Divider />
       <ListGroup
         className="list-group-flush overflow-auto"
-        style={{ maxHeight: "190px" }}
+        style={{ maxHeight: "132px" }}
       >
-        <CardNavBar />
-        {cardList.map((el) => (
+        {cardElements.map((el) => (
           <ListGroupItem
             key={el}
             className="d-flex justify-content-between align-items-center"
@@ -24,7 +51,7 @@ const AccountCard = () => {
             </Button>
           </ListGroupItem>
         ))}
-      </ListGroup>
+      </ListGroup> */}
     </>
   );
 };

@@ -10,7 +10,7 @@ const MainPage = () => {
       <Row className="mt-5">
         {cardList.map((el) => (
           <Col md="4" key={el}>
-            <div style={{ height: "191px", border: " solid 1px black" }}>
+            <div style={{ height: "190px", border: " solid 1px black" }}>
               <AccountCard />
             </div>
           </Col>
