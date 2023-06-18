@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import NavDropdown from "./navDropdown";
 import { Link } from "react-router-dom";
 import { Container, Navbar, Nav, Image } from "react-bootstrap";
-import ManualContainer from "../../common/typography/manualContainerContainer";
+import HeaderContainer from "../../common/typography/headerContainer";
 
 const NavBar = ({ onToggleTheme, darkTheme }) => {
   return (
     <Navbar bg="light" expand="sm">
-      <ManualContainer className="mx-4">
+      <HeaderContainer className="mx-4">
         <Navbar.Brand as={Link} to={"/"}>
           <Image
             className="mb-1 me-2"
@@ -28,7 +28,7 @@ const NavBar = ({ onToggleTheme, darkTheme }) => {
           </Nav.Link>
         </Nav>
         <NavDropdown {...{ onToggleTheme, darkTheme }} />
-      </ManualContainer>
+      </HeaderContainer>
     </Navbar>
   );
 };

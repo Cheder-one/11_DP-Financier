@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const ManualContainer = ({ children, className }) => {
+const HeaderContainer = ({ children, className }) => {
   return (
     <div
       className={`d-flex justify-content-between align-items-center w-100 ${className}`}
@@ -10,11 +10,11 @@ const ManualContainer = ({ children, className }) => {
   );
 };
 
-ManualContainer.defaultProps = {
+HeaderContainer.defaultProps = {
   className: "mx-5"
 };
 
-ManualContainer.propTypes = {
+HeaderContainer.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
@@ -22,4 +22,4 @@ ManualContainer.propTypes = {
   className: PropTypes.string
 };
 
-export default ManualContainer;
+export default HeaderContainer;
