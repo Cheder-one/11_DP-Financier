@@ -10,6 +10,7 @@ import themeConfig from "./app/utils/data/themeConfig";
 import Welcome from "./app/layout/welcome";
 import StickyFooter from "./app/components/common/typography/stickyFooter";
 import Main from "./app/layout/main";
+import Divider from "./app/components/common/typography/divider";
 
 const App = () => {
   const isDarkThemeEnabled = JSON.parse(localStorage.getItem("darkTheme"));
@@ -29,6 +30,7 @@ const App = () => {
   return (
     <>
       <NavBar onToggleTheme={handleToggleTheme} darkTheme={darkTheme} />
+      <Divider />
       <StickyFooter
         body={
           <Switch>

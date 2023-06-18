@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import NavDropdown from "./navDropdown";
 import { Link } from "react-router-dom";
-import { Container, Navbar, Nav, Image } from "react-bootstrap";
+import { Navbar, Nav, Image } from "react-bootstrap";
 import HeaderContainer from "../../common/typography/headerContainer";
 
 const NavBar = ({ onToggleTheme, darkTheme }) => {
