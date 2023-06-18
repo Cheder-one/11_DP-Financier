@@ -1,21 +1,26 @@
-import { Button, Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Nav,
+  NavDropdown,
+  Navbar,
+  Row
+} from "react-bootstrap";
+import OverlayTooltip from "../typography/overlayTooltip";
 
 const CardHeder = () => {
   return (
-    <thead>
-      <tr>
-        <th>Доход</th>
-        <th>Основной</th>
-        <th className="d-flex justify-content-center">
-          <Button
-            variant="outline-success btn-sm"
-            style={{ padding: "0px 8px", fontSize: "15px" }}
-          >
-            +
-          </Button>
-        </th>
-      </tr>
-    </thead>
+    <Container>
+      <Row>
+        <Col md="4" className="p-0 d-flex justify-content-center">
+          <OverlayTooltip text="Расхооssssssод" />
+          {/* Расход */}
+        </Col>
+        <Col md="4">sssssss</Col>
+        <Col md="4">sssssss</Col>
+      </Row>
+    </Container>
     // <Navbar bg="light" expand="sm" className="p-0 m-0">
     //   <Container>
     //     <Navbar.Brand className="fs-6 " href="#home">

@@ -1,12 +1,5 @@
 import _ from "lodash";
-import {
-  Button,
-  ListGroup,
-  ListGroupItem,
-  OverlayTrigger,
-  Table,
-  Tooltip
-} from "react-bootstrap";
+import { Button, ListGroup, ListGroupItem, Table } from "react-bootstrap";
 import CardHeder from "./cardHeder";
 import Divider from "../typography/divider";
 import CardBody from "./cardBody";
@@ -16,22 +9,10 @@ const AccountCard = () => {
 
   return (
     <>
-      <OverlayTrigger
-        placement="bottom"
-        overlay={<Tooltip id="tooltip">Full text goes here...</Tooltip>}
-      >
-        <div
-          className="container"
-          style={{
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis"
-          }}
-        >
-          Some long text goes here and it will be truncated if it exceeds 100px
-          width.
-        </div>
-      </OverlayTrigger>
+      <CardHeder />
+      {/* <Table striped bordered hover> */}
+      <CardBody />
+      {/* </Table> */}
 
       {/* <CardHeder />
       <Divider />
