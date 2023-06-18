@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const OverlayTooltip = ({ text }) => {
@@ -7,7 +7,9 @@ const OverlayTooltip = ({ text }) => {
   const ref = useRef(null);
 
   const handleMouseEnter = () => {
-    if (ref.current.offsetWidth < ref.current.scrollWidth) {
+    const { current } = ref;
+
+    if (current.offsetWidth < current.scrollWidth) {
       setShowTooltip(true);
     }
   };
@@ -23,8 +25,8 @@ const OverlayTooltip = ({ text }) => {
       placement="bottom"
       overlay={tooltip}
       show={showTooltip}
-      rootClose={true}
-      trigger="hover"
+      // rootClose={true}
+      // trigger="hover"
     >
       <div
         style={{

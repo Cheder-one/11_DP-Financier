@@ -3,15 +3,27 @@ import NavDropdown from "./navDropdown";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Image } from "react-bootstrap";
 import HeaderContainer from "../../common/typography/headerContainer";
+import LOGO_SRC from "../../../assets/logo";
 
 const NavBar = ({ onToggleTheme, darkTheme }) => {
+  const handleItemSelect = (eventKey) => {
+    switch (eventKey) {
+      case "switchTheme":
+        onToggleTheme();
+        return;
+      case "exit":
+        localStorage.removeItem("email");
+        localStorage.removeItem("password");
+    }
+  };
+
   return (
     <Navbar bg="light" expand="sm">
       <HeaderContainer className="mx-4">
         <Navbar.Brand as={Link} to={"/"}>
           <Image
             className="mb-1 me-1"
-            src="src/app/assets/logo-8406819701_0d0145e2-be71-48bb-8c56-b618324b44eb.webp"
+            src={LOGO_SRC}
             style={{ width: "30px", borderRadius: "50%" }}
           />
           Financier
@@ -27,7 +39,7 @@ const NavBar = ({ onToggleTheme, darkTheme }) => {
             История
           </Nav.Link>
         </Nav>
-        <NavDropdown {...{ onToggleTheme, darkTheme }} />
+        <NavDropdown onSelect={handleItemSelect} {...{ darkTheme }} />
       </HeaderContainer>
     </Navbar>
   );

@@ -5,19 +5,8 @@ import getAvatar from "../../../utils/getAvatar";
 import { useMemo } from "react";
 import SwitchForm from "../../common/form/switchField";
 
-const NavDropdown = ({ onToggleTheme, darkTheme }) => {
+const NavDropdown = ({ darkTheme, onSelect }) => {
   const avatarSrc = useMemo(() => getAvatar(), []);
-
-  const handleItemSelect = (eventKey) => {
-    switch (eventKey) {
-      case "switchTheme":
-        onToggleTheme();
-        return;
-      case "exit":
-        localStorage.removeItem("email");
-        localStorage.removeItem("password");
-    }
-  };
 
   return (
     <DropdownButton
@@ -28,7 +17,7 @@ const NavDropdown = ({ onToggleTheme, darkTheme }) => {
           Username
         </>
       }
-      onSelect={handleItemSelect}
+      onSelect={onSelect}
     >
       <Dropdown.Item eventKey="1_profile" as={Link} to={"/profile"}>
         Профиль
@@ -48,8 +37,8 @@ const NavDropdown = ({ onToggleTheme, darkTheme }) => {
 };
 
 NavDropdown.propTypes = {
-  onToggleTheme: PropTypes.func,
-  darkTheme: PropTypes.bool
+  darkTheme: PropTypes.bool,
+  onSelect: PropTypes.func
 };
 
 export default NavDropdown;

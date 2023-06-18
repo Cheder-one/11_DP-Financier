@@ -2,6 +2,7 @@ import {
   Button,
   Col,
   Container,
+  Dropdown,
   Nav,
   NavDropdown,
   Navbar,
@@ -10,15 +11,20 @@ import {
 import OverlayTooltip from "../typography/overlayTooltip";
 
 const CardHeder = () => {
+  const headerLabels = [
+    "Счета",
+    <Dropdown key={"1"} />,
+    <Button key={2}>text</Button>
+  ];
+
   return (
     <Container>
       <Row>
-        <Col md="4" className="p-0 d-flex justify-content-center">
-          <OverlayTooltip text="Расхооssssssод" />
-          {/* Расход */}
-        </Col>
-        <Col md="4">sssssss</Col>
-        <Col md="4">sssssss</Col>
+        {headerLabels.map((item) => (
+          <Col key={item} md="4" className="p-0 d-flex justify-content-center">
+            <OverlayTooltip text={item} />
+          </Col>
+        ))}
       </Row>
     </Container>
     // <Navbar bg="light" expand="sm" className="p-0 m-0">

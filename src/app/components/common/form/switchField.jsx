@@ -12,6 +12,7 @@ const SwitchForm = ({ label, darkTheme }) => {
         {label}
       </label>
       <Form.Check
+        className="m-0"
         type="switch"
         id="theme-switcher"
         checked={darkTheme}
