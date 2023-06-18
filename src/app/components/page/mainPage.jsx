@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { Col, Row } from "react-bootstrap";
+import AccountCard from "../common/card/accountCard";
 
 const MainPage = () => {
   const cardList = _.times(3);
@@ -9,11 +10,8 @@ const MainPage = () => {
       <Row className="mt-5">
         {cardList.map((el) => (
           <Col md="4" key={el}>
-            <div
-              className="d-flex justify-content-center align-items-center border border-dark"
-              style={{ height: "150px" }}
-            >
-              <h5>Element</h5>
+            <div style={{ height: "191px", border: " solid 1px black" }}>
+              <AccountCard />
             </div>
           </Col>
         ))}
@@ -22,7 +20,7 @@ const MainPage = () => {
         <Col>
           <div
             className="d-flex justify-content-center align-items-center border border-dark"
-            style={{ height: "250px" }}
+            style={{ height: "230px" }}
           >
             <h5>Element</h5>
           </div>
