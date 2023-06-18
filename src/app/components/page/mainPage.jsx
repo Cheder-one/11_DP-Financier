@@ -6,7 +6,7 @@ const MainPage = () => {
 
   return (
     <div className="mx-4">
-      <Row className="mt-4">
+      <Row className="mt-5">
         {cardList.map((el) => (
           <Col md="4" key={el}>
             <div
@@ -18,11 +18,11 @@ const MainPage = () => {
           </Col>
         ))}
       </Row>
-      <Row className="mt-5">
+      <Row className="mt-4">
         <Col>
           <div
             className="d-flex justify-content-center align-items-center border border-dark"
-            style={{ height: "200px" }}
+            style={{ height: "250px" }}
           >
             <h5>Element</h5>
           </div>
