@@ -1,29 +1,10 @@
 import _ from "lodash";
-import {
-  Button,
-  Col,
-  ListGroup,
-  ListGroupItem,
-  NavDropdown,
-  Row,
-  Table
-} from "react-bootstrap";
-import CardHeader from "./cardHeader";
-import Divider from "../typography/divider";
-import CardBody from "./cardBody";
+import { Col, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
 
 const AccountCard = () => {
-  const cardElements = _.times(10);
-
   const bodyLines = _.times(5);
-  const bodyLabels = _.times(3, (i) => `Счет ${16 ** (4 + i)}`);
-
-  const dropdown = (
-    <NavDropdown title="Основной" id="basic-nav-dropdown">
-      <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-    </NavDropdown>
-  );
+  const bodyLabels = _.times(3, (i) => `Счет ${i}`);
 
   return (
     <>
