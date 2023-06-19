@@ -37,7 +37,7 @@ const AccountCard = () => {
             }}
             onClick={handleOpen}
           >
-            <OverlayTooltip>Dropdownsssssss</OverlayTooltip>
+            <OverlayTooltip>Dropdown</OverlayTooltip>
           </div>
 
           <NavDropdown onClick={handleOpen} show={isOpen} drop="down-centered">
