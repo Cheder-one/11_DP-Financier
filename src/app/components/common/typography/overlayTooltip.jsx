@@ -21,7 +21,7 @@ const OverlayTooltip = ({ text, children }) => {
   const tooltip = <Tooltip id="tooltip">{text || children}</Tooltip>;
 
   return (
-    <OverlayTrigger placement="bottom" overlay={tooltip} show={showTooltip}>
+    <OverlayTrigger placement="top" overlay={tooltip} show={showTooltip}>
       <div
         style={{
           whiteSpace: "nowrap",
