@@ -1,13 +1,12 @@
+import _ from "lodash";
+import { Col, Container, Row } from "react-bootstrap";
+import OverlayTooltip from "../typography/overlayTooltip";
+
 const CardBody = () => {
-  return (
-    <tbody>
-      <tr>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-    </tbody>
-  );
+  const bodyLines = _.times(5, (i) => `element ${i}`);
+  const bodyLabels = _.times(3, (i) => `element ${i}`);
+
+  return null;
 };
 
 export default CardBody;
