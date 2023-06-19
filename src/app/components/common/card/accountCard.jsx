@@ -1,24 +1,17 @@
 import _ from "lodash";
-import {
-  ButtonGroup,
-  Col,
-  Dropdown,
-  DropdownButton,
-  NavDropdown,
-  Row
-} from "react-bootstrap";
+import { Col, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
 import { useState } from "react";
 
 const AccountCard = () => {
-  const bodyLines = _.times(5);
-  const bodyLabels = _.times(3, (i) => `Счет ${16 ** (4 + i)}`);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
   };
+
+  const bodyLines = _.times(5);
+  const bodyLabels = _.times(3, (i) => `Счет ${16 ** (4 + i)}`);
 
   return (
     <>
@@ -26,7 +19,7 @@ const AccountCard = () => {
         <Col md="4" className="border d-flex justify-content-center">
           Счета
         </Col>
-        <Col md="4" className="border d-flex p-0 justify-content-center">
+        <Col md="4" className="border d-flex justify-content-center">
           <div
             className="user-select-none"
             style={{
@@ -37,7 +30,7 @@ const AccountCard = () => {
             }}
             onClick={handleOpen}
           >
-            <OverlayTooltip>Dropdown</OverlayTooltip>
+            <OverlayTooltip>Dropdown_sssssss</OverlayTooltip>
           </div>
 
           <NavDropdown onClick={handleOpen} show={isOpen} drop="down-centered">
@@ -62,6 +55,26 @@ const AccountCard = () => {
           ))}
         </Row>
       ))}
+
+      {/* <CardHeader />
+      <Divider />
+      <ListGroup
+        className="list-group-flush overflow-auto"
+        style={{ maxHeight: "132px" }}
+      >
+        {cardElements.map((el) => (
+          <ListGroupItem
+            key={el}
+            className="d-flex justify-content-between align-items-center"
+          >
+            <span className="me-2">Sum</span>
+            <span className="me-2">Category</span>
+            <Button variant="danger" className="btn-sm p-1">
+              Delete
+            </Button>
+          </ListGroupItem>
+        ))}
+      </ListGroup> */}
     </>
   );
 };
