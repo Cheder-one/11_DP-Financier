@@ -1,10 +1,10 @@
-import CardHeader from "./cardHeader";
+import CardToolbar from "./cardToolbar";
 import CardBody from "./cardBody";
 
 const AccountCard = () => {
   return (
     <>
-      <CardHeader label={"Счет"} dropdownName={"Основной"} />
+      <CardToolbar label={"Счет"} dropdownName={"Основной"} />
       <CardBody />
     </>
   );
