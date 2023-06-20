@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { Button, Col, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
@@ -44,6 +45,11 @@ const CardHeader = ({ label, dropdownName }) => {
       </Col>
     </Row>
   );
+};
+
+CardHeader.propTypes = {
+  label: PropTypes.string.isRequired,
+  dropdownName: PropTypes.string.isRequired
 };
 
 export default CardHeader;
