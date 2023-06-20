@@ -7,14 +7,16 @@ const MainPage = () => {
 
   return (
     <div className="mx-4">
-      <Row className="mt-5">
+      <Row className="mt-4">
         {cardList.map((el) => (
-          <Col md="4" key={el}>
+          <Col md="4" key={el} className="my-3">
             <div
-              style={{
-                maxHeight: "190px",
-                border: " solid 1px black"
-              }}
+              style={
+                {
+                  // maxHeight: "190px",
+                  // border: " solid 1px black"
+                }
+              }
             >
               <AccountCard />
             </div>

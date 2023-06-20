@@ -17,18 +17,17 @@ const AccountCard = () => {
   // const handleOpen = () => {
   //   setIsOpen((prev) => !prev);
   // };
-  const cardList = _.times(10);
 
   const bodyLines = _.times(10);
   const bodyLabels = _.times(3, (i) => `Счет ${16 ** (4 + i)}`);
 
   return (
     <>
+      <CardHeader label={"Счет"} dropdownName={"Основной"} />
       <ListGroup
         className="list-group-flush overflow-auto"
-        style={{ maxHeight: "150px" }}
+        style={{ maxHeight: "140px" }}
       >
-        <CardHeader />
         {bodyLines.map((line) => (
           <ListGroupItem key={line} className="p-0">
             <Row className="mx-auto border">

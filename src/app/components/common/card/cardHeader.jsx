@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Col, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
 
-const CardHeader = ({ title }) => {
+const CardHeader = ({ label, dropdownName }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
@@ -10,9 +10,9 @@ const CardHeader = ({ title }) => {
   };
 
   return (
-    <Row className="mx-auto border w-100">
+    <Row className="mx-auto border">
       <Col md="4" className="border d-flex justify-content-center">
-        Счета
+        {label}
       </Col>
       <Col md="4" className="border d-flex justify-content-center">
         <div
@@ -25,7 +25,7 @@ const CardHeader = ({ title }) => {
           }}
           onClick={handleOpen}
         >
-          <OverlayTooltip text="Dropdown_sssssss" />
+          <OverlayTooltip text={dropdownName} />
         </div>
 
         <NavDropdown onClick={handleOpen} show={isOpen} drop="down-centered">
@@ -34,8 +34,9 @@ const CardHeader = ({ title }) => {
       </Col>
       <Col md="4" className="border d-flex justify-content-center">
         <Button
+          className="fs-6"
           variant="outline-success btn-md"
-          style={{ padding: "0 15%", margin: "2px" }}
+          style={{ padding: "0 0.5rem", margin: "2px" }}
         >
           +
         </Button>
