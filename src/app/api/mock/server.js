@@ -1,5 +1,7 @@
 import { createServer, Model } from "miragejs";
 import { faker } from "@faker-js/faker";
+import getAvatarSrc from "../../utils/getAvatar";
+import { nanoid } from "nanoid";
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({
@@ -16,6 +18,7 @@ export function makeServer({ environment = "development" } = {}) {
         const lastName = faker.person.lastName({ sex: gender });
 
         server.create("user", {
+          id: nanoid(10),
           name: `${firstName} ${lastName}`,
           email: faker.internet.email({
             firstName,
@@ -24,11 +27,7 @@ export function makeServer({ environment = "development" } = {}) {
           }),
           password: faker.internet.password(),
           gender,
-          avatarUrl: `https://avatars.dicebear.com/api/avataaars/${(
-            Math.random() + 1
-          )
-            .toString(36)
-            .substring(7)}.svg`
+          avatarUrl: getAvatarSrc()
         });
       }
     },

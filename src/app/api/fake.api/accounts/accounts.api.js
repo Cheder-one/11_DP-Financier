@@ -9,7 +9,10 @@ export const accounts = {
     { id: 7, name: "Тинькофф Инвестиции", balance: 600000 },
     { id: 8, name: "Сбербанк Инвестиции", balance: 500000 },
     { id: 9, name: "Альфа-Капитал", balance: 70000 }
-  ]
+  ],
+  "user-id-2": [
+    { id: 4, name: "American Bank", balance: 10000 },
+    { id: 5, name: "WebMoney", balance: 1500 }
+  ],
+  "user-id-3": [{ id: 6, name: "QIWI", balance: 10000 }]
 };
-
-console.log(accounts["user-id-1"]);
