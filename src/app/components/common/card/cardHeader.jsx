@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Col, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
+import { xCenter } from "../typography/alignment-classes/centering";
 
 const CardHeader = ({ label, dropdownName }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,10 +12,10 @@ const CardHeader = ({ label, dropdownName }) => {
 
   return (
     <Row className="mx-auto border">
-      <Col md="4" className="border d-flex justify-content-center">
+      <Col md="4" className={`${xCenter} border`}>
         {label}
       </Col>
-      <Col md="4" className="border d-flex justify-content-center">
+      <Col md="4" className={`${xCenter} border`}>
         <div
           className="user-select-none"
           style={{
@@ -32,7 +33,7 @@ const CardHeader = ({ label, dropdownName }) => {
           <NavDropdown.Item eventKey="1">Action</NavDropdown.Item>
         </NavDropdown>
       </Col>
-      <Col md="4" className="border d-flex justify-content-center">
+      <Col md="4" className={`${xCenter} border`}>
         <Button
           className="fs-6"
           variant="outline-success btn-md"
