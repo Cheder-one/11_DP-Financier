@@ -51,8 +51,8 @@ const CardToolbar = ({ label, dropdownName }) => {
 };
 
 CardToolbar.propTypes = {
-  label: PropTypes.string.isRequired,
-  dropdownName: PropTypes.object.isRequired
+  label: PropTypes.string.isRequired
+  // dropdownName: PropTypes.object.isRequired
 };
 
 export default CardToolbar;

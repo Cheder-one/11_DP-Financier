@@ -1,7 +1,9 @@
 import { createServer, Model } from "miragejs";
 import { faker } from "@faker-js/faker";
 import getAvatarSrc from "../../utils/getAvatar";
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
+
+const nanoId = customAlphabet("1234567890abcdef", 10);
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({
@@ -18,11 +20,11 @@ export function makeServer({ environment = "development" } = {}) {
         const lastName = faker.person.lastName({ sex: gender });
 
         server.create("user", {
-          id: nanoid(10),
+          id: nanoId(5),
           name: `${firstName} ${lastName}`,
           email: faker.internet.email({
             firstName,
-            lastName: "_",
+            lastName: "",
             provider: "example.com"
           }),
           password: faker.internet.password(),
