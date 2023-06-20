@@ -49,7 +49,7 @@ const CardHeader = ({ label, dropdownName }) => {
 
 CardHeader.propTypes = {
   label: PropTypes.string.isRequired,
-  dropdownName: PropTypes.string.isRequired
+  dropdownName: PropTypes.object.isRequired
 };
 
 export default CardHeader;
