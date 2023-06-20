@@ -14,9 +14,6 @@ const MainPage = () => {
               style={{
                 maxHeight: "190px",
                 border: " solid 1px black"
-                // whiteSpace: "nowrap",
-                // overflow: "hidden",
-                // textOverflow: "ellipsis"
               }}
             >
               <AccountCard />
@@ -24,6 +21,7 @@ const MainPage = () => {
           </Col>
         ))}
       </Row>
+
       <Row className="mt-4">
         <Col>
           <div

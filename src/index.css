@@ -85,3 +85,9 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+/* @media (max-width: 576px) {
+  .border {
+    font-size: 12px;
+  }
+} */
