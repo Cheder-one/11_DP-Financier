@@ -3,7 +3,7 @@ import CardBody from "./cardBody";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const AccountCard = () => {
+const AccountCard = ({ label, accountGroups }) => {
   const [users, setUsers] = useState([]);
 
   // Запрашиваем всех пользователей с фейкового сервера при монтировании компонента
@@ -20,8 +20,8 @@ const AccountCard = () => {
 
   return (
     <>
-      <CardToolbar label={"Счет"} dropdownName={"Основной"} />
-      <CardBody />
+      <CardToolbar label={label} dropdownLabel={accountGroups} />
+      {/* <CardBody /> */}
     </>
   );
 };

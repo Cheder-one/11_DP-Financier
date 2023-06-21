@@ -92,12 +92,14 @@ body::-webkit-scrollbar-thumb:hover {
   }
 } */
 
+/* Смещение скроллбара вправо */
 .list-group-flush {
   max-height: 140px;
   overflow-y: auto;
-  margin-right: -2px; /* отрицательный margin на 2px */
+  margin-right: -2px;
 }
 
+/* Выделение активной ссылки навигации */
 .navbar .nav-link.active {
   font-weight: 500;
   text-decoration: underline;

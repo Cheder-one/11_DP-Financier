@@ -1,7 +1,7 @@
 export const accountGroups = {
   "user-id-1": [
     {
-      groupName: "Основное",
+      groupName: "Основной",
       accountIds: [1, 7]
     },
     {
