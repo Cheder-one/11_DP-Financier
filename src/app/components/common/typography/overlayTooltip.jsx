@@ -32,7 +32,7 @@ const OverlayTooltip = ({ text, children }) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {text || children}
+        <span className="me-1"> {text || children}</span>
       </div>
     </OverlayTrigger>
   );

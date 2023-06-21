@@ -4,7 +4,12 @@ import AccountCard from "../common/card/accountCard";
 import { accountGroups } from "../../api/fake.api/accounts/groups.api";
 
 const MainPage = ({ userId }) => {
-  const cardList = ["Счета", "Доходы", "Расходы"];
+  const cardList = [
+    { label: "Счета", dropLabel: "Группа" },
+    { label: "Доходы", dropLabel: "Дата" },
+    { label: "Расходы", dropLabel: "Дата" }
+  ];
+
   const dropList = accountGroups[userId];
   console.log(dropList);
 
@@ -18,9 +23,9 @@ const MainPage = ({ userId }) => {
   return (
     <div className="mx-4">
       <Row className="mt-4">
-        {cardList.map((label) => (
-          <Col md="4" key={label} className="my-3">
-            <AccountCard label={label} accountGroups={"dropList"} />
+        {cardList.map((card) => (
+          <Col md="4" key={card} className="my-3">
+            <AccountCard label={card.label} accountGroups={card.dropLabel} />
           </Col>
         ))}
       </Row>

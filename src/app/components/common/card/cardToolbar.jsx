@@ -34,7 +34,7 @@ const CardToolbar = ({ label, dropdownLabel }) => {
       <Col md="4" className={`${xCenter} border`}>
         {label}
       </Col>
-      <Col md="4" className={`${xCenter} border`} ref={dropdownRef}>
+      <Col md="4" className={`${xCenter} border p-0`} ref={dropdownRef}>
         <div
           className="user-select-none"
           style={{
@@ -54,7 +54,7 @@ const CardToolbar = ({ label, dropdownLabel }) => {
         </NavDropdown>
       </Col>
       <Col md="4" className={`${xCenter} border`}>
-        <Button variant="black py-0 px-1 m-0">
+        <Button variant="black py-0 px-1">
           <Image
             src={PLUS_SQUARE_SRC}
             style={{
