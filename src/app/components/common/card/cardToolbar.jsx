@@ -34,7 +34,7 @@ const CardToolbar = ({ label, dropdownLabel }) => {
       <Col md="4" className={`${xCenter} border`}>
         {label}
       </Col>
-      <Col md="4" className={`${xCenter} border`}>
+      <Col md="4" className={`${xCenter} border`} ref={dropdownRef}>
         <div
           className="user-select-none"
           style={{
@@ -48,12 +48,7 @@ const CardToolbar = ({ label, dropdownLabel }) => {
           <OverlayTooltip text={dropdownLabel} />
         </div>
 
-        <NavDropdown
-          ref={dropdownRef}
-          onClick={handleOpen}
-          show={isOpen}
-          drop="down-centered"
-        >
+        <NavDropdown onClick={handleOpen} show={isOpen} drop="down-centered">
           <NavDropdown.Item eventKey="1">Action1</NavDropdown.Item>
           <NavDropdown.Item eventKey="2">Action2</NavDropdown.Item>
         </NavDropdown>
