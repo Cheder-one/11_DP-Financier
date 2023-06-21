@@ -7,21 +7,50 @@ import _ from "lodash";
 
 const MainPage = ({ userId }) => {
   const dropItems = _.times(5, (i) => `Элемент ${i}`);
-
   const [accountCardList, setAccountCardList] = useState([
-    { id: 1, label: "Доход", dropDown: { label: "Дата", items: dropItems } },
-    { id: 2, label: "Счета", dropDown: { label: "Группа", items: dropItems } },
-    { id: 3, label: "Расход", dropDown: { label: "Дата", items: dropItems } }
+    {
+      name: "income",
+      label: "Доход",
+      dropDown: { label: "Дата", items: dropItems }
+    },
+    {
+      name: "accounts",
+      label: "Счета",
+      dropDown: { label: "Группа", items: dropItems }
+    },
+    {
+      name: "expenses",
+      label: "Расход",
+      dropDown: { label: "Дата", items: dropItems }
+    }
   ]);
 
   const dropList = accountGroups[userId];
   console.log(dropList);
 
+  const columns = {
+    name: { path: "name", name: "Имя" },
+    quality: {
+      name: "Качества",
+      component: (user) => <Qualities {...user} />
+    },
+    delete: {
+      component: (user) => (
+        <button
+          className="btn btn-outline-dark btn-sm"
+          onClick={() => onDeleteUser(user._id)}
+        >
+          Delete
+        </button>
+      )
+    }
+  };
+
   return (
     <div className="mx-4">
       <Row className="mt-4">
         {accountCardList.map((card) => (
-          <Col md="4" key={card.id} className="my-3">
+          <Col md="4" key={card.name} className="my-3">
             <AccountCard accountCard={card} />
           </Col>
         ))}
