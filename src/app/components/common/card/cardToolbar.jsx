@@ -6,11 +6,16 @@ import { xCenter } from "../typography/alignment-classes/centering";
 
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
-const CardToolbar = ({ label, dropdownLabel }) => {
+const CardToolbar = ({ label, dropLabel: dropdownLabel, dropItems }) => {
+  const [dropLabel, setDropLabel] = useState(dropdownLabel);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleSelect = (eventKey) => {
+    setDropLabel(eventKey);
   };
 
   const dropdownRef = useRef(null);
@@ -45,14 +50,26 @@ const CardToolbar = ({ label, dropdownLabel }) => {
           }}
           onClick={handleOpen}
         >
-          <OverlayTooltip text={dropdownLabel} />
+          <OverlayTooltip text={dropLabel} />
         </div>
 
-        <NavDropdown onClick={handleOpen} show={isOpen} drop="down-centered">
-          <NavDropdown.Item eventKey="1">Action1</NavDropdown.Item>
-          <NavDropdown.Item eventKey="2">Action2</NavDropdown.Item>
+        <NavDropdown
+          show={isOpen}
+          drop="down-centered"
+          onClick={handleOpen}
+          onSelect={handleSelect}
+        >
+          <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
+          <NavDropdown.Divider className="m-0" />
+
+          {dropItems.map((item) => (
+            <NavDropdown.Item key={item} eventKey={item}>
+              {item}
+            </NavDropdown.Item>
+          ))}
         </NavDropdown>
       </Col>
+
       <Col md="4" className={`${xCenter} border`}>
         <Button variant="black py-0 px-1">
           <Image
@@ -70,8 +87,9 @@ const CardToolbar = ({ label, dropdownLabel }) => {
 };
 
 CardToolbar.propTypes = {
-  label: PropTypes.string.isRequired
-  // dropdownLabel: PropTypes.object.isRequired
+  label: PropTypes.string.isRequired,
+  dropLabel: PropTypes.string.isRequired,
+  dropItems: PropTypes.array.isRequired
 };
 
 export default CardToolbar;
