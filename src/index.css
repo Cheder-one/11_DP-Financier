@@ -97,3 +97,9 @@ body::-webkit-scrollbar-thumb:hover {
   overflow-y: auto;
   margin-right: -2px; /* отрицательный margin на 2px */
 }
+
+.navbar .nav-link.active {
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}

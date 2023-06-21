@@ -1,11 +1,10 @@
 import CardToolbar from "./cardToolbar";
 import CardBody from "./cardBody";
 import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 const AccountCard = () => {
   const [users, setUsers] = useState([]);
-  useMemo(() => console.log(users), []);
 
   // Запрашиваем всех пользователей с фейкового сервера при монтировании компонента
   useEffect(() => {
