@@ -4,10 +4,22 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav, Image } from "react-bootstrap";
 import HeaderContainer from "../../common/typography/headerContainer";
 import LOGO_SRC from "../../../assets/logo";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const NavBar = ({ onToggleTheme, darkTheme }) => {
   const [activeLink, setActiveLink] = useState(null);
+  const prevHrefRef = useRef();
+
+  useEffect(() => {
+    prevHrefRef.current = activeLink;
+  }, [activeLink]);
+
+  const handleClick = ({ target }) => {
+    const currentHref = target.getAttribute("href");
+    const prevHref = prevHrefRef.current;
+
+    setActiveLink(currentHref || prevHref);
+  };
 
   const handleItemSelect = (eventKey) => {
     switch (eventKey) {
@@ -20,12 +32,8 @@ const NavBar = ({ onToggleTheme, darkTheme }) => {
     }
   };
 
-  const handleClick = (e) => {
-    setActiveLink(e.target.getAttribute("href"));
-  };
-
   return (
-    <Navbar bg="light" expand="sm">
+    <Navbar bg="light" expand="sm" onClick={handleClick}>
       <HeaderContainer className="mx-4">
         <Navbar.Brand as={Link} to={"/"}>
           <Image
@@ -35,7 +43,7 @@ const NavBar = ({ onToggleTheme, darkTheme }) => {
           />
           Financier
         </Navbar.Brand>
-        <Nav className="me-auto my-2 my-lg-0" onClick={handleClick}>
+        <Nav className="me-auto my-2 my-lg-0">
           <Nav.Link as={Link} to={"/main"} active={activeLink === "/main"}>
             Главная
           </Nav.Link>
