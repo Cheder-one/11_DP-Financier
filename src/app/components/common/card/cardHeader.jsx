@@ -6,17 +6,21 @@ import { xCenter } from "../typography/alignment-classes/centering";
 
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
-const CardToolbar = ({ label, dropLabel: dropdownLabel, dropItems }) => {
-  const [dropLabel, setDropLabel] = useState(dropdownLabel);
+const CardHeader = ({ label, dropdown, onSelect }) => {
+  // const [dropdown, setDropdown] = useState(dropDown);
+  // const [dropItems, setDropItems] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const handleSelect = (eventKey) => {
-    setDropLabel(eventKey);
-  };
+  // const handleSelect = (eventKey) => {
+  //   setDropdown((prev) => ({
+  //     ...prev,
+  //     label: eventKey
+  //   }));
+  // };
 
   const dropdownRef = useRef(null);
 
@@ -35,7 +39,7 @@ const CardToolbar = ({ label, dropLabel: dropdownLabel, dropItems }) => {
   }, []);
 
   return (
-    <Row className="mx-auto border">
+    <Row className="card-header mx-auto border">
       <Col md="4" className={`${xCenter} border`}>
         {label}
       </Col>
@@ -50,19 +54,21 @@ const CardToolbar = ({ label, dropLabel: dropdownLabel, dropItems }) => {
           }}
           onClick={handleOpen}
         >
-          <OverlayTooltip text={dropLabel} />
+          <OverlayTooltip
+            text={<span className="me-1">{dropdown.label}</span>}
+          />
         </div>
 
         <NavDropdown
           show={isOpen}
           drop="down-centered"
           onClick={handleOpen}
-          onSelect={handleSelect}
+          onSelect={onSelect}
         >
           <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
           <NavDropdown.Divider className="m-0" />
 
-          {dropItems.map((item) => (
+          {dropdown.items.map((item) => (
             <NavDropdown.Item key={item} eventKey={item}>
               {item}
             </NavDropdown.Item>
@@ -86,10 +92,10 @@ const CardToolbar = ({ label, dropLabel: dropdownLabel, dropItems }) => {
   );
 };
 
-CardToolbar.propTypes = {
+CardHeader.propTypes = {
   label: PropTypes.string.isRequired,
-  dropLabel: PropTypes.string.isRequired,
-  dropItems: PropTypes.array.isRequired
+  dropdown: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired
 };
 
-export default CardToolbar;
+export default CardHeader;

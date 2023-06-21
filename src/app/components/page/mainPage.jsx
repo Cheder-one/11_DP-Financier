@@ -8,10 +8,10 @@ import _ from "lodash";
 const MainPage = ({ userId }) => {
   const dropItems = _.times(5, (i) => `Элемент ${i}`);
 
-  const [cardList, setCardList] = useState([
-    { id: 1, label: "Доход", dropLabel: "Дата", dropItems },
-    { id: 2, label: "Счета", dropLabel: "Группа", dropItems },
-    { id: 3, label: "Расход", dropLabel: "Дата", dropItems }
+  const [accountCardList, setAccountCardList] = useState([
+    { id: 1, label: "Доход", dropDown: { label: "Дата", items: dropItems } },
+    { id: 2, label: "Счета", dropDown: { label: "Группа", items: dropItems } },
+    { id: 3, label: "Расход", dropDown: { label: "Дата", items: dropItems } }
   ]);
 
   const dropList = accountGroups[userId];
@@ -20,9 +20,9 @@ const MainPage = ({ userId }) => {
   return (
     <div className="mx-4">
       <Row className="mt-4">
-        {cardList.map((card) => (
+        {accountCardList.map((card) => (
           <Col md="4" key={card.id} className="my-3">
-            <AccountCard {...{ card }} />
+            <AccountCard accountCard={card} />
           </Col>
         ))}
       </Row>
