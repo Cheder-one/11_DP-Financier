@@ -4,51 +4,37 @@ import AccountCard from "../common/card/accountCard";
 import { accountGroups } from "../../api/fake.api/archive/accounts/groups.api";
 import { useState } from "react";
 import _ from "lodash";
+import axios from "axios";
 
 const MainPage = ({ userId }) => {
   const dropItems = _.times(5, (i) => `Элемент ${i}`);
-  const [accountCardList, setAccountCardList] = useState([
-    {
-      name: "income",
-      label: "Доход",
-      dropDown: { label: "Дата", items: dropItems }
-    },
-    {
-      name: "accounts",
-      label: "Счета",
-      dropDown: { label: "Группа", items: dropItems }
-    },
-    {
-      name: "expenses",
-      label: "Расход",
-      dropDown: { label: "Дата", items: dropItems }
-    }
-  ]);
+  const [accountCardList, setAccountCardList] = useState();
 
   const dropList = accountGroups[userId];
   console.log(dropList);
 
   return (
-    <div className="mx-4">
-      <Row className="mt-4">
-        {accountCardList.map((card) => (
-          <Col md="4" key={card.name} className="my-3">
-            <AccountCard accountCard={card} />
-          </Col>
-        ))}
-      </Row>
+    <h1>MainPage</h1>
+    //   <div className="mx-4">
+    //     <Row className="mt-4">
+    //       {accountCardList.map((card) => (
+    //         <Col md="4" key={card.name} className="my-3">
+    //           <AccountCard accountCard={card} />
+    //         </Col>
+    //       ))}
+    //     </Row>
 
-      <Row className="mt-4">
-        <Col>
-          <div
-            className="d-flex justify-content-center align-items-center border border-dark"
-            style={{ height: "230px" }}
-          >
-            <h5>Element</h5>
-          </div>
-        </Col>
-      </Row>
-    </div>
+    //     <Row className="mt-4">
+    //       <Col>
+    //         <div
+    //           className="d-flex justify-content-center align-items-center border border-dark"
+    //           style={{ height: "230px" }}
+    //         >
+    //           <h5>Element</h5>
+    //         </div>
+    //       </Col>
+    //     </Row>
+    //   </div>
   );
 };
 
