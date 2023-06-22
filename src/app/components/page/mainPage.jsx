@@ -2,16 +2,45 @@ import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import AccountCard from "../common/card/accountCard";
 import _ from "lodash";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import CardBody from "../common/card/cardBody";
+import CardHeader from "../common/card/cardHeader";
 
 const MainPage = ({ userId }) => {
+  const [accounts, setAccounts] = useState(null);
+  console.log(accounts);
+
+  useEffect(() => {
+    axios.get(`/api/accounts/${userId}`).then((response) => {
+      setAccounts(response.data);
+      console.log(response.data);
+    });
+
+    axios.get(`/api/transactions/2022-03-02T11:00:00Z`).then((response) => {
+      console.log(response.data);
+    });
+  }, [userId]);
+
+  const humanDate = new Date().toLocaleString();
+  console.log(humanDate);
+
+  const accountCards = [
+    { name: "Доходы", dropdown: accounts },
+    { name: "Счета", dropdown: accounts },
+    { name: "Расходы", dropdown: accounts }
+  ];
+
   return (
     <div className="mx-4">
       <Row className="mt-4">
-        {_.times(3).map((card) => (
-          <Col md="4" key={card} className="my-3">
-            <AccountCard />
-          </Col>
-        ))}
+        {accounts &&
+          accountCards.map((card) => (
+            <Col md="4" key={card.name} className="my-3">
+              <CardHeader cardName={card.name} accounts={accounts} />
+              <CardBody />
+            </Col>
+          ))}
       </Row>
 
       <Row className="mt-4">

@@ -1,19 +1,9 @@
 import PropTypes from "prop-types";
-import axios from "axios";
+// import axios from "axios";
 import MainPage from "../components/page/mainPage";
-import { useEffect } from "react";
+// import { useEffect, useState } from "react";
 
 const Main = ({ userId }) => {
-  useEffect(() => {
-    axios.get(`api/users/${userId}`).then((response) => {
-      console.log(response.data);
-    });
-
-    axios.get(`/api/accounts/${userId}`).then((response) => {
-      console.log(response.data);
-    });
-  }, [userId]);
-
   return <MainPage userId={userId} />;
 };
 

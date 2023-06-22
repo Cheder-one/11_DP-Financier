@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
@@ -5,9 +6,12 @@ import { xCenter } from "../typography/alignment-classes/centering";
 
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
-const CardHeader = () => {
+const CardHeader = ({ cardName, accounts }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdown, setDropdown] = useState("accountCard.dropDown");
+  const [dropdown, setDropdown] = useState({
+    label: "Все",
+    items: accounts.map((account) => account.name)
+  });
 
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
@@ -39,7 +43,7 @@ const CardHeader = () => {
   return (
     <Row className="card-header mx-auto border">
       <Col md="4" className={`${xCenter} border`}>
-        {"label"}
+        {cardName}
       </Col>
       <Col md="4" className={`${xCenter} border p-0`} ref={dropdownRef}>
         <div
@@ -53,7 +57,7 @@ const CardHeader = () => {
           onClick={handleOpen}
         >
           <OverlayTooltip
-            text={<span className="me-1">{"dropdown.label"}</span>}
+            text={<span className="me-1">{dropdown.label}</span>}
           />
         </div>
 
@@ -66,7 +70,7 @@ const CardHeader = () => {
           <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
           <NavDropdown.Divider className="m-0" />
 
-          {[1, 2, 3].map((item) => (
+          {dropdown.items.map((item) => (
             <NavDropdown.Item key={item} eventKey={item}>
               {item}
             </NavDropdown.Item>
@@ -88,6 +92,11 @@ const CardHeader = () => {
       </Col>
     </Row>
   );
+};
+
+CardHeader.propTypes = {
+  cardName: PropTypes.string.isRequired,
+  accounts: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default CardHeader;

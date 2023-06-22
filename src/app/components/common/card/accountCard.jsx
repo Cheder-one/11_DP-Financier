@@ -1,10 +1,10 @@
 import CardHeader from "./cardHeader";
 import CardBody from "./cardBody";
 
-const AccountCard = () => {
+const AccountCard = ({ name }) => {
   return (
     <>
-      <CardHeader />
+      <CardHeader name={name} />
       <CardBody />
     </>
   );
