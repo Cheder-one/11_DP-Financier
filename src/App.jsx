@@ -38,7 +38,10 @@ const App = () => {
             <Route path="/settings" />
             <Route path="/history" />
             <Route path="/analysis" />
-            <Route path="/main" component={Main} />
+            <Route
+              path="/main"
+              render={(props) => <Main {...props} userId="user-id-1" />}
+            />
             <Route path="/" component={Welcome} />
           </Switch>
         }

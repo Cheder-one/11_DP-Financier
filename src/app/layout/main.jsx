@@ -1,7 +1,16 @@
+import axios from "axios";
 import MainPage from "../components/page/mainPage";
+import { useEffect } from "react";
 
-const Main = () => {
-  return <MainPage userId="user-id-1" />;
+// eslint-disable-next-line react/prop-types
+const Main = ({ userId }) => {
+  useEffect(() => {
+    axios.get(`api/users/${userId}`).then((response) => {
+      console.log(response.data);
+    });
+  }, [userId]);
+
+  return <MainPage userId={userId} />;
 };
 
 export default Main;

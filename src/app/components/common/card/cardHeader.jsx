@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
@@ -6,21 +6,13 @@ import { xCenter } from "../typography/alignment-classes/centering";
 
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
+// eslint-disable-next-line react/prop-types
 const CardHeader = ({ label, dropdown, onSelect }) => {
-  // const [dropdown, setDropdown] = useState(dropDown);
-  // const [dropItems, setDropItems] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
   };
-
-  // const handleSelect = (eventKey) => {
-  //   setDropdown((prev) => ({
-  //     ...prev,
-  //     label: eventKey
-  //   }));
-  // };
 
   const dropdownRef = useRef(null);
 
@@ -41,7 +33,7 @@ const CardHeader = ({ label, dropdown, onSelect }) => {
   return (
     <Row className="card-header mx-auto border">
       <Col md="4" className={`${xCenter} border`}>
-        {label}
+        {"label"}
       </Col>
       <Col md="4" className={`${xCenter} border p-0`} ref={dropdownRef}>
         <div
@@ -55,7 +47,7 @@ const CardHeader = ({ label, dropdown, onSelect }) => {
           onClick={handleOpen}
         >
           <OverlayTooltip
-            text={<span className="me-1">{dropdown.label}</span>}
+            text={<span className="me-1">{"dropdown.label"}</span>}
           />
         </div>
 
@@ -68,7 +60,7 @@ const CardHeader = ({ label, dropdown, onSelect }) => {
           <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
           <NavDropdown.Divider className="m-0" />
 
-          {dropdown.items.map((item) => (
+          {[1, 2, 3].map((item) => (
             <NavDropdown.Item key={item} eventKey={item}>
               {item}
             </NavDropdown.Item>
@@ -92,10 +84,10 @@ const CardHeader = ({ label, dropdown, onSelect }) => {
   );
 };
 
-CardHeader.propTypes = {
-  label: PropTypes.string.isRequired,
-  dropdown: PropTypes.object.isRequired,
-  onSelect: PropTypes.func.isRequired
-};
+// CardHeader.propTypes = {
+//   label: PropTypes.string.isRequired,
+//   dropdown: PropTypes.object.isRequired,
+//   onSelect: PropTypes.func.isRequired
+// };
 
 export default CardHeader;
