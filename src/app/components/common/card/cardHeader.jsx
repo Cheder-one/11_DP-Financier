@@ -1,4 +1,3 @@
-// import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
@@ -6,12 +5,19 @@ import { xCenter } from "../typography/alignment-classes/centering";
 
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
-// eslint-disable-next-line react/prop-types
-const CardHeader = ({ label, dropdown, onSelect }) => {
+const CardHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdown, setDropdown] = useState("accountCard.dropDown");
 
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleSelect = (eventKey) => {
+    setDropdown((prev) => ({
+      ...prev,
+      label: eventKey
+    }));
   };
 
   const dropdownRef = useRef(null);
@@ -55,7 +61,7 @@ const CardHeader = ({ label, dropdown, onSelect }) => {
           show={isOpen}
           drop="down-centered"
           onClick={handleOpen}
-          onSelect={onSelect}
+          onSelect={handleSelect}
         >
           <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
           <NavDropdown.Divider className="m-0" />
@@ -83,11 +89,5 @@ const CardHeader = ({ label, dropdown, onSelect }) => {
     </Row>
   );
 };
-
-// CardHeader.propTypes = {
-//   label: PropTypes.string.isRequired,
-//   dropdown: PropTypes.object.isRequired,
-//   onSelect: PropTypes.func.isRequired
-// };
 
 export default CardHeader;

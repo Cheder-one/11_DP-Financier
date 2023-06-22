@@ -1,10 +1,7 @@
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import AccountCard from "../common/card/accountCard";
-// import { accountGroups } from "../../api/fake.api/archive/accounts/groups.api";
-// import { useState } from "react";
 import _ from "lodash";
-// import { xCenter } from "../common/typography/alignment-classes/centering";
 
 const MainPage = ({ userId }) => {
   return (

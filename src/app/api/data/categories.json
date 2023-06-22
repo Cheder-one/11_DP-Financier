@@ -2,25 +2,25 @@
   {
     "id": "category-id-1",
     "name": "Зарплата",
-    "userId": "user-id-1",
     "accountIds": ["account-id-1"],
     "incomeTransactionIds": ["transaction-id-1", "transaction-id-3"],
-    "expenseTransactionIds": ["transaction-id-5"]
+    "expenseTransactionIds": ["transaction-id-5"],
+    "userId": "user-id-1"
   },
   {
     "id": "category-id-2",
     "name": "Аренда",
-    "userId": "user-id-1",
     "accountIds": ["account-id-2"],
     "incomeTransactionIds": [],
-    "expenseTransactionIds": ["transaction-id-2"]
+    "expenseTransactionIds": ["transaction-id-2"],
+    "userId": "user-id-1"
   },
   {
     "id": "category-id-3",
     "name": "Кредит",
-    "userId": "user-id-2",
     "accountIds": ["account-id-3"],
     "incomeTransactionIds": [],
-    "expenseTransactionIds": ["transaction-id-6"]
+    "expenseTransactionIds": ["transaction-id-6"],
+    "userId": "user-id-2"
   }
 ]

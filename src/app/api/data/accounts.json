@@ -3,27 +3,27 @@
     "id": "account-id-1",
     "name": "Сбербанк",
     "public": false,
-    "userId": "user-id-1",
     "categoryIds": ["category-id-1"],
     "balance": 90000,
-    "transactionIds": ["transaction-id-1", "transaction-id-2"]
+    "transactionIds": ["transaction-id-1", "transaction-id-2"],
+    "userId": "user-id-1"
   },
   {
     "id": "account-id-2",
     "name": "Альфа-банк",
     "public": false,
-    "userId": "user-id-1",
     "categoryIds": ["category-id-2"],
     "balance": 80000,
-    "transactionIds": ["transaction-id-3", "transaction-id-4"]
+    "transactionIds": ["transaction-id-3", "transaction-id-4"],
+    "userId": "user-id-1"
   },
   {
     "id": "account-id-3",
     "name": "Тинькофф",
     "public": true,
-    "userId": "user-id-2",
     "categoryIds": ["category-id-3"],
     "balance": 100,
-    "transactionIds": ["transaction-id-6"]
+    "transactionIds": ["transaction-id-6"],
+    "userId": "user-id-2"
   }
 ]
