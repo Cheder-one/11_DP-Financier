@@ -38,8 +38,7 @@ const MainPage = ({ userId }) => {
         {accounts &&
           accountCards.map((card) => (
             <Col md="4" key={card.name} className="my-3">
-              <CardHeader card={card} />
-              <CardBody />
+              <AccountCard card={card} />
             </Col>
           ))}
       </Row>

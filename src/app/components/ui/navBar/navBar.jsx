@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import NavBarDropdown from "./navBarDropdown";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Navbar, Nav, Image } from "react-bootstrap";
 import HeaderContainer from "../../common/typography/headerContainer";
 import LOGO_SRC from "../../../assets/logo";
 import { useEffect, useRef, useState } from "react";
 
 const NavBar = ({ onToggleTheme, darkTheme }) => {
-  const [activeLink, setActiveLink] = useState(null);
+  const [activeLink, setActiveLink] = useState(useLocation().pathname);
   const prevHrefRef = useRef();
 
   useEffect(() => {

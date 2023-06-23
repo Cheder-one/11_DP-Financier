@@ -30,34 +30,24 @@ form > div {
   margin-bottom: 1rem;
 }
 
-.list-group::-webkit-scrollbar {
-  width: 2px; /* Ширина скроллбара */
-}
-.list-group::-webkit-scrollbar-track {
-  background-color: #f5f5f5; /* Цвет фона скроллбара */
-}
-.list-group::-webkit-scrollbar-thumb {
-  background-color: #888; /* Цвет полосы прокрутки */
-  border-radius: 4px; /* Закругление углов полосы прокрутки */
-}
-.list-group::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Цвет полосы прокрутки при наведении */
+/* ----------ScrollBar---------- */
+/* Устанавливаем ширину скроллбаров */
+::-webkit-scrollbar {
+  width: 2px;
 }
 
-.list-group-flush::-webkit-scrollbar {
-  height: 4px;
-}
-.list-group-flush::-webkit-scrollbar-track {
-  background-color: #f5f5f5;
-}
-.list-group-flush::-webkit-scrollbar-thumb {
-  background-color: #888;
+/* Устанавливаем цвет ползунка скроллбара */
+::-webkit-scrollbar-thumb {
+  background-color: grey;
   border-radius: 4px;
 }
-.list-group-flush::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+
+/* Цвет полосы прокрутки */
+::-webkit-scrollbar-track {
+  background-color: white;
 }
 
+/* Скроллбар окна Y-axe */
 body::-webkit-scrollbar {
   width: 6px;
 }
@@ -72,6 +62,7 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
 
+/* Скроллбар окна Х-axe */
 body::-webkit-scrollbar {
   height: 7px;
 }
@@ -86,27 +77,16 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
 
-/* @media (max-width: 576px) {
-  .border {
-    font-size: 12px;
-  }
-} */
-
-/* Смещение скроллбара вправо */
-.list-group-flush {
-  max-height: 140px;
-  overflow-y: auto;
-  margin-right: -2px;
-}
-
+/* ----------Navbar---------- */
 /* Выделение активной ссылки навигации */
 .navbar .nav-link.active {
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 5px;
 }
-/* 
-.rw-popup-container.rw-calendar-popup {
+
+/* ----------Calendar---------- */
+/* .rw-popup-container.rw-calendar-popup {
   max-width: 15rem;
   font-size: smaller;
 }
@@ -114,3 +94,34 @@ body::-webkit-scrollbar-thumb:hover {
   max-height: 3rem;
   font-size: smaller;
 } */
+
+/* ----------Main .account-cards---------- */
+/* Смещение скроллбара карточки вправо */
+.account-card .list-group-flush {
+  max-height: 140px;
+  overflow-y: auto;
+  margin-right: -2px;
+}
+
+/* Размер и переполнение списка счетов */
+.account-card .dropdown-menu.show {
+  overflow: auto;
+  max-height: 10rem;
+  overflow-x: hidden;
+}
+
+/* Размер элементов и их поведение */
+.account-card .dropdown-menu.show a.dropdown-item {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.account-card .dropdown-menu.show .dropdown-item:hover {
+  background-color: #c9ccd0;
+}
+
+/* Рисуем разделитель */
+.account-card .dropdown-menu.show .dropdown-item:nth-child(2) {
+  border-top: 1px solid #c9ccd0;
+  padding-top: 0.2rem;
+  margin-top: 0.2rem;
+}

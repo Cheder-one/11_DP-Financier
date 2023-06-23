@@ -1,13 +1,20 @@
+import PropTypes from "prop-types";
 import CardHeader from "./cardHeader";
 import CardBody from "./cardBody";
 
-const AccountCard = ({ name }) => {
+const AccountCard = ({ card }) => {
   return (
     <>
-      <CardHeader name={name} />
-      <CardBody />
+      <div className="account-card">
+        <CardHeader card={card} />
+        <CardBody />
+      </div>
     </>
   );
+};
+
+AccountCard.propTypes = {
+  card: PropTypes.object.isRequired
 };
 
 export default AccountCard;

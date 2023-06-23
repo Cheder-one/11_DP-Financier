@@ -9,7 +9,10 @@ const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 const getDropdownItems = (card) => {
   return card.type === "account"
     ? card.dropdown.map((drop) => drop.name)
-    : card.dropdown.map((drop) => drop.date);
+    : card.dropdown.map((drop) => {
+        const humanDate = new Date(drop.date).toLocaleString();
+        return humanDate;
+      });
 };
 
 const CardHeader = ({ card }) => {
@@ -77,9 +80,10 @@ const CardHeader = ({ card }) => {
             drop="down-centered"
             onClick={handleOpen}
             onSelect={handleSelect}
+            className="account-card"
           >
             <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
-            <NavDropdown.Divider className="m-0" />
+            {/* <NavDropdown.Divider className="m-0" /> */}
 
             {dropdown.items.map((item) => (
               <NavDropdown.Item key={item} eventKey={item}>
