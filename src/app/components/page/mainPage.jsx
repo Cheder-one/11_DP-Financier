@@ -6,7 +6,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import CardBody from "../common/card/cardBody";
 import CardHeader from "../common/card/cardHeader";
-import DatePicker from "react-widgets/DatePicker";
+import ReactDatePicker, {
+  registerLocale,
+  setDefaultLocale
+} from "react-datepicker";
+import ru from "date-fns/locale/ru";
+registerLocale("ru", ru);
 
 const MainPage = ({ userId }) => {
   const [accounts, setAccounts] = useState(null);
@@ -37,8 +42,18 @@ const MainPage = ({ userId }) => {
     { name: "Расходы", dropdown: accounts }
   ];
 
+  const [startDate, setStartDate] = useState(new Date());
+
   return (
     <div className="mx-4">
+      <ReactDatePicker
+        selected={startDate}
+        onChange={(date) => setStartDate(date)}
+        calendarStartDay={1}
+        locale="ru"
+        showTimeSelect
+        dateFormat="Pp"
+      />
       <Row className="mt-4">
         {accounts &&
           accountCards.map((card) => (

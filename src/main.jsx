@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import "react-widgets/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-datepicker/dist/react-datepicker.css";
 import { BrowserRouter } from "react-router-dom";
 import { makeServer } from "./app/api/mock/mirage-server.js";
 
