@@ -105,3 +105,12 @@ body::-webkit-scrollbar-thumb:hover {
   text-decoration: underline;
   text-underline-offset: 5px;
 }
+
+.rw-popup-container.rw-calendar-popup {
+  max-width: 15rem;
+  font-size: smaller;
+}
+.rw-calendar-header {
+  max-height: 3rem;
+  font-size: smaller;
+}

@@ -60,14 +60,12 @@ export function makeServer({ environment = "development" } = {}) {
       this.get("/transactions", (schema) => {
         return schema.transactions.all();
       });
-      this.get("/transactions/:id", (schema, request) => {
+      this.get("/transactions/user/:id", (schema, request) => {
         const id = request.params.id;
         const transactions = schema.transactions.where({ userId: id });
         return transactions.models;
       });
-
-      // Маршруты для дат транзакций
-      this.get("/transactions/:date", (schema, request) => {
+      this.get("/transactions/date/:date", (schema, request) => {
         const date = request.params.date;
         const transactions = schema.transactions.where({ date });
         return transactions.models;

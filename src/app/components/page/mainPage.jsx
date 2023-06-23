@@ -6,6 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import CardBody from "../common/card/cardBody";
 import CardHeader from "../common/card/cardHeader";
+import DatePicker from "react-widgets/DatePicker";
 
 const MainPage = ({ userId }) => {
   const [accounts, setAccounts] = useState(null);
@@ -17,13 +18,18 @@ const MainPage = ({ userId }) => {
       console.log(response.data);
     });
 
-    axios.get(`/api/transactions/2022-03-02T11:00:00Z`).then((response) => {
+    axios.get(`/api/transactions/user/${userId}`).then((response) => {
       console.log(response.data);
     });
+    axios
+      .get(`/api/transactions/date/2022-03-02T11:00:00Z`)
+      .then((response) => {
+        console.log(response.data);
+      });
   }, [userId]);
 
   const humanDate = new Date().toLocaleString();
-  console.log(humanDate);
+  console.log(humanDate.split(","));
 
   const accountCards = [
     { name: "Доходы", dropdown: accounts },

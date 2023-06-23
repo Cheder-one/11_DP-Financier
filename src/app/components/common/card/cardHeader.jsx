@@ -24,8 +24,6 @@ const CardHeader = ({ cardName, accounts }) => {
     }));
   };
 
-  const dropdownRef = useRef(null);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -38,7 +36,9 @@ const CardHeader = ({ cardName, accounts }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [isOpen]);
+
+  const dropdownRef = useRef(null);
 
   return (
     <Row className="card-header mx-auto border">
@@ -82,10 +82,10 @@ const CardHeader = ({ cardName, accounts }) => {
         <Button variant="black py-0 px-1">
           <Image
             src={PLUS_SQUARE_SRC}
+            rounded
             style={{
               backgroundColor: "white",
-              borderRadius: "0.2rem",
-              height: "1.25rem"
+              height: "83%"
             }}
           />
         </Button>
