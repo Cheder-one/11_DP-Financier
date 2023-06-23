@@ -1,64 +1,44 @@
 import PropTypes from "prop-types";
-import { Col, Row } from "react-bootstrap";
-import AccountCard from "../common/card/accountCard";
-import _ from "lodash";
 import axios from "axios";
+import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import CardBody from "../common/card/cardBody";
 import CardHeader from "../common/card/cardHeader";
-import ReactDatePicker, {
-  registerLocale,
-  setDefaultLocale
-} from "react-datepicker";
-import ru from "date-fns/locale/ru";
-registerLocale("ru", ru);
+import AccountCard from "../common/card/accountCard";
+import _ from "lodash";
 
 const MainPage = ({ userId }) => {
   const [accounts, setAccounts] = useState(null);
-  console.log(accounts);
+  const [transactions, setTransactions] = useState(null);
+  const [transactsDay, setTransactsDay] = useState(null);
 
   useEffect(() => {
     axios.get(`/api/accounts/${userId}`).then((response) => {
       setAccounts(response.data);
-      console.log(response.data);
     });
-
     axios.get(`/api/transactions/user/${userId}`).then((response) => {
-      console.log(response.data);
+      setTransactions(response.data);
     });
     axios
       .get(`/api/transactions/date/2022-03-02T11:00:00Z`)
       .then((response) => {
-        console.log(response.data);
+        setTransactsDay(response.data);
       });
   }, [userId]);
 
-  const humanDate = new Date().toLocaleString();
-  console.log(humanDate.split(","));
-
   const accountCards = [
-    { name: "Доходы", dropdown: accounts },
-    { name: "Счета", dropdown: accounts },
-    { name: "Расходы", dropdown: accounts }
+    { type: "income", name: "Доходы", dropdown: transactions },
+    { type: "account", name: "Счета", dropdown: accounts },
+    { type: "expend", name: "Расходы", dropdown: transactions }
   ];
-
-  const [startDate, setStartDate] = useState(new Date());
 
   return (
     <div className="mx-4">
-      <ReactDatePicker
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        calendarStartDay={1}
-        locale="ru"
-        showTimeSelect
-        dateFormat="Pp"
-      />
       <Row className="mt-4">
         {accounts &&
           accountCards.map((card) => (
             <Col md="4" key={card.name} className="my-3">
-              <CardHeader cardName={card.name} accounts={accounts} />
+              <CardHeader card={card} />
               <CardBody />
             </Col>
           ))}

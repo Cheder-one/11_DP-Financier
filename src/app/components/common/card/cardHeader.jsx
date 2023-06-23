@@ -6,12 +6,22 @@ import { xCenter } from "../typography/alignment-classes/centering";
 
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
-const CardHeader = ({ cardName, accounts }) => {
+const getDropdownItems = (card) => {
+  return card.type === "account"
+    ? card.dropdown.map((drop) => drop.name)
+    : card.dropdown.map((drop) => drop.date);
+};
+
+const CardHeader = ({ card }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdown, setDropdown] = useState({
-    label: "Все",
-    items: accounts.map((account) => account.name)
-  });
+  const [dropdown, setDropdown] = useState(null);
+
+  useEffect(() => {
+    setDropdown({
+      label: "Все",
+      items: getDropdownItems(card)
+    });
+  }, [card]);
 
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
@@ -41,62 +51,63 @@ const CardHeader = ({ cardName, accounts }) => {
   const dropdownRef = useRef(null);
 
   return (
-    <Row className="card-header mx-auto border">
-      <Col md="4" className={`${xCenter} border`}>
-        {cardName}
-      </Col>
-      <Col md="4" className={`${xCenter} border p-0`} ref={dropdownRef}>
-        <div
-          className="user-select-none"
-          style={{
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis"
-          }}
-          onClick={handleOpen}
-        >
-          <OverlayTooltip
-            text={<span className="me-1">{dropdown.label}</span>}
-          />
-        </div>
-
-        <NavDropdown
-          show={isOpen}
-          drop="down-centered"
-          onClick={handleOpen}
-          onSelect={handleSelect}
-        >
-          <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
-          <NavDropdown.Divider className="m-0" />
-
-          {dropdown.items.map((item) => (
-            <NavDropdown.Item key={item} eventKey={item}>
-              {item}
-            </NavDropdown.Item>
-          ))}
-        </NavDropdown>
-      </Col>
-
-      <Col md="4" className={`${xCenter} border`}>
-        <Button variant="black py-0 px-1">
-          <Image
-            src={PLUS_SQUARE_SRC}
-            rounded
+    dropdown && (
+      <Row className="card-header mx-auto border">
+        <Col md="4" className={`${xCenter} border`}>
+          {card.name}
+        </Col>
+        <Col md="4" className={`${xCenter} border p-0`} ref={dropdownRef}>
+          <div
+            className="user-select-none"
             style={{
-              backgroundColor: "white",
-              height: "83%"
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis"
             }}
-          />
-        </Button>
-      </Col>
-    </Row>
+            onClick={handleOpen}
+          >
+            <OverlayTooltip
+              text={<span className="me-1">{dropdown.label}</span>}
+            />
+          </div>
+
+          <NavDropdown
+            show={isOpen}
+            drop="down-centered"
+            onClick={handleOpen}
+            onSelect={handleSelect}
+          >
+            <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
+            <NavDropdown.Divider className="m-0" />
+
+            {dropdown.items.map((item) => (
+              <NavDropdown.Item key={item} eventKey={item}>
+                {item}
+              </NavDropdown.Item>
+            ))}
+          </NavDropdown>
+        </Col>
+
+        <Col md="4" className={`${xCenter} border`}>
+          <Button variant="black py-0 px-1">
+            <Image
+              src={PLUS_SQUARE_SRC}
+              rounded
+              style={{
+                backgroundColor: "white",
+                height: "83%"
+              }}
+            />
+          </Button>
+        </Col>
+      </Row>
+    )
   );
 };
 
 CardHeader.propTypes = {
-  cardName: PropTypes.string.isRequired,
-  accounts: PropTypes.arrayOf(PropTypes.object).isRequired
+  card: PropTypes.object.isRequired
 };
 
 export default CardHeader;
