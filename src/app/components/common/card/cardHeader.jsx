@@ -56,13 +56,22 @@ const CardHeader = ({ card }) => {
   return (
     dropdown && (
       <Row className="card-header mx-auto border p-0">
-        <Col md="4" className={`${xCenter}  `}>
+        <Col
+          md="4"
+          className={`d-flex ${xCenter}`}
+          style={{ paddingTop: "2px" }}
+        >
           {card.name}
         </Col>
-        <Col md="4" className={`${xCenter} px-1`} ref={dropdownRef}>
+        <Col
+          md="4"
+          className={`d-flex ${xCenter} px-1`}
+          style={{ paddingTop: "2px" }}
+          ref={dropdownRef}
+        >
           <div
-            className="user-select-none"
             style={{
+              userSelect: "none",
               cursor: "pointer",
               whiteSpace: "nowrap",
               overflow: "hidden",
@@ -91,8 +100,14 @@ const CardHeader = ({ card }) => {
           </NavDropdown>
         </Col>
 
-        <Col md="4" className={`${xCenter}  `}>
-          <Button variant="black py-0 px-1">
+        <Col md="4" className={`d-flex ${xCenter}`}>
+          <Button
+            variant="black px-1"
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "2px"
+            }}
+          >
             <Image
               src={PLUS_SQUARE_SRC}
               rounded

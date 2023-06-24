@@ -20,7 +20,11 @@ const CardBody = () => {
         <ListGroupItem key={line} className="p-0">
           <Row className="mx-auto">
             {bodyLabels.map((label) => (
-              <Col className={`${xCenter} border p-0`} key={label} md="4">
+              <Col
+                className={`d-flex ${xCenter} border p-0`}
+                key={label}
+                md="4"
+              >
                 <OverlayTooltip text={label} />
               </Col>
             ))}

@@ -4,6 +4,10 @@ import { Card, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import AccountCard from "../common/card/accountCard";
 import CardSkeleton from "../common/card/cardSkeleton/cardSkeleton";
+import {
+  xCenter,
+  yCenter
+} from "../common/typography/alignment-classes/centering";
 
 const MainPage = ({ userId }) => {
   const [accounts, setAccounts] = useState(null);
@@ -64,7 +68,7 @@ const MainPage = ({ userId }) => {
       <Row className="mt-4">
         <Col>
           <div
-            className="d-flex justify-content-center align-items-center border border-dark"
+            className={`d-flex ${xCenter} ${yCenter} border border-dark`}
             style={{ height: "230px" }}
           >
             <h5>Element</h5>
