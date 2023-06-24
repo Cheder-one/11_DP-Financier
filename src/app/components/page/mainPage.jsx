@@ -47,7 +47,7 @@ const MainPage = ({ userId }) => {
 
   return (
     <div className="mx-4">
-      <h1 className="ps-4.5">Hello world!</h1>
+      <h1 className="ps-4.9">Hello world!</h1>
       <Row className="mt-4">
         {isLoading
           ? accountCards.map((card) => (
