@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 import NavBarDropdown from "./navBarDropdown";
 import { Link, useLocation } from "react-router-dom";
-import { Navbar, Nav, Image } from "react-bootstrap";
-import HeaderContainer from "../../common/typography/headerContainer";
 import LOGO_SRC from "../../../assets/logo";
 import { useEffect, useRef, useState } from "react";
 
@@ -33,44 +31,69 @@ const NavBar = ({ onToggleTheme, darkTheme }) => {
   };
 
   return (
-    <Navbar bg="light" expand="sm" onClick={handleClick}>
-      <HeaderContainer className="mx-4">
-        <Navbar.Brand as={Link} to={"/"}>
-          <Image
+    <nav
+      className="navbar navbar-expand-sm navbar-light bg-light"
+      onClick={handleClick}
+    >
+      <HeaderContainer>
+        <a className="navbar-brand" href="/">
+          <img
             className="mb-1 me-2"
             src={LOGO_SRC}
             style={{ width: "30px", borderRadius: "50%" }}
+            alt="logo"
           />
           Financier
-        </Navbar.Brand>
-        <Nav className="me-auto my-2 my-lg-0">
-          <Nav.Link as={Link} to={"/main"} active={activeLink === "/main"}>
-            Главная
-          </Nav.Link>
-          <Nav.Link
-            as={Link}
-            to={"/analysis"}
-            active={activeLink === "/analysis"}
-          >
-            Анализ
-          </Nav.Link>
-          <Nav.Link
-            as={Link}
-            to={"/history"}
-            active={activeLink === "/history"}
-          >
-            История
-          </Nav.Link>
-        </Nav>
+        </a>
+        <ul className="navbar-nav me-auto my-2 my-lg-0">
+          <li className="nav-item">
+            <Link
+              className={`nav-link${activeLink === "/main" ? " active" : ""}`}
+              to="/main"
+            >
+              Главная
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className={`nav-link${
+                activeLink === "/analysis" ? " active" : ""
+              }`}
+              to="/analysis"
+            >
+              Анализ
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className={`nav-link${
+                activeLink === "/history" ? " active" : ""
+              }`}
+              to="/history"
+            >
+              История
+            </Link>
+          </li>
+        </ul>
         <NavBarDropdown onSelect={handleItemSelect} {...{ darkTheme }} />
       </HeaderContainer>
-    </Navbar>
+    </nav>
   );
 };
+
+const HeaderContainer = ({ children }) => (
+  <div className="d-flex justify-content-between align-items-center w-100 mx-4">
+    {children}
+  </div>
+);
 
 NavBar.propTypes = {
   onToggleTheme: PropTypes.func,
   darkTheme: PropTypes.bool
+};
+
+HeaderContainer.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export default NavBar;

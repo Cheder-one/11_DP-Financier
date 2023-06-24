@@ -47,6 +47,7 @@ const MainPage = ({ userId }) => {
 
   return (
     <div className="mx-4">
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <Row className="mt-4">
         {isLoading
           ? accountCards.map((card) => (
@@ -69,7 +70,7 @@ const MainPage = ({ userId }) => {
         <Col>
           <div
             className={`d-flex ${xCenter} ${yCenter} border border-dark`}
-            style={{ height: "230px" }}
+            style={{ height: "45vh" }}
           >
             <h5>Element</h5>
           </div>

@@ -13,7 +13,8 @@ const CardBody = () => {
       style={{
         borderRight: "1px solid #dee2e6",
         marginRight: "0px",
-        maxHeight: "8rem"
+        // maxHeight: "8rem"
+        height: "25vh"
       }}
     >
       {bodyLines.map((line) => (
