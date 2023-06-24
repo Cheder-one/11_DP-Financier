@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 
-const HeaderContainer = ({ children, className, style }) => {
+const HeaderContainer = ({ children, className }) => {
   return (
     <div
-      className={`d-flex justify-content-between align-items-center w-100 ${className}`}
-      style={{ ...style }}
+      className={`flex flex-col sm:flex-row justify-between items-center w-full ${className}`}
     >
       {children}
     </div>
@@ -20,8 +19,7 @@ HeaderContainer.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  className: PropTypes.string,
-  style: PropTypes.object
+  className: PropTypes.string
 };
 
 export default HeaderContainer;

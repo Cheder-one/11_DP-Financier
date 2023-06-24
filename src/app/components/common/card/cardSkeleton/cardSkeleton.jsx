@@ -3,9 +3,9 @@ import ContentLoader from "react-content-loader";
 const CardSkeleton = () => {
   return (
     <ContentLoader
+      className="vh-25"
       speed={1}
       width="100%"
-      height="155px"
       backgroundColor="#f0f0f0"
       foregroundColor="#ecebeb"
     >
