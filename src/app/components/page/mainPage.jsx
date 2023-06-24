@@ -4,10 +4,6 @@ import { Card, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import AccountCard from "../common/card/accountCard";
 import CardSkeleton from "../common/card/cardSkeleton/cardSkeleton";
-import {
-  xCenter,
-  yCenter
-} from "../common/typography/alignment-classes/centering";
 
 const MainPage = ({ userId }) => {
   const [accounts, setAccounts] = useState(null);
@@ -47,7 +43,7 @@ const MainPage = ({ userId }) => {
 
   return (
     <div className="mx-4">
-      <h1 className="ps-4.9">Hello world!</h1>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <Row className="mt-4">
         {isLoading
           ? accountCards.map((card) => (
@@ -68,10 +64,7 @@ const MainPage = ({ userId }) => {
 
       <Row className="mt-4">
         <Col>
-          <div
-            className={`d-flex ${xCenter} ${yCenter} border border-dark`}
-            style={{ height: "45vh" }}
-          >
+          <div className="d-flex justify-center items-center border border-dark vh-45">
             <h5>Element</h5>
           </div>
         </Col>

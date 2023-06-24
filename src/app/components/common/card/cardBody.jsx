@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
-import { xCenter } from "../typography/alignment-classes/centering";
 
 const CardBody = () => {
   const bodyLines = _.times(10, (i) => `element ${i}`);
@@ -22,7 +21,7 @@ const CardBody = () => {
           <Row className="mx-auto">
             {bodyLabels.map((label) => (
               <Col
-                className={`d-flex ${xCenter} border p-0`}
+                className="d-flex justify-center border p-0"
                 key={label}
                 md="4"
               >

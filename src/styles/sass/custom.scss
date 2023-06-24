@@ -10,7 +10,7 @@ $step: 5;
 
 @for $i from 0 through $spacer-scale {
   .vw-#{$i * $step} {
-    height: $i * $spacer;
+    width: $i * $spacer;
   }
 }
 

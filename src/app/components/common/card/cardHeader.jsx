@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
-import { xCenter } from "../typography/alignment-classes/centering";
 
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
@@ -58,14 +57,14 @@ const CardHeader = ({ card }) => {
       <Row className="card-header mx-auto border p-0">
         <Col
           md="4"
-          className={`d-flex ${xCenter}`}
+          className="d-flex justify-center"
           style={{ paddingTop: "2px" }}
         >
           {card.name}
         </Col>
         <Col
           md="4"
-          className={`d-flex ${xCenter} px-1`}
+          className="d-flex justify-center px-1`"
           style={{ paddingTop: "2px" }}
           ref={dropdownRef}
         >
@@ -100,7 +99,7 @@ const CardHeader = ({ card }) => {
           </NavDropdown>
         </Col>
 
-        <Col md="4" className={`d-flex ${xCenter}`}>
+        <Col md="4" className="d-flex justify-center">
           <Button
             variant="black px-1"
             style={{
