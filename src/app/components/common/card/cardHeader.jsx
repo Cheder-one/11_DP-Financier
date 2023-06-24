@@ -55,11 +55,11 @@ const CardHeader = ({ card }) => {
 
   return (
     dropdown && (
-      <Row className="card-header mx-auto border">
-        <Col md="4" className={`${xCenter} border`}>
+      <Row className="card-header mx-auto border p-0">
+        <Col md="4" className={`${xCenter}  `}>
           {card.name}
         </Col>
-        <Col md="4" className={`${xCenter} border p-0`} ref={dropdownRef}>
+        <Col md="4" className={`${xCenter} px-1`} ref={dropdownRef}>
           <div
             className="user-select-none"
             style={{
@@ -83,8 +83,6 @@ const CardHeader = ({ card }) => {
             className="account-card"
           >
             <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
-            {/* <NavDropdown.Divider className="m-0" /> */}
-
             {dropdown.items.map((item) => (
               <NavDropdown.Item key={item} eventKey={item}>
                 {item}
@@ -93,7 +91,7 @@ const CardHeader = ({ card }) => {
           </NavDropdown>
         </Col>
 
-        <Col md="4" className={`${xCenter} border`}>
+        <Col md="4" className={`${xCenter}  `}>
           <Button variant="black py-0 px-1">
             <Image
               src={PLUS_SQUARE_SRC}

@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import { Col, Row } from "react-bootstrap";
+import { Card, Col, Row, Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import CardBody from "../common/card/cardBody";
 import CardHeader from "../common/card/cardHeader";
 import AccountCard from "../common/card/accountCard";
 import _ from "lodash";
+import ContentLoader from "react-content-loader";
 
 const MainPage = ({ userId }) => {
   const [accounts, setAccounts] = useState(null);
@@ -38,7 +39,36 @@ const MainPage = ({ userId }) => {
         {accounts &&
           accountCards.map((card) => (
             <Col md="4" key={card.name} className="my-3">
-              <AccountCard card={card} />
+              <Card>
+                <Card.Body className="p-0">
+                  <AccountCard card={card} />
+                  {/* <ContentLoader
+                    speed={2}
+                    width="100%"
+                    height="10rem"
+                    viewBox="0 0 360 170"
+                    backgroundColor="#f3f3f3"
+                    foregroundColor="#ecebeb"
+                  >
+                    <rect
+                      x="5%"
+                      y="5%"
+                      rx="3"
+                      ry="3"
+                      width="90%"
+                      height="12.5%"
+                    />
+                    <rect
+                      x="5%"
+                      y="22.5%"
+                      rx="3"
+                      ry="3"
+                      width="90%"
+                      height="72.5%"
+                    />
+                  </ContentLoader> */}
+                </Card.Body>
+              </Card>
             </Col>
           ))}
       </Row>
