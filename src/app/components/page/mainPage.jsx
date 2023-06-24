@@ -53,7 +53,7 @@ const MainPage = ({ userId }) => {
           ? accountCards.map((card) => (
               <Col md="4" key={card.name} className="my-3">
                 <Card>
-                  <Card.Body className="p-0">
+                  <Card.Body className="p-0.1">
                     <AccountCard card={card} />
                   </Card.Body>
                 </Card>

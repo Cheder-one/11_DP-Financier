@@ -1,0 +1,57 @@
+/* Классы для задания стилей padding */
+.p-t-0 {
+  padding-top: 0;
+}
+.p-t-0\.1 {
+  padding-top: 0.1rem;
+}
+.p-t-0\.2 {
+  padding-top: 0.2rem;
+}
+/* ... */
+.p-t-1\.5 {
+  padding-top: 1.5rem;
+}
+
+.p-b-0 {
+  padding-bottom: 0;
+}
+.p-b-0\.1 {
+  padding-bottom: 0.1rem;
+}
+.p-b-0\.2 {
+  padding-bottom: 0.2rem;
+}
+/* ... */
+.p-b-1\.5 {
+  padding-bottom: 1.5rem;
+}
+
+/* Классы для задания стилей margin */
+.m-t-0 {
+  margin-top: 0;
+}
+.m-t-0\.1 {
+  margin-top: 0.1rem;
+}
+.m-t-0\.2 {
+  margin-top: 0.2rem;
+}
+/* ... */
+.m-t-1\.5 {
+  margin-top: 1.5rem;
+}
+
+.m-b-0 {
+  margin-bottom: 0;
+}
+.m-b-0\.1 {
+  margin-bottom: 0.1rem;
+}
+.m-b-0\.2 {
+  margin-bottom: 0.2rem;
+}
+/* ... */
+.m-b-1\.5 {
+  margin-bottom: 1.5rem;
+}
