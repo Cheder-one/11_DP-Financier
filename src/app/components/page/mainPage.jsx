@@ -3,7 +3,6 @@ import axios from "axios";
 import { Card, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import AccountCard from "../common/card/accountCard";
-import ContentLoader from "react-content-loader";
 import CardSkeleton from "../common/card/cardSkeleton/cardSkeleton";
 
 const MainPage = ({ userId }) => {
