@@ -12,7 +12,7 @@ const Login = ({ formType, setFormType }) => {
   return (
     <Container className="mt-3">
       <Row>
-        <Col md="7" className="shadow p-4" style={{ maxWidth: "500px" }}>
+        <Col md="7" className="shadow p-4 " style={{ maxWidth: "500px" }}>
           <Nav
             fill
             variant="tabs"

@@ -1,6 +1,5 @@
-@import url("./styles/css/padding-margin.css");
 @import url("./styles/css/vh-wh.css");
-@import url("./styles/css/justify-align.css");
+/* @import url("./styles/css/justify-align.css"); */
 
 /* @tailwind base; */
 @tailwind components;

@@ -8,12 +8,10 @@ const CardBody = () => {
 
   return (
     <ListGroup
-      className="list-group-flush overflow-auto"
+      className="list-group-flush overflow-auto vh-25 me-0"
       style={{
-        borderRight: "1px solid #dee2e6",
-        marginRight: "0px",
+        borderRight: "1px solid #dee2e6"
         // maxHeight: "8rem"
-        height: "25vh"
       }}
     >
       {bodyLines.map((line) => (

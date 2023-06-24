@@ -39,9 +39,9 @@ const NavBar = ({ onToggleTheme, darkTheme }) => {
         <a className="navbar-brand" href="/">
           <img
             className="mb-1 me-2"
+            alt="logo"
             src={LOGO_SRC}
             style={{ width: "30px", borderRadius: "50%" }}
-            alt="logo"
           />
           Financier
         </a>

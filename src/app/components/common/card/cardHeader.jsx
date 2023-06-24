@@ -55,17 +55,12 @@ const CardHeader = ({ card }) => {
   return (
     dropdown && (
       <Row className="card-header mx-auto border p-0">
-        <Col
-          md="4"
-          className="d-flex justify-center"
-          style={{ paddingTop: "2px" }}
-        >
+        <Col md="4" className="d-flex justify-center pt-0.5">
           {card.name}
         </Col>
         <Col
           md="4"
-          className="d-flex justify-center px-1`"
-          style={{ paddingTop: "2px" }}
+          className="d-flex justify-center px-1 pt-0.5"
           ref={dropdownRef}
         >
           <div
@@ -79,7 +74,7 @@ const CardHeader = ({ card }) => {
             onClick={handleOpen}
           >
             <OverlayTooltip
-              text={<span className="me-1">{dropdown.label}</span>}
+              text={<span className="mr-1">{dropdown.label}</span>}
             />
           </div>
 
