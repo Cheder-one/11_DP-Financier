@@ -47,13 +47,13 @@ const MainPage = ({ userId }) => {
 
   return (
     <div className="mx-4">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <h1 className="ps-4.5">Hello world!</h1>
       <Row className="mt-4">
         {isLoading
           ? accountCards.map((card) => (
               <Col md="4" key={card.name} className="my-3">
                 <Card>
-                  <Card.Body className="p-0.1">
+                  <Card.Body className="p-0">
                     <AccountCard card={card} />
                   </Card.Body>
                 </Card>
