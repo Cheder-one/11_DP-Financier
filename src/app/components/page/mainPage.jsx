@@ -1,29 +1,38 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import { Card, Col, Row, Spinner } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import CardBody from "../common/card/cardBody";
-import CardHeader from "../common/card/cardHeader";
 import AccountCard from "../common/card/accountCard";
-import _ from "lodash";
 import ContentLoader from "react-content-loader";
+import CardSkeleton from "../common/card/cardSkeleton/cardSkeleton";
 
 const MainPage = ({ userId }) => {
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const [transactsDay, setTransactsDay] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios.get(`/api/accounts/${userId}`).then((response) => {
-      setAccounts(response.data);
-    });
-    axios.get(`/api/transactions/user/${userId}`).then((response) => {
-      setTransactions(response.data);
-    });
     axios
-      .get(`/api/transactions/date/2022-03-02T11:00:00Z`)
-      .then((response) => {
-        setTransactsDay(response.data);
+      .all([
+        axios.get(`/api/accounts/${userId}`),
+        axios.get(`/api/transactions/user/${userId}`),
+        axios.get(`/api/transactions/date/2022-03-02T11:00:00Z`)
+      ])
+      .then(
+        axios.spread(
+          (accountsResponse, transactionsResponse, transactsDayResponse) => {
+            setAccounts(accountsResponse.data);
+            setTransactions(transactionsResponse.data);
+            setTransactsDay(transactsDayResponse.data);
+          }
+        )
+      )
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(true);
       });
   }, [userId]);
 
@@ -36,41 +45,21 @@ const MainPage = ({ userId }) => {
   return (
     <div className="mx-4">
       <Row className="mt-4">
-        {accounts &&
-          accountCards.map((card) => (
-            <Col md="4" key={card.name} className="my-3">
-              <Card>
-                <Card.Body className="p-0">
-                  <AccountCard card={card} />
-                  {/* <ContentLoader
-                    speed={2}
-                    width="100%"
-                    height="10rem"
-                    viewBox="0 0 360 170"
-                    backgroundColor="#f3f3f3"
-                    foregroundColor="#ecebeb"
-                  >
-                    <rect
-                      x="5%"
-                      y="5%"
-                      rx="3"
-                      ry="3"
-                      width="90%"
-                      height="12.5%"
-                    />
-                    <rect
-                      x="5%"
-                      y="22.5%"
-                      rx="3"
-                      ry="3"
-                      width="90%"
-                      height="72.5%"
-                    />
-                  </ContentLoader> */}
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+        {isLoading
+          ? accountCards.map((card) => (
+              <Col md="4" key={card.name} className="my-3">
+                <Card>
+                  <Card.Body className="p-0">
+                    <AccountCard card={card} />
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))
+          : accountCards.map((card) => (
+              <Col md="4" key={card.name} className="my-3">
+                <CardSkeleton />
+              </Col>
+            ))}
       </Row>
 
       <Row className="mt-4">

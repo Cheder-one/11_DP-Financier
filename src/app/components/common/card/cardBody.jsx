@@ -10,8 +10,11 @@ const CardBody = () => {
   return (
     <ListGroup
       className="list-group-flush overflow-auto"
-      // style={{ maxHeight: "140px" }}
-      style={{ borderRight: "1px solid #dee2e6", marginRight: "0px" }}
+      style={{
+        borderRight: "1px solid #dee2e6",
+        marginRight: "0px",
+        maxHeight: "8rem"
+      }}
     >
       {bodyLines.map((line) => (
         <ListGroupItem key={line} className="p-0">
