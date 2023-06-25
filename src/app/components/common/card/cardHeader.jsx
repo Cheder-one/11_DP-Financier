@@ -9,8 +9,8 @@ const getDropdownItems = (card) => {
   return card.type === "account"
     ? card.dropdown.map((drop) => drop.name)
     : card.dropdown.map((drop) => {
-        const humanDate = new Date(drop.date).toLocaleString();
-        return humanDate;
+        const humanDate = new Date(drop.date).toLocaleString().split(",");
+        return humanDate[0];
       });
 };
 

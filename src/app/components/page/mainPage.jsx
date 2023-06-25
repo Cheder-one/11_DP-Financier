@@ -64,7 +64,7 @@ const MainPage = ({ userId }) => {
 
       <Row className="mt-4">
         <Col>
-          <div className="d-flex justify-center items-center border border-dark vh-45">
+          <div className="d-flex justify-center items-center border border-dark vh-40">
             <h5>Element</h5>
           </div>
         </Col>
