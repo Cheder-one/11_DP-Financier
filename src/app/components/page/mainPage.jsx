@@ -8,12 +8,26 @@ import _ from "lodash";
 
 const MainPage = ({ userId }) => {
   const [users, setUsers] = useState([]);
+  console.log(users);
 
   useEffect(() => {
-    axios.get(`/api/users`).then((resp) => setUsers(resp.data.users[0]));
-
-    // axios.get(`/api/users/${userId}`).then((resp) => console.log(resp.data));
+    axios.get(`/api/users`).then((resp) => setUsers(resp.data.users));
   }, [userId]);
+
+  const getNegativeTransactions = (user, accountId) => {
+    // Ищем счет по id
+    const account = _.find(user.accounts, { id: accountId });
+
+    if (account) {
+      // Фильтруем транзакции на счету
+      return _.filter(
+        user.transactions,
+        (t) => t.account === account.id && t.type === "expense" && t.amount < 0
+      );
+    }
+
+    return [];
+  };
 
   // const cards = [
   //   {
