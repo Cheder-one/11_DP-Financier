@@ -8,31 +8,6 @@ import _ from "lodash";
 
 const MainPage = ({ userId }) => {
   const [users, setUsers] = useState([]);
-  // const user = users.find((u) => u.id === userId);
-  // const categoryIdsFirstAcc = user.accounts[0].categoryIds;
-  // console.log(user.categories);
-
-  const user = users[userId];
-  console.log(user);
-
-  const userAccounts = user?.accounts;
-  console.log(userAccounts);
-
-  // Найти счет по name "Сбербанк"
-  const sberAccount = _.find(userAccounts, { name: "Сбербанк" });
-  console.log(sberAccount);
-
-  // Найти в счете категорию по name "Аренда"
-  const accCategoryIds = sberAccount.categoryIds;
-  console.log(accCategoryIds);
-
-  const accCategories = user.categories;
-  console.log(accCategories);
-
-  const accountWithRent = _.find(accCategories, { name: "Аренда" });
-  console.log(accountWithRent);
-
-  // Найти в счете транзакцию по id
 
   useEffect(() => {
     axios.get(`/api/users`).then((resp) => setUsers(resp.data.users[0]));
