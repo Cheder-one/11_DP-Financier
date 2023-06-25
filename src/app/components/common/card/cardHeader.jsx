@@ -7,7 +7,9 @@ const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
 const getDropdownItems = (card) => {
   return card.type === "account"
-    ? card.dropdown.map((drop) => drop.name)
+    ? card.dropdown.map((drop) => ({
+        id: drop.id
+      }))
     : card.dropdown.map((drop) => {
         const humanDate = new Date(drop.date).toLocaleString().split(",");
         return humanDate[0];
@@ -17,11 +19,18 @@ const getDropdownItems = (card) => {
 const CardHeader = ({ card }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdown, setDropdown] = useState(null);
+  const [selectedElemId, setSelectedElemId] = useState({
+    account: "",
+    income: "",
+    expense: ""
+  });
+
+  console.log(getDropdownItems(card));
 
   useEffect(() => {
     setDropdown({
       label: "Все",
-      items: getDropdownItems(card)
+      items: [{ id: "account-id-1", label: "Сбербанк" }]
     });
   }, [card]);
 
@@ -30,9 +39,16 @@ const CardHeader = ({ card }) => {
   };
 
   const handleSelect = (eventKey) => {
+    let arrKeys = eventKey.split(",");
+    arrKeys = {
+      id: arrKeys.find((key) => key.includes("id")),
+      label: arrKeys.find((key) => !key.includes("id"))
+    };
+    console.log(arrKeys);
+
     setDropdown((prev) => ({
       ...prev,
-      label: eventKey
+      label: arrKeys.label
     }));
   };
 
@@ -87,8 +103,8 @@ const CardHeader = ({ card }) => {
           >
             <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
             {dropdown.items.map((item) => (
-              <NavDropdown.Item key={item} eventKey={item}>
-                {item}
+              <NavDropdown.Item key={item.id} eventKey={[item.id, item.label]}>
+                {item.label}
               </NavDropdown.Item>
             ))}
           </NavDropdown>

@@ -8,45 +8,31 @@ import CardSkeleton from "../common/card/cardSkeleton/cardSkeleton";
 const MainPage = ({ userId }) => {
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
-  const [transactsDay, setTransactsDay] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .all([
-        axios.get(`/api/accounts/${userId}`),
-        axios.get(`/api/transactions/user/${userId}`),
-        axios.get(`/api/transactions/date/2022-03-02T11:00:00Z`)
-      ])
-      .then(
-        axios.spread(
-          (accountsResponse, transactionsResponse, transactsDayResponse) => {
-            setAccounts(accountsResponse.data);
-            setTransactions(transactionsResponse.data);
-            setTransactsDay(transactsDayResponse.data);
-          }
-        )
-      )
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setIsLoading(true);
-      });
+    axios.get(`/api/users`).then((response) => console.log(response.data));
   }, [userId]);
 
-  const accountCards = [
-    { type: "income", name: "Доходы", dropdown: transactions },
-    { type: "account", name: "Счета", dropdown: accounts },
-    { type: "expend", name: "Расходы", dropdown: transactions }
+  const cards = [
+    {
+      name: "Доходы",
+      type: "income",
+      dropdown: transactions?.filter((transact) => transact.type === "income")
+    },
+    { name: "Счета", type: "account", dropdown: accounts },
+    {
+      name: "Расходы",
+      type: "expense",
+      dropdown: transactions?.filter((transact) => transact.type === "expense")
+    }
   ];
 
   return (
     <div className="mx-4">
       {/* <h1 className="text-3xl font-bold underline">Hello world!</h1> */}
       <Row className="mt-4">
-        {isLoading
-          ? accountCards.map((card) => (
+        {false
+          ? [].map((card) => (
               <Col md="4" key={card.name} className="my-3">
                 <Card>
                   <Card.Body className="p-0">
@@ -55,7 +41,7 @@ const MainPage = ({ userId }) => {
                 </Card>
               </Col>
             ))
-          : accountCards.map((card) => (
+          : [{ name: 1 }, { name: 2 }, { name: 3 }].map((card) => (
               <Col md="4" key={card.name} className="my-3">
                 <CardSkeleton />
               </Col>
