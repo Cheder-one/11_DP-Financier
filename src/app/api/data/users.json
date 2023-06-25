@@ -1,16 +1,135 @@
 {
   "user-id-1": {
+    "id": "user-id-1",
     "name": "John",
     "email": "john@example.com",
     "password": "john123",
     "gender": "male",
-    "avatarUrl": "https://avatars.dicebear.com/api/avataaars/ywq5zk.svg"
+    "avatarUrl": "https://avatars.dicebear.com/api/avataaars/ywq5zk.svg",
+    "accounts": {
+      "account-id-1": {
+        "id": "account-id-1",
+        "name": "Сбербанк",
+        "public": false,
+        "categoryIds": ["category-id-1"],
+        "balance": 90000,
+        "transactionIds": ["transaction-id-1", "transaction-id-2"],
+        "userId": "user-id-1"
+      },
+      "account-id-2": {
+        "id": "account-id-2",
+        "name": "Альфа-банк",
+        "public": false,
+        "categoryIds": ["category-id-2"],
+        "balance": 80000,
+        "transactionIds": ["transaction-id-3", "transaction-id-4"],
+        "userId": "user-id-1"
+      }
+    },
+    "categories": {
+      "category-id-1": {
+        "id": "category-id-1",
+        "name": "Зарплата",
+        "accountIds": ["account-id-1"],
+        "incomeTransactionIds": ["transaction-id-1", "transaction-id-3"],
+        "expenseTransactionIds": ["transaction-id-5"],
+        "userId": "user-id-1"
+      },
+      "category-id-2": {
+        "id": "category-id-2",
+        "name": "Аренда",
+        "accountIds": ["account-id-2"],
+        "incomeTransactionIds": [],
+        "expenseTransactionIds": ["transaction-id-2"],
+        "userId": "user-id-1"
+      }
+    },
+    "transactions": {
+      "transaction-id-1": {
+        "id": "transaction-id-1",
+        "amount": 5000,
+        "type": "income",
+        "accountId": "account-id-1",
+        "categoryId": "category-id-1",
+        "date": "2022-03-01T10:00:00Z",
+        "userId": "user-id-1"
+      },
+      "transaction-id-2": {
+        "id": "transaction-id-2",
+        "amount": 1000,
+        "type": "expense",
+        "accountId": "account-id-1",
+        "categoryId": "category-id-2",
+        "date": "2022-03-02T11:00:00Z",
+        "userId": "user-id-1"
+      },
+      "transaction-id-3": {
+        "id": "transaction-id-3",
+        "amount": 2000,
+        "type": "income",
+        "accountId": "account-id-2",
+        "categoryId": "category-id-1",
+        "date": "2022-03-03T12:00:00Z",
+        "userId": "user-id-1"
+      },
+      "transaction-id-4": {
+        "id": "transaction-id-4",
+        "amount": 500,
+        "type": "expense",
+        "accountId": "account-id-2",
+        "categoryId": "category-id-2",
+        "date": "2022-03-04T13:00:00Z",
+        "userId": "user-id-1"
+      },
+      "transaction-id-5": {
+        "id": "transaction-id-5",
+        "amount": 1000,
+        "type": "expense",
+        "accountId": "account-id-1",
+        "categoryId": "category-id-1",
+        "date": "2022-03-05T14:00:00Z",
+        "userId": "user-id-1"
+      }
+    }
   },
   "user-id-2": {
+    "id": "user-id-2",
     "name": "Alex",
     "email": "alex@example.com",
     "password": "alex123",
     "gender": "male",
-    "avatarUrl": "https://avatars.dicebear.com/api/avataaars/rirdyg.svg"
+    "avatarUrl": "https://avatars.dicebear.com/api/avataaars/rirdyg.svg",
+    "accounts": {
+      "account-id-1": {
+        "id": "account-id-1",
+        "name": "Тинькофф",
+        "public": true,
+        "categoryIds": ["category-id-1"],
+        "balance": 100,
+        "transactionIds": ["transaction-id-1"],
+        "userId": "user-id-2"
+      }
+    },
+    "categories": {
+      "category-id-1": {
+        "id": "category-id-1",
+        "name": "Кредит",
+        "accountIds": ["account-id-1"],
+        "incomeTransactionIds": [],
+        "expenseTransactionIds": ["transaction-id-1"],
+        "userId": "user-id-2"
+      }
+    },
+    "transactions": {
+      "transaction-id-1": {
+        "id": "transaction-id-1",
+        "amount": 5000,
+        "type": "expense",
+        "accountId": "account-id-1",
+        "categoryId": "category-id-1",
+        "date": "2022-03-06T15:00:00Z",
+        "userId": "user-id-2"
+      }
+    }
   }
 }

@@ -6,26 +6,33 @@ import AccountCard from "../common/card/accountCard";
 import CardSkeleton from "../common/card/cardSkeleton/cardSkeleton";
 
 const MainPage = ({ userId }) => {
-  const [accounts, setAccounts] = useState(null);
-  const [transactions, setTransactions] = useState(null);
+  const [users, setUsers] = useState([]);
+  // const user = users.find((u) => u.id === userId);
+  // const categoryIdsFirstAcc = user.accounts[0].categoryIds;
+  // console.log(user.categories);
+
+  const user = users[userId];
+  console.log(user);
 
   useEffect(() => {
-    axios.get(`/api/users`).then((response) => console.log(response.data));
+    axios.get(`/api/users`).then((resp) => setUsers(resp.data.users[0]));
+
+    // axios.get(`/api/users/${userId}`).then((resp) => console.log(resp.data));
   }, [userId]);
 
-  const cards = [
-    {
-      name: "Доходы",
-      type: "income",
-      dropdown: transactions?.filter((transact) => transact.type === "income")
-    },
-    { name: "Счета", type: "account", dropdown: accounts },
-    {
-      name: "Расходы",
-      type: "expense",
-      dropdown: transactions?.filter((transact) => transact.type === "expense")
-    }
-  ];
+  // const cards = [
+  //   {
+  //     name: "Доходы",
+  //     type: "income",
+  //     dropdown: transactions?.filter((transact) => transact.type === "income")
+  //   },
+  //   { name: "Счета", type: "account", dropdown: accounts },
+  //   {
+  //     name: "Расходы",
+  //     type: "expense",
+  //     dropdown: transactions?.filter((transact) => transact.type === "expense")
+  //   }
+  // ];
 
   return (
     <div className="mx-4">
