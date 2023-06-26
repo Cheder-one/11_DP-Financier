@@ -82,6 +82,14 @@
         "account": "account-id-1",
         "category": "category-id-1",
         "date": "2022-03-05T14:00:00Z"
+      },
+      {
+        "id": "transaction-id-6",
+        "amount": -1000,
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "date": "2022-03-05T14:00:00Z"
       }
     ]
   },

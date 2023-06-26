@@ -8,38 +8,14 @@ import _ from "lodash";
 const ALL = "Все";
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
-const CardHeader = ({ card }) => {
+/* eslint-disable react/prop-types */
+
+const CardHeader = ({ card, handleSelect, dropdown }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(null);
-
-  const [selectedElemId, setSelectedElemId] = useState({
-    account: "",
-    income: "",
-    expense: ""
-  });
   const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    setDropdown({
-      name: ALL,
-      items: card.dropdown.map((item) => ({
-        id: item.id,
-        name: item.name || toReadableDate(item.date)[0]
-      }))
-    });
-  }, [card]);
 
   const handleDropOpen = () => {
     setIsOpen((prev) => !prev);
-  };
-
-  const handleDropItemSelect = (eventKeys) => {
-    const keys = JSON.parse(eventKeys);
-    setDropdown((prev) => ({
-      ...prev,
-      name: keys.name
-    }));
-    console.log({ dropdown });
   };
 
   useEffect(() => {
@@ -48,16 +24,13 @@ const CardHeader = ({ card }) => {
         setIsOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
-
-  const obj = { id: "ALL", name: "ALL" };
-  const json = _(obj).value();
-  console.log(json); // '{"id":"ALL","name":"ALL"}'
 
   return (
     dropdown && (
@@ -71,13 +44,7 @@ const CardHeader = ({ card }) => {
           ref={dropdownRef}
         >
           <div
-            style={{
-              userSelect: "none",
-              cursor: "pointer",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis"
-            }}
+            className="select-none cursor-pointer whitespace-nowrap overflow-hidden overflow-ellipsis"
             onClick={handleDropOpen}
           >
             <OverlayTooltip
@@ -88,11 +55,13 @@ const CardHeader = ({ card }) => {
           <NavDropdown
             show={isOpen}
             drop="down-centered"
-            onClick={handleDropOpen}
-            onSelect={handleDropItemSelect}
             className="account-card"
+            onClick={handleDropOpen}
+            onSelect={handleSelect}
           >
-            <NavDropdown.Item eventKey={JSON.stringify({ id: ALL, name: ALL })}>
+            <NavDropdown.Item
+              eventKey={JSON.stringify({ id: "ALL", name: ALL })}
+            >
               {ALL}
             </NavDropdown.Item>
             {dropdown.items.map((item) => (

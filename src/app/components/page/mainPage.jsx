@@ -8,31 +8,38 @@ import _ from "lodash";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState();
-  const { accounts, categories, transactions } = user || {};
+  const { accounts, transactions } = user || {};
 
   useEffect(() => {
     axios.get(`/api/users/${userId}`).then((resp) => setUser(resp.data.user));
   }, [userId]);
 
+  const getCroppedTransacts = (type) => {
+    if (_.isArray(transactions)) {
+      return _.chain(transactions)
+        .filter({ type })
+        .map(({ id, date }) => ({ id, date }))
+        .uniqBy("date")
+        .value();
+    }
+    return [];
+  };
+
   const cards = [
     {
       name: "Доходы",
       type: "income",
-      dropdown: Array.isArray(transactions)
-        ? transactions.filter((t) => t.type === "income")
-        : []
+      dropdown: getCroppedTransacts("income")
     },
     {
       name: "Счета",
       type: "account",
-      dropdown: Array.isArray(accounts) ? accounts : []
+      dropdown: _.isArray(accounts) ? accounts : []
     },
     {
       name: "Расходы",
       type: "expense",
-      dropdown: Array.isArray(transactions)
-        ? transactions.filter((t) => t.type === "expense")
-        : []
+      dropdown: getCroppedTransacts("expense")
     }
   ];
 
@@ -46,7 +53,7 @@ const MainPage = ({ userId }) => {
                 <Col md="4" key={card.name} className="my-3">
                   <Card>
                     <Card.Body className="p-0">
-                      <AccountCard card={card} />
+                      <AccountCard {...{ card, transactions }} />
                     </Card.Body>
                   </Card>
                 </Col>
