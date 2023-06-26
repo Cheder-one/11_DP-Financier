@@ -4,19 +4,8 @@ import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
 import { toReadableDate } from "../../../utils";
 
+const ALL = "Все";
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
-
-const getDropdownItems = (card) => {
-  return card.type === "account"
-    ? card.dropdown.map((drop) => ({
-        id: drop.id,
-        name: drop.name
-      }))
-    : card.dropdown.map((drop) => ({
-        id: drop.id,
-        name: toReadableDate(drop.date)[0]
-      }));
-};
 
 const CardHeader = ({ card }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,32 +15,27 @@ const CardHeader = ({ card }) => {
     income: "",
     expense: ""
   });
-
-  console.log(getDropdownItems(card));
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     setDropdown({
-      name: "Все",
-      items: getDropdownItems(card)
-      // items: [{ id: "account-id-1", name: "Сбербанк" }]
+      name: ALL,
+      items: card.dropdown.map((item) => ({
+        id: item.id,
+        name: item.name || toReadableDate(item.date)[0]
+      }))
     });
   }, [card]);
 
-  const handleOpen = () => {
+  const handleDropOpen = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const handleSelect = (eventKey) => {
-    let arrKeys = eventKey.split(",");
-    arrKeys = {
-      id: arrKeys.find((key) => key.includes("id")),
-      name: arrKeys.find((key) => !key.includes("id"))
-    };
-    console.log(arrKeys);
-
+  const handleDropItemSelect = (eventKeys) => {
+    const keys = JSON.parse(eventKeys);
     setDropdown((prev) => ({
       ...prev,
-      name: arrKeys.name
+      name: keys.name
     }));
   };
 
@@ -61,15 +45,12 @@ const CardHeader = ({ card }) => {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
-
-  const dropdownRef = useRef(null);
 
   return (
     dropdown && (
@@ -90,7 +71,7 @@ const CardHeader = ({ card }) => {
               overflow: "hidden",
               textOverflow: "ellipsis"
             }}
-            onClick={handleOpen}
+            onClick={handleDropOpen}
           >
             <OverlayTooltip
               text={<span className="mr-1">{dropdown.name}</span>}
@@ -100,13 +81,16 @@ const CardHeader = ({ card }) => {
           <NavDropdown
             show={isOpen}
             drop="down-centered"
-            onClick={handleOpen}
-            onSelect={handleSelect}
+            onClick={handleDropOpen}
+            onSelect={handleDropItemSelect}
             className="account-card"
           >
-            <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
+            <NavDropdown.Item eventKey={ALL}>Все</NavDropdown.Item>
             {dropdown.items.map((item) => (
-              <NavDropdown.Item key={item.id} eventKey={[item.id, item.name]}>
+              <NavDropdown.Item
+                key={item.id}
+                eventKey={JSON.stringify({ id: item.id, name: item.name })}
+              >
                 {item.name}
               </NavDropdown.Item>
             ))}
