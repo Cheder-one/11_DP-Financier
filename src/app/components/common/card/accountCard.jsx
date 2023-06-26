@@ -7,17 +7,12 @@ import _ from "lodash";
 
 const ALL = "Все";
 
-const AccountCard = ({ card, transactions }) => {
+const AccountCard = ({ card }) => {
   const [dropdown, setDropdown] = useState(null);
+  console.log({ dropdown });
+  console.log({ card });
 
-  console.log(card);
-  console.log(dropdown);
-  console.log(transactions);
-
-  const selectedElemId = dropdown?.id;
-  console.log(selectedElemId);
-
-  const filteredCard = _.filter(card, "");
+  const selectedItemId = dropdown?.id;
 
   const handleDropItemSelect = (eventKeys) => {
     eventKeys = JSON.parse(eventKeys);
@@ -30,8 +25,9 @@ const AccountCard = ({ card, transactions }) => {
 
   useEffect(() => {
     setDropdown({
+      id: `all-ids-${card.type}`,
+      type: card.type,
       name: ALL,
-      id: "ALL",
       items: card.dropdown.map((item) => ({
         id: item.id,
         name: item.name || toReadableDate(item.date)[0]

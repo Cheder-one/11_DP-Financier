@@ -8,19 +8,16 @@ import _ from "lodash";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState();
-  const { accounts, transactions } = user || {};
 
   useEffect(() => {
     axios.get(`/api/users/${userId}`).then((resp) => setUser(resp.data.user));
   }, [userId]);
 
-  const getCroppedTransacts = (type) => {
+  const { accounts, transactions } = user || {};
+
+  const getUniqTransacts = (type) => {
     if (_.isArray(transactions)) {
-      return _.chain(transactions)
-        .filter({ type })
-        .map(({ id, date }) => ({ id, date }))
-        .uniqBy("date")
-        .value();
+      return _.chain(transactions).filter({ type }).uniqBy("date").value();
     }
     return [];
   };
@@ -29,7 +26,7 @@ const MainPage = ({ userId }) => {
     {
       name: "Доходы",
       type: "income",
-      dropdown: getCroppedTransacts("income")
+      dropdown: getUniqTransacts("income")
     },
     {
       name: "Счета",
@@ -39,13 +36,12 @@ const MainPage = ({ userId }) => {
     {
       name: "Расходы",
       type: "expense",
-      dropdown: getCroppedTransacts("expense")
+      dropdown: getUniqTransacts("expense")
     }
   ];
 
   return (
     <div className="mx-4">
-      {/* <h1 className="text-3xl font-bold underline">Hello world!</h1> */}
       <Row className="mt-4">
         {user
           ? cards.map((card) => {
@@ -53,7 +49,7 @@ const MainPage = ({ userId }) => {
                 <Col md="4" key={card.name} className="my-3">
                   <Card>
                     <Card.Body className="p-0">
-                      <AccountCard {...{ card, transactions }} />
+                      <AccountCard {...{ card }} />
                     </Card.Body>
                   </Card>
                 </Col>

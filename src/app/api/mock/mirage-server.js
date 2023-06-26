@@ -27,7 +27,6 @@ export function makeServer({ environment = "development" } = {}) {
 
       this.get("/users/:user_id", (schema, request) => {
         const userId = request.params.user_id;
-        console.log(userId);
         return schema.users.find(userId);
       });
     }

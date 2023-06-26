@@ -2,8 +2,6 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
-import { toReadableDate } from "../../../utils";
-import _ from "lodash";
 
 const ALL = "Все";
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
@@ -60,7 +58,11 @@ const CardHeader = ({ card, handleSelect, dropdown }) => {
             onSelect={handleSelect}
           >
             <NavDropdown.Item
-              eventKey={JSON.stringify({ id: "ALL", name: ALL })}
+              eventKey={JSON.stringify({
+                id: `all-ids-${card.type}`,
+                type: card.type,
+                name: ALL
+              })}
             >
               {ALL}
             </NavDropdown.Item>
