@@ -7,7 +7,7 @@ const SwitchForm = ({ label, darkTheme }) => {
   const handleChange = (e) => {};
 
   return (
-    <Form className="d-flex">
+    <Form className="flex">
       <label className="me-2" htmlFor="theme-switcher">
         {label}
       </label>

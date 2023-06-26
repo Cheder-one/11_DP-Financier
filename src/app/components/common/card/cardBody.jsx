@@ -19,7 +19,7 @@ const CardBody = () => {
           <Row className="mx-auto">
             {bodyLabels.map((label) => (
               <Col
-                className="d-flex justify-center border p-0"
+                className="flex justify-center border p-0"
                 key={label}
                 md="4"
               >

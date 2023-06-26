@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
 import { toReadableDate } from "../../../utils";
+import _ from "lodash";
 
 const ALL = "Все";
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
@@ -10,6 +11,7 @@ const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 const CardHeader = ({ card }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdown, setDropdown] = useState(null);
+
   const [selectedElemId, setSelectedElemId] = useState({
     account: "",
     income: "",
@@ -37,6 +39,7 @@ const CardHeader = ({ card }) => {
       ...prev,
       name: keys.name
     }));
+    console.log({ dropdown });
   };
 
   useEffect(() => {
@@ -52,15 +55,19 @@ const CardHeader = ({ card }) => {
     };
   }, [isOpen]);
 
+  const obj = { id: "ALL", name: "ALL" };
+  const json = _(obj).value();
+  console.log(json); // '{"id":"ALL","name":"ALL"}'
+
   return (
     dropdown && (
       <Row className="card-header mx-auto border p-0">
-        <Col md="4" className="d-flex justify-center pt-0.5">
+        <Col md="4" className="flex justify-center pt-0.5">
           {card.name}
         </Col>
         <Col
           md="4"
-          className="d-flex justify-center px-1 pt-0.5"
+          className="flex justify-center px-1 pt-0.5"
           ref={dropdownRef}
         >
           <div
@@ -85,7 +92,9 @@ const CardHeader = ({ card }) => {
             onSelect={handleDropItemSelect}
             className="account-card"
           >
-            <NavDropdown.Item eventKey={ALL}>Все</NavDropdown.Item>
+            <NavDropdown.Item eventKey={JSON.stringify({ id: ALL, name: ALL })}>
+              {ALL}
+            </NavDropdown.Item>
             {dropdown.items.map((item) => (
               <NavDropdown.Item
                 key={item.id}
@@ -97,7 +106,7 @@ const CardHeader = ({ card }) => {
           </NavDropdown>
         </Col>
 
-        <Col md="4" className="d-flex justify-center">
+        <Col md="4" className="flex justify-center">
           <Button
             variant="black px-1"
             style={{

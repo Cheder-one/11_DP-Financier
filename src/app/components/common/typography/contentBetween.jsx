@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const ContentBetween = ({ children, className }) => {
   return (
-    <div className={`d-flex justify-content-between ${className}`}>
+    <div className={`flex justify-content-between ${className}`}>
       {children}
     </div>
   );
