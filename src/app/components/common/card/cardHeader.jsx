@@ -2,18 +2,20 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
+import { toReadableDate } from "../../../utils";
 
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
 const getDropdownItems = (card) => {
   return card.type === "account"
     ? card.dropdown.map((drop) => ({
-        id: drop.id
+        id: drop.id,
+        name: drop.name
       }))
-    : card.dropdown.map((drop) => {
-        const humanDate = new Date(drop.date).toLocaleString().split(",");
-        return humanDate[0];
-      });
+    : card.dropdown.map((drop) => ({
+        id: drop.id,
+        name: toReadableDate(drop.date)[0]
+      }));
 };
 
 const CardHeader = ({ card }) => {
@@ -29,8 +31,9 @@ const CardHeader = ({ card }) => {
 
   useEffect(() => {
     setDropdown({
-      label: "Все",
-      items: [{ id: "account-id-1", label: "Сбербанк" }]
+      name: "Все",
+      items: getDropdownItems(card)
+      // items: [{ id: "account-id-1", name: "Сбербанк" }]
     });
   }, [card]);
 
@@ -42,13 +45,13 @@ const CardHeader = ({ card }) => {
     let arrKeys = eventKey.split(",");
     arrKeys = {
       id: arrKeys.find((key) => key.includes("id")),
-      label: arrKeys.find((key) => !key.includes("id"))
+      name: arrKeys.find((key) => !key.includes("id"))
     };
     console.log(arrKeys);
 
     setDropdown((prev) => ({
       ...prev,
-      label: arrKeys.label
+      name: arrKeys.name
     }));
   };
 
@@ -90,7 +93,7 @@ const CardHeader = ({ card }) => {
             onClick={handleOpen}
           >
             <OverlayTooltip
-              text={<span className="mr-1">{dropdown.label}</span>}
+              text={<span className="mr-1">{dropdown.name}</span>}
             />
           </div>
 
@@ -103,8 +106,8 @@ const CardHeader = ({ card }) => {
           >
             <NavDropdown.Item eventKey={"Все"}>Все</NavDropdown.Item>
             {dropdown.items.map((item) => (
-              <NavDropdown.Item key={item.id} eventKey={[item.id, item.label]}>
-                {item.label}
+              <NavDropdown.Item key={item.id} eventKey={[item.id, item.name]}>
+                {item.name}
               </NavDropdown.Item>
             ))}
           </NavDropdown>

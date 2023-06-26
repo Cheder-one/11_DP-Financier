@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 // eslint-disable-next-line no-unused-vars
 import { Dropdown, DropdownButton, Image, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import getAvatar from "../../../utils/getAvatar";
 import { useMemo } from "react";
 import SwitchForm from "../../common/form/switchField";
+import { getAvatar } from "../../../utils";
 
 const NavBarDropdown = ({ darkTheme, onSelect }) => {
   const avatarSrc = useMemo(() => getAvatar(), []);
