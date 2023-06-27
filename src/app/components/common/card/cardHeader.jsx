@@ -33,12 +33,12 @@ const CardHeader = ({ card, handleSelect, dropdown }) => {
   return (
     dropdown && (
       <Row className="card-header mx-auto border p-0">
-        <Col md="4" className="flex justify-center pt-0.5">
+        <Col md="4" className="flex justify-center items-center pt-0.5">
           {card.name}
         </Col>
         <Col
-          md="4"
-          className="flex justify-center px-1 pt-0.5"
+          md="6"
+          className="flex justify-center items-center px-1 pt-0.5"
           ref={dropdownRef}
         >
           <div
@@ -77,7 +77,7 @@ const CardHeader = ({ card, handleSelect, dropdown }) => {
           </NavDropdown>
         </Col>
 
-        <Col md="4" className="flex justify-center">
+        <Col md="2" className="flex justify-center items-center">
           <Button
             variant="black px-1"
             style={{
@@ -87,11 +87,7 @@ const CardHeader = ({ card, handleSelect, dropdown }) => {
           >
             <Image
               src={PLUS_SQUARE_SRC}
-              rounded
-              style={{
-                backgroundColor: "white",
-                height: "83%"
-              }}
+              className="cursor-pointer select-none"
             />
           </Button>
         </Col>

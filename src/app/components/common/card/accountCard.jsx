@@ -6,23 +6,20 @@ import { toReadableDate } from "../../../utils";
 import _ from "lodash";
 
 const ALL = "Все";
+/* eslint-disable react/prop-types */
 
 const AccountCard = ({ card, allTransacts }) => {
   const [dropdown, setDropdown] = useState(null);
-  console.log({ dropdown });
-  console.log({ card });
 
   // const selectedItem = { id: dropdown?.id, type: dropdown?.type };
-  // console.log({ selectedItem });
+  //
 
   // Вывод всех транзакций карточки Счета "Сбербанк"
   const selectedData = { id: "account-id-1", type: "account" };
 
   // У меня есть номер счета, нужно узнать какие были транзакции по нему
-  console.log(allTransacts);
 
   const transOnAccount = _.filter(allTransacts, { account: selectedData.id });
-  console.log(transOnAccount);
 
   const handleDropItemSelect = (eventKeys) => {
     eventKeys = JSON.parse(eventKeys);
