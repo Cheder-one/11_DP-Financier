@@ -24,17 +24,17 @@ const MainPage = ({ userId }) => {
 
   const cards = [
     {
-      name: "Доходы",
+      name: "Доход",
       type: "income",
       dropdown: getUniqTransacts("income")
     },
     {
-      name: "Счета",
+      name: "Счет",
       type: "account",
       dropdown: _.isArray(accounts) ? accounts : []
     },
     {
-      name: "Расходы",
+      name: "Расход",
       type: "expense",
       dropdown: getUniqTransacts("expense")
     }
@@ -49,7 +49,7 @@ const MainPage = ({ userId }) => {
                 <Col md="4" key={card.name} className="my-3">
                   <Card>
                     <Card.Body className="p-0">
-                      <AccountCard {...{ card }} />
+                      <AccountCard {...{ card }} allTransacts={transactions} />
                     </Card.Body>
                   </Card>
                 </Col>
