@@ -2,27 +2,22 @@ import PropTypes from "prop-types";
 import CardHeader from "./cardHeader";
 import CardBody from "./cardBody";
 import { useEffect, useState } from "react";
-import { toReadableDate } from "../../../utils";
 import _ from "lodash";
 
 const ALL = "Все";
-/* eslint-disable react/prop-types */
 
 const AccountCard = ({ card, allTransacts }) => {
   const [dropdown, setDropdown] = useState(null);
-  console.log(card);
-  console.log(dropdown);
+  const [transactsOnAccount, setTransactsOnAccount] = useState(null);
 
-  // dropdown initial state
   useEffect(() => {
     setDropdown({
-      id: `all-ids-${card.type}`,
+      id: `all-ids`,
       type: card.type,
       name: ALL,
       items: card.dropdown.map((item) => ({
         id: item.id,
         name: item.name || item.date
-        // toReadableDate(item.date)[0]
       }))
     });
   }, [card]);
@@ -37,20 +32,21 @@ const AccountCard = ({ card, allTransacts }) => {
     }));
   };
 
-  const selectedItem = {
-    ...dropdown
-  };
-  console.log({ selectedItem });
-
-  // У меня есть номер счета, нужно узнать какие были транзакции по нему
-  const transactsOnAccount = _.filter(allTransacts, {
-    account: selectedItem.id
-  });
-
-  // Есть дата, нужно узнать какие были транзакции в этот день
-  const transactsOnAccount2 = _.filter(allTransacts, {
-    date: selectedItem.date
-  });
+  useEffect(() => {
+    let transacts = null;
+    if (dropdown && dropdown.id.includes("all")) {
+      transacts = allTransacts;
+    } else if (dropdown && dropdown.id.includes("account")) {
+      transacts = _.filter(allTransacts, {
+        account: dropdown.id
+      });
+    } else if (dropdown && dropdown.id.includes("transaction")) {
+      transacts = _.filter(allTransacts, {
+        date: dropdown.date
+      });
+    }
+    setTransactsOnAccount(transacts);
+  }, [dropdown, allTransacts]);
 
   return (
     <>
@@ -61,7 +57,7 @@ const AccountCard = ({ card, allTransacts }) => {
           dropdown={dropdown}
         />
 
-        <CardBody items={transactsOnAccount2} />
+        <CardBody items={transactsOnAccount} />
       </div>
     </>
   );
