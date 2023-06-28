@@ -9,9 +9,6 @@ const ALL = "Все";
 const AccountCard = ({ card, allTransacts }) => {
   const [dropdown, setDropdown] = useState(null);
   const [transactsOnAccount, setTransactsOnAccount] = useState(null);
-  console.log(card);
-  console.log(dropdown);
-  console.log(allTransacts);
 
   useEffect(() => {
     setDropdown({
@@ -36,23 +33,18 @@ const AccountCard = ({ card, allTransacts }) => {
   };
 
   useEffect(() => {
-    let cardTransacts = null;
     if (dropdown) {
-      if (dropdown.id.includes("all")) {
-        cardTransacts = _.filter(allTransacts, { type: card.type });
+      let cardTransacts = allTransacts;
 
-        if (cardTransacts.length === 0) {
-          cardTransacts = allTransacts;
-        }
+      if (dropdown.id.includes("all")) {
+        const result = _.filter(allTransacts, { type: card.type });
+        cardTransacts = result.length === 0 ? allTransacts : result;
       } else if (dropdown.id.includes("account")) {
-        cardTransacts = _.filter(allTransacts, {
-          account: dropdown.id
-        });
+        cardTransacts = _.filter(allTransacts, { account: dropdown.id });
       } else if (dropdown.id.includes("transaction")) {
-        cardTransacts = _.filter(allTransacts, {
-          date: dropdown.date
-        });
+        cardTransacts = _.filter(allTransacts, { date: dropdown.date });
       }
+
       setTransactsOnAccount(cardTransacts);
     }
   }, [dropdown, allTransacts, card.type]);
@@ -61,11 +53,10 @@ const AccountCard = ({ card, allTransacts }) => {
     <>
       <div className="account-card">
         <CardHeader
-          card={card}
-          handleSelect={handleDropItemSelect}
-          dropdown={dropdown}
-        />
 
+          {...{ card, dropdown, ALL }}
+          handleSelect={handleDropItemSelect}
+        />
         <CardBody items={transactsOnAccount} />
       </div>
     </>

@@ -4,12 +4,11 @@ import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
 import { toReadableDate } from "../../../utils";
 
-const ALL = "Все";
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 
 /* eslint-disable react/prop-types */
 
-const CardHeader = ({ card, handleSelect, dropdown }) => {
+const CardHeader = ({ card, handleSelect, dropdown, ALL }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
