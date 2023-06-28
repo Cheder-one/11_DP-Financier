@@ -9,6 +9,9 @@ const ALL = "Все";
 const AccountCard = ({ card, allTransacts }) => {
   const [dropdown, setDropdown] = useState(null);
   const [transactsOnAccount, setTransactsOnAccount] = useState(null);
+  console.log(card);
+  console.log(dropdown);
+  console.log(allTransacts);
 
   useEffect(() => {
     setDropdown({
@@ -33,20 +36,26 @@ const AccountCard = ({ card, allTransacts }) => {
   };
 
   useEffect(() => {
-    let transacts = null;
-    if (dropdown && dropdown.id.includes("all")) {
-      transacts = allTransacts;
-    } else if (dropdown && dropdown.id.includes("account")) {
-      transacts = _.filter(allTransacts, {
-        account: dropdown.id
-      });
-    } else if (dropdown && dropdown.id.includes("transaction")) {
-      transacts = _.filter(allTransacts, {
-        date: dropdown.date
-      });
+    let cardTransacts = null;
+    if (dropdown) {
+      if (dropdown.id.includes("all")) {
+        cardTransacts = _.filter(allTransacts, { type: card.type });
+
+        if (cardTransacts.length === 0) {
+          cardTransacts = allTransacts;
+        }
+      } else if (dropdown.id.includes("account")) {
+        cardTransacts = _.filter(allTransacts, {
+          account: dropdown.id
+        });
+      } else if (dropdown.id.includes("transaction")) {
+        cardTransacts = _.filter(allTransacts, {
+          date: dropdown.date
+        });
+      }
+      setTransactsOnAccount(cardTransacts);
     }
-    setTransactsOnAccount(transacts);
-  }, [dropdown, allTransacts]);
+  }, [dropdown, allTransacts, card.type]);
 
   return (
     <>

@@ -23,8 +23,6 @@ const CardHeader = ({ card, handleSelect, dropdown }) => {
     })
   };
 
-  console.log(transformDropdown);
-
   const handleDropOpen = () => {
     setIsOpen((prev) => !prev);
   };
