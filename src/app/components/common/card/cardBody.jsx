@@ -11,15 +11,15 @@ const X_SQUARE_SRC = "src/app/assets/x-square.svg";
 
 const CardBody = ({ items }) => {
   const columns = [
-    { label: "amount", valueKey: "amount" },
-    { label: "category", valueKey: "category" },
+    { label: "amount" },
+    { label: "category" },
     {
       label: "delete",
       renderValue: (item) => (
         <Image
           onClick={() => console.log(`${item.id} delete`)}
           src={X_SQUARE_SRC}
-          className="rounded-sm cursor-pointer  select-none active:bg-red-300 duration-100"
+          className="rounded-sm cursor-pointer select-none active:bg-red-300 duration-100"
         />
       )
     }
@@ -36,16 +36,16 @@ const CardBody = ({ items }) => {
       {items.map((item) => (
         <ListGroupItem key={item.id} className="p-0">
           <Row className="mx-auto">
-            {columns.map(({ label, valueKey, renderValue }) => (
+            {columns.map(({ label, renderValue }) => (
               <Col
                 className="flex justify-center  items-center border px-0 py-0.5"
-                key={label}
                 md={label === "delete" ? 2 : label === "amount" ? 4 : 6}
+                key={label}
               >
                 {renderValue ? (
                   renderValue(item)
                 ) : (
-                  <OverlayTooltip text={item[valueKey]} />
+                  <OverlayTooltip text={item[label]} />
                 )}
               </Col>
             ))}

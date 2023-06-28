@@ -10,26 +10,10 @@ const ALL = "Все";
 
 const AccountCard = ({ card, allTransacts }) => {
   const [dropdown, setDropdown] = useState(null);
+  console.log(card);
+  console.log(dropdown);
 
-  // const selectedItem = { id: dropdown?.id, type: dropdown?.type };
-  //
-
-  // Вывод всех транзакций карточки Счета "Сбербанк"
-  const selectedData = { id: "account-id-1", type: "account" };
-
-  // У меня есть номер счета, нужно узнать какие были транзакции по нему
-
-  const transOnAccount = _.filter(allTransacts, { account: selectedData.id });
-
-  const handleDropItemSelect = (eventKeys) => {
-    eventKeys = JSON.parse(eventKeys);
-    setDropdown((prev) => ({
-      ...prev,
-      name: eventKeys.name,
-      id: eventKeys.id
-    }));
-  };
-
+  // dropdown initial state
   useEffect(() => {
     setDropdown({
       id: `all-ids-${card.type}`,
@@ -37,10 +21,36 @@ const AccountCard = ({ card, allTransacts }) => {
       name: ALL,
       items: card.dropdown.map((item) => ({
         id: item.id,
-        name: item.name || toReadableDate(item.date)[0]
+        name: item.name || item.date
+        // toReadableDate(item.date)[0]
       }))
     });
   }, [card]);
+
+  const handleDropItemSelect = (eventKeys) => {
+    eventKeys = JSON.parse(eventKeys);
+    setDropdown((prev) => ({
+      ...prev,
+      id: eventKeys.id,
+      name: eventKeys.name,
+      date: eventKeys.date
+    }));
+  };
+
+  const selectedItem = {
+    ...dropdown
+  };
+  console.log({ selectedItem });
+
+  // У меня есть номер счета, нужно узнать какие были транзакции по нему
+  const transactsOnAccount = _.filter(allTransacts, {
+    account: selectedItem.id
+  });
+
+  // Есть дата, нужно узнать какие были транзакции в этот день
+  const transactsOnAccount2 = _.filter(allTransacts, {
+    date: selectedItem.date
+  });
 
   return (
     <>
@@ -51,7 +61,7 @@ const AccountCard = ({ card, allTransacts }) => {
           dropdown={dropdown}
         />
 
-        <CardBody items={transOnAccount} />
+        <CardBody items={transactsOnAccount2} />
       </div>
     </>
   );

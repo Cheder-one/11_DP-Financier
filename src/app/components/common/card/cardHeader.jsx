@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { Button, Col, Image, NavDropdown, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
+import { toReadableDate } from "../../../utils";
 
 const ALL = "Все";
 const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
@@ -11,6 +12,18 @@ const PLUS_SQUARE_SRC = "src/app/assets/plus-square-fill.svg";
 const CardHeader = ({ card, handleSelect, dropdown }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const transformDropdown = {
+    ...dropdown,
+    items: dropdown?.items.map((item) => {
+      const isTransaction = item.id.includes("transaction");
+      const name = isTransaction ? toReadableDate(item.name)[0] : item.name;
+      const date = isTransaction ? item.name : null;
+      return { ...item, name, date };
+    })
+  };
+
+  console.log(transformDropdown);
 
   const handleDropOpen = () => {
     setIsOpen((prev) => !prev);
@@ -46,7 +59,7 @@ const CardHeader = ({ card, handleSelect, dropdown }) => {
             onClick={handleDropOpen}
           >
             <OverlayTooltip
-              text={<span className="mr-1">{dropdown.name}</span>}
+              text={<span className="mr-1">{transformDropdown.name}</span>}
             />
           </div>
 
@@ -66,10 +79,10 @@ const CardHeader = ({ card, handleSelect, dropdown }) => {
             >
               {ALL}
             </NavDropdown.Item>
-            {dropdown.items.map((item) => (
+            {transformDropdown.items.map((item) => (
               <NavDropdown.Item
                 key={item.id}
-                eventKey={JSON.stringify({ id: item.id, name: item.name })}
+                eventKey={JSON.stringify({ ...item })}
               >
                 {item.name}
               </NavDropdown.Item>
