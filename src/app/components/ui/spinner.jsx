@@ -3,7 +3,7 @@ import { Spinner } from "react-bootstrap";
 
 const Loader = ({ text, className }) => {
   return (
-    <div className={`${className}}`}>
+    <div className={`${className}`}>
       <Spinner
         size="sm"
         role="status"
