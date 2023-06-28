@@ -53,7 +53,6 @@ const AccountCard = ({ card, allTransacts }) => {
     <>
       <div className="account-card">
         <CardHeader
-
           {...{ card, dropdown, ALL }}
           handleSelect={handleDropItemSelect}
         />

@@ -32,13 +32,13 @@ const CardBody = ({ items }) => {
   }
 
   return (
-    <ListGroup className="list-group-flush overflow-auto border-r border-gray-400 vh-25 me-0">
+    <ListGroup className="list-group-flush overflow-auto border-gray-400 vh-25 me-0">
       {items.map((item) => (
         <ListGroupItem key={item.id} className="p-0">
           <Row className="mx-auto">
             {columns.map(({ label, renderValue }) => (
               <Col
-                className="flex justify-center  items-center border px-0 py-0.5"
+                className="flex justify-center items-center border px-0 py-0.5"
                 md={label === "delete" ? 2 : label === "amount" ? 4 : 6}
                 key={label}
               >

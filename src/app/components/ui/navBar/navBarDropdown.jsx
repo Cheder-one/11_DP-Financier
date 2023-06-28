@@ -16,7 +16,7 @@ const NavBarDropdown = ({ darkTheme, onSelect }) => {
         title={
           <>
             <Image src={avatarSrc} className="me-2" id="avatar-icon" />
-            Username
+            <span>Username</span>
           </>
         }
         onSelect={onSelect}
