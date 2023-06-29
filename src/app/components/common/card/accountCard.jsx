@@ -1,14 +1,20 @@
 import PropTypes from "prop-types";
 import CardHeader from "./cardHeader";
 import CardBody from "./cardBody";
-import { useEffect, useState } from "react";
-import _ from "lodash";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { find, filter } from "lodash";
 
 const ALL = "Все";
 
 const AccountCard = ({ card, categories, allTransacts }) => {
   const [dropdown, setDropdown] = useState(null);
   const [transactsByCondition, setTransactsByCondition] = useState(null);
+
+  const renderComponent = useRef(0);
+
+  useEffect(() => {
+    renderComponent.current += 1;
+  });
 
   useEffect(() => {
     setDropdown({
@@ -22,7 +28,7 @@ const AccountCard = ({ card, categories, allTransacts }) => {
     });
   }, [card]);
 
-  const handleDropItemSelect = (eventKeys) => {
+  const handleDropItemSelect = useCallback((eventKeys) => {
     eventKeys = JSON.parse(eventKeys);
     setDropdown((prev) => ({
       ...prev,
@@ -30,24 +36,24 @@ const AccountCard = ({ card, categories, allTransacts }) => {
       name: eventKeys.name,
       date: eventKeys.date
     }));
-  };
+  }, []);
 
   useEffect(() => {
     if (dropdown) {
       let cardTransacts = allTransacts;
 
       if (dropdown.id.includes("all")) {
-        const result = _.filter(allTransacts, { type: card.type });
+        const result = filter(allTransacts, { type: card.type });
         cardTransacts = result.length === 0 ? allTransacts : result;
       } else if (dropdown.id.includes("account")) {
-        cardTransacts = _.filter(allTransacts, { account: dropdown.id });
+        cardTransacts = filter(allTransacts, { account: dropdown.id });
       } else if (dropdown.id.includes("transaction")) {
-        cardTransacts = _.filter(allTransacts, { date: dropdown.date });
+        cardTransacts = filter(allTransacts, { date: dropdown.date });
       }
 
       cardTransacts = cardTransacts.map((transact) => ({
         ...transact,
-        category: _.find(categories, { id: transact.category }).name
+        category: find(categories, { id: transact.category }).name
       }));
 
       setTransactsByCondition(cardTransacts);
@@ -57,6 +63,7 @@ const AccountCard = ({ card, categories, allTransacts }) => {
   return (
     <>
       <div className="account-card">
+        <h1>{renderComponent.current}</h1>
         <CardHeader
           {...{ card, dropdown, ALL }}
           handleSelect={handleDropItemSelect}
@@ -68,7 +75,9 @@ const AccountCard = ({ card, categories, allTransacts }) => {
 };
 
 AccountCard.propTypes = {
-  card: PropTypes.object.isRequired
+  card: PropTypes.object.isRequired,
+  categories: PropTypes.array.isRequired,
+  allTransacts: PropTypes.array.isRequired
 };
 
 export default AccountCard;
