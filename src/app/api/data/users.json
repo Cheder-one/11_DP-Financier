@@ -11,15 +11,20 @@
         "id": "account-id-1",
         "name": "Сбербанк",
         "public": false,
-        "categories": ["category-id-1"],
+        "category": "category-id-1",
         "balance": 90000,
-        "transactions": ["transaction-id-1", "transaction-id-2"]
+        "transactions": [
+          "transaction-id-1",
+          "transaction-id-2",
+          "transaction-id-5",
+          "transaction-id-6"
+        ]
       },
       {
         "id": "account-id-2",
         "name": "Альфа-банк",
         "public": false,
-        "categories": ["category-id-2"],
+        "category": "category-id-2",
         "balance": 80000,
         "transactions": ["transaction-id-3", "transaction-id-4"]
       }
@@ -45,7 +50,7 @@
     "transactions": [
       {
         "id": "transaction-id-1",
-        "amount": 5000,
+        "amount": 150000,
         "type": "income",
         "account": "account-id-1",
         "category": "category-id-1",
@@ -61,7 +66,7 @@
       },
       {
         "id": "transaction-id-3",
-        "amount": 2000,
+        "amount": 20000,
         "type": "income",
         "account": "account-id-2",
         "category": "category-id-1",
@@ -105,7 +110,7 @@
         "id": "account-id-3",
         "name": "Тинькофф",
         "public": true,
-        "categories": ["category-id-3"],
+        "category": "category-id-3",
         "balance": 100,
         "transactions": ["transaction-id-6"]
       }

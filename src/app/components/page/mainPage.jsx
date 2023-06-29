@@ -13,9 +13,9 @@ const MainPage = ({ userId }) => {
     axios.get(`/api/users/${userId}`).then((resp) => setUser(resp.data.user));
   }, [userId]);
 
-  const { accounts, transactions } = user || {};
+  const { accounts, categories, transactions } = user || {};
 
-  const getUniqTransacts = (type) => {
+  const getUniqTransactDates = (type) => {
     if (_.isArray(transactions)) {
       return _.chain(transactions).filter({ type }).uniqBy("date").value();
     }
@@ -26,7 +26,7 @@ const MainPage = ({ userId }) => {
     {
       name: "Доход",
       type: "income",
-      dropdown: getUniqTransacts("income")
+      dropdown: getUniqTransactDates("income")
     },
     {
       name: "Счет",
@@ -36,7 +36,7 @@ const MainPage = ({ userId }) => {
     {
       name: "Расход",
       type: "expense",
-      dropdown: getUniqTransacts("expense")
+      dropdown: getUniqTransactDates("expense")
     }
   ];
 
@@ -49,7 +49,10 @@ const MainPage = ({ userId }) => {
               <Col md="4" key={card.name} className="my-3">
                 <Card>
                   <Card.Body className="p-0">
-                    <AccountCard {...{ card }} allTransacts={transactions} />
+                    <AccountCard
+                      {...{ card, categories }}
+                      allTransacts={transactions}
+                    />
                   </Card.Body>
                 </Card>
               </Col>

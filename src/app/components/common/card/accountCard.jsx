@@ -6,9 +6,9 @@ import _ from "lodash";
 
 const ALL = "Все";
 
-const AccountCard = ({ card, allTransacts }) => {
+const AccountCard = ({ card, categories, allTransacts }) => {
   const [dropdown, setDropdown] = useState(null);
-  const [transactsOnAccount, setTransactsOnAccount] = useState(null);
+  const [transactsByCondition, setTransactsByCondition] = useState(null);
 
   useEffect(() => {
     setDropdown({
@@ -45,9 +45,14 @@ const AccountCard = ({ card, allTransacts }) => {
         cardTransacts = _.filter(allTransacts, { date: dropdown.date });
       }
 
-      setTransactsOnAccount(cardTransacts);
+      cardTransacts = cardTransacts.map((transact) => ({
+        ...transact,
+        category: _.find(categories, { id: transact.category }).name
+      }));
+
+      setTransactsByCondition(cardTransacts);
     }
-  }, [dropdown, allTransacts, card.type]);
+  }, [dropdown, allTransacts, card.type, categories]);
 
   return (
     <>
@@ -56,7 +61,7 @@ const AccountCard = ({ card, allTransacts }) => {
           {...{ card, dropdown, ALL }}
           handleSelect={handleDropItemSelect}
         />
-        <CardBody items={transactsOnAccount} />
+        <CardBody items={transactsByCondition} />
       </div>
     </>
   );
