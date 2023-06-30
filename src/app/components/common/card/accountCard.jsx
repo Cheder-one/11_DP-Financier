@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import CardHeader from "./cardHeader";
 import CardBody from "./cardBody";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { find, filter } from "lodash";
 
 const ALL = "Все";
@@ -9,12 +9,6 @@ const ALL = "Все";
 const AccountCard = ({ card, categories, allTransacts }) => {
   const [dropdown, setDropdown] = useState(null);
   const [transactsByCondition, setTransactsByCondition] = useState(null);
-
-  const renderComponent = useRef(0);
-
-  useEffect(() => {
-    renderComponent.current += 1;
-  });
 
   useEffect(() => {
     setDropdown({
@@ -63,7 +57,6 @@ const AccountCard = ({ card, categories, allTransacts }) => {
   return (
     <>
       <div className="account-card">
-        <h1>{renderComponent.current}</h1>
         <CardHeader
           {...{ card, dropdown, ALL }}
           handleSelect={handleDropItemSelect}
