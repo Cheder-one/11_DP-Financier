@@ -55,15 +55,13 @@ const AccountCard = ({ card, categories, allTransacts }) => {
   }, [dropdown, allTransacts, card.type, categories]);
 
   return (
-    <>
-      <div className="account-card">
-        <CardHeader
-          {...{ card, dropdown, ALL }}
-          handleSelect={handleDropItemSelect}
-        />
-        <CardBody items={transactsByCondition} />
-      </div>
-    </>
+    <div className="account-card">
+      <CardHeader
+        {...{ card, dropdown, ALL }}
+        handleSelect={handleDropItemSelect}
+      />
+      <CardBody items={transactsByCondition} />
+    </div>
   );
 };
 

@@ -12,7 +12,7 @@ const CardHeader = ({ card, handleSelect, dropdown, ALL }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const transformDropdown = {
+  const transformedDropdown = {
     ...dropdown,
     items: dropdown?.items.map((item) => {
       const isTransaction = item.id.includes("transaction");
@@ -56,7 +56,7 @@ const CardHeader = ({ card, handleSelect, dropdown, ALL }) => {
             onClick={handleDropOpen}
           >
             <OverlayTooltip
-              text={<span className="mr-1">{transformDropdown.name}</span>}
+              text={<span className="mr-1">{transformedDropdown.name}</span>}
             />
           </div>
 
@@ -76,7 +76,7 @@ const CardHeader = ({ card, handleSelect, dropdown, ALL }) => {
             >
               {ALL}
             </NavDropdown.Item>
-            {transformDropdown.items.map((item) => (
+            {transformedDropdown.items.map((item) => (
               <NavDropdown.Item
                 key={item.id}
                 eventKey={JSON.stringify({ ...item })}

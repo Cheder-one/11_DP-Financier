@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import _ from "lodash";
+import { chain, isArray } from "lodash";
 import { Card, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import AccountCard from "../common/card/accountCard";
@@ -10,14 +10,23 @@ const MainPage = ({ userId }) => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    axios.get(`/api/users/${userId}`).then((resp) => setUser(resp.data.user));
+    const fetchData = async () => {
+      try {
+        const resp = await axios.get(`/api/users/${userId}`);
+        setUser(resp.data.user);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
   }, [userId]);
 
   const { accounts, categories, transactions } = user || {};
 
   const getUniqTransactDates = (type) => {
-    if (_.isArray(transactions)) {
-      return _.chain(transactions).filter({ type }).uniqBy("date").value();
+    if (isArray(transactions)) {
+      return chain(transactions).filter({ type }).uniqBy("date").value();
     }
     return [];
   };
@@ -31,7 +40,7 @@ const MainPage = ({ userId }) => {
     {
       name: "Счет",
       type: "account",
-      dropdown: _.isArray(accounts) ? accounts : []
+      dropdown: isArray(accounts) ? accounts : []
     },
     {
       name: "Расход",
