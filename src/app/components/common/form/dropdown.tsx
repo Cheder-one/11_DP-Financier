@@ -13,12 +13,17 @@ const Dropdown = ({ name }) => {
               title={"DropdownName"}
               drop="down-centered"
               // menuVariant="dark"
-              className="account-card text-black"
+              className=""
             >
-              <NavDropdown.Item>Something</NavDropdown.Item>
-              <NavDropdown.Item>Separated link</NavDropdown.Item>
-              <NavDropdown.Item>Separated link</NavDropdown.Item>
-              <NavDropdown.Item>Separated link</NavDropdown.Item>
+              <NavDropdown.Item>Все</NavDropdown.Item>
+              <NavDropdown.Divider className="my-1" />
+              <NavDropdown.Item>Счет 1</NavDropdown.Item>
+              <NavDropdown.Item>Счет 2</NavDropdown.Item>
+              <NavDropdown.Item>Счет 3</NavDropdown.Item>
+              <NavDropdown.Item>Счет 3</NavDropdown.Item>
+              <NavDropdown.Item>Счет 3</NavDropdown.Item>
+              <NavDropdown.Item>Счет 3</NavDropdown.Item>
+              <NavDropdown.Item>Счет 3</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

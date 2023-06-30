@@ -120,35 +120,44 @@ body::-webkit-scrollbar-thumb:hover {
 
 /* ----------Main .account-cards---------- */
 /* Смещение скроллбара карточки вправо */
-.account-card .list-group-flush {
+/* .account-card .list-group-flush {
   overflow-y: auto;
   margin-right: -2px;
-}
+} */
 
 /* Высота карточки */
 /* .account-card .list-group-flush {
   max-height: 140px;
 } */
 
+/* Размер элементов и их поведение */
+/* .account-card .dropdown-menu.show a.dropdown-item {
+  padding-top: 2px;
+  padding-bottom: 2px;
+} */
+/* .account-card .dropdown-menu.show .dropdown-item:hover {
+  background-color: #c9ccd0;
+}
+
+.account-card .dropdown-menu.show .dropdown-item:nth-child(2) {
+  border-top: 1px solid #c9ccd0;
+  padding-top: 0.2rem;
+  padding-bottom: 2px;
+}
+*/
+
 /* Размер и переполнение списка счетов */
-.account-card .dropdown-menu.show {
+.dropdown-menu.show {
   overflow: auto;
   max-height: 10rem;
   overflow-x: hidden;
 }
 
-/* Размер элементов и их поведение */
-.account-card .dropdown-menu.show a.dropdown-item {
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-.account-card .dropdown-menu.show .dropdown-item:hover {
-  background-color: #c9ccd0;
+.dropdown-item:hover {
+  background-color: lightgray !important;
 }
 
-/* Рисуем разделитель */
-.account-card .dropdown-menu.show .dropdown-item:nth-child(2) {
-  border-top: 1px solid #c9ccd0;
-  padding-top: 0.2rem;
-  padding-bottom: 2px;
+.dropdown-divider {
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
 }
