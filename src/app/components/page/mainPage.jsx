@@ -3,8 +3,9 @@ import axios from "axios";
 import { chain, isArray } from "lodash";
 import { Card, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import AccountCard from "../common/card/accountCard";
+// import AccountCard from "../common/card/accountCard";
 import Loader from "../ui/spinner";
+import AccountCard from "../common/card2/accountCard";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState();
@@ -54,7 +55,16 @@ const MainPage = ({ userId }) => {
       {user ? (
         <div className="mx-4">
           <Row className="mt-4">
-            {cards.map((card) => (
+            <Col md={"4"} className="my-3">
+              <AccountCard />
+            </Col>
+            <Col md={"4"} className="my-3">
+              <AccountCard />
+            </Col>
+            <Col md={"4"} className="my-3">
+              <AccountCard />
+            </Col>
+            {/* {cards.map((card) => (
               <Col md="4" key={card.name} className="my-3">
                 <Card>
                   <Card.Body className="p-0">
@@ -65,7 +75,7 @@ const MainPage = ({ userId }) => {
                   </Card.Body>
                 </Card>
               </Col>
-            ))}
+            ))} */}
           </Row>
 
           <Row className="mt-4">

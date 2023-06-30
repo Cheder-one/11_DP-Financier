@@ -38,13 +38,23 @@ const NavBar = () => {
     <Navbar bg="light" expand="sm" onClick={handleClick}>
       <HeaderContainer className="mx-4">
         <Navbar.Brand as={Link} to={"/"} className="mt-0.5">
+          <img
+            alt="LOGO"
+            src={LOGO_SRC}
+            width="30"
+            height="30"
+            className="d-inline-block items-center mb-1 me-2 rounded-2xl"
+          />
+          Financier
+        </Navbar.Brand>
+        {/* <Navbar.Brand as={Link} to={"/"} className="mt-0.5">
           <Image
             src={LOGO_SRC}
             className="mb-1 me-2"
             style={{ width: "30px", borderRadius: "50%" }}
           />
           Financier
-        </Navbar.Brand>
+        </Navbar.Brand> */}
 
         <Nav className="sm:mr-auto my-2 my-lg-0">
           <Nav.Link as={Link} to={"/main"} active={activeLink === "/main"}>

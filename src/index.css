@@ -1,7 +1,7 @@
 @import url("./styles/css/vh-wh.css");
 /* @import url("./styles/css/justify-align.css"); */
 
-/* @tailwind base; */
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -150,5 +150,5 @@ body::-webkit-scrollbar-thumb:hover {
 .account-card .dropdown-menu.show .dropdown-item:nth-child(2) {
   border-top: 1px solid #c9ccd0;
   padding-top: 0.2rem;
-  margin-top: 0.2rem;
+  padding-bottom: 2px;
 }

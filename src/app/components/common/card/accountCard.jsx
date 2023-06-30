@@ -36,7 +36,13 @@ const AccountCard = ({ card, categories, allTransacts }) => {
   useEffect(() => {
     if (dropdown) {
       let cardTransacts = null;
-      const { id, date } = dropdown;
+      const { id, date, type } = dropdown;
+
+      if (type === "account") {
+        const accountTransacts = filter(allTransacts, { account: id });
+
+        cardTransacts = filter(accountTransacts, { date });
+      }
 
       if (id.includes("all")) {
         const result = filter(allTransacts, { type: card.type });
