@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import NavBarDropdown from "./navBarDropdown";
 import { Link, useLocation } from "react-router-dom";
-import { Navbar, Nav, Image, Container } from "react-bootstrap";
+import { Navbar, Nav, Image } from "react-bootstrap";
 import HeaderContainer from "../../common/typography/headerContainer";
 import LOGO_SRC from "../../../assets/logo";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { ThemeContext } from "../../common/theme/ThemeContext";
 
-const NavBar = ({ onToggleTheme, darkTheme }) => {
+const NavBar = () => {
+  const { darkTheme, handleToggleTheme } = useContext(ThemeContext);
   const [activeLink, setActiveLink] = useState(useLocation().pathname);
   const prevHrefRef = useRef();
 
@@ -24,7 +26,7 @@ const NavBar = ({ onToggleTheme, darkTheme }) => {
   const handleItemSelect = (eventKey) => {
     switch (eventKey) {
       case "switch-theme":
-        onToggleTheme();
+        handleToggleTheme();
         return;
       case "exit":
         localStorage.removeItem("email");
@@ -71,7 +73,7 @@ const NavBar = ({ onToggleTheme, darkTheme }) => {
 };
 
 NavBar.propTypes = {
-  onToggleTheme: PropTypes.func,
+  handleToggleTheme: PropTypes.func,
   darkTheme: PropTypes.bool
 };
 
