@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import CardHeader from "./cardHeader";
-import CardBody from "./cardBody";
 import { useCallback, useEffect, useState } from "react";
 import { find, filter } from "lodash";
+
+import CardHeader from "./cardHeader";
+import CardBody from "./cardBody";
 
 const ALL = "Все";
 
@@ -34,8 +35,8 @@ const AccountCard = ({ card, categories, allTransacts }) => {
 
   useEffect(() => {
     if (dropdown) {
+      let cardTransacts = null;
       const { id, date } = dropdown;
-      let cardTransacts = allTransacts;
 
       if (id.includes("all")) {
         const result = filter(allTransacts, { type: card.type });
