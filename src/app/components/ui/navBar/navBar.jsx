@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import NavBarDropdown from "./navBarDropdown";
 import { Link, useLocation } from "react-router-dom";
-import { Navbar, Nav, Image } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import HeaderContainer from "../../common/typography/headerContainer";
 import LOGO_SRC from "../../../assets/logo";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -47,14 +47,6 @@ const NavBar = () => {
           />
           Financier
         </Navbar.Brand>
-        {/* <Navbar.Brand as={Link} to={"/"} className="mt-0.5">
-          <Image
-            src={LOGO_SRC}
-            className="mb-1 me-2"
-            style={{ width: "30px", borderRadius: "50%" }}
-          />
-          Financier
-        </Navbar.Brand> */}
 
         <Nav className="sm:mr-auto my-2 my-lg-0">
           <Nav.Link as={Link} to={"/main"} active={activeLink === "/main"}>

@@ -1,14 +1,5 @@
 import PropTypes from "prop-types";
-// eslint-disable-next-line no-unused-vars
-import {
-  Container,
-  Dropdown,
-  DropdownButton,
-  Image,
-  Nav,
-  NavDropdown,
-  Navbar
-} from "react-bootstrap";
+import { Dropdown, DropdownButton, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
 import SwitchForm from "../../common/form/switchField";
@@ -19,34 +10,6 @@ const NavBarDropdown = ({ darkTheme, onSelect }) => {
 
   return (
     <>
-      {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </DropdownButton> */}
-
-      {/* <Navbar bg="" className="d-inline-block items-center ">
-        <Container fluid>
-          <Navbar.Toggle aria-controls="navbar-dark" />
-          <Navbar.Collapse id="navbar">
-            <Nav>
-              <NavDropdown
-                id="nav-dropdown"
-                title={"DropdownName"}
-                drop="down-centered"
-                // menuVariant="dark"
-                className="account-card text-black"
-              >
-                <NavDropdown.Item >Something</NavDropdown.Item>
-                <NavDropdown.Item>Separated link</NavDropdown.Item>
-                <NavDropdown.Item>Separated link</NavDropdown.Item>
-                <NavDropdown.Item>Separated link</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar> */}
-
       <DropdownButton
         variant="light"
         title={
@@ -77,31 +40,6 @@ const NavBarDropdown = ({ darkTheme, onSelect }) => {
           Выйти
         </Dropdown.Item>
       </DropdownButton>
-
-      {/* <NavDropdown
-        title={
-          <>
-            <Image src={avatarSrc} className="me-2" id="avatar-icon" />
-            Username
-          </>
-        }
-        drop={"down-centered"}
-        onSelect={onSelect}
-        className="me-3"
-      >
-        <NavDropdown.Item eventKey={"1_profile"} as={Link} to={"/profile"}>
-          Профиль
-        </NavDropdown.Item>
-        <NavDropdown.Item eventKey="switchTheme">
-          <SwitchForm label="Ночь" darkTheme={darkTheme} />
-        </NavDropdown.Item>
-        <NavDropdown.Item eventKey="3_settings" as={Link} to={"/settings"}>
-          Настройки
-        </NavDropdown.Item>
-        <NavDropdown.Item eventKey="exit" href={"/"}>
-          Выйти
-        </NavDropdown.Item>
-      </NavDropdown> */}
     </>
   );
 };

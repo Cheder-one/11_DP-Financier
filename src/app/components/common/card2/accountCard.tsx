@@ -46,39 +46,6 @@ const AccountCard = ({ md }: Props) => {
               >
                 3
               </Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
-              <Col md={md[0]}>1</Col>
-              <Col md={md[1]}>2</Col>
-              <Col md={md[2]}>3</Col>
             </Row>
           </ListGroupItem>
         </ListGroup>

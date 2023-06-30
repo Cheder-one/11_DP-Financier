@@ -118,34 +118,7 @@ body::-webkit-scrollbar-thumb:hover {
   font-size: smaller;
 } */
 
-/* ----------Main .account-cards---------- */
-/* Смещение скроллбара карточки вправо */
-/* .account-card .list-group-flush {
-  overflow-y: auto;
-  margin-right: -2px;
-} */
-
-/* Высота карточки */
-/* .account-card .list-group-flush {
-  max-height: 140px;
-} */
-
-/* Размер элементов и их поведение */
-/* .account-card .dropdown-menu.show a.dropdown-item {
-  padding-top: 2px;
-  padding-bottom: 2px;
-} */
-/* .account-card .dropdown-menu.show .dropdown-item:hover {
-  background-color: #c9ccd0;
-}
-
-.account-card .dropdown-menu.show .dropdown-item:nth-child(2) {
-  border-top: 1px solid #c9ccd0;
-  padding-top: 0.2rem;
-  padding-bottom: 2px;
-}
-*/
-
+/* ----------/main .account-cards---------- */
 /* Размер и переполнение списка счетов */
 .dropdown-menu.show {
   overflow: auto;
@@ -153,10 +126,14 @@ body::-webkit-scrollbar-thumb:hover {
   overflow-x: hidden;
 }
 
+/* dropdown-title */
+.dropdown-toggle.nav-link {
+  color: #000 !important;
+}
+/* dropdown-items */
 .dropdown-item:hover {
   background-color: lightgray !important;
 }
-
 .dropdown-divider {
   margin-top: 4px !important;
   margin-bottom: 4px !important;
