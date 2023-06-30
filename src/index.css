@@ -122,7 +122,7 @@ body::-webkit-scrollbar-thumb:hover {
 /* Размер и переполнение списка счетов */
 .dropdown-menu.show {
   overflow: auto;
-  max-height: 10rem;
+  max-height: 11rem;
   overflow-x: hidden;
 }
 

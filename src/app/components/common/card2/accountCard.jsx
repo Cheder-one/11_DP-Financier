@@ -3,18 +3,16 @@ import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
 import Dropdown from "../form/dropdown";
 
-const AccountCard = ({ md }) => {
-  md = [4, 6, 2];
-
+const AccountCard = ({ md, cardName }) => {
   return (
     <Card className="p-0">
       <Card.Body className="p-0">
         <Row className="card-header mx-auto border p-0">
           <Col md={md[0]} className="flex justify-center items-center">
-            {"Card"}
+            {cardName}
           </Col>
-          <Col md={md[1]} className="flex justify-center items-center">
-            <Dropdown />
+          <Col md={md[1]} className="mx-auto p-1">
+            <Dropdown name={<OverlayTooltip text={"Dropdown"} />} />
           </Col>
           <Col md={md[2]} className="flex justify-center items-center">
             {"+"}

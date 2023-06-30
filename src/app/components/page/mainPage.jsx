@@ -55,15 +55,11 @@ const MainPage = ({ userId }) => {
       {user ? (
         <div className="mx-4">
           <Row className="mt-4">
-            <Col md={"4"} className="my-3">
-              <AccountCard />
-            </Col>
-            <Col md={"4"} className="my-3">
-              <AccountCard />
-            </Col>
-            <Col md={"4"} className="my-3">
-              <AccountCard />
-            </Col>
+            {cards.map(({ name }) => (
+              <Col key={name} md={"4"} className="my-3">
+                <AccountCard md={[4, 6, 2]} cardName={name} />
+              </Col>
+            ))}
             {/* {cards.map((card) => (
               <Col md="4" key={card.name} className="my-3">
                 <Card>

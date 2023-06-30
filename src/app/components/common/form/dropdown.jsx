@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const DROP_ARROW = (
   <svg
-    className="w-4 h-4 ml-2"
+    className="w-4 h-4 ml-0.5"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -17,7 +17,7 @@ const DROP_ARROW = (
   </svg>
 );
 
-const Dropdown = () => {
+const Dropdown = ({ name }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -44,26 +44,37 @@ const Dropdown = () => {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className="flex items-center justify-center w-full py-2 text-black px-2"
+        className="flex items-center justify-center w-full py-1 text-black"
         onClick={toggleDropdown}
       >
-        Dropdown {DROP_ARROW}
+        {name} {DROP_ARROW}
       </button>
       {isOpen && (
         <div
-          className="dropdown-menu show bg-white rounded-md shadow-lg cursor-pointer absolute left-1/2 transform -translate-x-1/2 z-10 w-44 py-2 mt-2"
+          className="dropdown-menu show bg-white rounded-md shadow-lg cursor-pointer absolute left-1/2 transform -translate-x-1/2 z-10 w-44 py-1.5 mt-1"
           onClick={toggleDropdown}
         >
           <a
-            id="Option 1"
-            className="block px-4 py-1.5 text-gray-800 hover:bg-gray-200 no-underline"
+            id="all-ids"
+            className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline "
           >
-            Option 1
+            Все
           </a>
-          <div className="dropdown-divider border-t border-gray-300"></div>
           <a
             id="Option 2"
-            className="block px-4 py-1.5 text-gray-800 hover:bg-gray-200 no-underline"
+            className="block px-4 py-1.5 mt-1.5 text-black hover:bg-gray-200 no-underline border-t border-gray-300"
+          >
+            Option 2
+          </a>
+          <a
+            id="Option 2"
+            className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline"
+          >
+            Option 2
+          </a>
+          <a
+            id="Option 2"
+            className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline"
           >
             Option 2
           </a>

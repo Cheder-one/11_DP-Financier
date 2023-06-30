@@ -23,12 +23,8 @@ const OverlayTooltip = ({ text, children }) => {
   return (
     <OverlayTrigger placement="top" overlay={tooltip} show={showTooltip}>
       <div
-        style={{
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis"
-        }}
         ref={ref}
+        className="whitespace-nowrap overflow-hidden overflow-ellipsis"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
