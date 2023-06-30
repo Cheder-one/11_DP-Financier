@@ -1,14 +1,11 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import OverlayTooltip from "../typography/overlayTooltip";
 import Dropdown from "../form/dropdown";
 
-type Props = {
-  md: number[];
-};
-
-const AccountCard = ({ md }: Props) => {
+const AccountCard = ({ md }) => {
   md = [4, 6, 2];
+
   return (
     <Card className="p-0">
       <Card.Body className="p-0">
@@ -17,7 +14,6 @@ const AccountCard = ({ md }: Props) => {
             {"Card"}
           </Col>
           <Col md={md[1]} className="flex justify-center items-center">
-            {/* {"Dropdown"} */}
             <Dropdown />
           </Col>
           <Col md={md[2]} className="flex justify-center items-center">
