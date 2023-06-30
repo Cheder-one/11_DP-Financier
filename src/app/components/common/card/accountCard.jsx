@@ -34,15 +34,16 @@ const AccountCard = ({ card, categories, allTransacts }) => {
 
   useEffect(() => {
     if (dropdown) {
+      const { id, date } = dropdown;
       let cardTransacts = allTransacts;
 
-      if (dropdown.id.includes("all")) {
+      if (id.includes("all")) {
         const result = filter(allTransacts, { type: card.type });
         cardTransacts = result.length === 0 ? allTransacts : result;
-      } else if (dropdown.id.includes("account")) {
-        cardTransacts = filter(allTransacts, { account: dropdown.id });
-      } else if (dropdown.id.includes("transaction")) {
-        cardTransacts = filter(allTransacts, { date: dropdown.date });
+      } else if (id.includes("account")) {
+        cardTransacts = filter(allTransacts, { account: id });
+      } else if (id.includes("transaction")) {
+        cardTransacts = filter(allTransacts, { date });
       }
 
       cardTransacts = cardTransacts.map((transact) => ({

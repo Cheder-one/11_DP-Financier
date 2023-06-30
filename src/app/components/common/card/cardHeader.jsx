@@ -70,8 +70,8 @@ const CardHeader = ({ card, handleSelect, dropdown, ALL }) => {
             <NavDropdown.Item
               eventKey={JSON.stringify({
                 id: `all-ids`,
-                type: card.type,
-                name: ALL
+                name: ALL,
+                type: card.type
               })}
             >
               {ALL}
