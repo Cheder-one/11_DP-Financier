@@ -1,82 +1,60 @@
-import PropTypes from "prop-types";
-import { useCallback, useEffect, useState } from "react";
-import { find, filter } from "lodash";
+import { useEffect, useMemo, useRef } from "react";
+import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import OverlayTooltip from "../typography/overlayTooltip";
+import Dropdown from "../form/dropdown";
+import { filter, uniqBy } from "lodash";
 
-import CardHeader from "./cardHeader";
-import CardBody from "./cardBody";
-
-const ALL = "Все";
-
-const AccountCard = ({ card, categories, allTransacts }) => {
-  const [dropdown, setDropdown] = useState(null);
-  const [transactsByCondition, setTransactsByCondition] = useState(null);
-
-  useEffect(() => {
-    setDropdown({
-      id: `all-ids`,
-      type: card.type,
-      name: ALL,
-      items: card.dropdown.map((item) => ({
-        id: item.id,
-        name: item.name || item.date
-      }))
-    });
-  }, [card]);
-
-  const handleDropItemSelect = useCallback((eventKeys) => {
-    eventKeys = JSON.parse(eventKeys);
-    setDropdown((prev) => ({
-      ...prev,
-      id: eventKeys.id,
-      name: eventKeys.name,
-      date: eventKeys.date
-    }));
-  }, []);
-
-  useEffect(() => {
-    if (dropdown) {
-      let cardTransacts = null;
-      const { id, date, type } = dropdown;
-
-      if (type === "account") {
-        const accountTransacts = filter(allTransacts, { account: id });
-
-        cardTransacts = filter(accountTransacts, { date });
-      }
-
-      if (id.includes("all")) {
-        const result = filter(allTransacts, { type: card.type });
-        cardTransacts = result.length === 0 ? allTransacts : result;
-      } else if (id.includes("account")) {
-        cardTransacts = filter(allTransacts, { account: id });
-      } else if (id.includes("transaction")) {
-        cardTransacts = filter(allTransacts, { date });
-      }
-
-      cardTransacts = cardTransacts.map((transact) => ({
-        ...transact,
-        category: find(categories, { id: transact.category }).name
-      }));
-
-      setTransactsByCondition(cardTransacts);
-    }
-  }, [dropdown, allTransacts, card.type, categories]);
-
+const AccountCard = ({ md, title, type, transactions }) => {
   return (
-    <div className="account-card">
-      <CardHeader
-        {...{ card, dropdown, ALL }}
-        handleSelect={handleDropItemSelect}
-      />
-      <CardBody items={transactsByCondition} />
-    </div>
+    <Card className="p-0">
+      <Card.Body className="p-0">
+        <Row className="card-header mx-auto border p-0">
+          <Col md={md[0]} className="flex justify-center items-center">
+            {title}
+          </Col>
+          <Col md={md[1]} className="mx-auto p-0">
+            <Dropdown items={[]}>
+              <OverlayTooltip text={"Dropdownnnnnnnnnn"} />
+            </Dropdown>
+          </Col>
+          <Col md={md[2]} className="flex justify-center items-center">
+            {"+"}
+          </Col>
+        </Row>
+
+        <ListGroup className="list-group-flush overflow-auto border-gray-400 vh-25 me-0">
+          <ListGroupItem className="p-0">
+            {[].map((item) => (
+              <Row key={item.id} className="mx-auto">
+                <Col
+                  className="flex justify-center items-center border px-0 py-0.5"
+                  md={md[0]}
+                >
+                  1
+                </Col>
+                <Col
+                  className="flex justify-center items-center border px-0 py-0.5"
+                  md={md[1]}
+                >
+                  2
+                </Col>
+                <Col
+                  className="flex justify-center items-center border px-0 py-0.5"
+                  md={md[2]}
+                >
+                  3
+                </Col>
+              </Row>
+            ))}
+          </ListGroupItem>
+        </ListGroup>
+      </Card.Body>
+    </Card>
   );
 };
 
-AccountCard.propTypes = {
-  card: PropTypes.object.isRequired,
-  categories: PropTypes.array.isRequired,
-  allTransacts: PropTypes.array.isRequired
+AccountCard.defaultProps = {
+  md: [4, 6, 2]
 };
 
 export default AccountCard;

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const DROP_ARROW = (
   <svg
-    className="w-4 h-4 ml-0.5"
+    className="w-3 h-3 ml-0.5"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -17,7 +17,7 @@ const DROP_ARROW = (
   </svg>
 );
 
-const Dropdown = ({ name }) => {
+const Dropdown = ({ title, children, items }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -44,40 +44,31 @@ const Dropdown = ({ name }) => {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className="flex items-center justify-center w-full py-1 text-black"
+        className="flex items-center justify-center w-full p-1 text-black"
         onClick={toggleDropdown}
       >
-        {name} {DROP_ARROW}
+        {title || children} {DROP_ARROW}
       </button>
       {isOpen && (
         <div
-          className="dropdown-menu show bg-white rounded-md shadow-lg cursor-pointer absolute left-1/2 transform -translate-x-1/2 z-10 w-44 py-1.5 mt-1"
+          className="dropdown-menu show bg-white rounded-md shadow-lg cursor-pointer absolute left-1/2 transform -translate-x-1/2 z-10 w-44 py-1 mt-1"
           onClick={toggleDropdown}
         >
           <a
             id="all-ids"
-            className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline "
+            className="block px-4 py-1 text-black hover:bg-gray-200 no-underline border-b"
           >
             Все
           </a>
-          <a
-            id="Option 2"
-            className="block px-4 py-1.5 mt-1.5 text-black hover:bg-gray-200 no-underline border-t border-gray-300"
-          >
-            Option 2
-          </a>
-          <a
-            id="Option 2"
-            className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline"
-          >
-            Option 2
-          </a>
-          <a
-            id="Option 2"
-            className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline"
-          >
-            Option 2
-          </a>
+          {items.map((item) => (
+            <a
+              id={item}
+              key={item.id}
+              className="block px-4 py-1 mt-1 text-black hover:bg-gray-200 no-underline border-gray-300"
+            >
+              {item.name}
+            </a>
+          ))}
         </div>
       )}
     </div>

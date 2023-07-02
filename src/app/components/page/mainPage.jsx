@@ -1,50 +1,41 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import { chain, isArray } from "lodash";
-import { Card, Col, Row } from "react-bootstrap";
-import { useEffect, useState } from "react";
-// import AccountCard from "../common/card/accountCard";
+import { Col, Row } from "react-bootstrap";
+import { chain, isArray, keys } from "lodash";
+import { useEffect, useMemo, useState } from "react";
 import Loader from "../ui/spinner";
-import AccountCard from "../common/card2/accountCard";
+import AccountCard from "../common/card/accountCard";
 
 const MainPage = ({ userId }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
+  const { accounts, categories, transactions } = user;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resp = await axios.get(`/api/users/${userId}`);
-        setUser(resp.data.user);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
+    axios
+      .get(`/api/users/${userId}`)
+      .then((resp) => setUser(resp.data.user))
+      .catch((err) => console.error(err));
   }, [userId]);
 
-  const { accounts, categories, transactions } = user || {};
-
-  const getUniqTransactDates = (type) => {
-    if (isArray(transactions)) {
-      return chain(transactions).filter({ type }).uniqBy("date").value();
-    }
-    return [];
-  };
+  const getUniqTransactDates = (type) =>
+    chain(transactions || [])
+      .filter({ type })
+      .uniqBy("date")
+      .value();
 
   const cards = [
     {
-      name: "Доход",
+      title: "Доход",
       type: "income",
       dropdown: getUniqTransactDates("income")
     },
     {
-      name: "Счет",
+      title: "Счет",
       type: "account",
       dropdown: isArray(accounts) ? accounts : []
     },
     {
-      name: "Расход",
+      title: "Расход",
       type: "expense",
       dropdown: getUniqTransactDates("expense")
     }
@@ -52,26 +43,35 @@ const MainPage = ({ userId }) => {
 
   return (
     <>
-      {user ? (
+      {keys(user).length > 0 ? (
         <div className="mx-4">
           <Row className="mt-4">
-            {cards.map(({ name }) => (
-              <Col key={name} md={"4"} className="my-3">
-                <AccountCard md={[4, 6, 2]} cardName={name} />
+            {cards.map((card) => (
+              <Col key={card.title} md="4">
+                <AccountCard
+                  title={card.title}
+                  type={card.type}
+                  {...{ transactions }}
+                />
               </Col>
             ))}
-            {/* {cards.map((card) => (
-              <Col md="4" key={card.name} className="my-3">
-                <Card>
-                  <Card.Body className="p-0">
-                    <AccountCard
-                      {...{ card, categories }}
-                      allTransacts={transactions}
-                    />
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))} */}
+
+            {/* <Col md="4">
+              <AccountCard
+                title="Счета"
+                type="account"
+                dropItems={accounts}
+                bodyItems={transactions}
+              />
+            </Col>
+            <Col md="4">
+              <AccountCard
+                title="Расход"
+                type="expense"
+                dropItems={expense.uniqDates}
+                bodyItems={expense.transacts}
+              />
+            </Col> */}
           </Row>
 
           <Row className="mt-4">

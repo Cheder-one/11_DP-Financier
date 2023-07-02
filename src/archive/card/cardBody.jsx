@@ -2,7 +2,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import OverlayTooltip from "../typography/overlayTooltip";
+import OverlayTooltip from "../../app/components/common/typography/overlayTooltip";
 import { Image } from "react-bootstrap";
 
 const X_SQUARE_SRC = "src/app/assets/x-square.svg";
