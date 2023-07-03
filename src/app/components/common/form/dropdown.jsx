@@ -44,7 +44,7 @@ const Dropdown = ({ title, children, items }) => {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className="flex items-center justify-center w-full p-1 text-black"
+        className="flex items-center justify-center w-full px-1 py-0.5 text-black"
         onClick={toggleDropdown}
       >
         {title || children} {DROP_ARROW}

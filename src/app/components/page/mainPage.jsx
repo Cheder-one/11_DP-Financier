@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { chain, filter, keys, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import Loader from "../ui/spinner";
 import AccountCard from "../common/card/accountCard";
+import Dropdown from "../common/form/dropdown";
+import OverlayTooltip from "../common/typography/overlayTooltip";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -32,6 +34,14 @@ const MainPage = ({ userId }) => {
     return { transacts, uniqDates };
   }, [transactions]);
 
+  const dropdown = (
+    <Dropdown items={[]}>
+      <OverlayTooltip text={"Dropdownnnnnnnnnn"} />
+    </Dropdown>
+  );
+
+  const delButton = <Button></Button>;
+
   return (
     <>
       {keys(user).length > 0 ? (
@@ -39,26 +49,42 @@ const MainPage = ({ userId }) => {
           <Row className="mt-4">
             <Col md="4">
               <AccountCard
-                title="Доход"
+                title={{
+                  first: "Доход",
+                  second: dropdown,
+                  third: "+"
+                }}
                 type="income"
-                dropItems={income.uniqDates}
-                bodyItems={income.transacts}
+                route="/"
+                bodyList={income.transacts}
+                bodyCeil={{
+                  third: "x"
+                }}
+                dropDownList={income.uniqDates}
               />
             </Col>
             <Col md="4">
               <AccountCard
-                title="Счета"
+                title={{
+                  first: "Счет",
+                  second: dropdown,
+                  third: "+"
+                }}
                 type="account"
-                dropItems={accounts}
-                bodyItems={transactions}
+                bodyList={transactions}
+                dropDownList={accounts}
               />
             </Col>
             <Col md="4">
               <AccountCard
-                title="Расход"
+                title={{
+                  first: "Расход",
+                  second: dropdown,
+                  third: "+"
+                }}
                 type="expense"
-                dropItems={expense.uniqDates}
-                bodyItems={expense.transacts}
+                bodyList={expense.transacts}
+                dropDownList={expense.uniqDates}
               />
             </Col>
           </Row>
