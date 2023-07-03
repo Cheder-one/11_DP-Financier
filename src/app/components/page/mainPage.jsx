@@ -55,11 +55,12 @@ const MainPage = ({ userId }) => {
       {user ? (
         <div className="mx-4">
           <Row className="mt-4">
-            {cards.map(({ name }) => (
+            <AccountCard />{" "}
+            {/* {cards.map(({ name }) => (
               <Col key={name} md={"4"} className="my-3">
                 <AccountCard md={[4, 6, 2]} cardName={name} />
               </Col>
-            ))}
+            ))} */}
             {/* {cards.map((card) => (
               <Col md="4" key={card.name} className="my-3">
                 <Card>
@@ -73,7 +74,6 @@ const MainPage = ({ userId }) => {
               </Col>
             ))} */}
           </Row>
-
           <Row className="mt-4">
             <Col>
               <div className="flex justify-center items-center border border-dark vh-40">

@@ -138,3 +138,13 @@ body::-webkit-scrollbar-thumb:hover {
   margin-top: 4px !important;
   margin-bottom: 4px !important;
 }
+
+th {
+  text-align: center !important;
+  vertical-align: middle;
+}
+
+td {
+  text-align: center !important;
+  vertical-align: middle;
+}

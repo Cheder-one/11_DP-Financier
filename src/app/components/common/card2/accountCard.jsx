@@ -11,7 +11,7 @@ const AccountCard = ({ md, cardName }) => {
           <Col md={md[0]} className="flex justify-center items-center">
             {cardName}
           </Col>
-          <Col md={md[1]} className="mx-auto p-1">
+          <Col md={md[1]} className="mx-auto">
             <Dropdown name={<OverlayTooltip text={"Dropdown"} />} />
           </Col>
           <Col md={md[2]} className="flex justify-center items-center">
