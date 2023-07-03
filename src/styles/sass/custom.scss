@@ -2,15 +2,15 @@ $spacer: 5vh;
 $spacer-scale: 20;
 $step: 5;
 
-@for $i from 0 through $spacer-scale {
-  .vh-#{$i * $step} {
-    height: $i * $spacer;
+@for $i from 0 through 100 {
+  .vh-#{$i} {
+    height: #{$i}vh;
   }
 }
 
-@for $i from 0 through $spacer-scale {
-  .vw-#{$i * $step} {
-    width: $i * $spacer;
+@for $i from 0 through 100 {
+  .vw-#{$i} {
+    width: #{$i}vh;
   }
 }
 

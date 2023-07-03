@@ -24,7 +24,7 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
           </Col>
         </Row>
 
-        <ListGroup className="list-group-flush overflow-auto border-gray-400 vh-25 me-0">
+        <ListGroup className="list-group-flush overflow-auto border-gray-400 vh-27 me-0">
           <ListGroupItem className="p-0">
             {keys(bodyList).map((item) => {
               item = bodyList[item];

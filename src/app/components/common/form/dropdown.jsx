@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import OverlayTooltip from "../typography/overlayTooltip";
@@ -31,7 +32,10 @@ const Dropdown = ({ title, items, type }) => {
   }, [isOpen]);
 
   const getTransformId = () => {
-    return JSON.stringify("all-ids" + (type ? `-${type}` : ""));
+    return JSON.stringify({
+      id: "all-" + (type ? `${type}-ids` : "ids"),
+      type
+    });
   };
 
   return (
@@ -49,7 +53,6 @@ const Dropdown = ({ title, items, type }) => {
           onClick={toggleDropdown}
         >
           <a
-            // eslint-disable-next-line quotes
             id={getTransformId()}
             className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline border-b border-gray-300"
           >
@@ -68,6 +71,13 @@ const Dropdown = ({ title, items, type }) => {
       )}
     </div>
   );
+};
+
+Dropdown.propTypes = {
+  title: PropTypes.string,
+  items: PropTypes.arrayOf(PropTypes.object),
+  // .isRequired,
+  type: PropTypes.string
 };
 
 export default Dropdown;
