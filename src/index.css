@@ -108,6 +108,19 @@ body::-webkit-scrollbar-thumb:hover {
   text-underline-offset: 5px;
 }
 
+/* dropdown-title */
+.dropdown-toggle.nav-link {
+  color: #000 !important;
+}
+/* dropdown-items */
+.dropdown-item:hover {
+  background-color: lightgray !important;
+}
+.dropdown-divider {
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
 /* ----------Calendar---------- */
 /* .rw-popup-container.rw-calendar-popup {
   max-width: 15rem;
@@ -124,17 +137,4 @@ body::-webkit-scrollbar-thumb:hover {
   overflow: auto;
   max-height: 11rem;
   overflow-x: hidden;
-}
-
-/* dropdown-title */
-.dropdown-toggle.nav-link {
-  color: #000 !important;
-}
-/* dropdown-items */
-.dropdown-item:hover {
-  background-color: lightgray !important;
-}
-.dropdown-divider {
-  margin-top: 4px !important;
-  margin-bottom: 4px !important;
 }

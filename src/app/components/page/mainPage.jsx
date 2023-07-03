@@ -1,12 +1,15 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Image, Row } from "react-bootstrap";
 import { chain, filter, keys, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import Loader from "../ui/spinner";
 import AccountCard from "../common/card/accountCard";
 import Dropdown from "../common/form/dropdown";
 import OverlayTooltip from "../common/typography/overlayTooltip";
+
+import { BiSolidPlusSquare } from "react-icons/bi";
+import { LiaWindowCloseSolid } from "react-icons/lia";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -40,7 +43,17 @@ const MainPage = ({ userId }) => {
     </Dropdown>
   );
 
-  const delButton = <Button></Button>;
+  const addButton = (
+    <Button variant="" className="p-0">
+      <BiSolidPlusSquare style={{ color: "yellowgreen" }} size={25} />
+    </Button>
+  );
+
+  const delButton = (
+    <Button variant="" size="sm" className="p-0">
+      <LiaWindowCloseSolid style={{ color: "red" }} size={18} />
+    </Button>
+  );
 
   return (
     <>
@@ -52,13 +65,13 @@ const MainPage = ({ userId }) => {
                 title={{
                   first: "Доход",
                   second: dropdown,
-                  third: "+"
+                  third: addButton
                 }}
                 type="income"
                 route="/"
                 bodyList={income.transacts}
                 bodyCeil={{
-                  third: "x"
+                  third: delButton
                 }}
                 dropDownList={income.uniqDates}
               />
@@ -68,10 +81,13 @@ const MainPage = ({ userId }) => {
                 title={{
                   first: "Счет",
                   second: dropdown,
-                  third: "+"
+                  third: addButton
                 }}
                 type="account"
                 bodyList={transactions}
+                bodyCeil={{
+                  third: delButton
+                }}
                 dropDownList={accounts}
               />
             </Col>
@@ -80,10 +96,13 @@ const MainPage = ({ userId }) => {
                 title={{
                   first: "Расход",
                   second: dropdown,
-                  third: "+"
+                  third: addButton
                 }}
                 type="expense"
                 bodyList={expense.transacts}
+                bodyCeil={{
+                  third: delButton
+                }}
                 dropDownList={expense.uniqDates}
               />
             </Col>
