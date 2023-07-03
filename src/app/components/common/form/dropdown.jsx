@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import OverlayTooltip from "../typography/overlayTooltip";
 
-const ALL_ITEM = (type) => {
+const getIdAllItem = (type) => {
   return {
     id: "all-" + (type ? `${type}-ids` : "ids"),
     type,
@@ -12,18 +12,18 @@ const ALL_ITEM = (type) => {
 };
 
 const Dropdown = ({ items, type }) => {
+  const ALL_ITEM = getIdAllItem(type);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(ALL_ITEM(type));
+  const [selectedItem, setSelectedItem] = useState(ALL_ITEM);
+  console.log(selectedItem);
 
-  const toggleDropdown = ({ target }) => {
-    const { id } = target;
-    if (id) handleSelect(JSON.parse(id));
+  const handleClick = ({ target }) => {
+    const { id: eventKey } = target;
+    if (eventKey) {
+      setSelectedItem(JSON.parse(eventKey));
+    }
 
     setIsOpen((prev) => !prev);
-  };
-
-  const handleSelect = (eventKey) => {
-    setSelectedItem(eventKey.name);
   };
 
   // Слушатель для закрытия dropDownList при клике вне него
@@ -45,7 +45,7 @@ const Dropdown = ({ items, type }) => {
     <div className="relative" ref={dropdownRef}>
       <button
         className="flex items-center justify-center w-full px-1 py-0.5 text-black"
-        onClick={toggleDropdown}
+        onClick={handleClick}
       >
         <OverlayTooltip text={selectedItem?.name || selectedItem} />
         <RiArrowDropDownLine size="20px" />
@@ -53,7 +53,7 @@ const Dropdown = ({ items, type }) => {
       {isOpen && (
         <div
           className="dropdown-menu show bg-white rounded-md shadow-lg cursor-pointer absolute left-1/2 transform -translate-x-1/2 z-10 w-44 py-1 mt-1"
-          onClick={toggleDropdown}
+          onClick={handleClick}
         >
           <a
             id={JSON.stringify(ALL_ITEM)}

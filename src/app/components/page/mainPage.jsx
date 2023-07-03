@@ -23,17 +23,17 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const income = useMemo(() => {
-    const transacts = filter(transactions || [], { type: "income" });
-    const uniqDates = uniqBy(transacts, "date");
-    return { transacts, uniqDates };
+  const operations = useMemo(() => {
+    const result = {};
+    ["income", "expense"].forEach((type) => {
+      const transacts = filter(transactions || [], { type });
+      const uniqDates = uniqBy(transacts, "date");
+      result[type] = { transacts, uniqDates };
+    });
+    return result;
   }, [transactions]);
 
-  const expense = useMemo(() => {
-    const transacts = filter(transactions || [], { type: "expense" });
-    const uniqDates = uniqBy(transacts, "date");
-    return { transacts, uniqDates };
-  }, [transactions]);
+  const { income, expense } = operations;
 
   const dropDownAccount = (
     <Dropdown
