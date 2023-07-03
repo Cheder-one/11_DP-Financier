@@ -7,7 +7,7 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
   return (
     <Card className="p-0">
       <Card.Body className="p-0">
-        <Row className="card-header mx-auto border p-0">
+        <Row className="card-header mx-auto border p-0 py-1">
           <Col
             as={route ? Link : "div"}
             to={route}
@@ -32,19 +32,19 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
                 <Row key={item.id} className="mx-auto">
                   <Col
                     md={md[0]}
-                    className="flex justify-center items-center border px-0 py-0.5"
+                    className="flex justify-center items-center border px-0 py-1"
                   >
                     {item.amount || bodyCol?.first}
                   </Col>
                   <Col
                     md={md[1]}
-                    className="flex justify-center items-center border px-0 py-0.5"
+                    className="flex justify-center items-center border px-0 py-1"
                   >
                     {item.category || bodyCol?.second}
                   </Col>
                   <Col
                     md={md[2]}
-                    className="flex justify-center items-center border px-0 py-0.5"
+                    className="flex justify-center items-center border px-0 py-1"
                   >
                     {item.name || bodyCol?.third}
                   </Col>

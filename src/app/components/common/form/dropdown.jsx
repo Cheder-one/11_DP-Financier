@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import OverlayTooltip from "../typography/overlayTooltip";
 
-const Dropdown = ({ title, items }) => {
+const Dropdown = ({ title, items, type }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -30,6 +30,10 @@ const Dropdown = ({ title, items }) => {
     };
   }, [isOpen]);
 
+  const getTransformId = () => {
+    return JSON.stringify("all-ids" + (type ? `-${type}` : ""));
+  };
+
   return (
     <div className="relative" ref={dropdownRef}>
       <button
@@ -45,8 +49,9 @@ const Dropdown = ({ title, items }) => {
           onClick={toggleDropdown}
         >
           <a
-            id={'"all-ids"'}
-            className="block px-4 py-1 text-black hover:bg-gray-200 no-underline border-b border-gray-300"
+            // eslint-disable-next-line quotes
+            id={getTransformId()}
+            className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline border-b border-gray-300"
           >
             Все
           </a>
@@ -54,7 +59,7 @@ const Dropdown = ({ title, items }) => {
             <a
               id={JSON.stringify(item)}
               key={item.id}
-              className="block px-4 py-1 mt-1 text-black hover:bg-gray-200 no-underline"
+              className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline"
             >
               {item.name}
             </a>

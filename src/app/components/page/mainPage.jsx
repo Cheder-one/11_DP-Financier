@@ -8,8 +8,8 @@ import AccountCard from "../common/card/accountCard";
 import Dropdown from "../common/form/dropdown";
 import OverlayTooltip from "../common/typography/overlayTooltip";
 
-import { BiSolidPlusSquare } from "react-icons/bi";
-import { LiaWindowCloseSolid } from "react-icons/lia";
+import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
+import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -43,19 +43,21 @@ const MainPage = ({ userId }) => {
     </Dropdown>
   );
 
-  const dropDownAccount = <Dropdown title="Dropdown" items={accounts} />;
+  const dropDownAccount = (
+    <Dropdown title="Dropdown" items={accounts} type="account" />
+  );
 
   // const dropDownExpense = <Dropdown title="Dropdown" items={accounts} />;
 
   const addButton = (
     <Button variant="" className="p-0">
-      <BiSolidPlusSquare style={{ color: "yellowgreen" }} size={25} />
+      <PlusSquare style={{ color: "yellowgreen" }} size={25} />
     </Button>
   );
 
   const delButton = (
     <Button variant="" size="sm" className="p-0">
-      <LiaWindowCloseSolid style={{ color: "red" }} size={18} />
+      <CloseX style={{ color: "red" }} size={19} />
     </Button>
   );
 
