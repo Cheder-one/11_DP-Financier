@@ -3,40 +3,43 @@ import { useEffect, useRef, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import OverlayTooltip from "../typography/overlayTooltip";
 
-const Dropdown = ({ title, items, type }) => {
+const ALL_ITEM = (type) => {
+  return {
+    id: "all-" + (type ? `${type}-ids` : "ids"),
+    type,
+    name: "Все"
+  };
+};
+
+const Dropdown = ({ items, type }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [selectedItem, setSelectedItem] = useState(ALL_ITEM(type));
 
   const toggleDropdown = ({ target }) => {
     const { id } = target;
-    if (id) {
-      const itemData = JSON.parse(id);
-      console.log(itemData);
-    }
+    if (id) handleSelect(JSON.parse(id));
 
     setIsOpen((prev) => !prev);
   };
 
+  const handleSelect = (eventKey) => {
+    setSelectedItem(eventKey.name);
+  };
+
+  // Слушатель для закрытия dropDownList при клике вне него
+  const dropdownRef = useRef(null);
+
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!dropdownRef?.current?.contains(event.target)) {
+    const handleClickOutside = ({ target }) => {
+      if (!dropdownRef?.current?.contains(target)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
-
-  const getTransformId = () => {
-    return JSON.stringify({
-      id: "all-" + (type ? `${type}-ids` : "ids"),
-      type
-    });
-  };
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -44,7 +47,7 @@ const Dropdown = ({ title, items, type }) => {
         className="flex items-center justify-center w-full px-1 py-0.5 text-black"
         onClick={toggleDropdown}
       >
-        <OverlayTooltip text={title} />
+        <OverlayTooltip text={selectedItem?.name || selectedItem} />
         <RiArrowDropDownLine size="20px" />
       </button>
       {isOpen && (
@@ -53,7 +56,7 @@ const Dropdown = ({ title, items, type }) => {
           onClick={toggleDropdown}
         >
           <a
-            id={getTransformId()}
+            id={JSON.stringify(ALL_ITEM)}
             className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline border-b border-gray-300"
           >
             Все

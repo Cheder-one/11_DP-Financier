@@ -13,6 +13,7 @@ import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
+
   const { accounts, categories, transactions } = user;
 
   useEffect(() => {
@@ -22,32 +23,26 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const getTransactsByType = (type) => filter(transactions || [], { type });
-  const getUniqDates = (transacts) => uniqBy(transacts, "date");
-
   const income = useMemo(() => {
-    const transacts = getTransactsByType("income");
-    const uniqDates = getUniqDates(transacts);
+    const transacts = filter(transactions || [], { type: "income" });
+    const uniqDates = uniqBy(transacts, "date");
     return { transacts, uniqDates };
   }, [transactions]);
 
   const expense = useMemo(() => {
-    const transacts = getTransactsByType("expense");
-    const uniqDates = getUniqDates(transacts);
+    const transacts = filter(transactions || [], { type: "expense" });
+    const uniqDates = uniqBy(transacts, "date");
     return { transacts, uniqDates };
   }, [transactions]);
 
-  const dropdown = (
-    <Dropdown items={[]}>
-      <OverlayTooltip text={"Dropdownnnnnnnnnn"} />
-    </Dropdown>
-  );
-
   const dropDownAccount = (
-    <Dropdown title="Dropdown" items={accounts} type="account" />
+    <Dropdown
+      // title="Dropdown"
+      items={accounts}
+      type="account"
+      // onSelect={handleDropdownSelect}
+    />
   );
-
-  // const dropDownExpense = <Dropdown title="Dropdown" items={accounts} />;
 
   const addButton = (
     <Button variant="" className="p-0">
@@ -70,7 +65,7 @@ const MainPage = ({ userId }) => {
               <AccountCard
                 title={{
                   first: "Доход",
-                  second: dropdown,
+                  second: dropDownAccount,
                   third: addButton
                 }}
                 type="income"
@@ -101,7 +96,7 @@ const MainPage = ({ userId }) => {
               <AccountCard
                 title={{
                   first: "Расход",
-                  second: dropdown,
+                  second: dropDownAccount,
                   third: addButton
                 }}
                 type="expense"
