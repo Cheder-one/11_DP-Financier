@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Col, Row } from "react-bootstrap";
-import { chain, isArray, keys } from "lodash";
+import { chain, filter, keys, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import Loader from "../ui/spinner";
 import AccountCard from "../common/card/accountCard";
@@ -17,46 +17,35 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const getUniqTransactDates = (type) =>
-    chain(transactions || [])
-      .filter({ type })
-      .uniqBy("date")
-      .value();
+  const getTransactsByType = (type) => filter(transactions || [], { type });
+  const getUniqDates = (transacts) => uniqBy(transacts, "date");
 
-  const cards = [
-    {
-      title: "Доход",
-      type: "income",
-      dropdown: getUniqTransactDates("income")
-    },
-    {
-      title: "Счет",
-      type: "account",
-      dropdown: isArray(accounts) ? accounts : []
-    },
-    {
-      title: "Расход",
-      type: "expense",
-      dropdown: getUniqTransactDates("expense")
-    }
-  ];
+  const income = useMemo(() => {
+    const transacts = getTransactsByType("income");
+    const uniqDates = getUniqDates(transacts);
+    return { transacts, uniqDates };
+  }, [transactions]);
+
+  const expense = useMemo(() => {
+    const transacts = getTransactsByType("expense");
+    const uniqDates = getUniqDates(transacts);
+    return { transacts, uniqDates };
+  }, [transactions]);
 
   return (
     <>
       {keys(user).length > 0 ? (
         <div className="mx-4">
           <Row className="mt-4">
-            {cards.map((card) => (
-              <Col key={card.title} md="4">
-                <AccountCard
-                  title={card.title}
-                  type={card.type}
-                  {...{ transactions }}
-                />
-              </Col>
-            ))}
-
-            {/* <Col md="4">
+            <Col md="4">
+              <AccountCard
+                title="Доход"
+                type="income"
+                dropItems={income.uniqDates}
+                bodyItems={income.transacts}
+              />
+            </Col>
+            <Col md="4">
               <AccountCard
                 title="Счета"
                 type="account"
@@ -71,7 +60,7 @@ const MainPage = ({ userId }) => {
                 dropItems={expense.uniqDates}
                 bodyItems={expense.transacts}
               />
-            </Col> */}
+            </Col>
           </Row>
 
           <Row className="mt-4">
