@@ -40,12 +40,12 @@ form > div {
 /* ----------ScrollBar---------- */
 /* Устанавливаем ширину скроллбаров */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 /* Устанавливаем цвет ползунка скроллбара */
 ::-webkit-scrollbar-thumb {
   background-color: grey;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 /* Цвет полосы прокрутки при наведении*/
 ::-webkit-scrollbar-thumb:hover {
@@ -57,11 +57,11 @@ form > div {
 }
 
 ::-webkit-scrollbar {
-  height: 4px;
+  height: 3px;
 }
 ::-webkit-scrollbar-thumb {
   background-color: grey;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;

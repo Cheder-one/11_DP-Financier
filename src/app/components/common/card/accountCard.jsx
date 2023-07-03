@@ -1,11 +1,9 @@
-import { useEffect, useMemo, useRef } from "react";
+import PropTypes from "prop-types";
 import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
-import OverlayTooltip from "../typography/overlayTooltip";
-import Dropdown from "../form/dropdown";
-import { filter, keys, uniqBy } from "lodash";
+import { keys } from "lodash";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-const AccountCard = ({ md, title, route, type, bodyList, bodyCeil }) => {
+const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
   return (
     <Card className="p-0">
       <Card.Body className="p-0">
@@ -14,15 +12,15 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCeil }) => {
             as={route ? Link : "div"}
             to={route}
             md={md[0]}
-            className="flex justify-center items-center text-decoration-none text-inherit"
+            className="flex justify-center items-center text-inherit text-decoration-none"
           >
-            {title.first}
+            {title?.first}
           </Col>
           <Col md={md[1]} className="mx-auto p-0">
-            {title.second}
+            {title?.second}
           </Col>
           <Col md={md[2]} className="flex justify-center items-center">
-            {title.third}
+            {title?.third}
           </Col>
         </Row>
 
@@ -36,19 +34,19 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCeil }) => {
                     md={md[0]}
                     className="flex justify-center items-center border px-0 py-0.5"
                   >
-                    {item.amount || bodyCeil?.first}
+                    {item.amount || bodyCol?.first}
                   </Col>
                   <Col
                     md={md[1]}
                     className="flex justify-center items-center border px-0 py-0.5"
                   >
-                    {item.category || bodyCeil?.second}
+                    {item.category || bodyCol?.second}
                   </Col>
                   <Col
                     md={md[2]}
                     className="flex justify-center items-center border px-0 py-0.5"
                   >
-                    {item.name || bodyCeil?.third}
+                    {item.name || bodyCol?.third}
                   </Col>
                 </Row>
               );
@@ -58,6 +56,15 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCeil }) => {
       </Card.Body>
     </Card>
   );
+};
+
+AccountCard.propTypes = {
+  md: PropTypes.array,
+  title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  route: PropTypes.string,
+  type: PropTypes.string,
+  bodyList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bodyCol: PropTypes.object.isRequired
 };
 
 AccountCard.defaultProps = {

@@ -1,30 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import OverlayTooltip from "../typography/overlayTooltip";
 
-const DROP_ARROW = (
-  <svg
-    className="w-3 h-3 ml-0.5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      d="M19 9l-7 7-7-7"
-    ></path>
-  </svg>
-);
-
-const Dropdown = ({ title, children, items }) => {
+const Dropdown = ({ title, items }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const toggleDropdown = (event) => {
-    setIsOpen((prev) => !prev);
+  const toggleDropdown = ({ target }) => {
+    const { id } = target;
+    if (id) {
+      const itemData = JSON.parse(id);
+      console.log(itemData);
+    }
 
-    console.log(event.target.id);
+    setIsOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -47,7 +36,8 @@ const Dropdown = ({ title, children, items }) => {
         className="flex items-center justify-center w-full px-1 py-0.5 text-black"
         onClick={toggleDropdown}
       >
-        {title || children} {DROP_ARROW}
+        <OverlayTooltip text={title} />
+        <RiArrowDropDownLine size="20px" />
       </button>
       {isOpen && (
         <div
@@ -55,16 +45,16 @@ const Dropdown = ({ title, children, items }) => {
           onClick={toggleDropdown}
         >
           <a
-            id="all-ids"
-            className="block px-4 py-1 text-black hover:bg-gray-200 no-underline border-b"
+            id={'"all-ids"'}
+            className="block px-4 py-1 text-black hover:bg-gray-200 no-underline border-b border-gray-300"
           >
             Все
           </a>
           {items.map((item) => (
             <a
-              id={item}
+              id={JSON.stringify(item)}
               key={item.id}
-              className="block px-4 py-1 mt-1 text-black hover:bg-gray-200 no-underline border-gray-300"
+              className="block px-4 py-1 mt-1 text-black hover:bg-gray-200 no-underline"
             >
               {item.name}
             </a>

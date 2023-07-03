@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import { Button, Col, Image, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { chain, filter, keys, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import Loader from "../ui/spinner";
@@ -43,6 +43,10 @@ const MainPage = ({ userId }) => {
     </Dropdown>
   );
 
+  const dropDownAccount = <Dropdown title="Dropdown" items={accounts} />;
+
+  // const dropDownExpense = <Dropdown title="Dropdown" items={accounts} />;
+
   const addButton = (
     <Button variant="" className="p-0">
       <BiSolidPlusSquare style={{ color: "yellowgreen" }} size={25} />
@@ -70,7 +74,7 @@ const MainPage = ({ userId }) => {
                 type="income"
                 route="/"
                 bodyList={income.transacts}
-                bodyCeil={{
+                bodyCol={{
                   third: delButton
                 }}
                 dropDownList={income.uniqDates}
@@ -80,12 +84,12 @@ const MainPage = ({ userId }) => {
               <AccountCard
                 title={{
                   first: "Счет",
-                  second: dropdown,
+                  second: dropDownAccount,
                   third: addButton
                 }}
                 type="account"
                 bodyList={transactions}
-                bodyCeil={{
+                bodyCol={{
                   third: delButton
                 }}
                 dropDownList={accounts}
@@ -100,7 +104,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="expense"
                 bodyList={expense.transacts}
-                bodyCeil={{
+                bodyCol={{
                   third: delButton
                 }}
                 dropDownList={expense.uniqDates}
