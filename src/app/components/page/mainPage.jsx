@@ -14,7 +14,11 @@ import { toReadableDate } from "../../utils/functions/toReadableDate";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user;
-  // const [selectedDropItem, setSelectedDropItem] = useState();
+  const [filteredTransacts, setFilteredTransacts] = useState({});
+
+  useEffect(() => {
+    setFilteredTransacts(transactions || {});
+  }, [transactions]);
 
   useEffect(() => {}, [user]);
 
@@ -28,22 +32,14 @@ const MainPage = ({ userId }) => {
   const handleDropdownSelect = (eventKey) => {
     const { id, date } = eventKey;
     if (id.includes("all")) {
-      // setFilteredTransacts(transactions);
-    } else if (id.includes("transaction")) {
-      const dateTransacts = filter(transactions, { date });
-      // setFilteredTransacts(dateTransacts);
+      //
     } else if (id.includes("account")) {
-      const accountTransacts = filter(transactions, { account: id });
-      // setFilteredTransacts(accountTransacts);
+      //
+    } else if (id.includes("transaction")) {
+      //
     }
-
-    // setSelectedDropItem((prev) => ({
-    //   ...prev,
-    //   [name]: { id }
-    // }));
   };
 
-  // Фильтрация транзакций по их  для каждого типа.
   const filteredByUniqAndType = useMemo(() => {
     const result = {};
     ["income", "expense"].forEach((type) => {
