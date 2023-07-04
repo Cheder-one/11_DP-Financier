@@ -22,13 +22,14 @@ const Dropdown = ({ items, type, onSelect }) => {
     const { id: eventKey } = target;
     if (eventKey) {
       setSelectedItem(JSON.parse(eventKey));
+      // onSelect(JSON.parse(eventKey));
     }
     setIsOpen((prev) => !prev);
   };
 
   useEffect(() => {
     onSelect(selectedItem);
-  }, [onSelect, selectedItem]);
+  }, [selectedItem]);
 
   // Слушатель для закрытия dropDownList при клике вне него
   const dropdownRef = useRef(null);
@@ -82,7 +83,8 @@ const Dropdown = ({ items, type, onSelect }) => {
 
 Dropdown.propTypes = {
   title: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  items: PropTypes.arrayOf(PropTypes.object),
+  // .isRequired,
   type: PropTypes.string
 };
 

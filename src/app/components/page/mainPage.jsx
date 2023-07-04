@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
-import { filter, keys, uniqBy } from "lodash";
+import { filter, keys, map, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import Loader from "../ui/spinner";
 import AccountCard from "../common/card/accountCard";
@@ -14,6 +14,9 @@ import { toReadableDate } from "../../utils/functions/toReadableDate";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user;
+  const [selectedDropItem, setSelectedDropItem] = useState();
+
+  console.log(selectedDropItem);
 
   useEffect(() => {
     axios
@@ -23,7 +26,12 @@ const MainPage = ({ userId }) => {
   }, [userId]);
 
   const handleDropdownSelect = (eventKey) => {
+    const { id, name, type } = eventKey;
     console.log(eventKey);
+    setSelectedDropItem((prev) => ({
+      ...prev,
+      [name]: { id, type }
+    }));
   };
 
   // Фильтрация транзакций по их  для каждого типа.
@@ -31,7 +39,7 @@ const MainPage = ({ userId }) => {
     const result = {};
     ["income", "expense"].forEach((type) => {
       const transacts = filter(transactions || [], { type });
-      const uniqDates = uniqBy(transacts, "date").map((t) => ({
+      const uniqDates = map(uniqBy(transacts, "date"), (t) => ({
         ...t,
         name: toReadableDate(t.date).date
       }));
@@ -44,7 +52,6 @@ const MainPage = ({ userId }) => {
 
   const dropDownIncome = (
     <Dropdown
-      // title="Dropdown"
       items={income.uniqDates}
       type="income"
       onSelect={handleDropdownSelect}
@@ -52,17 +59,11 @@ const MainPage = ({ userId }) => {
   );
 
   const dropDownAccount = (
-    <Dropdown
-      // title="Dropdown"
-      items={accounts}
-      type="account"
-      onSelect={handleDropdownSelect}
-    />
+    <Dropdown items={accounts} type="account" onSelect={handleDropdownSelect} />
   );
 
   const dropDownExpense = (
     <Dropdown
-      // title="Dropdown"
       items={expense.uniqDates}
       type="expense"
       onSelect={handleDropdownSelect}
