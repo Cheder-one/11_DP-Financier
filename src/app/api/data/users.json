@@ -9,7 +9,6 @@
     "accounts": [
       {
         "id": "account-id-1",
-        "type": "account",
         "name": "Сбербанк",
         "public": false,
         "category": "category-id-1",
@@ -23,7 +22,6 @@
       },
       {
         "id": "account-id-2",
-        "type": "account",
         "name": "Альфа-банк",
         "public": false,
         "category": "category-id-2",
@@ -34,7 +32,6 @@
     "categories": [
       {
         "id": "category-id-1",
-        "type": "category",
         "name": "Зарплата",
         "accounts": ["account-id-1"],
         "transactions": [
@@ -45,7 +42,6 @@
       },
       {
         "id": "category-id-2",
-        "type": "category",
         "name": "Аренда",
         "accounts": ["account-id-2"],
         "transactions": ["transaction-id-2"]
@@ -112,7 +108,6 @@
     "accounts": [
       {
         "id": "account-id-3",
-        "type": "account",
         "name": "Тинькофф",
         "public": true,
         "category": "category-id-3",
@@ -123,7 +118,6 @@
     "categories": [
       {
         "id": "category-id-3",
-        "type": "category",
         "name": "Кредит",
         "accounts": ["account-id-3"],
         "transactions": ["transaction-id-6"]

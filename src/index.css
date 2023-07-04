@@ -1,5 +1,4 @@
 @import url("./styles/css/vh-wh.css");
-@import url("./styles/css/sm:md:m-p.css");
 
 @tailwind base;
 @tailwind components;

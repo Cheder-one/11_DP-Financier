@@ -14,9 +14,9 @@ import { toReadableDate } from "../../utils/functions/toReadableDate";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user;
-  const [selectedDropItem, setSelectedDropItem] = useState();
+  // const [selectedDropItem, setSelectedDropItem] = useState();
 
-  console.log(selectedDropItem);
+  useEffect(() => {}, [user]);
 
   useEffect(() => {
     axios
@@ -26,12 +26,21 @@ const MainPage = ({ userId }) => {
   }, [userId]);
 
   const handleDropdownSelect = (eventKey) => {
-    const { id, name, type } = eventKey;
-    console.log(eventKey);
-    setSelectedDropItem((prev) => ({
-      ...prev,
-      [name]: { id, type }
-    }));
+    const { id, date } = eventKey;
+    if (id.includes("all")) {
+      // setFilteredTransacts(transactions);
+    } else if (id.includes("transaction")) {
+      const dateTransacts = filter(transactions, { date });
+      // setFilteredTransacts(dateTransacts);
+    } else if (id.includes("account")) {
+      const accountTransacts = filter(transactions, { account: id });
+      // setFilteredTransacts(accountTransacts);
+    }
+
+    // setSelectedDropItem((prev) => ({
+    //   ...prev,
+    //   [name]: { id }
+    // }));
   };
 
   // Фильтрация транзакций по их  для каждого типа.
@@ -86,7 +95,7 @@ const MainPage = ({ userId }) => {
     <>
       {keys(user).length > 0 ? (
         <div className="mx-4">
-          <Row className="mt-4">
+          <Row style={{ marginTop: "3%" }}>
             <Col md="4">
               <AccountCard
                 title={{
@@ -135,7 +144,7 @@ const MainPage = ({ userId }) => {
             </Col>
           </Row>
 
-          <Row className="mt-4  ">
+          <Row style={{ marginTop: "3%" }}>
             <Col>
               <div className="flex justify-center items-center border border-dark vh-40">
                 <h5>Element</h5>
