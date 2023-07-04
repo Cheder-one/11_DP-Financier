@@ -135,7 +135,7 @@ const MainPage = ({ userId }) => {
             </Col>
           </Row>
 
-          <Row className="mt-4">
+          <Row className="mt-4  ">
             <Col>
               <div className="flex justify-center items-center border border-dark vh-40">
                 <h5>Element</h5>
