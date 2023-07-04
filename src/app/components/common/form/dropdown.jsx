@@ -11,20 +11,24 @@ const getIdAllItem = (type) => {
   };
 };
 
-const Dropdown = ({ items, type }) => {
+const Dropdown = ({ items, type, onSelect }) => {
   const ALL_ITEM = getIdAllItem(type);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(ALL_ITEM);
-  console.log(selectedItem);
+
+  // console.log(selectedItem);
 
   const handleClick = ({ target }) => {
     const { id: eventKey } = target;
     if (eventKey) {
       setSelectedItem(JSON.parse(eventKey));
     }
-
     setIsOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    onSelect(selectedItem);
+  }, [onSelect, selectedItem]);
 
   // Слушатель для закрытия dropDownList при клике вне него
   const dropdownRef = useRef(null);
@@ -78,8 +82,7 @@ const Dropdown = ({ items, type }) => {
 
 Dropdown.propTypes = {
   title: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.object),
-  // .isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
   type: PropTypes.string
 };
 

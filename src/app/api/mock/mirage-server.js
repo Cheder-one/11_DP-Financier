@@ -25,10 +25,14 @@ export function makeServer({ environment = "development" } = {}) {
         return schema.users.all();
       });
 
-      this.get("/users/:user_id", (schema, request) => {
-        const userId = request.params.user_id;
-        return schema.users.find(userId);
-      });
+      this.get(
+        "/users/:user_id",
+        (schema, request) => {
+          const userId = request.params.user_id;
+          return schema.users.find(userId);
+        },
+        { timing: 500 }
+      );
     }
   });
   return server;

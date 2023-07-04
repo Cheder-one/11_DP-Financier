@@ -34,19 +34,19 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
                     md={md[0]}
                     className="flex justify-center items-center border px-0 py-1"
                   >
-                    {item.amount || bodyCol?.first}
+                    {bodyCol?.first || item.amount}
                   </Col>
                   <Col
                     md={md[1]}
                     className="flex justify-center items-center border px-0 py-1"
                   >
-                    {item.category || bodyCol?.second}
+                    {bodyCol?.second || item.category}
                   </Col>
                   <Col
                     md={md[2]}
                     className="flex justify-center items-center border px-0 py-1"
                   >
-                    {item.name || bodyCol?.third}
+                    {bodyCol?.third || item.date}
                   </Col>
                 </Row>
               );

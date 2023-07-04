@@ -1,19 +1,18 @@
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
-import { chain, filter, keys, uniqBy } from "lodash";
+import { filter, keys, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import Loader from "../ui/spinner";
 import AccountCard from "../common/card/accountCard";
 import Dropdown from "../common/form/dropdown";
-import OverlayTooltip from "../common/typography/overlayTooltip";
 
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
+import { toReadableDate } from "../../utils/functions/toReadableDate";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-
   const { accounts, categories, transactions } = user;
 
   useEffect(() => {
@@ -23,24 +22,50 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const operations = useMemo(() => {
+  const handleDropdownSelect = (eventKey) => {
+    console.log(eventKey);
+  };
+
+  // Фильтрация транзакций по их  для каждого типа.
+  const filteredByUniqAndType = useMemo(() => {
     const result = {};
     ["income", "expense"].forEach((type) => {
       const transacts = filter(transactions || [], { type });
-      const uniqDates = uniqBy(transacts, "date");
+      const uniqDates = uniqBy(transacts, "date").map((t) => ({
+        ...t,
+        name: toReadableDate(t.date).date
+      }));
       result[type] = { transacts, uniqDates };
     });
     return result;
   }, [transactions]);
 
-  const { income, expense } = operations;
+  const { income, expense } = filteredByUniqAndType;
+
+  const dropDownIncome = (
+    <Dropdown
+      // title="Dropdown"
+      items={income.uniqDates}
+      type="income"
+      onSelect={handleDropdownSelect}
+    />
+  );
 
   const dropDownAccount = (
     <Dropdown
       // title="Dropdown"
       items={accounts}
       type="account"
-      // onSelect={handleDropdownSelect}
+      onSelect={handleDropdownSelect}
+    />
+  );
+
+  const dropDownExpense = (
+    <Dropdown
+      // title="Dropdown"
+      items={expense.uniqDates}
+      type="expense"
+      onSelect={handleDropdownSelect}
     />
   );
 
@@ -65,7 +90,7 @@ const MainPage = ({ userId }) => {
               <AccountCard
                 title={{
                   first: "Доход",
-                  second: dropDownAccount,
+                  second: dropDownIncome,
                   third: addButton
                 }}
                 type="income"
@@ -96,7 +121,7 @@ const MainPage = ({ userId }) => {
               <AccountCard
                 title={{
                   first: "Расход",
-                  second: dropDownAccount,
+                  second: dropDownExpense,
                   third: addButton
                 }}
                 type="expense"
