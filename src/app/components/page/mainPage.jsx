@@ -14,13 +14,11 @@ import { toReadableDate } from "../../utils/functions/toReadableDate";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user;
-  const [filteredTransacts, setFilteredTransacts] = useState({});
-
-  useEffect(() => {
-    setFilteredTransacts(transactions || {});
-  }, [transactions]);
-
-  useEffect(() => {}, [user]);
+  const [cardBodyItems, setCardBodyItems] = useState({
+    income: [],
+    expense: [],
+    account: []
+  });
 
   useEffect(() => {
     axios
@@ -29,24 +27,13 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const handleDropdownSelect = (eventKey) => {
-    const { id, date } = eventKey;
-    if (id.includes("all")) {
-      //
-    } else if (id.includes("account")) {
-      //
-    } else if (id.includes("transaction")) {
-      //
-    }
-  };
-
   const filteredByUniqAndType = useMemo(() => {
     const result = {};
     ["income", "expense"].forEach((type) => {
       const transacts = filter(transactions || [], { type });
-      const uniqDates = map(uniqBy(transacts, "date"), (t) => ({
-        ...t,
-        name: toReadableDate(t.date).date
+      const uniqDates = map(uniqBy(transacts, "date"), (tran) => ({
+        ...tran,
+        name: toReadableDate(tran.date).date
       }));
       result[type] = { transacts, uniqDates };
     });
@@ -54,6 +41,37 @@ const MainPage = ({ userId }) => {
   }, [transactions]);
 
   const { income, expense } = filteredByUniqAndType;
+
+  const handleDropdownSelect = (eventKey) => {
+    const { id, type: cardType, date } = eventKey;
+    let bodyItems = [];
+
+    if (id.includes("all")) {
+      switch (cardType) {
+        case "account":
+          bodyItems = transactions;
+          break;
+        case "income":
+          bodyItems = income.transacts;
+          break;
+        case "expense":
+          bodyItems = expense.transacts;
+          break;
+      }
+    } else if (id.includes("account")) {
+      bodyItems = filter(transactions, { account: id });
+    } else if (id.includes("transaction")) {
+      bodyItems =
+        cardType === "income"
+          ? filter(income.transacts, { date })
+          : filter(expense.transacts, { date });
+    }
+
+    setCardBodyItems((prev) => ({
+      ...prev,
+      [cardType]: bodyItems
+    }));
+  };
 
   const dropDownIncome = (
     <Dropdown
@@ -101,7 +119,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={income.transacts}
+                bodyList={cardBodyItems.income}
                 bodyCol={{
                   third: delButton
                 }}
@@ -116,7 +134,7 @@ const MainPage = ({ userId }) => {
                   third: addButton
                 }}
                 type="account"
-                bodyList={transactions}
+                bodyList={cardBodyItems.account}
                 bodyCol={{
                   third: delButton
                 }}
@@ -131,7 +149,7 @@ const MainPage = ({ userId }) => {
                   third: addButton
                 }}
                 type="expense"
-                bodyList={expense.transacts}
+                bodyList={cardBodyItems.expense}
                 bodyCol={{
                   third: delButton
                 }}
