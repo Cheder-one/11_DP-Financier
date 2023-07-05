@@ -7,7 +7,7 @@ import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
 import Loader from "../ui/spinner";
-import AccountCard from "../common/card/accountCard";
+import AccountCard from "../common/card/ListCard";
 import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
@@ -26,17 +26,17 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
+  // Фильтрует транзакции на доход/расход
+  // Создает массив не дублирующихся дат когда были транзакции
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
     const result = {};
 
     types.forEach((type) => {
       const transacts = filter(transactions || [], { type });
-
-      let uniqDates = uniqBy(transacts, "date");
-      uniqDates = uniqDates.map((transact) => ({
-        ...transact,
-        name: toReadableDate(transact.date).date
+      const uniqDates = uniqBy(transacts, "date").map((t) => ({
+        ...t,
+        name: toReadableDate(t.date).date
       }));
       result[type] = { transacts, uniqDates };
     });
@@ -45,6 +45,26 @@ const MainPage = ({ userId }) => {
 
   const { income, expense } = filteredByUniqAndType;
 
+  // Получение транзакций принадлежащие выбранному счету
+  const updIncExpTransacts = (id) => {
+    // setCardBodyItems((prev) => ({
+    //   ...prev,
+    //   income: filter(income.transacts, { account: id })
+    // }));
+    // setCardBodyItems((prev) => ({
+    //   ...prev,
+    //   expense: filter(expense.transacts, { account: id })
+    // }));
+    setCardBodyItems((prev) => ({
+      ...prev,
+      income: filter(income.transacts, { account: id }),
+      expense: filter(expense.transacts, { account: id })
+    }));
+  };
+
+  // Обработчик dropdown -
+  // определяет в какой карточке был выбор.
+  // определяет какой item был выбран в drop-листе карточки.
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
     let bodyItems = [];
@@ -62,26 +82,15 @@ const MainPage = ({ userId }) => {
           break;
       }
     } else if (id.includes("account")) {
-      // Выбран конкретный счет, фильтруем транзакции по счету
       bodyItems = filter(transactions, { account: id });
-
-      // Обновляем транзакции в карточке "Доходы"
-      setCardBodyItems((prev) => ({
-        ...prev,
-        income: filter(income.transacts, { account: id })
-      }));
-
-      // Обновляем транзакции в карточке "Расходы"
-      setCardBodyItems((prev) => ({
-        ...prev,
-        expense: filter(expense.transacts, { account: id })
-      }));
+      updIncExpTransacts(id);
     } else if (id.includes("transaction")) {
       bodyItems =
         cardType === "income"
           ? filter(income.transacts, { date })
           : filter(expense.transacts, { date });
     }
+    console.log(cardBodyItems);
 
     setCardBodyItems((prev) => ({
       ...prev,
@@ -123,7 +132,7 @@ const MainPage = ({ userId }) => {
 
   return (
     <>
-      {keys(user).length > 0 ? (
+      {keys(user || {}).length > 0 ? (
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
