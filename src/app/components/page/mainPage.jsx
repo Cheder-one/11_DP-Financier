@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
-import { filter, keys, map, uniqBy } from "lodash";
+import { filter, keys, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
-import Loader from "../ui/spinner";
-import AccountCard from "../common/card/accountCard";
-import Dropdown from "../common/form/dropdown";
-
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
+import Loader from "../ui/spinner";
+import AccountCard from "../common/card/accountCard";
+import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -28,12 +27,16 @@ const MainPage = ({ userId }) => {
   }, [userId]);
 
   const filteredByUniqAndType = useMemo(() => {
+    const types = ["income", "expense"];
     const result = {};
-    ["income", "expense"].forEach((type) => {
+
+    types.forEach((type) => {
       const transacts = filter(transactions || [], { type });
-      const uniqDates = map(uniqBy(transacts, "date"), (tran) => ({
-        ...tran,
-        name: toReadableDate(tran.date).date
+
+      let uniqDates = uniqBy(transacts, "date");
+      uniqDates = uniqDates.map((transact) => ({
+        ...transact,
+        name: toReadableDate(transact.date).date
       }));
       result[type] = { transacts, uniqDates };
     });
@@ -59,7 +62,20 @@ const MainPage = ({ userId }) => {
           break;
       }
     } else if (id.includes("account")) {
+      // Выбран конкретный счет, фильтруем транзакции по счету
       bodyItems = filter(transactions, { account: id });
+
+      // Обновляем транзакции в карточке "Доходы"
+      setCardBodyItems((prev) => ({
+        ...prev,
+        income: filter(income.transacts, { account: id })
+      }));
+
+      // Обновляем транзакции в карточке "Расходы"
+      setCardBodyItems((prev) => ({
+        ...prev,
+        expense: filter(expense.transacts, { account: id })
+      }));
     } else if (id.includes("transaction")) {
       bodyItems =
         cardType === "income"
