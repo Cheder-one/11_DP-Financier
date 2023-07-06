@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
 import { filter, keys, uniqBy } from "lodash";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
@@ -12,39 +12,11 @@ import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const { accounts, categories } = user;
-  const [parentCardBodyItems, setParentCardBodyItems] = useState({
-    transactions: []
+  const [parentCard, setParentCard] = useState({ transactions: [] });
+  const [childCard, setChildCard] = useState({
+    income: { transacts: [], uniqDates: [] },
+    expense: { transacts: [], uniqDates: [] }
   });
-
-  const [cardBodyItems, setCardBodyItems] = useState({});
-
-  console.log(cardBodyItems?.income?.uniqDates);
-
-  const filtrationTransactsByType = (type) => {
-    return filter(parentCardBodyItems.transactions, { type });
-  };
-
-  const getUniqTransactsDates = (type) => {
-    return uniqBy(filtrationTransactsByType(type), "date").map((t) => ({
-      ...t,
-      name: toReadableDate(t.date).date
-    }));
-  };
-
-  useEffect(() => {
-    setCardBodyItems((prev) => ({
-      ...prev,
-      income: {
-        transacts: filtrationTransactsByType("income"),
-        uniqDates: getUniqTransactsDates("income")
-      },
-      expense: {
-        transacts: filtrationTransactsByType("expense"),
-        uniqDates: getUniqTransactsDates("expense")
-      }
-    }));
-  }, [parentCardBodyItems.transactions, user]);
 
   useEffect(() => {
     axios
@@ -53,115 +25,82 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  // // Фильтрует транзакции на доход/расход
-  // // Создает массив не дублирующихся дат когда были транзакции
-  // const filteredByUniqAndType = useMemo(() => {
-  //   const types = ["income", "expense"];
-  //   const result = {};
+  useEffect(() => {
+    if (user.transactions) {
+      setParentCard({ transactions: user.transactions });
+    }
+  }, [user.transactions]);
 
-  //   types.forEach((type) => {
-  //     const transacts = filter(transactions || [], { type });
-  //     const uniqDates = uniqBy(transacts, "date").map((t) => ({
-  //       ...t,
-  //       name: toReadableDate(t.date).date
-  //     }));
-  //     result[type] = { transacts, uniqDates };
-  //   });
-  //   return result;
-  // }, [transactions]);
+  const filteringTransactsByType = (type) => {
+    return filter(parentCard.transactions || [], { type });
+  };
 
-  // const { income, expense } = filteredByUniqAndType;
-
-  // // Получение транзакций принадлежащие выбранному счету
-  // const updIncExpTransacts = (id) => {
-  //   setCardBodyItems((prev) => ({
-  //     ...prev,
-  //     income: filter(income.transacts, { account: id }),
-  //     expense: filter(expense.transacts, { account: id })
-  //   }));
-  // };
-
-  // Обработчик dropdown -
-  // определяет в какой карточке был выбор.
-  // определяет какой item был выбран в drop-листе карточки.
+  const getUniqTransactionDates = (type) => {
+    return uniqBy(filteringTransactsByType(type), "date").map((t) => ({
+      ...t,
+      name: toReadableDate(t.date).date
+    }));
+  };
 
   const handleDropdownSelect = (eventKey) => {
     const { id, type, date } = eventKey;
     let bodyItems = [];
+    let parentBodyItems = [];
 
     if (id.includes("all")) {
       switch (type) {
         case "account":
-          bodyItems = user.transactions;
+          parentBodyItems = user.transactions || [];
           break;
         case "income":
-          bodyItems = cardBodyItems?.income?.transacts;
+          bodyItems = filteringTransactsByType(type);
           break;
         case "expense":
-          bodyItems = cardBodyItems?.expense?.transacts;
+          bodyItems = filteringTransactsByType(type);
           break;
       }
     } else if (id.includes("account")) {
-      bodyItems = filter(user.transactions, { account: id });
-      // updIncExpTransacts(id);
+      parentBodyItems = filter(user.transactions || [], { account: id });
     } else if (id.includes("transaction")) {
       switch (type) {
         case "income":
-          bodyItems = filter(cardBodyItems?.income?.transacts, { date });
+          // привести childCard в исходное состояние исходя из транзакций выбранного счета
+          bodyItems = filter(childCard.income.transacts || [], { date });
           break;
         case "expense":
-          bodyItems = filter(cardBodyItems?.expense?.transacts, { date });
+          // Handle expense case
           break;
       }
-      // bodyItems =
-      //   type === "income"
-      //     ? filter(cardBodyItems?.income?.transacts, { date })
-      //     : filter(cardBodyItems?.expense?.transacts, { date });
     }
-    // console.log(cardBodyItems);
-
-    // setCardBodyItems((prev) => ({
-    //   ...prev,
-    //   [cardType]: bodyItems
-    // }));
 
     if (type === "account") {
-      setParentCardBodyItems((prev) => ({
-        ...prev,
-        transactions: bodyItems
-      }));
+      setParentCard({ transactions: parentBodyItems });
     } else {
-      setCardBodyItems((prev) => ({
+      setChildCard((prev) => ({
         ...prev,
         [type]: {
-          ...prev[type],
-          transacts: bodyItems
+          transacts: bodyItems,
+          uniqDates: getUniqTransactionDates(type)
         }
       }));
     }
   };
 
-  // console.log(cardBodyItems?.income?.uniqDates);
-
   const dropDownIncome = (
     <Dropdown
-      items={cardBodyItems?.income?.uniqDates}
+      items={childCard.income.uniqDates}
       type="income"
       onSelect={handleDropdownSelect}
     />
   );
 
   const dropDownAccount = (
-    <Dropdown items={accounts} type="account" onSelect={handleDropdownSelect} />
+    <Dropdown
+      items={user.accounts}
+      type="account"
+      onSelect={handleDropdownSelect}
+    />
   );
-
-  // const dropDownExpense = (
-  //   <Dropdown
-  //     items={expense.uniqDates}
-  //     type="expense"
-  //     onSelect={handleDropdownSelect}
-  //   />
-  // );
 
   const addButton = (
     <Button variant="" className="p-0">
@@ -177,7 +116,7 @@ const MainPage = ({ userId }) => {
 
   return (
     <>
-      {keys(user || {}).length > 0 ? (
+      {keys(parentCard.transactions || []).length > 0 ? (
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
@@ -189,11 +128,10 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={cardBodyItems?.income?.transacts}
+                bodyList={childCard?.income?.transacts}
                 bodyCol={{
                   third: delButton
                 }}
-                // dropDownList={income.uniqDates}
               />
             </Col>
             <Col md="4">
@@ -204,11 +142,10 @@ const MainPage = ({ userId }) => {
                   third: addButton
                 }}
                 type="account"
-                bodyList={parentCardBodyItems.transactions}
+                bodyList={parentCard.transactions}
                 bodyCol={{
                   third: delButton
                 }}
-                // dropDownList={accounts}
               />
             </Col>
             <Col md="4">
@@ -219,11 +156,11 @@ const MainPage = ({ userId }) => {
                   third: addButton
                 }}
                 type="expense"
-                bodyList={cardBodyItems?.expense?}
+                bodyList={childCard?.expense?}
                 bodyCol={{
                   third: delButton
                 }}
-                // dropDownList={expense.uniqDates}
+
               /> */}
             </Col>
           </Row>
@@ -242,6 +179,7 @@ const MainPage = ({ userId }) => {
     </>
   );
 };
+
 MainPage.propTypes = {
   userId: PropTypes.string.isRequired
 };
