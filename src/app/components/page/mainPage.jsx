@@ -12,11 +12,8 @@ import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [parentCard, setParentCard] = useState({ transactions: [] });
-  const [childCard, setChildCard] = useState({
-    income: { transacts: [], uniqDates: [] },
-    expense: { transacts: [], uniqDates: [] }
-  });
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  console.log(selectedAccount);
 
   useEffect(() => {
     axios
@@ -25,70 +22,46 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  useEffect(() => {
-    if (user.transactions) {
-      setParentCard({ transactions: user.transactions });
-    }
-  }, [user.transactions]);
+  const handleDropdownSelect = (eventKey) => {
+    const { id, type, date } = eventKey;
 
-  const filteringTransactsByType = (type) => {
-    return filter(parentCard.transactions || [], { type });
+    setSelectedAccount(id);
   };
 
-  const getUniqTransactionDates = (type) => {
-    return uniqBy(filteringTransactsByType(type), "date").map((t) => ({
-      ...t,
-      name: toReadableDate(t.date).date
+  const getTransactsByType = (type) => {
+    return filter(user.transactions || [], { type });
+  };
+
+  const getUniqTransactDates = (type) => {
+    return uniqBy(getTransactsByType(type), "date").map((uniq) => ({
+      ...uniq,
+      name: toReadableDate(uniq.date).dateOnly
     }));
   };
 
-  const handleDropdownSelect = (eventKey) => {
-    const { id, type, date } = eventKey;
-    let bodyItems = [];
-    let parentBodyItems = [];
+  const getAccountTransactsByType = (accountId, type) => {
+    const result = filter(getTransactsByType(type), { account: accountId });
+    return result.length > 0 ? result : null;
+  };
 
-    if (id.includes("all")) {
-      switch (type) {
-        case "account":
-          parentBodyItems = user.transactions || [];
-          break;
-        case "income":
-          bodyItems = filteringTransactsByType(type);
-          break;
-        case "expense":
-          bodyItems = filteringTransactsByType(type);
-          break;
-      }
-    } else if (id.includes("account")) {
-      parentBodyItems = filter(user.transactions || [], { account: id });
-    } else if (id.includes("transaction")) {
-      switch (type) {
-        case "income":
-          // привести childCard в исходное состояние исходя из транзакций выбранного счета
-          bodyItems = filter(childCard.income.transacts || [], { date });
-          break;
-        case "expense":
-          // Handle expense case
-          break;
-      }
-    }
-
-    if (type === "account") {
-      setParentCard({ transactions: parentBodyItems });
-    } else {
-      setChildCard((prev) => ({
-        ...prev,
-        [type]: {
-          transacts: bodyItems,
-          uniqDates: getUniqTransactionDates(type)
-        }
-      }));
+  const getBodyListItems = (type) => {
+    switch (type) {
+      case "account":
+        return user.transactions;
+      case "income":
+        return (
+          getAccountTransactsByType(selectedAccount, "income") ||
+          user.transactions
+        );
+      case "expend":
+        console.log();
+        break;
     }
   };
 
   const dropDownIncome = (
     <Dropdown
-      items={childCard.income.uniqDates}
+      items={getUniqTransactDates("income")}
       type="income"
       onSelect={handleDropdownSelect}
     />
@@ -116,7 +89,7 @@ const MainPage = ({ userId }) => {
 
   return (
     <>
-      {keys(parentCard.transactions || []).length > 0 ? (
+      {keys(user || []).length > 0 ? (
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
@@ -128,7 +101,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={childCard?.income?.transacts}
+                bodyList={[]}
                 bodyCol={{
                   third: delButton
                 }}
@@ -142,7 +115,7 @@ const MainPage = ({ userId }) => {
                   third: addButton
                 }}
                 type="account"
-                bodyList={parentCard.transactions}
+                bodyList={getBodyListItems("account")}
                 bodyCol={{
                   third: delButton
                 }}

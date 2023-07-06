@@ -4,5 +4,5 @@ export const toReadableDate = (utcDate: string) => {
   let time = dateArr[1];
   time = time.slice(0, time.lastIndexOf(":"));
 
-  return { date, time, full: date + time };
+  return { dateOnly: date, timeOnly: time, full: date + time };
 };
