@@ -44,7 +44,7 @@ const MainPage = ({ userId }) => {
         uniqDates: getUniqTransactsDates("expense")
       }
     }));
-  }, [parentCardBodyItems.transactions]);
+  }, [parentCardBodyItems.transactions, user]);
 
   useEffect(() => {
     axios
@@ -105,10 +105,18 @@ const MainPage = ({ userId }) => {
       bodyItems = filter(user.transactions, { account: id });
       // updIncExpTransacts(id);
     } else if (id.includes("transaction")) {
-      bodyItems =
-        type === "income"
-          ? filter(cardBodyItems?.income?.transacts, { date })
-          : filter(cardBodyItems?.expense?.transacts, { date });
+      switch (type) {
+        case "income":
+          bodyItems = filter(cardBodyItems?.income?.transacts, { date });
+          break;
+        case "expense":
+          bodyItems = filter(cardBodyItems?.expense?.transacts, { date });
+          break;
+      }
+      // bodyItems =
+      //   type === "income"
+      //     ? filter(cardBodyItems?.income?.transacts, { date })
+      //     : filter(cardBodyItems?.expense?.transacts, { date });
     }
     // console.log(cardBodyItems);
 
