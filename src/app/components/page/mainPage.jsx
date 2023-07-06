@@ -16,36 +16,32 @@ const MainPage = ({ userId }) => {
   const [parentCardBodyItems, setParentCardBodyItems] = useState({
     transactions: []
   });
-  console.log(parentCardBodyItems);
 
   const [cardBodyItems, setCardBodyItems] = useState({});
 
+  console.log(cardBodyItems?.income?.uniqDates);
+
+  const filtrationTransactsByType = (type) => {
+    return filter(parentCardBodyItems.transactions, { type });
+  };
+
+  const getUniqTransactsDates = (type) => {
+    return uniqBy(filtrationTransactsByType(type), "date").map((t) => ({
+      ...t,
+      name: toReadableDate(t.date).date
+    }));
+  };
+
   useEffect(() => {
     setCardBodyItems((prev) => ({
-      // account: [],
+      ...prev,
       income: {
-        transacts: () =>
-          filter(parentCardBodyItems.transactions, { type: "income" }),
-        uniqDates: () =>
-          uniqBy(
-            filter(parentCardBodyItems.transactions, { type: "income" }),
-            "date"
-          ).map((t) => ({
-            ...t,
-            name: toReadableDate(t.date).date
-          }))
+        transacts: filtrationTransactsByType("income"),
+        uniqDates: getUniqTransactsDates("income")
       },
       expense: {
-        transacts: () =>
-          filter(parentCardBodyItems.transactions, { type: "expense" }),
-        uniqDates: () =>
-          uniqBy(
-            filter(parentCardBodyItems.transactions, { type: "expense" }),
-            "date"
-          ).map((t) => ({
-            ...t,
-            name: toReadableDate(t.date).date
-          }))
+        transacts: filtrationTransactsByType("expense"),
+        uniqDates: getUniqTransactsDates("expense")
       }
     }));
   }, [parentCardBodyItems.transactions]);
@@ -99,10 +95,10 @@ const MainPage = ({ userId }) => {
           bodyItems = user.transactions;
           break;
         case "income":
-          bodyItems = cardBodyItems?.income?.transacts();
+          bodyItems = cardBodyItems?.income?.transacts;
           break;
         case "expense":
-          bodyItems = cardBodyItems?.expense?.transacts();
+          bodyItems = cardBodyItems?.expense?.transacts;
           break;
       }
     } else if (id.includes("account")) {
@@ -111,8 +107,8 @@ const MainPage = ({ userId }) => {
     } else if (id.includes("transaction")) {
       bodyItems =
         type === "income"
-          ? filter(cardBodyItems?.income?.transacts(), { date })
-          : filter(cardBodyItems?.expense?.transacts(), { date });
+          ? filter(cardBodyItems?.income?.transacts, { date })
+          : filter(cardBodyItems?.expense?.transacts, { date });
     }
     // console.log(cardBodyItems);
 
@@ -120,17 +116,28 @@ const MainPage = ({ userId }) => {
     //   ...prev,
     //   [cardType]: bodyItems
     // }));
-    setParentCardBodyItems((prev) => ({
-      ...prev,
-      transactions: bodyItems
-    }));
+
+    if (type === "account") {
+      setParentCardBodyItems((prev) => ({
+        ...prev,
+        transactions: bodyItems
+      }));
+    } else {
+      setCardBodyItems((prev) => ({
+        ...prev,
+        [type]: {
+          ...prev[type],
+          transacts: bodyItems
+        }
+      }));
+    }
   };
 
-  console.log(cardBodyItems?.income?.uniqDates());
+  // console.log(cardBodyItems?.income?.uniqDates);
 
   const dropDownIncome = (
     <Dropdown
-      items={cardBodyItems?.income?.uniqDates()}
+      items={cardBodyItems?.income?.uniqDates}
       type="income"
       onSelect={handleDropdownSelect}
     />
@@ -174,7 +181,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={cardBodyItems?.income?.transacts()}
+                bodyList={cardBodyItems?.income?.transacts}
                 bodyCol={{
                   third: delButton
                 }}
