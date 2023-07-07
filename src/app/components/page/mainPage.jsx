@@ -32,11 +32,9 @@ const MainPage = ({ userId }) => {
     return filter(user.transactions || [], { type });
   };
 
-  const getUniqTransactDates = (type) => {
-    return uniqBy(getTransactsByType(type), "date").map((uniq) => ({
-      ...uniq,
-      name: toReadableDate(uniq.date).dateOnly
-    }));
+  const getAccountTransacts = (accountId) => {
+    const result = filter(user.transactions || [], { account: accountId });
+    return result.length > 0 ? result : null;
   };
 
   const getAccountTransactsByType = (accountId, type) => {
@@ -44,18 +42,27 @@ const MainPage = ({ userId }) => {
     return result.length > 0 ? result : null;
   };
 
+  const getUniqTransactDates = (type) => {
+    return uniqBy(getTransactsByType(type), "date").map((uniq) => ({
+      ...uniq,
+      name: toReadableDate(uniq.date).dateOnly
+    }));
+  };
+
   const getBodyListItems = (type) => {
     switch (type) {
       case "account":
-        return user.transactions;
+        return getAccountTransacts(selectedAccount) || user.transactions;
       case "income":
         return (
-          getAccountTransactsByType(selectedAccount, "income") ||
-          user.transactions
+          getAccountTransactsByType(selectedAccount, type) ||
+          getTransactsByType(type)
         );
       case "expend":
-        console.log();
-        break;
+        return (
+          getAccountTransactsByType(selectedAccount, type) ||
+          getTransactsByType(type)
+        );
     }
   };
 
@@ -101,7 +108,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={[]}
+                bodyList={getBodyListItems("income")}
                 bodyCol={{
                   third: delButton
                 }}
