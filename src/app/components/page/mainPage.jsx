@@ -13,8 +13,7 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
-  const [selectedExpenseDate, setSelectedExpenseDate] = useState(null);
-  const [selectedIncomeDate, setSelectedIncomeDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     axios
@@ -23,91 +22,69 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const handleAccountSelect = (eventKey) => {
-    setSelectedAccount(eventKey.id);
-    setSelectedExpenseDate(null);
-    setSelectedIncomeDate(null);
-  };
-
-  const handleExpenseDateSelect = (eventKey) => {
-    setSelectedExpenseDate(eventKey.date);
-  };
-
-  const handleIncomeDateSelect = (eventKey) => {
-    setSelectedIncomeDate(eventKey.date);
-  };
-
-  const filteredTransactions = user.transactions?.filter((transaction) => {
-    if (selectedAccount === null || selectedAccount === "all") {
-      return true;
+  const handleDropdownSelect = (eventKey, type) => {
+    if (type === "account") {
+      setSelectedAccount(eventKey);
+      setSelectedDate(null);
+    } else if (type === "date") {
+      setSelectedDate(eventKey);
     }
-
-    if (transaction.account === selectedAccount) {
-      if (selectedExpenseDate !== null && transaction.type === "expense") {
-        return transaction.date === selectedExpenseDate;
-      }
-
-      if (selectedIncomeDate !== null && transaction.type === "income") {
-        return transaction.date === selectedIncomeDate;
-      }
-
-      return true;
-    }
-
-    return false;
-  });
-
-  const addButton = <button>кнопка</button>;
-
-  const delButton = <button>кнопка</button>;
-
-  const getUniqueDates = () => {
-    const expenseDates = [];
-    user.transactions?.forEach((transaction) => {
-      if (
-        transaction.type === "expense" &&
-        transaction.account === selectedAccount
-      ) {
-        if (!expenseDates.includes(transaction.date)) {
-          expenseDates.push(transaction.date);
-        }
-      }
-    });
-    return expenseDates;
   };
 
   const dropDownIncome = (
-    <Dropdown
-      items={user.categories}
-      type="income"
-      onSelect={handleIncomeDateSelect}
-    />
+    <Dropdown items={[]} type="income" onSelect={handleDropdownSelect} />
   );
 
   const dropDownAccount = (
     <Dropdown
       items={user.accounts}
       type="account"
-      onSelect={handleAccountSelect}
+      onSelect={(eventKey) => handleDropdownSelect(eventKey, "account")}
     />
   );
 
-  // const dropDownExpense = (
-  //   <Dropdown
-  //     items={getUniqueDates()}
-  //     type="expense"
-  //     onSelect={handleExpenseDateSelect}
-  //   />
-  // );
+  const dropDownExpense = (
+    <Dropdown items={[]} type="expense" onSelect={handleDropdownSelect} />
+  );
+
+  const addButton = "+";
+  const delButton = "-";
+
+  // Filter transactions based on selected account and date
+  const filteredTransactions =
+    user.transactions ||
+    [].filter((transaction) => {
+      if (selectedAccount === null || transaction.account === selectedAccount) {
+        if (selectedDate === null) {
+          return true;
+        } else {
+          const transactionDate = new Date(transaction.date).toDateString();
+          return transactionDate === selectedDate;
+        }
+      }
+      return false;
+    });
+
+  // Get unique dates for selected account
+  const uniqueDates =
+    user.transactions ||
+    []
+      .filter((transaction) => transaction.account === selectedAccount)
+      .reduce((dates, transaction) => {
+        const transactionDate = new Date(transaction.date).toDateString();
+        if (!dates.includes(transactionDate)) {
+          dates.push(transactionDate);
+        }
+        return dates;
+      }, []);
 
   return (
     <>
-      {Object.keys(user).length > 0 ? (
+      {keys(user || []).length > 0 ? (
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
               <ListCard
-                md={[4, 8, 4]}
                 title={{
                   first: "Доход",
                   second: dropDownIncome,
@@ -115,9 +92,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={filteredTransactions?.filter(
-                  (transaction) => transaction.type === "income"
-                )}
+                bodyList={[]}
                 bodyCol={{
                   third: delButton
                 }}
@@ -125,7 +100,6 @@ const MainPage = ({ userId }) => {
             </Col>
             <Col md="4">
               <ListCard
-                md={[4, 8, 4]}
                 title={{
                   first: "Счет",
                   second: dropDownAccount,
@@ -133,6 +107,23 @@ const MainPage = ({ userId }) => {
                 }}
                 type="account"
                 bodyList={filteredTransactions}
+                bodyCol={{
+                  third: delButton
+                }}
+              />
+            </Col>
+            <Col md="4">
+              <ListCard
+                title={{
+                  first: "Расход",
+                  second: dropDownExpense,
+                  third: addButton
+                }}
+                type="expense"
+                route="/"
+                bodyList={filteredTransactions.filter(
+                  (transaction) => transaction.amount < 0
+                )}
                 bodyCol={{
                   third: delButton
                 }}
