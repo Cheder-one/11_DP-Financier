@@ -12,12 +12,12 @@ import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [selectedItem, setSelectedItem] = useState({
-    id: "",
+  const [selected, setSelected] = useState({
+    account: "",
     date: ""
   });
 
-  console.log(selectedItem);
+  console.log(selected);
 
   useEffect(() => {
     axios
@@ -41,18 +41,8 @@ const MainPage = ({ userId }) => {
       //
     } else if (is("transaction")) {
       selectedDate = date;
-
-      // switch (type) {
-      //   case "income":
-      //     selectedDate = date;
-      //     // setSelectedItem((prev) => ({ ...prev, date }));
-      //     break;
-      //   case "expend":
-      //     selectedDate = date;
-      //     break;
-      // }
     }
-    setSelectedItem({ id, date: selectedDate });
+    setSelected({ account: id, date: selectedDate });
     // setSelectedDate(date);
   };
 
@@ -78,20 +68,19 @@ const MainPage = ({ userId }) => {
   };
 
   const getBodyListItems = (type) => {
-    const getTransacts = (selectedItem, type) => {
+    const getTransacts = (selected, type) => {
       return (
-        getAccountTransactsByType(selectedItem, type) ||
-        getTransactsByType(type)
+        getAccountTransactsByType(selected, type) || getTransactsByType(type)
       );
     };
 
     switch (type) {
       case "account":
-        return getAccountTransacts(selectedItem.id) || user.transactions;
+        return getAccountTransacts(selected.account) || user.transactions;
       case "income":
-        return getTransacts(selectedItem.id, type);
+        return getTransacts(selected.account, type);
       case "expense":
-        return getTransacts(selectedItem.id, type);
+        return getTransacts(selected.account, type);
     }
   };
 
@@ -169,7 +158,7 @@ const MainPage = ({ userId }) => {
               <AccountCard
                 title={{
                   first: "Расход",
-                  second: dropDownIncome,
+                  second: dropDownExpense,
                   third: addButton
                 }}
                 type="expense"
