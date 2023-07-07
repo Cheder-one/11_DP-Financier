@@ -12,11 +12,9 @@ import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [selectedAccountId, setSelectedAccountId] = useState("");
-  const [currentAccountTransactions, setCurrentAccountTransactions] =
-    useState();
-
-  console.log(currentAccountTransactions);
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [selectedIncome, setSelectedIncome] = useState(null);
+  const [selectedExpense, setSelectedExpense] = useState(null);
 
   useEffect(() => {
     axios
@@ -25,37 +23,22 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  // Счет по-умолчанию
-  useEffect(() => {
-    setSelectedAccountId("all-account-ids");
-  }, []);
-
-  const getAccountTransactions = (accId, data) => {
-    const dataToFilter = data || user.transactions;
-
-    let transactionData = null;
-
-    if (accId.includes("all-account")) {
-      transactionData = user.transactions;
-    } else if (accId.includes("account")) {
-      transactionData = filter(dataToFilter, { account: accId });
+  const handleDropdownSelect = (eventKey, type) => {
+    switch (type) {
+      case "account":
+        setSelectedAccount(eventKey);
+        setSelectedIncome(null);
+        setSelectedExpense(null);
+        break;
+      case "income":
+        setSelectedIncome(eventKey);
+        break;
+      case "expense":
+        setSelectedExpense(eventKey);
+        break;
+      default:
+        break;
     }
-
-    return transactionData;
-  };
-
-  // Все Транзакции текущего счета  (для карточки "Счета")
-  useEffect(() => {
-    const result = getAccountTransactions(selectedAccountId);
-    console.log(selectedAccountId);
-
-    setCurrentAccountTransactions(result);
-  }, [selectedAccountId, user]);
-
-  const handleDropdownSelect = (eventKey) => {
-    const { id, date, type } = eventKey;
-
-    setSelectedAccountId(id);
   };
 
   const dropDownIncome = (
@@ -88,7 +71,7 @@ const MainPage = ({ userId }) => {
 
   return (
     <>
-      {keys(user.transactions || []).length > 0 ? (
+      {keys(user || []).length > 0 ? (
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
