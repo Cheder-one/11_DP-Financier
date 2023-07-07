@@ -16,6 +16,11 @@ const MainPage = ({ userId }) => {
     account: "",
     date: ""
   });
+  const [bodyList, setBodyList] = useState({
+    account: [],
+    income: [],
+    expense: []
+  });
 
   console.log(selected);
 
@@ -28,38 +33,35 @@ const MainPage = ({ userId }) => {
 
   const handleDropdownSelect = (eventKey) => {
     const { id, type, date } = eventKey;
-    const is = (idPart) => id.includes(idPart);
 
-    let selectedDate = null;
+    setSelected({
+      account: id,
+      type,
+      date: date || null
+    });
+  };
 
-    console.log(id);
-    console.log(date);
+  const getAccountTransacts = (id) => {
+    const result = filter(user.transactions || [], { account: id });
 
-    if (is("all")) {
-      //
-    } else if (is("account")) {
-      //
-    } else if (is("transaction")) {
-      selectedDate = date;
+    if (id.includes("all")) {
+      return user.transactions;
+    } else if (id.includes("account")) {
+      return result.length > 0 ? result : null;
     }
-    setSelected({ account: id, date: selectedDate });
-    // setSelectedDate(date);
   };
 
   const getTransactsByType = (type) => {
-    return filter(user.transactions || [], { type });
-  };
-
-  const getAccountTransacts = (accountId) => {
-    const result = filter(user.transactions || [], { account: accountId });
+    const result = filter(user.transactions || [], { type });
     return result.length > 0 ? result : null;
   };
 
-  const getAccountTransactsByType = (accountId, type) => {
-    const result = filter(getTransactsByType(type), { account: accountId });
+  const getAccountTransactsByType = (id, type) => {
+    const result = filter(getTransactsByType(type), { account: id });
     return result.length > 0 ? result : null;
   };
 
+  // перенести в state
   const getUniqTransactDates = (type) => {
     return uniqBy(getTransactsByType(type), "date").map((uniq) => ({
       ...uniq,
@@ -67,22 +69,35 @@ const MainPage = ({ userId }) => {
     }));
   };
 
-  const getBodyListItems = (type) => {
-    const getTransacts = (selected, type) => {
-      return (
-        getAccountTransactsByType(selected, type) || getTransactsByType(type)
-      );
-    };
-
-    switch (type) {
-      case "account":
-        return getAccountTransacts(selected.account) || user.transactions;
-      case "income":
-        return getTransacts(selected.account, type);
-      case "expense":
-        return getTransacts(selected.account, type);
-    }
+  const getTransacts = (selected, type) => {
+    return [];
   };
+
+  // const getBodyListItems = (type) => {
+  //   const getTransacts = (selected, type) => {
+  //     return (
+  //       getAccountTransactsByType(selected, type) || getTransactsByType(type)
+  //     );
+  //   };
+
+  //   switch (type) {
+  //     case "account":
+  //       // если у счета нет транзакций нельзя выводить все!
+  //       return getAccountTransacts(selected.account) || user.transactions;
+  //     case "income":
+  //       return getTransacts(selected.account, type);
+  //     case "expense":
+  //       return getTransacts(selected.account, type);
+  //   }
+  // };
+
+  useEffect(() => {
+    setBodyList({
+      account: getAccountTransacts(selected.account),
+      income: getTransacts(selected, "income"),
+      expense: getTransacts(selected, "expense")
+    });
+  }, [selected]);
 
   const dropDownIncome = (
     <Dropdown
@@ -134,7 +149,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={getBodyListItems("income")}
+                bodyList={bodyList.income}
                 bodyCol={{
                   third: delButton
                 }}
@@ -148,7 +163,7 @@ const MainPage = ({ userId }) => {
                   third: addButton
                 }}
                 type="account"
-                bodyList={getBodyListItems("account")}
+                bodyList={bodyList.account}
                 bodyCol={{
                   third: delButton
                 }}
@@ -163,7 +178,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="expense"
                 route="/"
-                bodyList={getBodyListItems("expense")}
+                bodyList={bodyList.expense}
                 bodyCol={{
                   third: delButton
                 }}
