@@ -1,8 +1,7 @@
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
 import { filter, keys, uniqBy } from "lodash";
-import { useEffect, useMemo, useState } from "react";
 import Loader from "../ui/spinner";
 import ListCard from "../common/card/ListCard";
 import Dropdown from "../common/form/dropdown";
@@ -10,6 +9,7 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     axios
@@ -18,56 +18,90 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const handleAccountSelect = (account) => {
-    setSelectedAccount(account);
-  };
-
-  const filterTransactionsByAccount = (account) => {
-    if (account === null) return user.transactions;
-    return filter(user.transactions, { account: account.id });
-  };
-
-  const filterDatesByAccount = (account) => {
-    if (account === null) return [];
-    const accountTransactions = filterTransactionsByAccount(account);
-    return uniqBy(accountTransactions, "date").map(
-      (transaction) => transaction.date
-    );
-  };
-
   const handleDropdownSelect = (eventKey, type) => {
     if (type === "account") {
-      const account = JSON.parse(eventKey);
-      handleAccountSelect(account);
+      setSelectedAccount(eventKey);
+      setSelectedDate(null);
+    } else {
+      setSelectedDate(eventKey);
     }
   };
 
-  const dropDownIncome = (
-    <Dropdown
-      items={filterDatesByAccount(selectedAccount)}
-      type="income"
-      onSelect={handleDropdownSelect}
-    />
-  );
+  const filterTransactions = () => {
+    let filteredTransactions = user.transactions;
 
-  const dropDownAccount = (
-    <Dropdown
-      items={user.accounts}
-      type="account"
-      onSelect={handleDropdownSelect}
-    />
-  );
+    if (selectedAccount && selectedAccount.id !== "all-account-ids") {
+      filteredTransactions = filter(filteredTransactions, {
+        account: selectedAccount.id
+      });
+    }
 
-  const dropDownExpense = (
-    <Dropdown
-      items={filterDatesByAccount(selectedAccount)}
-      type="expense"
-      onSelect={handleDropdownSelect}
-    />
-  );
+    if (
+      selectedDate &&
+      selectedDate.id !== "all-expense-ids" &&
+      selectedAccount &&
+      selectedAccount.id !== "all-account-ids"
+    ) {
+      filteredTransactions = filter(filteredTransactions, {
+        date: selectedDate.id
+      });
+    }
 
-  const addButton = "+";
-  const delButton = "-";
+    return filteredTransactions;
+  };
+
+  const getAccountDropdownItems = () => {
+    const accountItems =
+      user.accounts ||
+      [].map((account) => {
+        return {
+          id: account.id,
+          type: "account",
+          name: account.name
+        };
+      });
+
+    return [
+      { id: "all-account-ids", type: "account", name: "Все" },
+      ...accountItems
+    ];
+  };
+
+  const getExpenseDropdownItems = () => {
+    let expenseItems = [];
+
+    if (selectedAccount && selectedAccount.id !== "all-account-ids") {
+      const transactions = filter(user.transactions, {
+        account: selectedAccount.id
+      });
+      const uniqueDates = uniqBy(transactions, "date");
+      expenseItems = uniqueDates.map((transaction) => {
+        return {
+          id: transaction.date,
+          type: "expense",
+          name: transaction.date
+        };
+      });
+    }
+
+    return [
+      { id: "all-expense-ids", type: "expense", name: "Все" },
+      ...expenseItems
+    ];
+  };
+
+  const accountDropdownItems = getAccountDropdownItems();
+  const expenseDropdownItems = getExpenseDropdownItems();
+
+  const handleAddButtonClick = () => {
+    // Обработчик для кнопки добавления
+  };
+
+  const handleDeleteButtonClick = () => {
+    // Обработчик для кнопки удаления
+  };
+
+  const filteredTransactions = filterTransactions();
 
   return (
     <>
@@ -78,14 +112,28 @@ const MainPage = ({ userId }) => {
               <ListCard
                 title={{
                   first: "Доход",
-                  second: dropDownIncome,
-                  third: addButton
+                  second: (
+                    <Dropdown
+                      items={[]}
+                      type="income"
+                      onSelect={handleDropdownSelect}
+                    />
+                  ),
+                  third: (
+                    <Button variant="primary" onClick={handleAddButtonClick}>
+                      +
+                    </Button>
+                  )
                 }}
                 type="income"
                 route="/"
-                bodyList={filterTransactionsByAccount(selectedAccount)}
+                bodyList={[]}
                 bodyCol={{
-                  third: delButton
+                  third: (
+                    <Button variant="danger" onClick={handleDeleteButtonClick}>
+                      -
+                    </Button>
+                  )
                 }}
               />
             </Col>
@@ -93,13 +141,29 @@ const MainPage = ({ userId }) => {
               <ListCard
                 title={{
                   first: "Счет",
-                  second: dropDownAccount,
-                  third: addButton
+                  second: (
+                    <Dropdown
+                      items={accountDropdownItems}
+                      type="account"
+                      onSelect={(eventKey) =>
+                        handleDropdownSelect(eventKey, "account")
+                      }
+                    />
+                  ),
+                  third: (
+                    <Button variant="primary" onClick={handleAddButtonClick}>
+                      +
+                    </Button>
+                  )
                 }}
                 type="account"
-                bodyList={filterTransactionsByAccount(selectedAccount)}
+                bodyList={[]}
                 bodyCol={{
-                  third: delButton
+                  third: (
+                    <Button variant="danger" onClick={handleDeleteButtonClick}>
+                      -
+                    </Button>
+                  )
                 }}
               />
             </Col>
@@ -107,14 +171,30 @@ const MainPage = ({ userId }) => {
               <ListCard
                 title={{
                   first: "Расход",
-                  second: dropDownExpense,
-                  third: addButton
+                  second: (
+                    <Dropdown
+                      items={expenseDropdownItems}
+                      type="expense"
+                      onSelect={(eventKey) =>
+                        handleDropdownSelect(eventKey, "expense")
+                      }
+                    />
+                  ),
+                  third: (
+                    <Button variant="primary" onClick={handleAddButtonClick}>
+                      +
+                    </Button>
+                  )
                 }}
                 type="expense"
                 route="/"
-                bodyList={filterTransactionsByAccount(selectedAccount)}
+                bodyList={[]}
                 bodyCol={{
-                  third: delButton
+                  third: (
+                    <Button variant="danger" onClick={handleDeleteButtonClick}>
+                      -
+                    </Button>
+                  )
                 }}
               />
             </Col>
@@ -133,10 +213,6 @@ const MainPage = ({ userId }) => {
       )}
     </>
   );
-};
-
-MainPage.propTypes = {
-  userId: PropTypes.string.isRequired
 };
 
 export default MainPage;
