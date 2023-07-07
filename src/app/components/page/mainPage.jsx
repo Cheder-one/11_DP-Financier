@@ -22,133 +22,86 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const handleDropdownSelect = (eventKey, type) => {
-    if (type === "account") {
-      setSelectedAccount(eventKey);
-      setSelectedDate(null);
-    } else if (type === "date") {
-      setSelectedDate(eventKey);
-    }
+  const handleAccountSelect = (account) => {
+    setSelectedAccount(account);
+    setSelectedDate(null);
   };
 
-  const filteredTransactions = useMemo(() => {
-    if (!selectedAccount || selectedAccount === "Все") {
-      return user.transactions;
-    }
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+  };
 
-    if (!selectedDate || selectedDate === "Все") {
-      return user.transactions.filter(
+  const handleDropdownSelect = (params) => {};
+
+  const filterTransactions = () => {
+    let filteredTransactions = user.transactions;
+
+    if (selectedAccount && selectedAccount !== "all") {
+      filteredTransactions = filteredTransactions.filter(
         (transaction) => transaction.account === selectedAccount
       );
     }
 
-    return user.transactions.filter(
-      (transaction) =>
-        transaction.account === selectedAccount &&
-        transaction.date === selectedDate
-    );
-  }, [selectedAccount, selectedDate, user.transactions]);
-
-  // const accountDropdownItems = useMemo(() => {
-  //   const dropdownItems = user.accounts.map((account) => ({
-  //     id: account.id,
-  //     name: account.name
-  //   }));
-  //   dropdownItems.unshift({ id: "Все", name: "Все" });
-  //   return dropdownItems;
-  // }, [user.accounts]);
-
-  const dateDropdownItems = useMemo(() => {
-    const dropdownItems = [];
-    if (selectedAccount && selectedAccount !== "Все") {
-      const account = user.accounts.find(
-        (account) => account.id === selectedAccount
+    if (selectedDate && selectedDate !== "all") {
+      filteredTransactions = filteredTransactions.filter((transaction) =>
+        transaction.date.includes(selectedDate)
       );
-      const accountTransactions = user.transactions.filter(
-        (transaction) => transaction.account === account.id
-      );
-      const uniqueDates = [
-        ...new Set(accountTransactions.map((transaction) => transaction.date))
-      ];
-      dropdownItems.push({ id: "Все", name: "Все" });
-      uniqueDates.forEach((date) => {
-        dropdownItems.push({ id: date, name: date });
-      });
     }
-    return dropdownItems;
-  }, [selectedAccount, user.accounts, user.transactions]);
 
-  const addButton = <Button>"кнопка"</Button>;
+    return filteredTransactions;
+  };
 
-  const delButton = <Button>"кнопка"</Button>;
+  const dropDownIncome = (
+    <Dropdown items={[]} type="income" onSelect={handleDropdownSelect} />
+  );
+
+  const dropDownAccount = (
+    <Dropdown
+      items={user.accounts}
+      type="account"
+      onSelect={handleAccountSelect}
+    />
+  );
+
+  const dropDownExpense = (
+    <Dropdown items={[]} type="expense" onSelect={handleDropdownSelect} />
+  );
+
+  const addButton = <button>"кнопка"</button>;
+
+  const delButton = <button>"кнопка"</button>;
 
   return (
     <>
-      {Object.keys(user || {}).length > 0 ? (
+      {Object.keys(user).length > 0 ? (
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
               <ListCard
-                md={[4, 8, 4]}
+                md={[4, 4, 4]}
                 title={{
                   first: "Доход",
-                  second: (
-                    <Dropdown
-                      items={dateDropdownItems}
-                      type="date"
-                      onSelect={(eventKey) =>
-                        handleDropdownSelect(eventKey, "date")
-                      }
-                    />
-                  ),
+                  second: dropDownIncome,
                   third: addButton
                 }}
                 type="income"
                 route="/"
-                bodyList={filteredTransactions.filter(
-                  (transaction) =>
-                    transaction.type === "income" &&
-                    (!selectedAccount ||
-                      selectedAccount === "Все" ||
-                      transaction.account === selectedAccount) &&
-                    (!selectedDate ||
-                      selectedDate === "Все" ||
-                      transaction.date === selectedDate)
-                )}
+                bodyList={filterTransactions()}
                 bodyCol={{
                   third: delButton
                 }}
               />
             </Col>
-
             <Col md="4">
               <ListCard
-                md={[4, 8, 4]}
+                md={[4, 4, 4]}
                 title={{
                   first: "Счет",
-                  second: (
-                    <Dropdown
-                      items={dateDropdownItems}
-                      type="date"
-                      onSelect={(eventKey) =>
-                        handleDropdownSelect(eventKey, "date")
-                      }
-                    />
-                  ),
+                  second: dropDownAccount,
                   third: addButton
                 }}
                 type="account"
-                route="/"
-                bodyList={filteredTransactions.filter(
-                  (transaction) =>
-                    transaction.type === "account" &&
-                    (!selectedAccount ||
-                      selectedAccount === "Все" ||
-                      transaction.account === selectedAccount) &&
-                    (!selectedDate ||
-                      selectedDate === "Все" ||
-                      transaction.date === selectedDate)
-                )}
+                bodyList={filterTransactions()}
                 bodyCol={{
                   third: delButton
                 }}
@@ -156,32 +109,15 @@ const MainPage = ({ userId }) => {
             </Col>
             <Col md="4">
               <ListCard
-                md={[4, 8, 4]}
+                md={[4, 4, 4]}
                 title={{
                   first: "Расход",
-                  second: (
-                    <Dropdown
-                      items={dateDropdownItems}
-                      type="date"
-                      onSelect={(eventKey) =>
-                        handleDropdownSelect(eventKey, "date")
-                      }
-                    />
-                  ),
+                  second: dropDownExpense,
                   third: addButton
                 }}
                 type="expense"
                 route="/"
-                bodyList={filteredTransactions.filter(
-                  (transaction) =>
-                    transaction.type === "expense" &&
-                    (!selectedAccount ||
-                      selectedAccount === "Все" ||
-                      transaction.account === selectedAccount) &&
-                    (!selectedDate ||
-                      selectedDate === "Все" ||
-                      transaction.date === selectedDate)
-                )}
+                bodyList={filterTransactions()}
                 bodyCol={{
                   third: delButton
                 }}
