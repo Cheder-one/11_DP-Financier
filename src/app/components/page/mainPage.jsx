@@ -10,7 +10,6 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     axios
@@ -19,46 +18,35 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  useEffect(() => {
-    if (selectedAccount) {
-      const selectedAccountTransactions = filter(
-        user.transactions,
-        (transaction) => transaction.account === selectedAccount.id
-      );
-
-      const uniqueDates = uniqBy(
-        selectedAccountTransactions,
-        (transaction) => transaction.date
-      ).map((transaction) => transaction.date);
-
-      setSelectedDate(null);
-      setSelectedDate(uniqueDates[0]);
-    }
-  }, [user.transactions, selectedAccount]);
-
   const handleAccountSelect = (account) => {
     setSelectedAccount(account);
   };
 
-  const handleDateSelect = (date) => {
-    setSelectedDate(date);
+  const filterTransactionsByAccount = (account) => {
+    if (account === null) return user.transactions;
+    return filter(user.transactions, { account: account.id });
+  };
+
+  const filterDatesByAccount = (account) => {
+    if (account === null) return [];
+    const accountTransactions = filterTransactionsByAccount(account);
+    return uniqBy(accountTransactions, "date").map(
+      (transaction) => transaction.date
+    );
   };
 
   const handleDropdownSelect = (eventKey, type) => {
     if (type === "account") {
-      const selectedAccount = JSON.parse(JSON.stringify(eventKey));
-      handleAccountSelect(selectedAccount);
-    } else if (type === "income" || type === "expense") {
-      const selectedDate = JSON.parse(JSON.stringify(eventKey));
-      handleDateSelect(selectedDate);
+      const account = JSON.parse(eventKey);
+      handleAccountSelect(account);
     }
   };
 
   const dropDownIncome = (
     <Dropdown
-      items={getUniqueDates("income")}
+      items={filterDatesByAccount(selectedAccount)}
       type="income"
-      onSelect={(eventKey) => handleDropdownSelect(eventKey, "income")}
+      onSelect={handleDropdownSelect}
     />
   );
 
@@ -66,71 +54,20 @@ const MainPage = ({ userId }) => {
     <Dropdown
       items={user.accounts}
       type="account"
-      onSelect={(eventKey) => handleDropdownSelect(eventKey, "account")}
+      onSelect={handleDropdownSelect}
     />
   );
 
   const dropDownExpense = (
     <Dropdown
-      items={getUniqueDates("expense")}
+      items={filterDatesByAccount(selectedAccount)}
       type="expense"
-      onSelect={(eventKey) => handleDropdownSelect(eventKey, "expense")}
+      onSelect={handleDropdownSelect}
     />
   );
 
   const addButton = "+";
   const delButton = "-";
-
-  function getUniqueDates(type) {
-    if (selectedAccount) {
-      const transactions = filter(
-        user.transactions,
-        (transaction) => transaction.account === selectedAccount.id
-      );
-      const uniqueDates = uniqBy(
-        transactions,
-        (transaction) => transaction.date
-      );
-      return uniqueDates.map((transaction) => ({
-        id: transaction.date,
-        type,
-        name: transaction.date
-      }));
-    }
-    return [];
-  }
-
-  const filterTransactions = (type) => {
-    if (selectedAccount) {
-      const transactions = filter(
-        user.transactions,
-        (transaction) => transaction.account === selectedAccount.id
-      );
-
-      if (selectedDate) {
-        const filteredTransactions = filter(
-          transactions,
-          (transaction) =>
-            (type === "income" && transaction.amount > 0) ||
-            (type === "expense" && transaction.amount < 0)
-        );
-
-        return filter(
-          filteredTransactions,
-          (transaction) => transaction.date === selectedDate
-        );
-      }
-
-      return filter(
-        transactions,
-        (transaction) =>
-          (type === "income" && transaction.amount > 0) ||
-          (type === "expense" && transaction.amount < 0)
-      );
-    }
-
-    return [];
-  };
 
   return (
     <>
@@ -146,7 +83,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={filterTransactions("income")}
+                bodyList={filterTransactionsByAccount(selectedAccount)}
                 bodyCol={{
                   third: delButton
                 }}
@@ -160,7 +97,7 @@ const MainPage = ({ userId }) => {
                   third: addButton
                 }}
                 type="account"
-                bodyList={filterTransactions("account")}
+                bodyList={filterTransactionsByAccount(selectedAccount)}
                 bodyCol={{
                   third: delButton
                 }}
@@ -175,7 +112,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="expense"
                 route="/"
-                bodyList={filterTransactions("expense")}
+                bodyList={filterTransactionsByAccount(selectedAccount)}
                 bodyCol={{
                   third: delButton
                 }}
