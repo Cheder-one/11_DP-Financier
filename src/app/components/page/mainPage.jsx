@@ -3,9 +3,6 @@ import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
 import { filter, keys, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
-import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
-import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
-import { toReadableDate } from "../../utils/functions/toReadableDate";
 import Loader from "../ui/spinner";
 import ListCard from "../common/card/ListCard";
 import Dropdown from "../common/form/dropdown";
@@ -22,17 +19,47 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
+  useEffect(() => {
+    if (selectedAccount) {
+      const selectedAccountTransactions = filter(
+        user.transactions,
+        (transaction) => transaction.account === selectedAccount.id
+      );
+
+      const uniqueDates = uniqBy(
+        selectedAccountTransactions,
+        (transaction) => transaction.date
+      ).map((transaction) => transaction.date);
+
+      setSelectedDate(null);
+      setSelectedDate(uniqueDates[0]);
+    }
+  }, [user.transactions, selectedAccount]);
+
+  const handleAccountSelect = (account) => {
+    setSelectedAccount(account);
+  };
+
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+  };
+
   const handleDropdownSelect = (eventKey, type) => {
     if (type === "account") {
-      setSelectedAccount(eventKey);
-      setSelectedDate(null);
-    } else if (type === "date") {
-      setSelectedDate(eventKey);
+      const selectedAccount = JSON.parse(JSON.stringify(eventKey));
+      handleAccountSelect(selectedAccount);
+    } else if (type === "income" || type === "expense") {
+      const selectedDate = JSON.parse(JSON.stringify(eventKey));
+      handleDateSelect(selectedDate);
     }
   };
 
   const dropDownIncome = (
-    <Dropdown items={[]} type="income" onSelect={handleDropdownSelect} />
+    <Dropdown
+      items={getUniqueDates("income")}
+      type="income"
+      onSelect={(eventKey) => handleDropdownSelect(eventKey, "income")}
+    />
   );
 
   const dropDownAccount = (
@@ -44,39 +71,66 @@ const MainPage = ({ userId }) => {
   );
 
   const dropDownExpense = (
-    <Dropdown items={[]} type="expense" onSelect={handleDropdownSelect} />
+    <Dropdown
+      items={getUniqueDates("expense")}
+      type="expense"
+      onSelect={(eventKey) => handleDropdownSelect(eventKey, "expense")}
+    />
   );
 
   const addButton = "+";
   const delButton = "-";
 
-  // Filter transactions based on selected account and date
-  const filteredTransactions =
-    user.transactions ||
-    [].filter((transaction) => {
-      if (selectedAccount === null || transaction.account === selectedAccount) {
-        if (selectedDate === null) {
-          return true;
-        } else {
-          const transactionDate = new Date(transaction.date).toDateString();
-          return transactionDate === selectedDate;
-        }
-      }
-      return false;
-    });
+  function getUniqueDates(type) {
+    if (selectedAccount) {
+      const transactions = filter(
+        user.transactions,
+        (transaction) => transaction.account === selectedAccount.id
+      );
+      const uniqueDates = uniqBy(
+        transactions,
+        (transaction) => transaction.date
+      );
+      return uniqueDates.map((transaction) => ({
+        id: transaction.date,
+        type,
+        name: transaction.date
+      }));
+    }
+    return [];
+  }
 
-  // Get unique dates for selected account
-  const uniqueDates =
-    user.transactions ||
-    []
-      .filter((transaction) => transaction.account === selectedAccount)
-      .reduce((dates, transaction) => {
-        const transactionDate = new Date(transaction.date).toDateString();
-        if (!dates.includes(transactionDate)) {
-          dates.push(transactionDate);
-        }
-        return dates;
-      }, []);
+  const filterTransactions = (type) => {
+    if (selectedAccount) {
+      const transactions = filter(
+        user.transactions,
+        (transaction) => transaction.account === selectedAccount.id
+      );
+
+      if (selectedDate) {
+        const filteredTransactions = filter(
+          transactions,
+          (transaction) =>
+            (type === "income" && transaction.amount > 0) ||
+            (type === "expense" && transaction.amount < 0)
+        );
+
+        return filter(
+          filteredTransactions,
+          (transaction) => transaction.date === selectedDate
+        );
+      }
+
+      return filter(
+        transactions,
+        (transaction) =>
+          (type === "income" && transaction.amount > 0) ||
+          (type === "expense" && transaction.amount < 0)
+      );
+    }
+
+    return [];
+  };
 
   return (
     <>
@@ -92,7 +146,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={[]}
+                bodyList={filterTransactions("income")}
                 bodyCol={{
                   third: delButton
                 }}
@@ -106,7 +160,7 @@ const MainPage = ({ userId }) => {
                   third: addButton
                 }}
                 type="account"
-                bodyList={filteredTransactions}
+                bodyList={filterTransactions("account")}
                 bodyCol={{
                   third: delButton
                 }}
@@ -121,9 +175,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="expense"
                 route="/"
-                bodyList={filteredTransactions.filter(
-                  (transaction) => transaction.amount < 0
-                )}
+                bodyList={filterTransactions("expense")}
                 bodyCol={{
                   third: delButton
                 }}
