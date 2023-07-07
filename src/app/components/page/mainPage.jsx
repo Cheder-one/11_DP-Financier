@@ -12,8 +12,10 @@ import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [selectedAccount, setSelectedAccount] = useState(null);
-  console.log(selectedAccount);
+  const [selectedItem, setSelectedItem] = useState({ id: "", date: "" });
+  // const [selectedDate, setSelectedDate] = useState(null);
+
+  console.log(selectedItem);
 
   useEffect(() => {
     axios
@@ -24,8 +26,22 @@ const MainPage = ({ userId }) => {
 
   const handleDropdownSelect = (eventKey) => {
     const { id, type, date } = eventKey;
+    const is = (idPart) => id.includes(idPart);
 
-    setSelectedAccount(id);
+    console.log(id);
+    console.log(date);
+
+    if (is("all")) {
+      //
+    } else if (is("account")) {
+      //
+    } else if (is("income")) {
+      //
+    } else if (is("expense")) {
+      //
+    }
+    setSelectedItem({ id, date });
+    // setSelectedDate(date);
   };
 
   const getTransactsByType = (type) => {
@@ -50,19 +66,20 @@ const MainPage = ({ userId }) => {
   };
 
   const getBodyListItems = (type) => {
+    const getTransacts = (selectedItem, type) => {
+      return (
+        getAccountTransactsByType(selectedItem, type) ||
+        getTransactsByType(type)
+      );
+    };
+
     switch (type) {
       case "account":
-        return getAccountTransacts(selectedAccount) || user.transactions;
+        return getAccountTransacts(selectedItem.id) || user.transactions;
       case "income":
-        return (
-          getAccountTransactsByType(selectedAccount, type) ||
-          getTransactsByType(type)
-        );
+        return getTransacts(selectedItem.id, type);
       case "expend":
-        return (
-          getAccountTransactsByType(selectedAccount, type) ||
-          getTransactsByType(type)
-        );
+        return getTransacts(selectedItem.id, type);
     }
   };
 
