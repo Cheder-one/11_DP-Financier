@@ -12,17 +12,11 @@ import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [selected, setSelected] = useState({
-    account: "",
-    date: ""
-  });
-  const [bodyList, setBodyList] = useState({
-    account: [],
-    income: [],
-    expense: []
-  });
+  const [selectedAccountId, setSelectedAccountId] = useState("");
+  const [currentAccountTransactions, setCurrentAccountTransactions] =
+    useState();
 
-  console.log(selected);
+  console.log(currentAccountTransactions);
 
   useEffect(() => {
     axios
@@ -31,80 +25,41 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const handleDropdownSelect = (eventKey) => {
-    const { id, type, date } = eventKey;
-
-    setSelected({
-      account: id,
-      type,
-      date: date || null
-    });
-  };
-
-  const getAccountTransacts = (id) => {
-    const result = filter(user.transactions || [], { account: id });
-
-    if (id.includes("all")) {
-      return user.transactions;
-    } else if (id.includes("account")) {
-      return result.length > 0 ? result : null;
-    }
-  };
-
-  const getTransactsByType = (type) => {
-    const result = filter(user.transactions || [], { type });
-    return result.length > 0 ? result : null;
-  };
-
-  const getAccountTransactsByType = (id, type) => {
-    const result = filter(getTransactsByType(type), { account: id });
-    return result.length > 0 ? result : null;
-  };
-
-  // перенести в state
-  const getUniqTransactDates = (type) => {
-    return uniqBy(getTransactsByType(type), "date").map((uniq) => ({
-      ...uniq,
-      name: toReadableDate(uniq.date).dateOnly
-    }));
-  };
-
-  const getTransacts = (selected, type) => {
-    return [];
-  };
-
-  // const getBodyListItems = (type) => {
-  //   const getTransacts = (selected, type) => {
-  //     return (
-  //       getAccountTransactsByType(selected, type) || getTransactsByType(type)
-  //     );
-  //   };
-
-  //   switch (type) {
-  //     case "account":
-  //       // если у счета нет транзакций нельзя выводить все!
-  //       return getAccountTransacts(selected.account) || user.transactions;
-  //     case "income":
-  //       return getTransacts(selected.account, type);
-  //     case "expense":
-  //       return getTransacts(selected.account, type);
-  //   }
-  // };
-
+  // Счет по-умолчанию
   useEffect(() => {
-    setBodyList({
-      account: getAccountTransacts(selected.account),
-      income: getTransacts(selected, "income"),
-      expense: getTransacts(selected, "expense")
-    });
-  }, [selected]);
+    setSelectedAccountId("all-account-ids");
+  }, []);
+
+  const getAccountTransactions = (accId, data) => {
+    const dataToFilter = data || user.transactions;
+
+    let transactionData = null;
+
+    if (accId.includes("all-account")) {
+      transactionData = user.transactions;
+    } else if (accId.includes("account")) {
+      transactionData = filter(dataToFilter, { account: accId });
+    }
+
+    return transactionData;
+  };
+
+  // Все Транзакции текущего счета  (для карточки "Счета")
+  useEffect(() => {
+    const result = getAccountTransactions(selectedAccountId);
+    console.log(selectedAccountId);
+
+    setCurrentAccountTransactions(result);
+  }, [selectedAccountId, user]);
+
+  const handleDropdownSelect = (eventKey) => {
+    const { id, date, type } = eventKey;
+
+    setSelectedAccountId(id);
+  };
 
   const dropDownIncome = (
-    <Dropdown
-      items={getUniqTransactDates("income")}
-      type="income"
-      onSelect={handleDropdownSelect}
-    />
+    <Dropdown items={[]} type="income" onSelect={handleDropdownSelect} />
   );
 
   const dropDownAccount = (
@@ -116,11 +71,7 @@ const MainPage = ({ userId }) => {
   );
 
   const dropDownExpense = (
-    <Dropdown
-      items={getUniqTransactDates("expense")}
-      type="expense"
-      onSelect={handleDropdownSelect}
-    />
+    <Dropdown items={[]} type="expense" onSelect={handleDropdownSelect} />
   );
 
   const addButton = (
@@ -137,7 +88,7 @@ const MainPage = ({ userId }) => {
 
   return (
     <>
-      {keys(user || []).length > 0 ? (
+      {keys(user.transactions || []).length > 0 ? (
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
@@ -149,7 +100,10 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={bodyList.income}
+                bodyList={
+                  // bodyItems.income
+                  []
+                }
                 bodyCol={{
                   third: delButton
                 }}
@@ -163,7 +117,10 @@ const MainPage = ({ userId }) => {
                   third: addButton
                 }}
                 type="account"
-                bodyList={bodyList.account}
+                bodyList={
+                  // bodyItems.account
+                  []
+                }
                 bodyCol={{
                   third: delButton
                 }}
@@ -178,7 +135,10 @@ const MainPage = ({ userId }) => {
                 }}
                 type="expense"
                 route="/"
-                bodyList={bodyList.expense}
+                bodyList={
+                  // bodyItems.expense
+                  []
+                }
                 bodyCol={{
                   third: delButton
                 }}
