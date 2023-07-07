@@ -13,7 +13,8 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedExpenseDate, setSelectedExpenseDate] = useState(null);
+  const [selectedIncomeDate, setSelectedIncomeDate] = useState(null);
 
   useEffect(() => {
     axios
@@ -22,37 +23,65 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const handleAccountSelect = (account) => {
-    setSelectedAccount(account);
-    setSelectedDate(null);
+  const handleAccountSelect = (eventKey) => {
+    setSelectedAccount(eventKey.id);
+    setSelectedExpenseDate(null);
+    setSelectedIncomeDate(null);
   };
 
-  const handleDateSelect = (date) => {
-    setSelectedDate(date);
+  const handleExpenseDateSelect = (eventKey) => {
+    setSelectedExpenseDate(eventKey.date);
   };
 
-  const handleDropdownSelect = (params) => {};
+  const handleIncomeDateSelect = (eventKey) => {
+    setSelectedIncomeDate(eventKey.date);
+  };
 
-  const filterTransactions = () => {
-    let filteredTransactions = user.transactions;
-
-    if (selectedAccount && selectedAccount !== "all") {
-      filteredTransactions = filteredTransactions.filter(
-        (transaction) => transaction.account === selectedAccount
-      );
+  const filteredTransactions = user.transactions?.filter((transaction) => {
+    if (selectedAccount === null || selectedAccount === "all") {
+      return true;
     }
 
-    if (selectedDate && selectedDate !== "all") {
-      filteredTransactions = filteredTransactions.filter((transaction) =>
-        transaction.date.includes(selectedDate)
-      );
+    if (transaction.account === selectedAccount) {
+      if (selectedExpenseDate !== null && transaction.type === "expense") {
+        return transaction.date === selectedExpenseDate;
+      }
+
+      if (selectedIncomeDate !== null && transaction.type === "income") {
+        return transaction.date === selectedIncomeDate;
+      }
+
+      return true;
     }
 
-    return filteredTransactions;
+    return false;
+  });
+
+  const addButton = <button>кнопка</button>;
+
+  const delButton = <button>кнопка</button>;
+
+  const getUniqueDates = () => {
+    const expenseDates = [];
+    user.transactions?.forEach((transaction) => {
+      if (
+        transaction.type === "expense" &&
+        transaction.account === selectedAccount
+      ) {
+        if (!expenseDates.includes(transaction.date)) {
+          expenseDates.push(transaction.date);
+        }
+      }
+    });
+    return expenseDates;
   };
 
   const dropDownIncome = (
-    <Dropdown items={[]} type="income" onSelect={handleDropdownSelect} />
+    <Dropdown
+      items={user.categories}
+      type="income"
+      onSelect={handleIncomeDateSelect}
+    />
   );
 
   const dropDownAccount = (
@@ -63,13 +92,13 @@ const MainPage = ({ userId }) => {
     />
   );
 
-  const dropDownExpense = (
-    <Dropdown items={[]} type="expense" onSelect={handleDropdownSelect} />
-  );
-
-  const addButton = <button>"кнопка"</button>;
-
-  const delButton = <button>"кнопка"</button>;
+  // const dropDownExpense = (
+  //   <Dropdown
+  //     items={getUniqueDates()}
+  //     type="expense"
+  //     onSelect={handleExpenseDateSelect}
+  //   />
+  // );
 
   return (
     <>
@@ -78,7 +107,7 @@ const MainPage = ({ userId }) => {
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
               <ListCard
-                md={[4, 4, 4]}
+                md={[4, 8, 4]}
                 title={{
                   first: "Доход",
                   second: dropDownIncome,
@@ -86,7 +115,9 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={filterTransactions()}
+                bodyList={filteredTransactions?.filter(
+                  (transaction) => transaction.type === "income"
+                )}
                 bodyCol={{
                   third: delButton
                 }}
@@ -94,30 +125,14 @@ const MainPage = ({ userId }) => {
             </Col>
             <Col md="4">
               <ListCard
-                md={[4, 4, 4]}
+                md={[4, 8, 4]}
                 title={{
                   first: "Счет",
                   second: dropDownAccount,
                   third: addButton
                 }}
                 type="account"
-                bodyList={filterTransactions()}
-                bodyCol={{
-                  third: delButton
-                }}
-              />
-            </Col>
-            <Col md="4">
-              <ListCard
-                md={[4, 4, 4]}
-                title={{
-                  first: "Расход",
-                  second: dropDownExpense,
-                  third: addButton
-                }}
-                type="expense"
-                route="/"
-                bodyList={filterTransactions()}
+                bodyList={filteredTransactions}
                 bodyCol={{
                   third: delButton
                 }}
