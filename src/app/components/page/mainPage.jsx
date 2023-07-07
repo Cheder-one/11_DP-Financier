@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
 import { filter, keys, uniqBy } from "lodash";
+import { useEffect, useState } from "react";
+import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
+import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
+import { toReadableDate } from "../../utils/functions/toReadableDate";
 import Loader from "../ui/spinner";
-import ListCard from "../common/card/ListCard";
+import AccountCard from "../common/card/ListCard";
 import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [selectedAccount, setSelectedAccount] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [parentCard, setParentCard] = useState({ transactions: [] });
+  const [childCard, setChildCard] = useState({
+    income: { transacts: [], uniqDates: [] },
+    expense: { transacts: [], uniqDates: [] }
+  });
 
   useEffect(() => {
     axios
@@ -18,185 +25,143 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const handleDropdownSelect = (eventKey, type) => {
+  useEffect(() => {
+    if (user.transactions) {
+      setParentCard({ transactions: user.transactions });
+    }
+  }, [user.transactions]);
+
+  const filteringTransactsByType = (type) => {
+    return filter(parentCard.transactions || [], { type });
+  };
+
+  const getUniqTransactionDates = (type) => {
+    return uniqBy(filteringTransactsByType(type), "date").map((t) => ({
+      ...t,
+      name: toReadableDate(t.date).date
+    }));
+  };
+
+  const handleDropdownSelect = (eventKey) => {
+    const { id, type, date } = eventKey;
+    let bodyItems = [];
+    let parentBodyItems = [];
+
+    if (id.includes("all")) {
+      switch (type) {
+        case "account":
+          parentBodyItems = user.transactions || [];
+          break;
+        case "income":
+          bodyItems = filteringTransactsByType(type);
+          break;
+        case "expense":
+          bodyItems = filteringTransactsByType(type);
+          break;
+      }
+    } else if (id.includes("account")) {
+      parentBodyItems = filter(user.transactions || [], { account: id });
+    } else if (id.includes("transaction")) {
+      switch (type) {
+        case "income":
+          // привести childCard в исходное состояние исходя из транзакций выбранного счета
+          bodyItems = filter(childCard.income.transacts || [], { date });
+          break;
+        case "expense":
+          // Handle expense case
+          break;
+      }
+    }
+
     if (type === "account") {
-      setSelectedAccount(eventKey);
-      setSelectedDate(null);
+      setParentCard({ transactions: parentBodyItems });
     } else {
-      setSelectedDate(eventKey);
+      setChildCard((prev) => ({
+        ...prev,
+        [type]: {
+          transacts: bodyItems,
+          uniqDates: getUniqTransactionDates(type)
+        }
+      }));
     }
   };
 
-  const filterTransactions = () => {
-    let filteredTransactions = user.transactions;
+  const dropDownIncome = (
+    <Dropdown
+      items={childCard.income.uniqDates}
+      type="income"
+      onSelect={handleDropdownSelect}
+    />
+  );
 
-    if (selectedAccount && selectedAccount.id !== "all-account-ids") {
-      filteredTransactions = filter(filteredTransactions, {
-        account: selectedAccount.id
-      });
-    }
+  const dropDownAccount = (
+    <Dropdown
+      items={user.accounts}
+      type="account"
+      onSelect={handleDropdownSelect}
+    />
+  );
 
-    if (
-      selectedDate &&
-      selectedDate.id !== "all-expense-ids" &&
-      selectedAccount &&
-      selectedAccount.id !== "all-account-ids"
-    ) {
-      filteredTransactions = filter(filteredTransactions, {
-        date: selectedDate.id
-      });
-    }
+  const addButton = (
+    <Button variant="" className="p-0">
+      <PlusSquare style={{ color: "yellowgreen" }} size={25} />
+    </Button>
+  );
 
-    return filteredTransactions;
-  };
-
-  const getAccountDropdownItems = () => {
-    const accountItems =
-      user.accounts ||
-      [].map((account) => {
-        return {
-          id: account.id,
-          type: "account",
-          name: account.name
-        };
-      });
-
-    return [
-      { id: "all-account-ids", type: "account", name: "Все" },
-      ...accountItems
-    ];
-  };
-
-  const getExpenseDropdownItems = () => {
-    let expenseItems = [];
-
-    if (selectedAccount && selectedAccount.id !== "all-account-ids") {
-      const transactions = filter(user.transactions, {
-        account: selectedAccount.id
-      });
-      const uniqueDates = uniqBy(transactions, "date");
-      expenseItems = uniqueDates.map((transaction) => {
-        return {
-          id: transaction.date,
-          type: "expense",
-          name: transaction.date
-        };
-      });
-    }
-
-    return [
-      { id: "all-expense-ids", type: "expense", name: "Все" },
-      ...expenseItems
-    ];
-  };
-
-  const accountDropdownItems = getAccountDropdownItems();
-  const expenseDropdownItems = getExpenseDropdownItems();
-
-  const handleAddButtonClick = () => {
-    // Обработчик для кнопки добавления
-  };
-
-  const handleDeleteButtonClick = () => {
-    // Обработчик для кнопки удаления
-  };
-
-  const filteredTransactions = filterTransactions();
+  const delButton = (
+    <Button variant="" size="sm" className="p-0">
+      <CloseX style={{ color: "red" }} size={19} />
+    </Button>
+  );
 
   return (
     <>
-      {keys(user || []).length > 0 ? (
+      {keys(parentCard.transactions || []).length > 0 ? (
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
-              <ListCard
+              <AccountCard
                 title={{
                   first: "Доход",
-                  second: (
-                    <Dropdown
-                      items={[]}
-                      type="income"
-                      onSelect={handleDropdownSelect}
-                    />
-                  ),
-                  third: (
-                    <Button variant="primary" onClick={handleAddButtonClick}>
-                      +
-                    </Button>
-                  )
+                  second: dropDownIncome,
+                  third: addButton
                 }}
                 type="income"
                 route="/"
-                bodyList={[]}
+                bodyList={childCard?.income?.transacts}
                 bodyCol={{
-                  third: (
-                    <Button variant="danger" onClick={handleDeleteButtonClick}>
-                      -
-                    </Button>
-                  )
+                  third: delButton
                 }}
               />
             </Col>
             <Col md="4">
-              <ListCard
+              <AccountCard
                 title={{
                   first: "Счет",
-                  second: (
-                    <Dropdown
-                      items={accountDropdownItems}
-                      type="account"
-                      onSelect={(eventKey) =>
-                        handleDropdownSelect(eventKey, "account")
-                      }
-                    />
-                  ),
-                  third: (
-                    <Button variant="primary" onClick={handleAddButtonClick}>
-                      +
-                    </Button>
-                  )
+                  second: dropDownAccount,
+                  third: addButton
                 }}
                 type="account"
-                bodyList={[]}
+                bodyList={parentCard.transactions}
                 bodyCol={{
-                  third: (
-                    <Button variant="danger" onClick={handleDeleteButtonClick}>
-                      -
-                    </Button>
-                  )
+                  third: delButton
                 }}
               />
             </Col>
             <Col md="4">
-              <ListCard
+              {/* <AccountCard
                 title={{
                   first: "Расход",
-                  second: (
-                    <Dropdown
-                      items={expenseDropdownItems}
-                      type="expense"
-                      onSelect={(eventKey) =>
-                        handleDropdownSelect(eventKey, "expense")
-                      }
-                    />
-                  ),
-                  third: (
-                    <Button variant="primary" onClick={handleAddButtonClick}>
-                      +
-                    </Button>
-                  )
+                  second: dropDownExpense,
+                  third: addButton
                 }}
                 type="expense"
-                route="/"
-                bodyList={[]}
+                bodyList={childCard?.expense?}
                 bodyCol={{
-                  third: (
-                    <Button variant="danger" onClick={handleDeleteButtonClick}>
-                      -
-                    </Button>
-                  )
+                  third: delButton
                 }}
-              />
+
+              /> */}
             </Col>
           </Row>
 
@@ -213,6 +178,10 @@ const MainPage = ({ userId }) => {
       )}
     </>
   );
+};
+
+MainPage.propTypes = {
+  userId: PropTypes.string.isRequired
 };
 
 export default MainPage;
