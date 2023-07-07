@@ -7,14 +7,11 @@ import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
 import Loader from "../ui/spinner";
-import AccountCard from "../common/card/ListCard";
+import ListCard from "../common/card/ListCard";
 import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [selectedAccount, setSelectedAccount] = useState(null);
-  const [selectedIncome, setSelectedIncome] = useState(null);
-  const [selectedExpense, setSelectedExpense] = useState(null);
 
   useEffect(() => {
     axios
@@ -23,22 +20,8 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  const handleDropdownSelect = (eventKey, type) => {
-    switch (type) {
-      case "account":
-        setSelectedAccount(eventKey);
-        setSelectedIncome(null);
-        setSelectedExpense(null);
-        break;
-      case "income":
-        setSelectedIncome(eventKey);
-        break;
-      case "expense":
-        setSelectedExpense(eventKey);
-        break;
-      default:
-        break;
-    }
+  const handleDropdownSelect = (eventKey) => {
+    const { id, date, type } = eventKey;
   };
 
   const dropDownIncome = (
@@ -75,7 +58,7 @@ const MainPage = ({ userId }) => {
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
-              <AccountCard
+              <ListCard
                 title={{
                   first: "Доход",
                   second: dropDownIncome,
@@ -83,34 +66,28 @@ const MainPage = ({ userId }) => {
                 }}
                 type="income"
                 route="/"
-                bodyList={
-                  // bodyItems.income
-                  []
-                }
+                bodyList={[]}
                 bodyCol={{
                   third: delButton
                 }}
               />
             </Col>
             <Col md="4">
-              <AccountCard
+              <ListCard
                 title={{
                   first: "Счет",
                   second: dropDownAccount,
                   third: addButton
                 }}
                 type="account"
-                bodyList={
-                  // bodyItems.account
-                  []
-                }
+                bodyList={[]}
                 bodyCol={{
                   third: delButton
                 }}
               />
             </Col>
             <Col md="4">
-              <AccountCard
+              <ListCard
                 title={{
                   first: "Расход",
                   second: dropDownExpense,
@@ -118,10 +95,7 @@ const MainPage = ({ userId }) => {
                 }}
                 type="expense"
                 route="/"
-                bodyList={
-                  // bodyItems.expense
-                  []
-                }
+                bodyList={[]}
                 bodyCol={{
                   third: delButton
                 }}
