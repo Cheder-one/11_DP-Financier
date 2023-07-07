@@ -12,8 +12,10 @@ import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [selectedItem, setSelectedItem] = useState({ id: "", date: "" });
-  // const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedItem, setSelectedItem] = useState({
+    id: "",
+    date: ""
+  });
 
   console.log(selectedItem);
 
@@ -28,6 +30,8 @@ const MainPage = ({ userId }) => {
     const { id, type, date } = eventKey;
     const is = (idPart) => id.includes(idPart);
 
+    let selectedDate = null;
+
     console.log(id);
     console.log(date);
 
@@ -35,12 +39,20 @@ const MainPage = ({ userId }) => {
       //
     } else if (is("account")) {
       //
-    } else if (is("income")) {
-      //
-    } else if (is("expense")) {
-      //
+    } else if (is("transaction")) {
+      selectedDate = date;
+
+      // switch (type) {
+      //   case "income":
+      //     selectedDate = date;
+      //     // setSelectedItem((prev) => ({ ...prev, date }));
+      //     break;
+      //   case "expend":
+      //     selectedDate = date;
+      //     break;
+      // }
     }
-    setSelectedItem({ id, date });
+    setSelectedItem({ id, date: selectedDate });
     // setSelectedDate(date);
   };
 
@@ -78,7 +90,7 @@ const MainPage = ({ userId }) => {
         return getAccountTransacts(selectedItem.id) || user.transactions;
       case "income":
         return getTransacts(selectedItem.id, type);
-      case "expend":
+      case "expense":
         return getTransacts(selectedItem.id, type);
     }
   };
@@ -95,6 +107,14 @@ const MainPage = ({ userId }) => {
     <Dropdown
       items={user.accounts}
       type="account"
+      onSelect={handleDropdownSelect}
+    />
+  );
+
+  const dropDownExpense = (
+    <Dropdown
+      items={getUniqTransactDates("expense")}
+      type="expense"
       onSelect={handleDropdownSelect}
     />
   );
@@ -146,19 +166,19 @@ const MainPage = ({ userId }) => {
               />
             </Col>
             <Col md="4">
-              {/* <AccountCard
+              <AccountCard
                 title={{
                   first: "Расход",
-                  second: dropDownExpense,
+                  second: dropDownIncome,
                   third: addButton
                 }}
                 type="expense"
-                bodyList={childCard?.expense?}
+                route="/"
+                bodyList={getBodyListItems("expense")}
                 bodyCol={{
                   third: delButton
                 }}
-
-              /> */}
+              />
             </Col>
           </Row>
 
