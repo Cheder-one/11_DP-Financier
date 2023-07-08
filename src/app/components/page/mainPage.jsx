@@ -36,16 +36,17 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
+  const getUniqDates = (data) => {
+    return uniqBy(data, "date").map((uniq) => ({
+      ...uniq,
+      name: toReadableDate(uniq.date).dateOnly
+    }));
+  };
+
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
     const { id } = selectedAccount;
     const result = {};
-
-    const getUniqDates = (data) =>
-      uniqBy(data, "date").map((uniq) => ({
-        ...uniq,
-        name: toReadableDate(uniq.date).dateOnly
-      }));
 
     types.forEach((type) => {
       const transacts = filter(transactions, { type });
@@ -74,10 +75,13 @@ const MainPage = ({ userId }) => {
 
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
-
-    setSelectedAccount({ id });
+    const dataByCardType = filteredByUniqAndType[cardType];
+    // setSelectedAccount({ id });
 
     if (id.includes("all")) {
+      // setSelectedAccount({ id });
+      console.log(selectedAccount);
+
       cardType === "account"
         ? setCardBodyItems({
             account: transactions,
@@ -86,9 +90,14 @@ const MainPage = ({ userId }) => {
           })
         : setCardBodyItems((prev) => ({
             ...prev,
-            [cardType]: filteredByUniqAndType[cardType].transacts
+            [cardType]: selectedAccount.id.includes("account-id-")
+              ? filter(dataByCardType.transacts, {
+                  account: selectedAccount.id
+                })
+              : dataByCardType.transacts
           }));
     } else if (id.includes("account")) {
+      setSelectedAccount({ id });
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(transactions, { account: id })
@@ -97,7 +106,7 @@ const MainPage = ({ userId }) => {
     } else if (id.includes("transaction")) {
       setCardBodyItems((prev) => ({
         ...prev,
-        [cardType]: filter(filteredByUniqAndType[cardType].transacts, { date })
+        [cardType]: filter(dataByCardType.transacts, { date })
       }));
     }
   };
