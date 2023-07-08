@@ -13,13 +13,12 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user || [];
+  const [selectedAccount, setSelectedAccount] = useState("");
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
     income: [],
     expense: []
   });
-
-  console.log(cardBodyItems);
 
   useEffect(() => {
     axios
@@ -67,56 +66,12 @@ const MainPage = ({ userId }) => {
   // Обработчик dropdown -
   // определяет в какой карточке был выбор.
   // определяет какой item был выбран в drop-листе карточки.
-  // const handleDropdownSelect = (eventKey) => {
-  //   const { id, type: cardType, date } = eventKey;
-  //   let bodyItems = [];
-
-  //   if (id.includes("all")) {
-  //     switch (cardType) {
-  //       case "account":
-  //         setCardBodyItems({
-  //           account: transactions,
-  //           income: income.transacts,
-  //           expense: expense.transacts
-  //         });
-  //         break;
-  //       case "income":
-  //         setCardBodyItems((prev) => ({
-  //           ...prev,
-  //           [cardType]: income.transacts
-  //         }));
-  //         break;
-  //       case "expense":
-  //         setCardBodyItems((prev) => ({
-  //           ...prev,
-  //           [cardType]: expense.transacts
-  //         }));
-  //         break;
-  //     }
-  //   } else if (id.includes("account")) {
-  //     setCardBodyItems((prev) => ({
-  //       ...prev,
-  //       [cardType]: filter(transactions, { account: id })
-  //     }));
-  //     updIncExpTransacts(id);
-  //   } else if (id.includes("transaction")) {
-  //     switch (cardType) {
-  //       case "income":
-  //         bodyItems = filter(income.transacts, { date });
-  //         break;
-  //       case "expense":
-  //         bodyItems = filter(expense.transacts, { date });
-  //         break;
-  //     }
-  //     setCardBodyItems((prev) => ({
-  //       ...prev,
-  //       [cardType]: bodyItems
-  //     }));
-  //   }
-  // };
-
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
+
+    // if (id) {
+    //   setSelectedAccount();
+    // }
 
     if (id.includes("all")) {
       cardType === "account"
@@ -129,15 +84,13 @@ const MainPage = ({ userId }) => {
             ...prev,
             [cardType]: filteredByUniqAndType[cardType].transacts
           }));
-    }
-    if (id.includes("account")) {
+    } else if (id.includes("account")) {
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(transactions, { account: id })
       }));
       updIncExpTransacts(id);
-    }
-    if (id.includes("transaction")) {
+    } else if (id.includes("transaction")) {
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(filteredByUniqAndType[cardType].transacts, { date })
