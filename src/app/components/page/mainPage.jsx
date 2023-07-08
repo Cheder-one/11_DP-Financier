@@ -7,14 +7,13 @@ import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
 import Loader from "../ui/spinner";
-import AccountCard from "../common/card/ListCard";
+import ListCard from "../common/card/listCard";
 import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user || [];
   const [selectedAcc, setSelectedAcc] = useState({ id: "" });
-
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
     income: [],
@@ -146,7 +145,7 @@ const MainPage = ({ userId }) => {
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
-              <AccountCard
+              <ListCard
                 title={{
                   first: "Доход",
                   second: dropDownIncome,
@@ -162,13 +161,14 @@ const MainPage = ({ userId }) => {
               />
             </Col>
             <Col md="4">
-              <AccountCard
+              <ListCard
                 title={{
                   first: "Счет",
                   second: dropDownAccount,
                   third: addButton
                 }}
                 type="account"
+                route="/"
                 bodyList={cardBodyItems.account}
                 bodyCol={{
                   third: delButton
@@ -177,13 +177,14 @@ const MainPage = ({ userId }) => {
               />
             </Col>
             <Col md="4">
-              <AccountCard
+              <ListCard
                 title={{
                   first: "Расход",
                   second: dropDownExpense,
                   third: addButton
                 }}
                 type="expense"
+                route="/"
                 bodyList={cardBodyItems.expense}
                 bodyCol={{
                   third: delButton
