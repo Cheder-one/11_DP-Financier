@@ -13,7 +13,7 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user || [];
-  const [selectedAccount, setSelectedAccount] = useState({ id: "" });
+  const [selectedAcc, setSelectedAcc] = useState({ id: "" });
 
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
@@ -45,7 +45,7 @@ const MainPage = ({ userId }) => {
 
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
-    const { id } = selectedAccount;
+    const { id } = selectedAcc;
     const result = {};
 
     types.forEach((type) => {
@@ -61,7 +61,7 @@ const MainPage = ({ userId }) => {
     });
 
     return result;
-  }, [transactions, selectedAccount]);
+  }, [transactions, selectedAcc]);
 
   const { income, expense } = filteredByUniqAndType;
 
@@ -75,7 +75,9 @@ const MainPage = ({ userId }) => {
 
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
+    const { id: selAccId } = selectedAcc;
     const dataByCardType = filteredByUniqAndType[cardType];
+    let bodyItems = null;
 
     if (id.includes("all")) {
       if (cardType === "account") {
@@ -85,24 +87,23 @@ const MainPage = ({ userId }) => {
           expense: expense.transacts
         });
       } else {
-        setCardBodyItems((prev) => ({
-          ...prev,
-          [cardType]: selectedAccount.id.includes("account-id-")
-            ? filter(dataByCardType.transacts, { account: selectedAccount.id })
-            : dataByCardType.transacts
-        }));
+        bodyItems = selAccId.includes("account-id-")
+          ? filter(dataByCardType.transacts, { account: selAccId })
+          : dataByCardType.transacts;
       }
     } else if (id.includes("account")) {
-      setSelectedAccount({ id });
-      setCardBodyItems((prev) => ({
-        ...prev,
-        [cardType]: filter(transactions, { account: id })
-      }));
+      setSelectedAcc({ id });
+      bodyItems = filter(transactions, { account: id });
+
       updIncExpTransacts(id);
     } else if (id.includes("transaction")) {
+      bodyItems = filter(dataByCardType.transacts, { date });
+    }
+
+    if (bodyItems) {
       setCardBodyItems((prev) => ({
         ...prev,
-        [cardType]: filter(dataByCardType.transacts, { date })
+        [cardType]: bodyItems
       }));
     }
   };
