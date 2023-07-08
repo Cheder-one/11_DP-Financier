@@ -76,12 +76,8 @@ const MainPage = ({ userId }) => {
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
     const dataByCardType = filteredByUniqAndType[cardType];
-    // setSelectedAccount({ id });
 
     if (id.includes("all")) {
-      // setSelectedAccount({ id });
-      console.log(selectedAccount);
-
       cardType === "account"
         ? setCardBodyItems({
             account: transactions,
