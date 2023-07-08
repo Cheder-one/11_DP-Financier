@@ -67,47 +67,80 @@ const MainPage = ({ userId }) => {
   // Обработчик dropdown -
   // определяет в какой карточке был выбор.
   // определяет какой item был выбран в drop-листе карточки.
+  // const handleDropdownSelect = (eventKey) => {
+  //   const { id, type: cardType, date } = eventKey;
+  //   let bodyItems = [];
+
+  //   if (id.includes("all")) {
+  //     switch (cardType) {
+  //       case "account":
+  //         setCardBodyItems({
+  //           account: transactions,
+  //           income: income.transacts,
+  //           expense: expense.transacts
+  //         });
+  //         break;
+  //       case "income":
+  //         setCardBodyItems((prev) => ({
+  //           ...prev,
+  //           [cardType]: income.transacts
+  //         }));
+  //         break;
+  //       case "expense":
+  //         setCardBodyItems((prev) => ({
+  //           ...prev,
+  //           [cardType]: expense.transacts
+  //         }));
+  //         break;
+  //     }
+  //   } else if (id.includes("account")) {
+  //     setCardBodyItems((prev) => ({
+  //       ...prev,
+  //       [cardType]: filter(transactions, { account: id })
+  //     }));
+  //     updIncExpTransacts(id);
+  //   } else if (id.includes("transaction")) {
+  //     switch (cardType) {
+  //       case "income":
+  //         bodyItems = filter(income.transacts, { date });
+  //         break;
+  //       case "expense":
+  //         bodyItems = filter(expense.transacts, { date });
+  //         break;
+  //     }
+  //     setCardBodyItems((prev) => ({
+  //       ...prev,
+  //       [cardType]: bodyItems
+  //     }));
+  //   }
+  // };
+
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
-    let bodyItems = [];
 
     if (id.includes("all")) {
-      switch (cardType) {
-        case "account":
-          setCardBodyItems({
+      cardType === "account"
+        ? setCardBodyItems({
             account: transactions,
             income: income.transacts,
             expense: expense.transacts
-          });
-          break;
-        case "income":
-          setCardBodyItems((prev) => ({
+          })
+        : setCardBodyItems((prev) => ({
             ...prev,
-            [cardType]: income.transacts
+            [cardType]: filteredByUniqAndType[cardType].transacts
           }));
-          break;
-        case "expense":
-          setCardBodyItems((prev) => ({
-            ...prev,
-            [cardType]: expense.transacts
-          }));
-          break;
-      }
-    } else if (id.includes("account")) {
+    }
+    if (id.includes("account")) {
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(transactions, { account: id })
       }));
       updIncExpTransacts(id);
-    } else if (id.includes("transaction")) {
-      switch (cardType) {
-        case "income":
-          bodyItems = filter(income.transacts, { date });
-          break;
-        case "expense":
-          bodyItems = filter(expense.transacts, { date });
-          break;
-      }
+    }
+    if (id.includes("transaction")) {
+      const bodyItems = filter(filteredByUniqAndType[cardType].transacts, {
+        date
+      });
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: bodyItems
