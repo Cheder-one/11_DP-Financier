@@ -14,9 +14,9 @@ const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user || [];
   const [cardBodyItems, setCardBodyItems] = useState({
+    account: [],
     income: [],
-    expense: [],
-    account: []
+    expense: []
   });
 
   console.log(cardBodyItems);
@@ -57,11 +57,19 @@ const MainPage = ({ userId }) => {
 
   // Получение транзакций принадлежащие выбранному счету
   const updIncExpTransacts = (id) => {
-    setCardBodyItems((prev) => ({
-      ...prev,
-      income: filter(income.transacts, { account: id }),
-      expense: filter(expense.transacts, { account: id })
-    }));
+    if (id.includes("all-account")) {
+      setCardBodyItems((prev) => ({
+        ...prev,
+        income: income.transacts,
+        expense: expense.transacts
+      }));
+    } else {
+      setCardBodyItems((prev) => ({
+        ...prev,
+        income: filter(income.transacts, { account: id }),
+        expense: filter(expense.transacts, { account: id })
+      }));
+    }
   };
 
   // Обработчик dropdown -
@@ -83,6 +91,7 @@ const MainPage = ({ userId }) => {
           bodyItems = expense.transacts;
           break;
       }
+      updIncExpTransacts(id);
     } else if (id.includes("account")) {
       bodyItems = filter(transactions, { account: id });
       updIncExpTransacts(id);
