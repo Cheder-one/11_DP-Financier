@@ -138,12 +138,9 @@ const MainPage = ({ userId }) => {
       updIncExpTransacts(id);
     }
     if (id.includes("transaction")) {
-      const bodyItems = filter(filteredByUniqAndType[cardType].transacts, {
-        date
-      });
       setCardBodyItems((prev) => ({
         ...prev,
-        [cardType]: bodyItems
+        [cardType]: filter(filteredByUniqAndType[cardType].transacts, { date })
       }));
     }
   };
