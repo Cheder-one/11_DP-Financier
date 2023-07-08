@@ -13,12 +13,8 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user || [];
-  const [selectedAccount, setSelectedAccount] = useState("");
-  const [selectedAll, setSelectedAll] = useState({
-    income: false,
-    account: false,
-    expense: false
-  });
+  const [selectedAccount, setSelectedAccount] = useState({ id: "" });
+
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
     income: [],
@@ -42,24 +38,29 @@ const MainPage = ({ userId }) => {
 
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
+    const { id } = selectedAccount;
     const result = {};
 
-    types.forEach((type) => {
-      const transacts = filter(transactions, { type });
-      let uniqDates = uniqBy(transacts, "date").map((uniq) => ({
+    const getUniqDates = (data) =>
+      uniqBy(data, "date").map((uniq) => ({
         ...uniq,
         name: toReadableDate(uniq.date).dateOnly
       }));
 
-      if (!selectedAll[type] && selectedAccount) {
-        uniqDates = filter(uniqDates, { account: selectedAccount });
+    types.forEach((type) => {
+      const transacts = filter(transactions, { type });
+      let uniqDates = getUniqDates(transacts);
+
+      if (id.includes("account-id-")) {
+        const accTransacts = filter(transacts, { account: id });
+        uniqDates = getUniqDates(accTransacts);
       }
 
       result[type] = { transacts, uniqDates };
     });
 
     return result;
-  }, [transactions, selectedAccount, selectedAll]);
+  }, [transactions, selectedAccount]);
 
   const { income, expense } = filteredByUniqAndType;
 
@@ -74,16 +75,9 @@ const MainPage = ({ userId }) => {
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
 
-    if (id.includes("account")) {
-      setSelectedAccount(id);
-    }
+    setSelectedAccount({ id });
 
     if (id.includes("all")) {
-      setSelectedAll((prev) => ({
-        ...prev,
-        [cardType]: true
-      }));
-
       cardType === "account"
         ? setCardBodyItems({
             account: transactions,
@@ -95,22 +89,12 @@ const MainPage = ({ userId }) => {
             [cardType]: filteredByUniqAndType[cardType].transacts
           }));
     } else if (id.includes("account")) {
-      setSelectedAll((prev) => ({
-        ...prev,
-        [cardType]: false
-      }));
-
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(transactions, { account: id })
       }));
       updIncExpTransacts(id);
     } else if (id.includes("transaction")) {
-      setSelectedAll((prev) => ({
-        ...prev,
-        [cardType]: false
-      }));
-
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(filteredByUniqAndType[cardType].transacts, { date })
@@ -139,7 +123,7 @@ const MainPage = ({ userId }) => {
   );
 
   const addButton = (
-    <Button variant="" size="sm" className="p-0">
+    <Button variant="" className="p-0">
       <PlusSquare style={{ color: "yellowgreen" }} size={25} />
     </Button>
   );
