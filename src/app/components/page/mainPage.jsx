@@ -14,6 +14,11 @@ const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user || [];
   const [selectedAccount, setSelectedAccount] = useState("");
+  const [selectedAll, setSelectedAll] = useState({
+    income: false,
+    account: false,
+    expense: false
+  });
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
     income: [],
@@ -35,26 +40,29 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  // Фильтрует транзакции по типу, доход/расход
-  // Создает массив уникальных дат транзакций
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
     const result = {};
 
     types.forEach((type) => {
       const transacts = filter(transactions, { type });
-      const uniqDates = uniqBy(transacts, "date").map((uniq) => ({
+      let uniqDates = uniqBy(transacts, "date").map((uniq) => ({
         ...uniq,
         name: toReadableDate(uniq.date).dateOnly
       }));
+
+      if (!selectedAll[type] && selectedAccount) {
+        uniqDates = filter(uniqDates, { account: selectedAccount });
+      }
+
       result[type] = { transacts, uniqDates };
     });
+
     return result;
-  }, [transactions]);
+  }, [transactions, selectedAccount, selectedAll]);
 
   const { income, expense } = filteredByUniqAndType;
 
-  // Получение транзакций принадлежащие выбранному счету
   const updIncExpTransacts = (id) => {
     setCardBodyItems((prev) => ({
       ...prev,
@@ -63,17 +71,19 @@ const MainPage = ({ userId }) => {
     }));
   };
 
-  // Обработчик dropdown -
-  // определяет в какой карточке был выбор.
-  // определяет какой item был выбран в drop-листе карточки.
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
 
-    // if (id) {
-    //   setSelectedAccount();
-    // }
+    if (id.includes("account")) {
+      setSelectedAccount(id);
+    }
 
     if (id.includes("all")) {
+      setSelectedAll((prev) => ({
+        ...prev,
+        [cardType]: true
+      }));
+
       cardType === "account"
         ? setCardBodyItems({
             account: transactions,
@@ -85,12 +95,22 @@ const MainPage = ({ userId }) => {
             [cardType]: filteredByUniqAndType[cardType].transacts
           }));
     } else if (id.includes("account")) {
+      setSelectedAll((prev) => ({
+        ...prev,
+        [cardType]: false
+      }));
+
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(transactions, { account: id })
       }));
       updIncExpTransacts(id);
     } else if (id.includes("transaction")) {
+      setSelectedAll((prev) => ({
+        ...prev,
+        [cardType]: false
+      }));
+
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(filteredByUniqAndType[cardType].transacts, { date })
@@ -103,11 +123,17 @@ const MainPage = ({ userId }) => {
       items={income.uniqDates}
       type="income"
       onSelect={handleDropdownSelect}
+      selected={selectedAll.income}
     />
   );
 
   const dropDownAccount = (
-    <Dropdown items={accounts} type="account" onSelect={handleDropdownSelect} />
+    <Dropdown
+      items={accounts}
+      type="account"
+      onSelect={handleDropdownSelect}
+      selected={selectedAll.account}
+    />
   );
 
   const dropDownExpense = (
@@ -115,6 +141,7 @@ const MainPage = ({ userId }) => {
       items={expense.uniqDates}
       type="expense"
       onSelect={handleDropdownSelect}
+      selected={selectedAll.expense}
     />
   );
 
@@ -197,6 +224,7 @@ const MainPage = ({ userId }) => {
     </>
   );
 };
+
 MainPage.propTypes = {
   userId: PropTypes.string.isRequired
 };
