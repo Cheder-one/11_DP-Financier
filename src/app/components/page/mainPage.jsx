@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
-import { filter, includes, keys, some, uniqBy } from "lodash";
+import { filter, keys, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
-import { CgCloseR as CloseR } from "react-icons/cg";
+import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
 import Loader from "../ui/spinner";
 import AccountCard from "../common/card/ListCard";
@@ -13,8 +13,12 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user || [];
-  const [selectedAccountId, setSelectedAccount] = useState("");
-
+  const [selectedAccount, setSelectedAccount] = useState("");
+  const [selectedAll, setSelectedAll] = useState({
+    income: false,
+    account: false,
+    expense: false
+  });
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
     income: [],
@@ -42,19 +46,20 @@ const MainPage = ({ userId }) => {
 
     types.forEach((type) => {
       const transacts = filter(transactions, { type });
-      const uniqDates = uniqBy(transacts, "date").map((uniq) => ({
+      let uniqDates = uniqBy(transacts, "date").map((uniq) => ({
         ...uniq,
         name: toReadableDate(uniq.date).dateOnly
       }));
 
-      console.log(uniqDates);
-      console.log(selectedAccountId);
+      if (!selectedAll[type] && selectedAccount) {
+        uniqDates = filter(uniqDates, { account: selectedAccount });
+      }
 
       result[type] = { transacts, uniqDates };
     });
 
     return result;
-  }, [transactions, selectedAccountId]);
+  }, [transactions, selectedAccount, selectedAll]);
 
   const { income, expense } = filteredByUniqAndType;
 
@@ -74,6 +79,11 @@ const MainPage = ({ userId }) => {
     }
 
     if (id.includes("all")) {
+      setSelectedAll((prev) => ({
+        ...prev,
+        [cardType]: true
+      }));
+
       cardType === "account"
         ? setCardBodyItems({
             account: transactions,
@@ -82,18 +92,28 @@ const MainPage = ({ userId }) => {
           })
         : setCardBodyItems((prev) => ({
             ...prev,
-            [cardType]: [cardType].transacts
+            [cardType]: filteredByUniqAndType[cardType].transacts
           }));
     } else if (id.includes("account")) {
+      setSelectedAll((prev) => ({
+        ...prev,
+        [cardType]: false
+      }));
+
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(transactions, { account: id })
       }));
       updIncExpTransacts(id);
     } else if (id.includes("transaction")) {
+      setSelectedAll((prev) => ({
+        ...prev,
+        [cardType]: false
+      }));
+
       setCardBodyItems((prev) => ({
         ...prev,
-        [cardType]: filter([cardType].transacts, { date })
+        [cardType]: filter(filteredByUniqAndType[cardType].transacts, { date })
       }));
     }
   };
@@ -126,7 +146,7 @@ const MainPage = ({ userId }) => {
 
   const delButton = (
     <Button variant="" size="sm" className="p-0">
-      <CloseR style={{ color: "red" }} size={15} />
+      <CloseX style={{ color: "red" }} size={19} />
     </Button>
   );
 
