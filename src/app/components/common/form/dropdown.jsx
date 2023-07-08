@@ -15,20 +15,23 @@ const Dropdown = ({ items, type, onSelect }) => {
   const ALL_ITEM = getIdAllItem(type);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(ALL_ITEM);
-
-  // console.log(selectedItem);
+  const isInitialRender = useRef(true);
 
   const handleClick = ({ target }) => {
     const { id: eventKey } = target;
     if (eventKey) {
       setSelectedItem(JSON.parse(eventKey));
-      // onSelect(JSON.parse(eventKey));
     }
     setIsOpen((prev) => !prev);
   };
 
   useEffect(() => {
-    onSelect(selectedItem);
+    // Вызов onSelect только после первого рендера
+    if (!isInitialRender.current) {
+      onSelect(selectedItem);
+    } else {
+      isInitialRender.current = false;
+    }
   }, [selectedItem]);
 
   // Слушатель для закрытия dropDownList при клике вне него

@@ -19,10 +19,20 @@ const MainPage = ({ userId }) => {
     account: []
   });
 
+  console.log(cardBodyItems);
+
   useEffect(() => {
     axios
       .get(`/api/users/${userId}`)
-      .then((resp) => setUser(resp.data.user))
+      .then((resp) => {
+        setUser(resp.data.user);
+        const { transactions } = resp.data.user;
+        setCardBodyItems({
+          income: filter(transactions, { type: "income" }),
+          expense: filter(transactions, { type: "expense" }),
+          account: transactions
+        });
+      })
       .catch((err) => console.error(err));
   }, [userId]);
 
@@ -82,7 +92,6 @@ const MainPage = ({ userId }) => {
           ? filter(income.transacts, { date })
           : filter(expense.transacts, { date });
     }
-    console.log(cardBodyItems);
 
     setCardBodyItems((prev) => ({
       ...prev,
