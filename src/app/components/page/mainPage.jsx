@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
-import { filter, keys, uniqBy } from "lodash";
+import { filter, includes, keys, some, uniqBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
-import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
+import { CgCloseR as CloseR } from "react-icons/cg";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
 import Loader from "../ui/spinner";
 import AccountCard from "../common/card/ListCard";
@@ -13,12 +13,8 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user || [];
-  const [selectedAccount, setSelectedAccount] = useState("");
-  const [selectedAll, setSelectedAll] = useState({
-    income: false,
-    account: false,
-    expense: false
-  });
+  const [selectedAccountId, setSelectedAccount] = useState("");
+
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
     income: [],
@@ -46,20 +42,19 @@ const MainPage = ({ userId }) => {
 
     types.forEach((type) => {
       const transacts = filter(transactions, { type });
-      let uniqDates = uniqBy(transacts, "date").map((uniq) => ({
+      const uniqDates = uniqBy(transacts, "date").map((uniq) => ({
         ...uniq,
         name: toReadableDate(uniq.date).dateOnly
       }));
 
-      if (!selectedAll[type] && selectedAccount) {
-        uniqDates = filter(uniqDates, { account: selectedAccount });
-      }
+      console.log(uniqDates);
+      console.log(selectedAccountId);
 
       result[type] = { transacts, uniqDates };
     });
 
     return result;
-  }, [transactions, selectedAccount, selectedAll]);
+  }, [transactions, selectedAccountId]);
 
   const { income, expense } = filteredByUniqAndType;
 
@@ -79,11 +74,6 @@ const MainPage = ({ userId }) => {
     }
 
     if (id.includes("all")) {
-      setSelectedAll((prev) => ({
-        ...prev,
-        [cardType]: true
-      }));
-
       cardType === "account"
         ? setCardBodyItems({
             account: transactions,
@@ -92,28 +82,18 @@ const MainPage = ({ userId }) => {
           })
         : setCardBodyItems((prev) => ({
             ...prev,
-            [cardType]: filteredByUniqAndType[cardType].transacts
+            [cardType]: [cardType].transacts
           }));
     } else if (id.includes("account")) {
-      setSelectedAll((prev) => ({
-        ...prev,
-        [cardType]: false
-      }));
-
       setCardBodyItems((prev) => ({
         ...prev,
         [cardType]: filter(transactions, { account: id })
       }));
       updIncExpTransacts(id);
     } else if (id.includes("transaction")) {
-      setSelectedAll((prev) => ({
-        ...prev,
-        [cardType]: false
-      }));
-
       setCardBodyItems((prev) => ({
         ...prev,
-        [cardType]: filter(filteredByUniqAndType[cardType].transacts, { date })
+        [cardType]: filter([cardType].transacts, { date })
       }));
     }
   };
@@ -123,17 +103,11 @@ const MainPage = ({ userId }) => {
       items={income.uniqDates}
       type="income"
       onSelect={handleDropdownSelect}
-      selected={selectedAll.income}
     />
   );
 
   const dropDownAccount = (
-    <Dropdown
-      items={accounts}
-      type="account"
-      onSelect={handleDropdownSelect}
-      selected={selectedAll.account}
-    />
+    <Dropdown items={accounts} type="account" onSelect={handleDropdownSelect} />
   );
 
   const dropDownExpense = (
@@ -141,19 +115,18 @@ const MainPage = ({ userId }) => {
       items={expense.uniqDates}
       type="expense"
       onSelect={handleDropdownSelect}
-      selected={selectedAll.expense}
     />
   );
 
   const addButton = (
-    <Button variant="" className="p-0">
+    <Button variant="" size="sm" className="p-0">
       <PlusSquare style={{ color: "yellowgreen" }} size={25} />
     </Button>
   );
 
   const delButton = (
     <Button variant="" size="sm" className="p-0">
-      <CloseX style={{ color: "red" }} size={19} />
+      <CloseR style={{ color: "red" }} size={15} />
     </Button>
   );
 
