@@ -12,7 +12,7 @@ import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const { accounts, categories, transactions } = user;
+  const { accounts, categories, transactions } = user || [];
   const [cardBodyItems, setCardBodyItems] = useState({
     income: [],
     expense: [],
@@ -26,17 +26,17 @@ const MainPage = ({ userId }) => {
       .catch((err) => console.error(err));
   }, [userId]);
 
-  // Фильтрует транзакции на доход/расход
-  // Создает массив не дублирующихся дат когда были транзакции
+  // Фильтрует транзакции по типу, доход/расход
+  // Создает массив уникальных дат транзакций
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
     const result = {};
 
     types.forEach((type) => {
-      const transacts = filter(transactions || [], { type });
-      const uniqDates = uniqBy(transacts, "date").map((t) => ({
-        ...t,
-        name: toReadableDate(t.date).date
+      const transacts = filter(transactions, { type });
+      const uniqDates = uniqBy(transacts, "date").map((uniq) => ({
+        ...uniq,
+        name: toReadableDate(uniq.date).dateOnly
       }));
       result[type] = { transacts, uniqDates };
     });
@@ -47,14 +47,6 @@ const MainPage = ({ userId }) => {
 
   // Получение транзакций принадлежащие выбранному счету
   const updIncExpTransacts = (id) => {
-    // setCardBodyItems((prev) => ({
-    //   ...prev,
-    //   income: filter(income.transacts, { account: id })
-    // }));
-    // setCardBodyItems((prev) => ({
-    //   ...prev,
-    //   expense: filter(expense.transacts, { account: id })
-    // }));
     setCardBodyItems((prev) => ({
       ...prev,
       income: filter(income.transacts, { account: id }),
