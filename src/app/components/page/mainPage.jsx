@@ -78,20 +78,20 @@ const MainPage = ({ userId }) => {
     const dataByCardType = filteredByUniqAndType[cardType];
 
     if (id.includes("all")) {
-      cardType === "account"
-        ? setCardBodyItems({
-            account: transactions,
-            income: income.transacts,
-            expense: expense.transacts
-          })
-        : setCardBodyItems((prev) => ({
-            ...prev,
-            [cardType]: selectedAccount.id.includes("account-id-")
-              ? filter(dataByCardType.transacts, {
-                  account: selectedAccount.id
-                })
-              : dataByCardType.transacts
-          }));
+      if (cardType === "account") {
+        setCardBodyItems({
+          account: transactions,
+          income: income.transacts,
+          expense: expense.transacts
+        });
+      } else {
+        setCardBodyItems((prev) => ({
+          ...prev,
+          [cardType]: selectedAccount.id.includes("account-id-")
+            ? filter(dataByCardType.transacts, { account: selectedAccount.id })
+            : dataByCardType.transacts
+        }));
+      }
     } else if (id.includes("account")) {
       setSelectedAccount({ id });
       setCardBodyItems((prev) => ({
