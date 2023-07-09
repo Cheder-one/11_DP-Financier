@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
-import { filter, keys, map, uniqBy, values } from "lodash";
+import { filter, find, keys, map, uniqBy, values } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
@@ -23,25 +23,21 @@ const MainPage = ({ userId }) => {
     expense: []
   });
 
-  console.log(cardBodyItems);
-
-  // transactions.map((t) => filter(categories, { id: t.category }));
-
-  const transformTransacts = (data) => {
-    data.income = data.income.map((item) => {
-      return {
-        ...item,
-        firstCol: find(categories, { id: item.category })
-      };
-    });
-    data.account = data.account.map((item) => ({ ...item, secondCol: [] }));
-    data.expense = data.expense.map((item) => ({ ...item, thirdCol: [] }));
-    return data;
+  const getCategoryName = (item) => {
+    return find(categories, { id: item.category }).name;
   };
 
-  console.log(transformTransacts(cardBodyItems));
-
-  console.log(cardBodyItems);
+  const getCardBodyColumnItems = (cards) => {
+    keys(cards).forEach((key) => {
+      const card = cards[key];
+      card.forEach((item) => {
+        item.firstCol = item.amount;
+        item.secondCol = getCategoryName(item);
+        item.thirdCol = null;
+      });
+    });
+    return cards;
+  };
 
   useEffect(() => {
     axios
@@ -134,6 +130,8 @@ const MainPage = ({ userId }) => {
       }));
     }
   };
+
+  useMemo(() => getCardBodyColumnItems(cardBodyItems), [cardBodyItems]);
 
   const dropDownIncome = (
     <Dropdown
