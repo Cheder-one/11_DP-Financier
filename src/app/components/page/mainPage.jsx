@@ -52,7 +52,7 @@ const MainPage = ({ userId }) => {
   }, [userId]);
 
   // Трансформирую данные body каждой карточки, чтобы универсальный компонент мог принимать любые значения, независимо от их name.
-  const cardBodyColItems = useMemo(() => {
+  const transformedBodyItems = useMemo(() => {
     const updatedCards = {};
 
     keys(cardBodyItems).forEach((key) => {
@@ -68,19 +68,6 @@ const MainPage = ({ userId }) => {
 
     return updatedCards;
   }, [cardBodyItems, categories]);
-
-  // Мутирует исходный объект
-  // const getCardBodyColumnItems = (cards) => {
-  //   keys(cards).forEach((key) => {
-  //     const card = cards[key];
-  //     card.forEach((item) => {
-  //       item.firstCol = item.amount;
-  //       item.secondCol = find(categories, { id: item.category }).name;
-  //       item.thirdCol = null;
-  //     });
-  //   });
-  //   return cards;
-  // };
 
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
@@ -198,7 +185,7 @@ const MainPage = ({ userId }) => {
                 third: addButton
               }}
               route="/"
-              bodyList={cardBodyColItems.income}
+              bodyList={transformedBodyItems.income}
               bodyCol={{
                 third: delButton
               }}
@@ -213,7 +200,7 @@ const MainPage = ({ userId }) => {
                 third: addButton
               }}
               route="/"
-              bodyList={cardBodyColItems.account}
+              bodyList={transformedBodyItems.account}
               bodyCol={{
                 third: delButton
               }}
@@ -228,7 +215,7 @@ const MainPage = ({ userId }) => {
                 third: addButton
               }}
               route="/"
-              bodyList={cardBodyColItems.expense}
+              bodyList={transformedBodyItems.expense}
               bodyCol={{
                 third: delButton
               }}

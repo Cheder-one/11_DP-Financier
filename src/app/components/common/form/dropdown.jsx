@@ -41,16 +41,18 @@ const Dropdown = ({ items, type, onSelect, reset }) => {
     }
   }, [reset]);
 
-  // Слушатель для закрытия dropDownList при клике вне него
   const dropdownRef = useRef(null);
 
+  // Слушатель для закрытия dropDownList при клике вне него
   useEffect(() => {
     const handleClickOutside = ({ target }) => {
       if (!dropdownRef?.current?.contains(target)) {
         setIsOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
