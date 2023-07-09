@@ -93,9 +93,10 @@ const Dropdown = ({ items, type, onSelect, reset }) => {
 
 Dropdown.propTypes = {
   title: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.object),
-  // .isRequired,
-  type: PropTypes.string
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  type: PropTypes.string,
+  onSelect: PropTypes.func.isRequired,
+  reset: PropTypes.bool
 };
 
 export default Dropdown;

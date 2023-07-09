@@ -9,12 +9,16 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
       <Card.Body className="p-0">
         <Row className="card-header mx-auto border p-0 py-1">
           <Col
-            as={route ? Link : "div"}
-            to={route}
             md={md[0]}
-            className="flex justify-center items-center text-inherit text-decoration-none"
+            className="flex justify-center items-center text-inherit"
           >
-            {title?.first}
+            <Link
+              to={route}
+              className="text-inherit cursor-pointer"
+              style={{ textUnderlineOffset: "3px" }}
+            >
+              {title?.first}
+            </Link>
           </Col>
           <Col md={md[1]} className="mx-auto p-0">
             {title?.second}
@@ -61,7 +65,7 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
 AccountCard.propTypes = {
   md: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  route: PropTypes.string,
+  route: PropTypes.string.isRequired,
   type: PropTypes.string,
   bodyList: PropTypes.arrayOf(PropTypes.object).isRequired,
   bodyCol: PropTypes.object.isRequired

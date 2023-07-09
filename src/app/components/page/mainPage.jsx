@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
-import { filter, find, keys, map, uniqBy, values } from "lodash";
-import { useEffect, useMemo, useState } from "react";
+import { filter, find, keys, uniqBy } from "lodash";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
@@ -23,37 +23,46 @@ const MainPage = ({ userId }) => {
     expense: []
   });
 
-  const getCategoryName = (item) => {
-    return find(categories, { id: item.category }).name;
-  };
-
-  const getCardBodyColumnItems = (cards) => {
-    keys(cards).forEach((key) => {
-      const card = cards[key];
-      card.forEach((item) => {
-        item.firstCol = item.amount;
-        item.secondCol = getCategoryName(item);
-        item.thirdCol = null;
-      });
-    });
-    return cards;
-  };
-
   useEffect(() => {
-    axios
-      .get(`/api/users/${userId}`)
-      .then((resp) => {
-        setUser(resp.data.user);
-        const { transactions } = resp.data.user;
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/users/${userId}`);
+        const { user: userData } = response.data;
+        setUser(userData);
 
+        const { transactions } = userData;
         setCardBodyItems({
           account: transactions,
           income: filter(transactions, { type: "income" }),
           expense: filter(transactions, { type: "expense" })
         });
-      })
-      .catch((err) => console.error(err));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
   }, [userId]);
+
+  const getCategoryName = (item) => {
+    return find(categories, { id: item.category }).name;
+  };
+
+  // Трансформирую данные body карточки, чтобы универсальный компонент мог принимать любые значения, независимо от их name.
+  const getCardBodyColumnItems = useCallback(
+    (cards) => {
+      keys(cards).forEach((key) => {
+        const card = cards[key];
+        card.forEach((item) => {
+          item.firstCol = item.amount;
+          item.secondCol = getCategoryName(item);
+          item.thirdCol = null;
+        });
+      });
+      return cards;
+    },
+    [cardBodyItems]
+  );
 
   const getUniqDates = (data) => {
     return uniqBy(data, "date").map((uniq) => ({
@@ -179,7 +188,6 @@ const MainPage = ({ userId }) => {
                   second: dropDownIncome,
                   third: addButton
                 }}
-                type="income"
                 route="/"
                 bodyList={cardBodyItems.income}
                 bodyCol={{
@@ -195,7 +203,6 @@ const MainPage = ({ userId }) => {
                   second: dropDownAccount,
                   third: addButton
                 }}
-                type="account"
                 route="/"
                 bodyList={cardBodyItems.account}
                 bodyCol={{
@@ -211,7 +218,6 @@ const MainPage = ({ userId }) => {
                   second: dropDownExpense,
                   third: addButton
                 }}
-                type="expense"
                 route="/"
                 bodyList={cardBodyItems.expense}
                 bodyCol={{
