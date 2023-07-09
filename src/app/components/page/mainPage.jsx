@@ -52,11 +52,11 @@ const MainPage = ({ userId }) => {
   }, [userId]);
 
   // Трансформирую данные body каждой карточки, чтобы универсальный компонент мог принимать любые значения, независимо от их name.
-  const getCardBodyColumnItems = (cards) => {
+  const cardBodyColItems = useMemo(() => {
     const updatedCards = {};
 
-    keys(cards).forEach((key) => {
-      const card = cards[key];
+    keys(cardBodyItems).forEach((key) => {
+      const card = cardBodyItems[key];
       const updatedCard = card.map((item) => ({
         ...item,
         firstCol: item.amount,
@@ -67,7 +67,7 @@ const MainPage = ({ userId }) => {
     });
 
     return updatedCards;
-  };
+  }, [cardBodyItems, categories]);
 
   // Мутирует исходный объект
   // const getCardBodyColumnItems = (cards) => {
@@ -150,8 +150,6 @@ const MainPage = ({ userId }) => {
       }));
     }
   };
-
-  const cardBodyColItems = getCardBodyColumnItems(cardBodyItems);
 
   if (keys(user || {}).length > 0) {
     const dropDownIncome = (
