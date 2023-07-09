@@ -51,18 +51,36 @@ const MainPage = ({ userId }) => {
     fetchData();
   }, [userId]);
 
-  // Трансформирую данные body карточки, чтобы универсальный компонент мог принимать любые значения, независимо от их name.
+  // Трансформирую данные body каждой карточки, чтобы универсальный компонент мог принимать любые значения, независимо от их name.
   const getCardBodyColumnItems = (cards) => {
+    const updatedCards = {};
+
     keys(cards).forEach((key) => {
       const card = cards[key];
-      card.forEach((item) => {
-        item.firstCol = item.amount;
-        item.secondCol = find(categories, { id: item.category }).name;
-        item.thirdCol = null;
-      });
+      const updatedCard = card.map((item) => ({
+        ...item,
+        firstCol: item.amount,
+        secondCol: find(categories, { id: item.category }).name,
+        thirdCol: null
+      }));
+      updatedCards[key] = updatedCard;
     });
-    return cards;
+
+    return updatedCards;
   };
+
+  // Мутирует исходный объект
+  // const getCardBodyColumnItems = (cards) => {
+  //   keys(cards).forEach((key) => {
+  //     const card = cards[key];
+  //     card.forEach((item) => {
+  //       item.firstCol = item.amount;
+  //       item.secondCol = find(categories, { id: item.category }).name;
+  //       item.thirdCol = null;
+  //     });
+  //   });
+  //   return cards;
+  // };
 
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
@@ -133,7 +151,7 @@ const MainPage = ({ userId }) => {
     }
   };
 
-  getCardBodyColumnItems(cardBodyItems);
+  const cardBodyColItems = getCardBodyColumnItems(cardBodyItems);
 
   if (keys(user || {}).length > 0) {
     const dropDownIncome = (
@@ -182,7 +200,7 @@ const MainPage = ({ userId }) => {
                 third: addButton
               }}
               route="/"
-              bodyList={cardBodyItems.income}
+              bodyList={cardBodyColItems.income}
               bodyCol={{
                 third: delButton
               }}
@@ -197,7 +215,7 @@ const MainPage = ({ userId }) => {
                 third: addButton
               }}
               route="/"
-              bodyList={cardBodyItems.account}
+              bodyList={cardBodyColItems.account}
               bodyCol={{
                 third: delButton
               }}
@@ -212,7 +230,7 @@ const MainPage = ({ userId }) => {
                 third: addButton
               }}
               route="/"
-              bodyList={cardBodyItems.expense}
+              bodyList={cardBodyColItems.expense}
               bodyCol={{
                 third: delButton
               }}
