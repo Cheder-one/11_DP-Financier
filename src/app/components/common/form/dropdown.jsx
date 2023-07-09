@@ -11,11 +11,11 @@ const getIdAllItem = (type) => {
   };
 };
 
-const Dropdown = ({ items, type, onSelect }) => {
+const Dropdown = ({ items, type, onSelect, reset }) => {
   const ALL_ITEM = getIdAllItem(type);
+  const isInitialRender = useRef(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(ALL_ITEM);
-  const isInitialRender = useRef(true);
 
   const handleClick = ({ target }) => {
     const { id: eventKey } = target;
@@ -33,6 +33,13 @@ const Dropdown = ({ items, type, onSelect }) => {
       isInitialRender.current = false;
     }
   }, [selectedItem]);
+
+  useEffect(() => {
+    // Сброс title в dropdown на изначальное, при смене счета.
+    if (reset) {
+      setSelectedItem(ALL_ITEM);
+    }
+  }, [reset]);
 
   // Слушатель для закрытия dropDownList при клике вне него
   const dropdownRef = useRef(null);

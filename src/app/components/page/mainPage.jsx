@@ -13,7 +13,10 @@ import Dropdown from "../common/form/dropdown";
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
   const { accounts, categories, transactions } = user || [];
-  const [selectedAcc, setSelectedAcc] = useState({ id: "" });
+  const [selectedAccount, setSelectedAccount] = useState({
+    id: "",
+    reset: false
+  });
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
     income: [],
@@ -44,7 +47,7 @@ const MainPage = ({ userId }) => {
 
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
-    const { id } = selectedAcc;
+    const { id } = selectedAccount;
     const result = {};
 
     types.forEach((type) => {
@@ -60,7 +63,7 @@ const MainPage = ({ userId }) => {
     });
 
     return result;
-  }, [transactions, selectedAcc]);
+  }, [transactions, selectedAccount]);
 
   const { income, expense } = filteredByUniqAndType;
 
@@ -74,9 +77,13 @@ const MainPage = ({ userId }) => {
 
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
-    const { id: selAccId } = selectedAcc;
+    const { id: selAccId } = selectedAccount;
     const dataByCardType = filteredByUniqAndType[cardType];
     let bodyItems = null;
+
+    if (cardType === "account") {
+      setSelectedAccount((prev) => ({ ...prev, reset: true }));
+    }
 
     if (id.includes("all")) {
       if (cardType === "account") {
@@ -91,12 +98,12 @@ const MainPage = ({ userId }) => {
           : dataByCardType.transacts;
       }
     } else if (id.includes("account")) {
-      setSelectedAcc({ id });
       bodyItems = filter(transactions, { account: id });
-
+      setSelectedAccount((prev) => ({ ...prev, id }));
       updIncExpTransacts(id);
     } else if (id.includes("transaction")) {
       bodyItems = filter(dataByCardType.transacts, { date });
+      setSelectedAccount((prev) => ({ ...prev, reset: false }));
     }
 
     if (bodyItems) {
@@ -112,6 +119,7 @@ const MainPage = ({ userId }) => {
       items={income.uniqDates}
       type="income"
       onSelect={handleDropdownSelect}
+      reset={selectedAccount.reset}
     />
   );
 
@@ -124,6 +132,7 @@ const MainPage = ({ userId }) => {
       items={expense.uniqDates}
       type="expense"
       onSelect={handleDropdownSelect}
+      reset={selectedAccount.reset}
     />
   );
 
