@@ -3,7 +3,7 @@ import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { keys } from "lodash";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-const ListCard = ({ md, title, route, type, bodyList, bodyCol }) => {
+const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
   return (
     <Card className="p-0">
       <Card.Body className="p-0">
@@ -58,7 +58,7 @@ const ListCard = ({ md, title, route, type, bodyList, bodyCol }) => {
   );
 };
 
-ListCard.propTypes = {
+AccountCard.propTypes = {
   md: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   route: PropTypes.string,
@@ -67,8 +67,8 @@ ListCard.propTypes = {
   bodyCol: PropTypes.object.isRequired
 };
 
-ListCard.defaultProps = {
+AccountCard.defaultProps = {
   md: [4, 6, 2]
 };
 
-export default ListCard;
+export default AccountCard;

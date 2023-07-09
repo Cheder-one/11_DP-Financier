@@ -7,7 +7,7 @@ import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
 import Loader from "../ui/spinner";
-import ListCard from "../common/card/listCard";
+import AccountCard from "../common/card/accountCard";
 import Dropdown from "../common/form/dropdown";
 
 const MainPage = ({ userId }) => {
@@ -154,7 +154,7 @@ const MainPage = ({ userId }) => {
         <div className="mx-4">
           <Row style={{ marginTop: "3%" }}>
             <Col md="4">
-              <ListCard
+              <AccountCard
                 title={{
                   first: "Доход",
                   second: dropDownIncome,
@@ -170,7 +170,7 @@ const MainPage = ({ userId }) => {
               />
             </Col>
             <Col md="4">
-              <ListCard
+              <AccountCard
                 title={{
                   first: "Счет",
                   second: dropDownAccount,
@@ -186,7 +186,7 @@ const MainPage = ({ userId }) => {
               />
             </Col>
             <Col md="4">
-              <ListCard
+              <AccountCard
                 title={{
                   first: "Расход",
                   second: dropDownExpense,
