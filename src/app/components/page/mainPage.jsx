@@ -1,19 +1,27 @@
-import PropTypes from "prop-types";
 import axios from "axios";
+import PropTypes from "prop-types";
+import { useEffect, useMemo, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { filter, find, keys, uniqBy } from "lodash";
-import { useEffect, useMemo, useState } from "react";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
-import { toReadableDate } from "../../utils/functions/toReadableDate";
 import Loader from "../ui/spinner";
 import AccountCard from "../common/card/accountCard";
 import Dropdown from "../common/form/dropdown";
+import { toReadableDate } from "../../utils/functions/toReadableDate";
 
 const getUniqDates = (data) => {
   return uniqBy(data, "date").map((uniq) => ({
     ...uniq,
     name: toReadableDate(uniq.date).dateOnly
+  }));
+};
+
+const updIncomeExpenseTransacts = (id, income, expense, setCardBodyItems) => {
+  setCardBodyItems((prev) => ({
+    ...prev,
+    income: filter(income.transacts, { account: id }),
+    expense: filter(expense.transacts, { account: id })
   }));
 };
 
@@ -89,14 +97,6 @@ const MainPage = ({ userId }) => {
 
   const { income, expense } = filteredByUniqAndType;
 
-  const updIncomeExpenseTransacts = (id) => {
-    setCardBodyItems((prev) => ({
-      ...prev,
-      income: filter(income.transacts, { account: id }),
-      expense: filter(expense.transacts, { account: id })
-    }));
-  };
-
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
     const { id: selAccId } = selectedAccount;
@@ -122,7 +122,7 @@ const MainPage = ({ userId }) => {
     } else if (id.includes("account")) {
       bodyItems = filter(user.transactions, { account: id });
       setSelectedAccount((prev) => ({ ...prev, id }));
-      updIncomeExpenseTransacts(id);
+      updIncomeExpenseTransacts(id, income, expense, setCardBodyItems);
     } else if (id.includes("transaction")) {
       bodyItems = filter(dataByCardType.transacts, { date });
       setSelectedAccount((prev) => ({ ...prev, reset: false }));
