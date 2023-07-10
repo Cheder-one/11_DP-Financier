@@ -89,7 +89,7 @@ const MainPage = ({ userId }) => {
 
   const { income, expense } = filteredByUniqAndType;
 
-  const updIncExpTransacts = (id) => {
+  const updIncomeExpenseTransacts = (id) => {
     setCardBodyItems((prev) => ({
       ...prev,
       income: filter(income.transacts, { account: id }),
@@ -122,7 +122,7 @@ const MainPage = ({ userId }) => {
     } else if (id.includes("account")) {
       bodyItems = filter(user.transactions, { account: id });
       setSelectedAccount((prev) => ({ ...prev, id }));
-      updIncExpTransacts(id);
+      updIncomeExpenseTransacts(id);
     } else if (id.includes("transaction")) {
       bodyItems = filter(dataByCardType.transacts, { date });
       setSelectedAccount((prev) => ({ ...prev, reset: false }));
