@@ -161,79 +161,43 @@ const MainPage = ({ userId }) => {
       />
     );
 
-    const addButton = (
-      <Button variant="" className="p-0">
-        <PlusSquare style={{ color: "yellowgreen" }} size={25} />
-      </Button>
-    );
-    const delButton = (
-      <Button variant="" size="sm" className="p-0">
-        <CloseX style={{ color: "red" }} size={19} />
-      </Button>
-    );
-
-    return (
-      <div className="mx-4">
-        <Row style={{ marginTop: "3%" }}>
-          <Col md="4">
-            <AccountCard
-              title={{
-                first: "Доход",
-                second: dropDownIncome,
-                third: addButton
-              }}
-              route="/"
-              bodyList={transformedBodyItems.income}
-              bodyCol={{
-                third: delButton
-              }}
-              dropDownList={income.uniqDates}
-            />
-          </Col>
-          <Col md="4">
-            <AccountCard
-              title={{
-                first: "Счет",
-                second: dropDownAccount,
-                third: addButton
-              }}
-              route="/"
-              bodyList={transformedBodyItems.account}
-              bodyCol={{
-                third: delButton
-              }}
-              dropDownList={user.accounts}
-            />
-          </Col>
-          <Col md="4">
-            <AccountCard
-              title={{
-                first: "Расход",
-                second: dropDownExpense,
-                third: addButton
-              }}
-              route="/"
-              bodyList={transformedBodyItems.expense}
-              bodyCol={{
-                third: delButton
-              }}
-              dropDownList={expense.uniqDates}
-            />
-          </Col>
-        </Row>
-
-        <Row style={{ marginTop: "3%" }}>
-          <Col>
-            <div className="flex justify-center items-center border border-dark vh-40">
-              <h5>Element</h5>
-            </div>
-          </Col>
-        </Row>
-      </div>
-    );
-  } else {
-    return <Loader className="flex justify-center items-center vh-30" />;
-  }
+  return (
+    <>
+      {user ? (
+        <div className="mx-4">
+          <Row className="mt-4">
+            <AccountCard />{" "}
+            {/* {cards.map(({ name }) => (
+              <Col key={name} md={"4"} className="my-3">
+                <AccountCard md={[4, 6, 2]} cardName={name} />
+              </Col>
+            ))} */}
+            {/* {cards.map((card) => (
+              <Col md="4" key={card.name} className="my-3">
+                <Card>
+                  <Card.Body className="p-0">
+                    <AccountCard
+                      {...{ card, categories }}
+                      allTransacts={transactions}
+                    />
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))} */}
+          </Row>
+          <Row className="mt-4">
+            <Col>
+              <div className="flex justify-center items-center border border-dark vh-40">
+                <h5>Element</h5>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      ) : (
+        <Loader className="flex justify-center items-center vh-30" />
+      )}
+    </>
+  );
 };
 
 MainPage.propTypes = {

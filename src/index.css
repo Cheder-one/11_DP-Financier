@@ -137,3 +137,26 @@ body::-webkit-scrollbar-thumb:hover {
   max-height: 11rem;
   overflow-x: hidden;
 }
+
+/* dropdown-title */
+.dropdown-toggle.nav-link {
+  color: #000 !important;
+}
+/* dropdown-items */
+.dropdown-item:hover {
+  background-color: lightgray !important;
+}
+.dropdown-divider {
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+th {
+  text-align: center !important;
+  vertical-align: middle;
+}
+
+td {
+  text-align: center !important;
+  vertical-align: middle;
+}
