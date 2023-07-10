@@ -1,0 +1,139 @@
+@import url("./styles/css/vh-wh.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif !important;
+
+  font-synthesis: none !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  -webkit-text-size-adjust: 100% !important;
+}
+
+#avatar-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.form-check-input {
+  box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
+
+.dark-theme-true.dropdown-item {
+  background-color: white !important;
+  color: black !important;
+}
+
+form > div {
+  margin-bottom: 1rem;
+}
+
+/* ----------ScrollBar---------- */
+/* Устанавливаем ширину скроллбаров */
+::-webkit-scrollbar {
+  width: 3px;
+}
+/* Устанавливаем цвет ползунка скроллбара */
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 3px;
+}
+/* Цвет полосы прокрутки при наведении*/
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+/* Цвет полосы прокрутки */
+::-webkit-scrollbar-track {
+  background-color: white;
+}
+
+::-webkit-scrollbar {
+  height: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+::-webkit-scrollbar-track {
+  background-color: white;
+}
+
+/* ----------Window Скроллбар Y-axe---------- */
+body::-webkit-scrollbar {
+  width: 6px;
+}
+body::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #888;
+  /* border-radius: 4px; */
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* ----------Window Скроллбар Х-axe---------- */
+body::-webkit-scrollbar {
+  height: 7px;
+}
+body::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #888;
+  /* border-radius: 4px; */
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* ----------Navbar---------- */
+/* Выделение активной ссылки навигации */
+.navbar .nav-link.active {
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+/* dropdown-title */
+.dropdown-toggle.nav-link {
+  color: #000 !important;
+}
+/* dropdown-items */
+.dropdown-item:hover {
+  background-color: lightgray !important;
+}
+.dropdown-divider {
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+/* ----------Calendar---------- */
+/* .rw-popup-container.rw-calendar-popup {
+  max-width: 15rem;
+  font-size: smaller;
+}
+.rw-calendar-header {
+  max-height: 3rem;
+  font-size: smaller;
+} */
+
+/* ----------/main .account-cards---------- */
+/* Размер и переполнение списка счетов */
+.dropdown-menu.show {
+  overflow: auto;
+  max-height: 11rem;
+  overflow-x: hidden;
+}
