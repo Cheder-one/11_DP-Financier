@@ -19,7 +19,6 @@ const getUniqDates = (data) => {
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const { accounts, categories, transactions } = user || [];
   const [selectedAccount, setSelectedAccount] = useState({
     id: "",
     reset: false
@@ -51,7 +50,6 @@ const MainPage = ({ userId }) => {
     fetchData();
   }, [userId]);
 
-  // Трансформирует данные body каждой карточки, чтобы универсальный компонент мог принимать любые значения, независимо от их name.
   const transformedBodyItems = useMemo(() => {
     const updatedCards = {};
 
@@ -60,14 +58,14 @@ const MainPage = ({ userId }) => {
       const updatedCard = card.map((item) => ({
         ...item,
         firstCol: item.amount,
-        secondCol: find(categories, { id: item.category }).name,
+        secondCol: find(user.categories, { id: item.category }).name,
         thirdCol: null
       }));
       updatedCards[key] = updatedCard;
     });
 
     return updatedCards;
-  }, [cardBodyItems, categories]);
+  }, [cardBodyItems, user.categories]);
 
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
@@ -75,7 +73,7 @@ const MainPage = ({ userId }) => {
     const result = {};
 
     types.forEach((type) => {
-      const transacts = filter(transactions, { type });
+      const transacts = filter(user.transactions, { type });
       let uniqDates = getUniqDates(transacts);
 
       if (id.includes("account-id-")) {
@@ -87,7 +85,7 @@ const MainPage = ({ userId }) => {
     });
 
     return result;
-  }, [transactions, selectedAccount]);
+  }, [user.transactions, selectedAccount]);
 
   const { income, expense } = filteredByUniqAndType;
 
@@ -112,7 +110,7 @@ const MainPage = ({ userId }) => {
     if (id.includes("all")) {
       if (cardType === "account") {
         setCardBodyItems({
-          account: transactions,
+          account: user.transactions,
           income: income.transacts,
           expense: expense.transacts
         });
@@ -122,7 +120,7 @@ const MainPage = ({ userId }) => {
           : dataByCardType.transacts;
       }
     } else if (id.includes("account")) {
-      bodyItems = filter(transactions, { account: id });
+      bodyItems = filter(user.transactions, { account: id });
       setSelectedAccount((prev) => ({ ...prev, id }));
       updIncExpTransacts(id);
     } else if (id.includes("transaction")) {
@@ -149,7 +147,7 @@ const MainPage = ({ userId }) => {
     );
     const dropDownAccount = (
       <Dropdown
-        items={accounts}
+        items={user.accounts}
         type="account"
         onSelect={handleDropdownSelect}
       />
@@ -204,7 +202,7 @@ const MainPage = ({ userId }) => {
               bodyCol={{
                 third: delButton
               }}
-              dropDownList={accounts}
+              dropDownList={user.accounts}
             />
           </Col>
           <Col md="4">
