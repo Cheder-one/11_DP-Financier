@@ -7,7 +7,7 @@ const Footer = () => {
     <>
       <Divider className="mt-5" />
       <footer className="bg-light py-3 ">
-        <Container className="flex flex-column flex-sm-row justify-content-between align-items-center">
+        <Container className="flex flex-column flex-sm-row justify-between items-center p-0">
           <p className="m-0 text-center text-sm-start">
             © 2023 Financier. All Rights Reserved.
           </p>
