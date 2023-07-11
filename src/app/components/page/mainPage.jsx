@@ -5,11 +5,13 @@ import { Button, Col, Row } from "react-bootstrap";
 import { filter, find, keys, uniqBy } from "lodash";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
+
 import Loader from "../ui/spinner";
 import AccountCard from "../common/card/accountCard";
 import Dropdown from "../common/form/dropdown";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
 
+// Создает массив уникальных дат транзакций для dropdownList
 const getUniqDates = (data) => {
   return uniqBy(data, "date").map((uniq) => ({
     ...uniq,
@@ -17,6 +19,7 @@ const getUniqDates = (data) => {
   }));
 };
 
+// Обновляет список транзакций согласно выбранному счету.
 const updIncomeExpenseTransacts = (id, income, expense, setCardBodyItems) => {
   setCardBodyItems((prev) => ({
     ...prev,
@@ -27,9 +30,9 @@ const updIncomeExpenseTransacts = (id, income, expense, setCardBodyItems) => {
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [selectedAccount, setSelectedAccount] = useState({
+  const [isAnyAccSelected, setIsAnyAccSelected] = useState({
     id: "",
-    reset: false
+    resetDropTitle: false
   });
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
@@ -58,6 +61,7 @@ const MainPage = ({ userId }) => {
     fetchData();
   }, [userId]);
 
+  // Универсализирует данные для отправки в AccountCard, чтобы компонент не был привязан к конкретным переменным.
   const transformedBodyItems = useMemo(() => {
     const updatedCards = {};
 
@@ -66,8 +70,7 @@ const MainPage = ({ userId }) => {
       const updatedCard = card.map((item) => ({
         ...item,
         firstCol: item.amount,
-        secondCol: find(user.categories, { id: item.category }).name,
-        thirdCol: null
+        secondCol: find(user.categories, { id: item.category }).name
       }));
       updatedCards[key] = updatedCard;
     });
@@ -75,57 +78,88 @@ const MainPage = ({ userId }) => {
     return updatedCards;
   }, [cardBodyItems, user.categories]);
 
+  // Фильтрует транзакции по типу (расход/доход). Создает под каждый тип массив уникальных дат для возможности отображения транзакций по датам.
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
-    const { id } = selectedAccount;
+    const { id } = isAnyAccSelected;
     const result = {};
 
     types.forEach((type) => {
       const transacts = filter(user.transactions, { type });
       let uniqDates = getUniqDates(transacts);
 
+      // Делает тоже самое для транзакций конкретного счета (если выбран).
       if (id.includes("account-id-")) {
-        const accTransacts = filter(transacts, { account: id });
-        uniqDates = getUniqDates(accTransacts);
+        const accountTransacts = filter(transacts, { account: id });
+        uniqDates = getUniqDates(accountTransacts);
       }
 
       result[type] = { transacts, uniqDates };
     });
 
     return result;
-  }, [user.transactions, selectedAccount]);
+  }, [user.transactions, isAnyAccSelected]);
 
   const { income, expense } = filteredByUniqAndType;
 
+  // Обработчик Dropdown.
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
-    const { id: selAccId } = selectedAccount;
+    const { id: selAccId } = isAnyAccSelected;
     const dataByCardType = filteredByUniqAndType[cardType];
     let bodyItems = null;
 
+    // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается его title. При любой смене счета устанавливается default значение для dropdown.
     if (cardType === "account") {
-      setSelectedAccount((prev) => ({ ...prev, reset: true }));
+      setIsAnyAccSelected((prev) => ({
+        ...prev,
+        resetDropTitle: true
+      }));
     }
-
+    // Если фильтрую карточку по критерию "Все"
     if (id.includes("all")) {
+      // Выбраны все счета. Выводятся все транзакции всех счетов.
       if (cardType === "account") {
         setCardBodyItems({
           account: user.transactions,
           income: income.transacts,
           expense: expense.transacts
         });
+        // Если выбрано "Все" для карточек расход/доход
       } else {
-        bodyItems = selAccId.includes("account-id-")
-          ? filter(dataByCardType.transacts, { account: selAccId })
-          : dataByCardType.transacts;
+        // Фильтруем транзакции по типу карточки под выбранный счет
+        if (selAccId.includes("account-id-")) {
+          bodyItems = filter(dataByCardType.transacts, {
+            account: selAccId
+          });
+          // В "Счетах" не выбрано конкретного счета. Выводим все транзакции в соответствии с типом карточки где было выбрано "Все"
+        } else {
+          bodyItems = dataByCardType.transacts;
+        }
       }
+      // Выбран конкретный счет для фильтрации
     } else if (id.includes("account")) {
-      bodyItems = filter(user.transactions, { account: id });
-      setSelectedAccount((prev) => ({ ...prev, id }));
+      bodyItems = filter(user.transactions, {
+        account: id
+      });
+
+      // Обновляем транзакции в карточках расход/доход под выбранный счет
       updIncomeExpenseTransacts(id, income, expense, setCardBodyItems);
+
+      // Обозначаем что сейчас выбран счет и любые фильтрации должны опираться на него
+      setIsAnyAccSelected((prev) => ({
+        ...prev,
+        id
+      }));
+      // Карточки Расход/Доход. Фильтруем транзакции по типу карточки.
     } else if (id.includes("transaction")) {
       bodyItems = filter(dataByCardType.transacts, { date });
-      setSelectedAccount((prev) => ({ ...prev, reset: false }));
+
+      // Отключаем сброс title в dropdown для отображения выбранной даты для фильтрации
+      setIsAnyAccSelected((prev) => ({
+        ...prev,
+        resetDropTitle: false
+      }));
     }
 
     if (bodyItems) {
@@ -142,7 +176,7 @@ const MainPage = ({ userId }) => {
         items={income.uniqDates}
         type="income"
         onSelect={handleDropdownSelect}
-        reset={selectedAccount.reset}
+        reset={isAnyAccSelected.resetDropTitle}
       />
     );
     const dropDownAccount = (
@@ -157,7 +191,7 @@ const MainPage = ({ userId }) => {
         items={expense.uniqDates}
         type="expense"
         onSelect={handleDropdownSelect}
-        reset={selectedAccount.reset}
+        reset={isAnyAccSelected.resetDropTitle}
       />
     );
 
