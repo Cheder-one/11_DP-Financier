@@ -2,7 +2,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { filter, find, keys, uniqBy } from "lodash";
+import { chain, filter, find, keys, reverse } from "lodash";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
@@ -13,10 +13,14 @@ import { toReadableDate } from "../../utils/functions/toReadableDate";
 
 // Создает массив уникальных дат транзакций для dropdownList
 const getUniqDates = (data) => {
-  return uniqBy(data, "date").map((uniq) => ({
-    ...uniq,
-    name: toReadableDate(uniq.date).dateOnly
-  }));
+  return chain(data)
+    .uniqBy("date")
+    .map((uniq) => ({
+      ...uniq,
+      name: toReadableDate(uniq.date).dateOnly
+    }))
+    .reverse()
+    .value();
 };
 
 // Обновляет список транзакций согласно выбранному счету.
