@@ -2,7 +2,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { chain, filter, find, keys, reverse } from "lodash";
+import { chain, filter, find, keys } from "lodash";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
