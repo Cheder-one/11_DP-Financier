@@ -30,10 +30,8 @@ const updIncomeExpenseTransacts = (id, income, expense, setCardBodyItems) => {
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [isAnyAccSelected, setIsAnyAccSelected] = useState({
-    id: "",
-    resetDropTitle: false
-  });
+  const [selectedAccount, setSelectedAccount] = useState({ id: "" });
+  const [resetDropTitle, setResetDropTitle] = useState(false);
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
     income: [],
@@ -81,14 +79,14 @@ const MainPage = ({ userId }) => {
   // Фильтрует транзакции по типу (расход/доход). Создает под каждый тип массив уникальных дат для возможности отображения транзакций по датам.
   const filteredByUniqAndType = useMemo(() => {
     const types = ["income", "expense"];
-    const { id } = isAnyAccSelected;
+    const { id } = selectedAccount;
     const result = {};
 
     types.forEach((type) => {
       const transacts = filter(user.transactions, { type });
       let uniqDates = getUniqDates(transacts);
 
-      // Делает тоже самое для транзакций конкретного счета (если выбран).
+      // Фильтрует транзакции под конкретный счет (если выбран). Создает массив uniqDates.
       if (id.includes("account-id-")) {
         const accountTransacts = filter(transacts, { account: id });
         uniqDates = getUniqDates(accountTransacts);
@@ -98,25 +96,22 @@ const MainPage = ({ userId }) => {
     });
 
     return result;
-  }, [user.transactions, isAnyAccSelected]);
+  }, [user.transactions, selectedAccount]);
 
   const { income, expense } = filteredByUniqAndType;
 
   // Обработчик Dropdown.
   const handleDropdownSelect = (eventKey) => {
-    // debugger;
     const { id, type: cardType, date } = eventKey;
-    const { id: selAccId } = isAnyAccSelected;
+    const { id: selAccId } = selectedAccount;
     const dataByCardType = filteredByUniqAndType[cardType];
     let bodyItems = null;
 
     // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается его title. При любой смене счета устанавливается default значение для dropdown.
     if (cardType === "account") {
-      setIsAnyAccSelected((prev) => ({
-        ...prev,
-        resetDropTitle: true
-      }));
+      setResetDropTitle(true);
     }
+
     // Если фильтруем карточку по критерии "Все"
     if (id.includes("all")) {
       // Выбраны все счета. Выводятся все транзакции всех счетов.
@@ -126,6 +121,8 @@ const MainPage = ({ userId }) => {
           income: income.transacts,
           expense: expense.transacts
         });
+        // Обозначаем что нет конкретного счета для фильтрации
+        setSelectedAccount({ id: "all" });
         // Если выбрано "Все" для карточек расход/доход
       } else {
         // Фильтруем транзакции по типу карточки под выбранный счет
@@ -148,19 +145,14 @@ const MainPage = ({ userId }) => {
       updIncomeExpenseTransacts(id, income, expense, setCardBodyItems);
 
       // Обозначаем что сейчас выбран счет и любые фильтрации должны опираться на него
-      setIsAnyAccSelected((prev) => ({
-        ...prev,
-        id
-      }));
+      setSelectedAccount({ id });
+
       // Карточки Расход/Доход. Фильтруем транзакции по типу карточки.
     } else if (id.includes("transaction")) {
       bodyItems = filter(dataByCardType.transacts, { date });
 
       // Отключаем сброс title в dropdown для отображения выбранной даты для фильтрации
-      setIsAnyAccSelected((prev) => ({
-        ...prev,
-        resetDropTitle: false
-      }));
+      setResetDropTitle(false);
     }
 
     if (bodyItems) {
@@ -177,7 +169,7 @@ const MainPage = ({ userId }) => {
         items={income.uniqDates}
         type="income"
         onSelect={handleDropdownSelect}
-        reset={isAnyAccSelected.resetDropTitle}
+        reset={resetDropTitle}
       />
     );
     const dropDownAccount = (
@@ -192,7 +184,7 @@ const MainPage = ({ userId }) => {
         items={expense.uniqDates}
         type="expense"
         onSelect={handleDropdownSelect}
-        reset={isAnyAccSelected.resetDropTitle}
+        reset={resetDropTitle}
       />
     );
 
