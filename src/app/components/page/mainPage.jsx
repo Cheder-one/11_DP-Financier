@@ -104,6 +104,7 @@ const MainPage = ({ userId }) => {
 
   // Обработчик Dropdown.
   const handleDropdownSelect = (eventKey) => {
+    // debugger;
     const { id, type: cardType, date } = eventKey;
     const { id: selAccId } = isAnyAccSelected;
     const dataByCardType = filteredByUniqAndType[cardType];
@@ -116,7 +117,7 @@ const MainPage = ({ userId }) => {
         resetDropTitle: true
       }));
     }
-    // Если фильтрую карточку по критерию "Все"
+    // Если фильтруем карточку по критерии "Все"
     if (id.includes("all")) {
       // Выбраны все счета. Выводятся все транзакции всех счетов.
       if (cardType === "account") {
@@ -221,7 +222,6 @@ const MainPage = ({ userId }) => {
               bodyCol={{
                 third: delButton
               }}
-              dropDownList={income.uniqDates}
             />
           </Col>
           <Col md="4">
@@ -236,7 +236,6 @@ const MainPage = ({ userId }) => {
               bodyCol={{
                 third: delButton
               }}
-              dropDownList={user.accounts}
             />
           </Col>
           <Col md="4">
@@ -251,7 +250,6 @@ const MainPage = ({ userId }) => {
               bodyCol={{
                 third: delButton
               }}
-              dropDownList={expense.uniqDates}
             />
           </Col>
         </Row>
