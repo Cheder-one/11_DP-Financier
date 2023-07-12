@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { keys } from "lodash";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import OverlayTooltip from "../typography/overlayTooltip";
 
 const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
   return (
@@ -38,19 +39,19 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
                     md={md[0]}
                     className="flex justify-center items-center border px-0 py-1"
                   >
-                    {bodyCol?.first || item.firstCol}
+                    <OverlayTooltip text={bodyCol?.first || item.firstCol} />
                   </Col>
                   <Col
                     md={md[1]}
                     className="flex justify-center items-center border px-0 py-1"
                   >
-                    {bodyCol?.second || item.secondCol}
+                    <OverlayTooltip text={bodyCol?.second || item.secondCol} />
                   </Col>
                   <Col
                     md={md[2]}
                     className="flex justify-center items-center border px-0 py-1"
                   >
-                    {bodyCol?.third || item.thirdCol}
+                    <OverlayTooltip text={bodyCol?.third || item.thirdCol} />
                   </Col>
                 </Row>
               );
