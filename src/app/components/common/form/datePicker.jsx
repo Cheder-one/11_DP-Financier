@@ -8,11 +8,11 @@ registerLocale("ru", ru);
 
 const CustomInput = forwardRef(({ value, onClick }, ref) => (
   <div className="flex items-center cursor-pointer" onClick={onClick}>
+    <span className="select-none">{value}</span>
     <MdOutlineDateRange
       className="flex items-center justify-center mr-0.5"
       size={20}
     />
-    <span className="select-none">{value}</span>
   </div>
 ));
 

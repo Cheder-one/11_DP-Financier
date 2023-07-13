@@ -1,104 +1,34 @@
-import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import OverlayTooltip from "../typography/overlayTooltip";
-
-const getIdAllItem = (type) => {
-  return {
-    id: "all-" + (type ? `${type}-ids` : "ids"),
-    type,
-    name: "Все"
-  };
-};
-
-const Dropdown = ({ items, type, onSelect, reset }) => {
-  const ALL_ITEM = getIdAllItem(type);
-  const isInitialRender = useRef(true);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(ALL_ITEM);
-
-  const handleClick = ({ target }) => {
-    const { id: eventKey } = target;
-    if (eventKey) {
-      setSelectedItem(JSON.parse(eventKey));
-    }
-    setIsOpen((prev) => !prev);
-  };
-
-  useEffect(() => {
-    // Вызов onSelect только после первого рендера
-    if (!isInitialRender.current) {
-      onSelect(selectedItem);
-    } else {
-      isInitialRender.current = false;
-    }
-  }, [selectedItem]);
-
-  useEffect(() => {
-    // Сброс title в dropdown на изначальное, при смене счета.
-    if (reset) {
-      setSelectedItem(ALL_ITEM);
-    }
-  }, [reset]);
-
-  const dropdownRef = useRef(null);
-
-  // Слушатель для закрытия dropDownList при клике вне него
-  useEffect(() => {
-    const handleClickOutside = ({ target }) => {
-      if (!dropdownRef?.current?.contains(target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+const Dropdown = () => {
+  const items = [
+    { id: 1, name: "Наличные" },
+    { id: 2, name: "Дебетовая карта" },
+    { id: 3, name: "Депозит" },
+    { id: 4, name: "Интернет деньги" },
+    { id: 5, name: "Криптовалюта" },
+    { id: 6, name: "Инвестиции" },
+    { id: 7, name: "Имущество" },
+    { id: 8, name: "Кредит" },
+    { id: 9, name: "Долг" }
+  ];
 
   return (
-    <div className="relative" ref={dropdownRef}>
-      <button
-        className="flex items-center justify-center w-full px-1 py-0.5 text-black"
-        onClick={handleClick}
-      >
-        <OverlayTooltip text={selectedItem?.name || selectedItem} />
-        <RiArrowDropDownLine size="20px" />
-      </button>
-      {isOpen && (
-        <div
-          className="dropdown-menu show bg-white rounded-md shadow-lg cursor-pointer absolute left-1/2 transform -translate-x-1/2 z-10 w-44 py-1 mt-1"
-          onClick={handleClick}
+    <div className="relative inline-block">
+      <select className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+        {items.map(({ id, name }) => (
+          <option key={id}>{name}</option>
+        ))}
+      </select>
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+        <svg
+          className="fill-current h-4 w-4"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
         >
-          <a
-            id={JSON.stringify(ALL_ITEM)}
-            className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline border-b border-gray-300"
-          >
-            Все
-          </a>
-          {items.map((item) => (
-            <a
-              id={JSON.stringify(item)}
-              key={item.id}
-              className="block px-4 py-1.5 text-black hover:bg-gray-200 no-underline"
-            >
-              {item.name}
-            </a>
-          ))}
-        </div>
-      )}
+          <path d="M10 12.586l4-4V8h-8v.586l4 4zm0 4l-4-4V12H8v.586l4 4zm0-8L6 8H4v2h2l4 4 4-4h2V8h-2l-4 4z" />
+        </svg>
+      </div>
     </div>
   );
-};
-
-Dropdown.propTypes = {
-  title: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  type: PropTypes.string,
-  onSelect: PropTypes.func.isRequired,
-  reset: PropTypes.bool
 };
 
 export default Dropdown;

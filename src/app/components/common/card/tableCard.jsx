@@ -4,7 +4,7 @@ import { keys } from "lodash";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import OverlayTooltip from "../typography/overlayTooltip";
 
-const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
+const TableCard = ({ md, route, title, body, bodyCol }) => {
   return (
     <Card className="p-0">
       <Card.Body className="p-0">
@@ -31,8 +31,8 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
 
         <ListGroup className="list-group-flush overflow-auto border-gray-400 vh-27 me-0">
           <ListGroupItem className="p-0">
-            {keys(bodyList).map((item) => {
-              item = bodyList[item];
+            {keys(body).map((item) => {
+              item = body[item];
               return (
                 <Row key={item.id} className="mx-auto">
                   <Col
@@ -63,17 +63,16 @@ const AccountCard = ({ md, title, route, type, bodyList, bodyCol }) => {
   );
 };
 
-AccountCard.propTypes = {
+TableCard.propTypes = {
   md: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   route: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  bodyList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  body: PropTypes.arrayOf(PropTypes.object).isRequired,
   bodyCol: PropTypes.object.isRequired
 };
 
-AccountCard.defaultProps = {
+TableCard.defaultProps = {
   md: [4, 6, 2]
 };
 
-export default AccountCard;
+export default TableCard;

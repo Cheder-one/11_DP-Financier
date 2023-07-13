@@ -1,14 +1,14 @@
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row, Modal } from "react-bootstrap";
 import { chain, filter, find, keys } from "lodash";
 import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
 import Loader from "../ui/spinner";
-import AccountCard from "../common/card/accountCard";
-import Dropdown from "../common/form/dropdown";
+import TableCard from "../common/card/tableCard";
+import CardDropdown from "../ui/cards/cardDropdown/cardDropdown";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
 
 // Создает массив уникальных дат транзакций для dropdownList
@@ -42,6 +42,8 @@ const MainPage = ({ userId }) => {
     expense: []
   });
 
+  const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -63,7 +65,7 @@ const MainPage = ({ userId }) => {
     fetchData();
   }, [userId]);
 
-  // Универсализирует данные для отправки в AccountCard, чтобы компонент не был привязан к конкретным переменным.
+  // Универсализирует данные для отправки в TableCard, чтобы компонент не был привязан к конкретным переменным.
   const transformedBodyItems = useMemo(() => {
     const updatedCards = {};
 
@@ -104,7 +106,7 @@ const MainPage = ({ userId }) => {
 
   const { income, expense } = filteredByUniqAndType;
 
-  // Обработчик Dropdown.
+  // Обработчик dropdown.
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
     const { id: selAccId } = selectedAccount;
@@ -169,7 +171,7 @@ const MainPage = ({ userId }) => {
 
   if (keys(user || {}).length > 0) {
     const dropDownIncome = (
-      <Dropdown
+      <CardDropdown
         items={income.uniqDates}
         type="income"
         onSelect={handleDropdownSelect}
@@ -177,14 +179,14 @@ const MainPage = ({ userId }) => {
       />
     );
     const dropDownAccount = (
-      <Dropdown
+      <CardDropdown
         items={user.accounts}
         type="account"
         onSelect={handleDropdownSelect}
       />
     );
     const dropDownExpense = (
-      <Dropdown
+      <CardDropdown
         items={expense.uniqDates}
         type="expense"
         onSelect={handleDropdownSelect}
@@ -203,46 +205,87 @@ const MainPage = ({ userId }) => {
       </Button>
     );
 
+    const handleAddButtonClick = () => {
+      setShowModal(true);
+    };
+
+    const handleSaveChanges = () => {
+      return null;
+    };
+
+    // const props =  {
+    //     route:"/",
+    //     title: {first: "Доход"},
+    //   body: transformedBodyItems.income,
+    //   bodyCol={{
+    //     third: delButton
+    //   }}
+    //   }
+
+    // <TableCard
+    //   title={{
+    //     first: "Доход",
+    //     second: dropDownIncome,
+    //     third: (
+    //       <Button variant="" className="p-0" onClick={handleAddButtonClick}>
+    //         <PlusSquare style={{ color: "yellowgreen" }} size={25} />
+    //       </Button>
+    //     )
+    //   }}
+    //   body={transformedBodyItems.income}
+    //   bodyCol={{
+    //     third: delButton
+    //   }}
+    // />;
+
     return (
       <div className="mx-4">
         <Row style={{ marginTop: "3%" }}>
           <Col md="4">
-            <AccountCard
+            <TableCard
+              route="/"
               title={{
                 first: "Доход",
                 second: dropDownIncome,
-                third: addButton
+                third: (
+                  <Button
+                    variant=""
+                    className="p-0"
+                    onClick={handleAddButtonClick}
+                  >
+                    <PlusSquare style={{ color: "yellowgreen" }} size={25} />
+                  </Button>
+                )
               }}
-              route="/"
-              bodyList={transformedBodyItems.income}
+              body={transformedBodyItems.income}
               bodyCol={{
                 third: delButton
               }}
             />
           </Col>
           <Col md="4">
-            <AccountCard
+            <TableCard
+              route="/"
               title={{
                 first: "Счет",
                 second: dropDownAccount,
                 third: addButton
               }}
-              route="/"
-              bodyList={transformedBodyItems.account}
+              body={transformedBodyItems.account}
               bodyCol={{
                 third: delButton
               }}
             />
           </Col>
           <Col md="4">
-            <AccountCard
+            <TableCard
               title={{
                 first: "Расход",
                 second: dropDownExpense,
                 third: addButton
               }}
               route="/"
-              bodyList={transformedBodyItems.expense}
+              body={transformedBodyItems.expense}
               bodyCol={{
                 third: delButton
               }}
@@ -257,6 +300,24 @@ const MainPage = ({ userId }) => {
             </div>
           </Col>
         </Row>
+
+        <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Заголовок модального окна</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {/* Содержимое модального окна */}
+            <p>Тут может быть ваше содержимое модального окна.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Закрыть
+            </Button>
+            <Button variant="primary" onClick={handleSaveChanges}>
+              Сохранить
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   } else {
