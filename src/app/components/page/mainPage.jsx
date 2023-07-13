@@ -1,15 +1,13 @@
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
-import { Button, Col, Row, Modal } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { chain, filter, find, keys } from "lodash";
-import { BiSolidPlusSquare as PlusSquare } from "react-icons/bi";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
 import Loader from "../ui/spinner";
-import TableCard from "../common/card/tableCard";
-import CardDropdown from "../ui/cards/cardDropdown/cardDropdown";
 import { toReadableDate } from "../../utils/functions/toReadableDate";
+import TableCardsShell from "../ui/tableCards/tableCardsShell";
 
 // Создает массив уникальных дат транзакций для dropdownList
 const getUniqDates = (data) => {
@@ -42,8 +40,6 @@ const MainPage = ({ userId }) => {
     expense: []
   });
 
-  const [showModal, setShowModal] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -74,7 +70,12 @@ const MainPage = ({ userId }) => {
       const updatedCard = card.map((item) => ({
         ...item,
         firstCol: item.amount,
-        secondCol: find(user.categories, { id: item.category }).name
+        secondCol: find(user.categories, { id: item.category }).name,
+        thirdCol: (
+          <Button variant="" size="sm" className="p-0">
+            <CloseX style={{ color: "red" }} size={19} />
+          </Button>
+        )
       }));
       updatedCards[key] = updatedCard;
     });
@@ -169,160 +170,35 @@ const MainPage = ({ userId }) => {
     }
   };
 
-  if (keys(user || {}).length > 0) {
-    const dropDownIncome = (
-      <CardDropdown
-        items={income.uniqDates}
-        type="income"
-        onSelect={handleDropdownSelect}
+  const handleAddButtonClick = () => {
+    // setShowModal(true);
+  };
+
+  return keys(user || {}).length > 0 ? (
+    <div className="mx-4">
+      <TableCardsShell
+        dropList={{
+          income,
+          account: user.accounts,
+          expense
+        }}
+        bodyItems={transformedBodyItems}
         reset={resetDropTitle}
-      />
-    );
-    const dropDownAccount = (
-      <CardDropdown
-        items={user.accounts}
-        type="account"
         onSelect={handleDropdownSelect}
+        onAddButtonClick={handleAddButtonClick}
       />
-    );
-    const dropDownExpense = (
-      <CardDropdown
-        items={expense.uniqDates}
-        type="expense"
-        onSelect={handleDropdownSelect}
-        reset={resetDropTitle}
-      />
-    );
 
-    const addButton = (
-      <Button variant="" className="p-0">
-        <PlusSquare style={{ color: "yellowgreen" }} size={25} />
-      </Button>
-    );
-    const delButton = (
-      <Button variant="" size="sm" className="p-0">
-        <CloseX style={{ color: "red" }} size={19} />
-      </Button>
-    );
-
-    const handleAddButtonClick = () => {
-      setShowModal(true);
-    };
-
-    const handleSaveChanges = () => {
-      return null;
-    };
-
-    // const props =  {
-    //     route:"/",
-    //     title: {first: "Доход"},
-    //   body: transformedBodyItems.income,
-    //   bodyCol={{
-    //     third: delButton
-    //   }}
-    //   }
-
-    // <TableCard
-    //   title={{
-    //     first: "Доход",
-    //     second: dropDownIncome,
-    //     third: (
-    //       <Button variant="" className="p-0" onClick={handleAddButtonClick}>
-    //         <PlusSquare style={{ color: "yellowgreen" }} size={25} />
-    //       </Button>
-    //     )
-    //   }}
-    //   body={transformedBodyItems.income}
-    //   bodyCol={{
-    //     third: delButton
-    //   }}
-    // />;
-
-    return (
-      <div className="mx-4">
-        <Row style={{ marginTop: "3%" }}>
-          <Col md="4">
-            <TableCard
-              route="/"
-              title={{
-                first: "Доход",
-                second: dropDownIncome,
-                third: (
-                  <Button
-                    variant=""
-                    className="p-0"
-                    onClick={handleAddButtonClick}
-                  >
-                    <PlusSquare style={{ color: "yellowgreen" }} size={25} />
-                  </Button>
-                )
-              }}
-              body={transformedBodyItems.income}
-              bodyCol={{
-                third: delButton
-              }}
-            />
-          </Col>
-          <Col md="4">
-            <TableCard
-              route="/"
-              title={{
-                first: "Счет",
-                second: dropDownAccount,
-                third: addButton
-              }}
-              body={transformedBodyItems.account}
-              bodyCol={{
-                third: delButton
-              }}
-            />
-          </Col>
-          <Col md="4">
-            <TableCard
-              title={{
-                first: "Расход",
-                second: dropDownExpense,
-                third: addButton
-              }}
-              route="/"
-              body={transformedBodyItems.expense}
-              bodyCol={{
-                third: delButton
-              }}
-            />
-          </Col>
-        </Row>
-
-        <Row style={{ marginTop: "3%" }}>
-          <Col>
-            <div className="flex justify-center items-center border border-dark vh-40">
-              <h5>Element</h5>
-            </div>
-          </Col>
-        </Row>
-
-        <Modal show={showModal} onHide={() => setShowModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Заголовок модального окна</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {/* Содержимое модального окна */}
-            <p>Тут может быть ваше содержимое модального окна.</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
-              Закрыть
-            </Button>
-            <Button variant="primary" onClick={handleSaveChanges}>
-              Сохранить
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-    );
-  } else {
-    return <Loader className="flex justify-center items-center vh-30" />;
-  }
+      <Row style={{ marginTop: "3%" }}>
+        <Col>
+          <div className="flex justify-center items-center border border-dark vh-40">
+            <h5>Element</h5>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  ) : (
+    <Loader className="flex justify-center items-center vh-30" />
+  );
 };
 
 MainPage.propTypes = {

@@ -4,7 +4,7 @@ import { keys } from "lodash";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import OverlayTooltip from "../typography/overlayTooltip";
 
-const TableCard = ({ md, route, title, body, bodyCol }) => {
+const TableCard = ({ md, route, title, body }) => {
   return (
     <Card className="p-0">
       <Card.Body className="p-0">
@@ -39,19 +39,19 @@ const TableCard = ({ md, route, title, body, bodyCol }) => {
                     md={md[0]}
                     className="flex justify-center items-center border px-0 py-1"
                   >
-                    <OverlayTooltip text={bodyCol?.first || item.firstCol} />
+                    <OverlayTooltip text={item.firstCol} />
                   </Col>
                   <Col
                     md={md[1]}
                     className="flex justify-center items-center border px-0 py-1"
                   >
-                    <OverlayTooltip text={bodyCol?.second || item.secondCol} />
+                    <OverlayTooltip text={item.secondCol} />
                   </Col>
                   <Col
                     md={md[2]}
                     className="flex justify-center items-center border px-0 py-1"
                   >
-                    <OverlayTooltip text={bodyCol?.third || item.thirdCol} />
+                    <OverlayTooltip text={item.thirdCol} />
                   </Col>
                 </Row>
               );
@@ -67,8 +67,7 @@ TableCard.propTypes = {
   md: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   route: PropTypes.string.isRequired,
-  body: PropTypes.arrayOf(PropTypes.object).isRequired,
-  bodyCol: PropTypes.object.isRequired
+  body: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 TableCard.defaultProps = {
