@@ -171,6 +171,7 @@ const MainPage = ({ userId }) => {
   };
 
   const handleAddButtonClick = () => {
+    console.log("Add clicked");
     // setShowModal(true);
   };
 
