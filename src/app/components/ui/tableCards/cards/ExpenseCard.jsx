@@ -24,7 +24,7 @@ const ExpenseCard = ({
         ),
         third: addButton
       }}
-      body={bodyItems.income}
+      body={bodyItems.expense}
     />
   );
 };
