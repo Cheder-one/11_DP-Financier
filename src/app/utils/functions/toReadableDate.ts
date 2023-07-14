@@ -1,4 +1,4 @@
-export const toReadableDate = (utcDate: string) => {
+const toReadableDate = (utcDate: string) => {
   let dateArr = new Date(utcDate).toLocaleString().split(",");
   let date = dateArr[0];
   let time = dateArr[1];
@@ -6,3 +6,5 @@ export const toReadableDate = (utcDate: string) => {
 
   return { dateOnly: date, timeOnly: time, full: date + time };
 };
+
+export default toReadableDate;

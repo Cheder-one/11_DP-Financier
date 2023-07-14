@@ -6,8 +6,8 @@ import { chain, filter, find, keys } from "lodash";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
 import Loader from "../ui/spinner";
-import { toReadableDate } from "../../utils/functions/toReadableDate";
-import TableCardsShell from "../ui/tableCards/tableCardsShell";
+import { toReadableDate } from "../../utils";
+import TableCardsShell from "../ui/table-cards/tableCardsShell";
 
 // Создает массив уникальных дат транзакций для dropdownList
 const getUniqDates = (data) => {

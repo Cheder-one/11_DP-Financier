@@ -1,10 +1,30 @@
 import PropTypes from "prop-types";
-import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
-import { keys } from "lodash";
+import { keys, map, parseInt, sum } from "lodash";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+
 import OverlayTooltip from "../typography/overlayTooltip";
+import { getScrollbarWidth, getTwStyleValue } from "../../../utils";
 
 const TableCard = ({ md, route, title, body }) => {
+  const [adaptPadding, setAdaptPadding] = useState(null);
+  const thirdColHeaderRef = useRef(null);
+  const listGroupRef = useRef(null);
+
+  useEffect(() => {
+    const listGroup = listGroupRef.current;
+    const scrollWidth = getScrollbarWidth(listGroupRef);
+    const colPaddingR = getTwStyleValue(thirdColHeaderRef, "padding-right");
+
+    if (listGroup.scrollHeight > listGroup.clientHeight) {
+      const newPadding = sum(map([scrollWidth, colPaddingR], parseInt));
+      setAdaptPadding({ paddingRight: `${newPadding}px` });
+    } else {
+      setAdaptPadding(null);
+    }
+  }, [body]);
+
   return (
     <Card className="p-0">
       <Card.Body className="p-0">
@@ -24,12 +44,20 @@ const TableCard = ({ md, route, title, body }) => {
           <Col md={md[1]} className="mx-auto p-0">
             {title?.second}
           </Col>
-          <Col md={md[2]} className="flex justify-center items-center">
+          <Col
+            md={md[2]}
+            className="flex justify-center items-center"
+            // style={{ ...adaptPadding }}
+            ref={thirdColHeaderRef}
+          >
             {title?.third}
           </Col>
         </Row>
 
-        <ListGroup className="list-group-flush overflow-auto border-gray-400 vh-27 me-0">
+        <ListGroup
+          ref={listGroupRef}
+          className="list-group-flush overflow-auto border-gray-400 vh-27 me-0"
+        >
           <ListGroupItem className="p-0">
             {keys(body).map((item) => {
               item = body[item];

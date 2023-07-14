@@ -1,5 +1,5 @@
 import { Route, Switch } from "react-router-dom";
-import NavBar from "./app/components/ui/navBar/navBar";
+import NavBar from "./app/components/ui/navbar/navBar";
 import Footer from "./app/components/ui/footer";
 import Welcome from "./app/layout/welcome";
 import StickyFooter from "./app/components/common/typography/stickyFooter";

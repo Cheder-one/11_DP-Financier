@@ -1,10 +1,10 @@
-import _ from "lodash";
+import { filter, find } from "lodash";
 
-export const getExpendTransactions = (user, accountId) => {
-  const account = _.find(user.accounts, { id: accountId });
+const getExpendTransactions = (user, accountId) => {
+  const account = find(user.accounts, { id: accountId });
 
   if (account) {
-    return _.filter(
+    return filter(
       user.transactions,
       (t) => t.account === account.id && t.type === "expense"
     );
@@ -12,3 +12,5 @@ export const getExpendTransactions = (user, accountId) => {
 
   return [];
 };
+
+export default getExpendTransactions;
