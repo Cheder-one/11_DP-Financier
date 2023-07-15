@@ -8,6 +8,7 @@ import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 import Loader from "../ui/spinner";
 import { toReadableDate } from "../../utils";
 import TableCardsShell from "../ui/table-cards/tableCardsShell";
+import ModalPopup from "../common/modal/modalPopup";
 
 // Создает массив уникальных дат транзакций для dropdownList
 const getUniqDates = (data) => {
@@ -39,6 +40,9 @@ const MainPage = ({ userId }) => {
     income: [],
     expense: []
   });
+
+  const [showModal, setShowModal] = useState(false);
+  console.log(showModal);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -171,8 +175,7 @@ const MainPage = ({ userId }) => {
   };
 
   const handleAddButtonClick = () => {
-    console.log("Add clicked");
-    // setShowModal(true);
+    setShowModal(true);
   };
 
   return keys(user || {}).length > 0 ? (
@@ -196,6 +199,8 @@ const MainPage = ({ userId }) => {
           </div>
         </Col>
       </Row>
+
+      <ModalPopup {...{ showModal, setShowModal }} />
     </div>
   ) : (
     <Loader className="flex justify-center items-center vh-30" />

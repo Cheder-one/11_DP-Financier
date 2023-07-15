@@ -1,10 +1,6 @@
-import { Button } from "bootstrap";
-import { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
-const ModalPopup = () => {
-  const [showModal, setShowModal] = useState(false);
-
+const ModalPopup = ({ showModal, setShowModal }) => {
   const handleSaveChanges = () => {
     return null;
   };
