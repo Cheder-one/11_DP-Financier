@@ -17,17 +17,13 @@ const RegisterForm = () => {
       onSubmit={console.log}
     >
       {({ errors, touched, values, handleChange }) => {
-        const getClass = (name) => {
-          return `form-control ${
-            errors[name] && touched[name] ? "is-invalid" : ""
-          }`;
-        };
+        const getClass = (name) =>
+          `form-control ${errors[name] && touched[name] ? "is-invalid" : ""}`;
 
-        const getErrorDiv = (name) => {
-          return errors[name] && touched[name] ? (
+        const getErrorDiv = (name) =>
+          errors[name] && touched[name] ? (
             <div className="invalid-feedback">{errors[name]}</div>
           ) : null;
-        };
 
         return (
           <FormikForm>

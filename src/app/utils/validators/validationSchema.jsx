@@ -27,11 +27,8 @@ export const loginSchema = yup.object().shape({
     .string()
     .required()
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, INCORRECT_EMAIL),
-  password: yup
-    .string()
-    .required()
-    .min(MIN_PASSWORD_LENGTH)
-    .matches(/(?=.*[A-ZА-Я])(?=.*[a-zа-я])(?=.*\d)/g, INCORRECT_PASSWORD)
+  password: yup.string().required()
+
   // stayOn: yup.boolean().oneOf([true]).required()
 });
 
@@ -39,6 +36,10 @@ export const registerSchema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
-  password: yup.string().min(8).required(),
+  password: yup
+    .string()
+    .required()
+    .min(MIN_PASSWORD_LENGTH)
+    .matches(/(?=.*[A-ZА-Я])(?=.*[a-zа-я])(?=.*\d)/g, INCORRECT_PASSWORD),
   terms: yup.bool().oneOf([true])
 });

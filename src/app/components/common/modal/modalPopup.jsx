@@ -1,29 +1,39 @@
+import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 
-const ModalPopup = ({ showModal, setShowModal }) => {
-  const handleSaveChanges = () => {
-    return null;
+const ModalPopup = ({ title, children, showModal, setShowModal, onSave }) => {
+  const handleHide = () => {
+    setShowModal(false);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
   };
 
   return (
-    <Modal show={showModal} onHide={() => setShowModal(false)}>
+    <Modal show={showModal} onHide={handleHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Заголовок модального окна</Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        {/* Содержимое модального окна */}
-        <p>Тут может быть ваше содержимое модального окна.</p>
-      </Modal.Body>
+      <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setShowModal(false)}>
+        <Button variant="secondary" onClick={handleClose}>
           Закрыть
         </Button>
-        <Button variant="primary" onClick={handleSaveChanges}>
+        <Button type="submit" variant="primary" onClick={onSave}>
           Сохранить
         </Button>
       </Modal.Footer>
     </Modal>
   );
+};
+
+ModalPopup.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  showModal: PropTypes.bool.isRequired,
+  setShowModal: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired
 };
 
 export default ModalPopup;
