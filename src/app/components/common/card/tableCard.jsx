@@ -30,34 +30,36 @@ const TableCard = ({ md, route, title, body }) => {
           </Col>
         </Row>
 
-        <ListGroup className="list-group-flush overflow-auto border-gray-400 vh-27 me-0">
-          <ListGroupItem className="p-0">
-            {keys(body).map((item) => {
-              item = body[item];
-              return (
-                <Row key={item.id} className="mx-auto">
-                  <Col
-                    md={md[0]}
-                    className="flex justify-center items-center border px-0 py-1"
-                  >
-                    <OverlayTooltip text={item.firstCol} />
-                  </Col>
-                  <Col
-                    md={md[1]}
-                    className="flex justify-center items-center border px-0 py-1"
-                  >
-                    <OverlayTooltip text={item.secondCol} />
-                  </Col>
-                  <Col
-                    md={md[2]}
-                    className="flex justify-center items-center border px-0 py-1"
-                  >
-                    <OverlayTooltip text={item.thirdCol} />
-                  </Col>
-                </Row>
-              );
-            })}
-          </ListGroupItem>
+        <ListGroup className="list-group-flush border-gray-400 vh-27 me-0 rounded">
+          <div className="overflow-auto rounded-b">
+            <ListGroupItem className="p-0">
+              {keys(body).map((item) => {
+                item = body[item];
+                return (
+                  <Row key={item.id} className="mx-auto">
+                    <Col
+                      md={md[0]}
+                      className="flex justify-center items-center border px-0 py-1"
+                    >
+                      <OverlayTooltip text={item.firstCol} />
+                    </Col>
+                    <Col
+                      md={md[1]}
+                      className="flex justify-center items-center border px-0 py-1"
+                    >
+                      <OverlayTooltip text={item.secondCol} />
+                    </Col>
+                    <Col
+                      md={md[2]}
+                      className="flex justify-center items-center border px-0 py-1"
+                    >
+                      <OverlayTooltip text={item.thirdCol} />
+                    </Col>
+                  </Row>
+                );
+              })}
+            </ListGroupItem>
+          </div>
         </ListGroup>
       </Card.Body>
     </Card>

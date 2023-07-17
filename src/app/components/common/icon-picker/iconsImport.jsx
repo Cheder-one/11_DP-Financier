@@ -58,10 +58,4 @@ const iconsArray = [
   FaTrophy
 ];
 
-const formattedIconsArray = iconsArray.map((Icon, index) => {
-  const key = `icon-${index}`;
-  return <Icon />;
-});
-
-export default formattedIconsArray;
-console.log(formattedIconsArray);
+export default iconsArray;

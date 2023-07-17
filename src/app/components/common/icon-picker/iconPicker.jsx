@@ -1,35 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  FaDollarSign,
-  FaEuroSign,
-  FaPoundSign,
-  FaYenSign,
-  FaRubleSign,
-  FaLiraSign,
-  FaMoneyBillAlt,
-  FaChartLine,
-  FaChartBar,
-  FaCoins,
-  FaWallet,
-  FaCreditCard,
-  FaCalculator,
-  FaExchangeAlt,
-  FaPiggyBank,
-  FaChartPie,
-  FaReceipt,
-  FaMoneyCheck,
-  FaMoneyBillWave,
-  FaBriefcase,
-  FaBalanceScale,
-  FaHandHoldingUsd,
-  FaPercent,
-  FaFileInvoiceDollar,
-  FaMoneyCheckAlt,
-  FaHandshake,
-  FaTrophy
-} from "react-icons/fa";
 import Table from "react-bootstrap/Table";
 import { IconContext } from "react-icons";
+import { Button } from "react-bootstrap";
+
+import iconsArray from "./iconsImport";
 
 const IconPicker = ({ onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,35 +26,9 @@ const IconPicker = ({ onSelect }) => {
     };
   }, []);
 
-  const iconOptions = [
-    FaDollarSign,
-    FaEuroSign,
-    FaPoundSign,
-    FaYenSign,
-    FaRubleSign,
-    FaLiraSign,
-    FaMoneyBillAlt,
-    FaChartLine,
-    FaChartBar,
-    FaCoins,
-    FaWallet,
-    FaCreditCard,
-    FaCalculator,
-    FaExchangeAlt,
-    FaPiggyBank,
-    FaChartPie,
-    FaReceipt,
-    FaMoneyCheck,
-    FaMoneyBillWave,
-    FaBriefcase,
-    FaBalanceScale,
-    FaHandHoldingUsd,
-    FaPercent,
-    FaFileInvoiceDollar,
-    FaMoneyCheckAlt,
-    FaHandshake,
-    FaTrophy
-  ];
+  const handleShow = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   const handleIconSelect = (icon) => {
     setSelectedIcon(icon);
@@ -90,24 +38,28 @@ const IconPicker = ({ onSelect }) => {
 
   return (
     <div className="icon-picker" ref={iconPickerRef}>
-      <button onClick={() => setIsOpen(!isOpen)}>Select an Icon</button>
+      <Button variant="" className="border p-1" onClick={handleShow}>
+        {selectedIcon ? (
+          <div className="selected-icon">
+            <IconContext.Provider value={{ size: "20px" }}>
+              {selectedIcon}
+            </IconContext.Provider>
+          </div>
+        ) : (
+          <div className="p-2.5"></div>
+        )}
+      </Button>
       {isOpen && (
         <Table striped bordered hover>
           <tbody>
-            {iconOptions
+            {iconsArray
               .reduce((rows, Icon, index) => {
                 if (index % 5 === 0) {
                   rows.push([]);
                 }
                 rows[rows.length - 1].push(
-                  <td
-                    key={index}
-                    className={`icon-option ${
-                      selectedIcon === Icon ? "selected" : ""
-                    }`}
-                    onClick={() => handleIconSelect(Icon)}
-                  >
-                    <div className="flex justify-center">
+                  <td key={index} onClick={() => handleIconSelect(Icon)}>
+                    <div className="flex justify-center cursor-pointer">
                       <Icon />
                     </div>
                   </td>
@@ -119,13 +71,6 @@ const IconPicker = ({ onSelect }) => {
               ))}
           </tbody>
         </Table>
-      )}
-      {selectedIcon && (
-        <IconContext.Provider
-          value={{ size: "20px", className: "react-icons" }}
-        >
-          {selectedIcon}
-        </IconContext.Provider>
       )}
     </div>
   );
