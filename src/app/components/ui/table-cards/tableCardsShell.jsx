@@ -21,13 +21,13 @@ const TableCardsShell = ({
 
   return (
     <Row style={{ marginTop: "3%" }}>
-      <Col md="4">
+      <Col md="4" className="mb-3 mb-md-0">
         <IncomeCard {...{ dropList, bodyItems, reset, onSelect, addButton }} />
       </Col>
-      <Col md="4">
+      <Col md="4" className="mb-3 mb-md-0">
         <AccountCard {...{ dropList, bodyItems, onSelect, addButton }} />
       </Col>
-      <Col md="4">
+      <Col md="4" className="mb-3 mb-md-0">
         <ExpenseCard {...{ dropList, bodyItems, reset, onSelect, addButton }} />
       </Col>
     </Row>

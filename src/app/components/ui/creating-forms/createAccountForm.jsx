@@ -49,7 +49,7 @@ const CreateAccountForm = () => {
         <Col md={1}>
           <IconPicker className={"mt-3"} />
         </Col>
-        <Col md={11}>
+        <Col md={10}>
           <TextField
             className={"mt-3"}
             label={"Название счета"}

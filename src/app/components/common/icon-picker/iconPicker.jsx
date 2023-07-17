@@ -26,67 +26,59 @@ const IconPicker = ({ className }) => {
   useClickOutside(itemRef, () => setIsOpen(false));
 
   return (
-    <div className={className}>
-      <Dropdown autoClose="true" show={isOpen}>
-        <Dropdown.Toggle
-          as={CustomToggle}
-          variant="light"
-          className="border"
-          onClick={handleToggleShow}
+    <Dropdown autoClose="true" show={isOpen} className={className}>
+      <Dropdown.Toggle
+        as={CustomToggle}
+        variant="light"
+        className="border"
+        onClick={handleToggleShow}
+      >
+        <div
+          className="flex justify-center cursor-pointer border rounded w-10 p-2"
+          ref={itemRef}
         >
-          <div
-            className="cursor-pointer p-2 border rounded inline-block"
-            ref={itemRef}
-          >
-            <IconContext.Provider
-              value={{
-                size: "20px",
-                color: "black",
-                className: "cursor-pointer"
-              }}
-            >
-              {selectedIcon || <EmptyIcon />}
-            </IconContext.Provider>
-          </div>
-        </Dropdown.Toggle>
+          <IconContext.Provider value={{ size: "20px" }}>
+            {selectedIcon || <EmptyIcon />}
+          </IconContext.Provider>
+        </div>
+      </Dropdown.Toggle>
 
-        <Dropdown.Menu className="p-0">
-          <div>
-            <Table bordered className="m-0">
-              <tbody>
-                {iconsArray(5).map((row, rowIndex) => (
-                  <tr key={rowIndex}>
-                    {row.map((Icon, cellIndex) => (
-                      <td
-                        key={cellIndex}
-                        className="hover:bg-lime-200"
-                        onClick={() => handleItemSelect(Icon)}
-                        // ref={itemRef}
+      <Dropdown.Menu className="p-0">
+        <div>
+          <Table bordered className="m-0">
+            <tbody>
+              {iconsArray(5).map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {row.map((Icon, cellIndex) => (
+                    <td
+                      key={cellIndex}
+                      className="hover:bg-lime-200"
+                      onClick={() => handleItemSelect(Icon)}
+                      // ref={itemRef}
+                    >
+                      <IconContext.Provider
+                        value={{
+                          size: "20px",
+                          color: "black",
+                          className: "cursor-pointer"
+                        }}
                       >
-                        <IconContext.Provider
-                          value={{
-                            size: "20px",
-                            color: "black",
-                            className: "cursor-pointer"
-                          }}
-                        >
-                          <Icon />
-                        </IconContext.Provider>
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-        </Dropdown.Menu>
-      </Dropdown>
-    </div>
+                        <Icon />
+                      </IconContext.Provider>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
 
 const CustomToggle = forwardRef(({ children, onClick }, ref) => (
-  <span
+  <div
     ref={ref}
     onClick={(e) => {
       e.preventDefault();
@@ -94,7 +86,7 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => (
     }}
   >
     {children}
-  </span>
+  </div>
 ));
 
 CustomToggle.displayName = "CustomToggle";
