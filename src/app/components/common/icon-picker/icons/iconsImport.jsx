@@ -1,3 +1,4 @@
+import { chunk } from "lodash";
 import {
   FaDollarSign,
   FaEuroSign,
@@ -27,8 +28,10 @@ import {
   FaHandshake,
   FaTrophy
 } from "react-icons/fa";
+import EmptyIcon from "./emptyIcon";
 
 const iconsArray = [
+  EmptyIcon,
   FaDollarSign,
   FaEuroSign,
   FaPoundSign,
@@ -58,4 +61,6 @@ const iconsArray = [
   FaTrophy
 ];
 
-export default iconsArray;
+const chunkedIconsArray = (num = 5) => chunk(iconsArray, num);
+
+export default chunkedIconsArray;

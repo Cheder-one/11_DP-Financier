@@ -26,11 +26,7 @@ const DropdownComponent = ({
   return (
     <Form.Group>
       <Form.Label>{label}</Form.Label>
-      <Dropdown
-        className={className}
-        drop="down-centered"
-        onSelect={handleSelect}
-      >
+      <Dropdown className={className} drop="down" onSelect={handleSelect}>
         <Dropdown.Toggle variant="light" className="border">
           {value || defaultItem}
         </Dropdown.Toggle>
@@ -45,6 +41,15 @@ const DropdownComponent = ({
       </Dropdown>
     </Form.Group>
   );
+};
+
+DropdownComponent.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  items: PropTypes.array.isRequired,
+  className: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 };
 
 export default DropdownComponent;

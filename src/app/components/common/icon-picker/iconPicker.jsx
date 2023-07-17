@@ -1,79 +1,83 @@
-import React, { useState, useRef, useEffect } from "react";
-import Table from "react-bootstrap/Table";
+import PropTypes from "prop-types";
+import { Dropdown, Table } from "react-bootstrap";
+import { forwardRef, useState } from "react";
 import { IconContext } from "react-icons";
-import { Button } from "react-bootstrap";
 
-import iconsArray from "./iconsImport";
+import iconsArray from "./icons/iconsImport";
+import EmptyIcon from "./icons/emptyIcon";
 
-const IconPicker = ({ onSelect }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const DropdownTable = () => {
   const [selectedIcon, setSelectedIcon] = useState(null);
-  const iconPickerRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        iconPickerRef.current &&
-        !iconPickerRef.current.contains(event.target)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleShow = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const handleIconSelect = (icon) => {
-    setSelectedIcon(icon);
-    // onSelect(icon);
-    setIsOpen(false);
+  const handleClick = (Icon) => {
+    setSelectedIcon(Icon);
   };
 
   return (
-    <div className="icon-picker" ref={iconPickerRef}>
-      <Button variant="" className="border p-1" onClick={handleShow}>
-        {selectedIcon ? (
-          <div className="selected-icon">
-            <IconContext.Provider value={{ size: "20px" }}>
-              {selectedIcon}
-            </IconContext.Provider>
-          </div>
-        ) : (
-          <div className="p-2.5"></div>
-        )}
-      </Button>
-      {isOpen && (
-        <Table striped bordered hover>
-          <tbody>
-            {iconsArray
-              .reduce((rows, Icon, index) => {
-                if (index % 5 === 0) {
-                  rows.push([]);
-                }
-                rows[rows.length - 1].push(
-                  <td key={index} onClick={() => handleIconSelect(Icon)}>
-                    <div className="flex justify-center cursor-pointer">
-                      <Icon />
-                    </div>
-                  </td>
-                );
-                return rows;
-              }, [])
-              .map((row, index) => (
-                <tr key={index}>{row}</tr>
+    <Dropdown drop="">
+      <Dropdown.Toggle as={CustomToggle} variant="light" className="border">
+        <div className="cursor-pointer p-2 border rounded inline-block">
+          <IconContext.Provider
+            value={{
+              size: "20px",
+              color: "black",
+              className: "cursor-pointer"
+            }}
+          >
+            {selectedIcon || <EmptyIcon />}
+          </IconContext.Provider>
+        </div>
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu className="p-0">
+        <div>
+          <Table bordered className="m-0">
+            <tbody>
+              {iconsArray(5).map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {row.map((Icon, cellIndex) => (
+                    <td
+                      key={cellIndex}
+                      className="hover:bg-lime-200"
+                      onClick={() => handleClick(Icon)}
+                    >
+                      <IconContext.Provider
+                        value={{
+                          size: "20px",
+                          color: "black",
+                          className: "cursor-pointer"
+                        }}
+                      >
+                        <Icon />
+                      </IconContext.Provider>
+                    </td>
+                  ))}
+                </tr>
               ))}
-          </tbody>
-        </Table>
-      )}
-    </div>
+            </tbody>
+          </Table>
+        </div>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
 
-export default IconPicker;
+const CustomToggle = forwardRef(({ children, onClick }, ref) => (
+  <a
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+  </a>
+));
+
+CustomToggle.displayName = "CustomToggle";
+
+CustomToggle.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired
+};
+
+export default DropdownTable;

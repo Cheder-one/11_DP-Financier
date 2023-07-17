@@ -20,7 +20,7 @@ const ModalPopup = ({ title, children, showModal, setShowModal, onSave }) => {
         <Button variant="secondary" onClick={handleClose}>
           Закрыть
         </Button>
-        <Button type="submit" variant="primary" onClick={onSave}>
+        <Button type="submit" variant="success" onClick={onSave}>
           Сохранить
         </Button>
       </Modal.Footer>
