@@ -9,7 +9,6 @@ import useClickOutside from "../../../hooks/useClickOutside";
 
 const IconPicker = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(isOpen);
   const [selectedIcon, setSelectedIcon] = useState(null);
 
   const itemRef = useRef();
