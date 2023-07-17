@@ -2,6 +2,7 @@ import Dropdown from "../../common/form/dropdown";
 import { useState } from "react";
 import TextField from "../../common/form/textField";
 import IconPicker from "../../common/icon-picker/iconPicker";
+import { Col, Row } from "react-bootstrap";
 
 const ITEMS = [
   { id: 1, name: "Наличные" },
@@ -44,15 +45,21 @@ const CreateAccountForm = () => {
         items={ITEMS}
         onChange={handleInputChange}
       />
-      <IconPicker />
-      <TextField
-        className={"mt-3"}
-        label={"Название счета"}
-        name={"name"}
-        value={inputFields.name}
-        onChange={handleInputChange}
-        // error={errors.name}
-      />
+      <Row className="flex items-end">
+        <Col md={1}>
+          <IconPicker className={"mt-3"} />
+        </Col>
+        <Col md={11}>
+          <TextField
+            className={"mt-3"}
+            label={"Название счета"}
+            name={"name"}
+            value={inputFields.name}
+            onChange={handleInputChange}
+            // error={errors.name}
+          />
+        </Col>
+      </Row>
     </>
   );
 };
