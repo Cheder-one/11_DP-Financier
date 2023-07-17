@@ -3,7 +3,9 @@ import ReactDatePicker, { registerLocale } from "react-datepicker";
 import ru from "date-fns/locale/ru";
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { MdOutlineDateRange } from "react-icons/md";
+
 import { toReadableDate } from "../../../utils";
+import useClickOutside from "../../../hooks/useClickOutside";
 registerLocale("ru", ru);
 
 const CustomInput = forwardRef(({ value, onClick }, ref) => (
@@ -20,6 +22,8 @@ const DatePicker = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
+  const calendarRef = useRef(null);
+
   console.log(toReadableDate(selectedDate).dateOnly);
 
   const onInputClick = () => {
@@ -30,21 +34,7 @@ const DatePicker = () => {
     setSelectedDate(date);
   };
 
-  const calendarRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = ({ target }) => {
-      if (!calendarRef?.current?.contains(target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  useClickOutside(calendarRef, () => setIsOpen(false));
 
   return (
     <div className="inline-block p-0 m-0" ref={calendarRef}>

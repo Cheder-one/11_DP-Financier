@@ -2,7 +2,9 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
+
 import OverlayTooltip from "../../../common/typography/overlayTooltip";
+import useClickOutside from "../../../../hooks/useClickOutside";
 
 const getIdAllItem = (type) => {
   return {
@@ -45,19 +47,7 @@ const CardDropdown = ({ items, type, onSelect, reset }) => {
   const dropdownRef = useRef(null);
 
   // Слушатель для закрытия dropDownList при клике вне него
-  useEffect(() => {
-    const handleClickOutside = ({ target }) => {
-      if (!dropdownRef?.current?.contains(target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  useClickOutside(dropdownRef, () => setIsOpen(false));
 
   return (
     <div className="relative" ref={dropdownRef}>

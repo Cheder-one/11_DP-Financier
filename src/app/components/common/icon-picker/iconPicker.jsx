@@ -1,21 +1,42 @@
 import PropTypes from "prop-types";
 import { Dropdown, Table } from "react-bootstrap";
-import { forwardRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import { IconContext } from "react-icons";
 
 import iconsArray from "./icons/iconsImport";
 import EmptyIcon from "./icons/emptyIcon";
+import useClickOutside from "../../../hooks/useClickOutside";
 
 const DropdownTable = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  console.log(isOpen);
   const [selectedIcon, setSelectedIcon] = useState(null);
-  const handleClick = (Icon) => {
+
+  const itemRef = useRef();
+
+  const handleItemSelect = (Icon) => {
     setSelectedIcon(Icon);
+    setIsOpen(false);
   };
 
+  const handleToggleShow = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  useClickOutside(itemRef, () => setIsOpen(false));
+
   return (
-    <Dropdown drop="">
-      <Dropdown.Toggle as={CustomToggle} variant="light" className="border">
-        <div className="cursor-pointer p-2 border rounded inline-block">
+    <Dropdown autoClose="true" show={isOpen}>
+      <Dropdown.Toggle
+        as={CustomToggle}
+        variant="light"
+        className="border"
+        onClick={handleToggleShow}
+      >
+        <div
+          className="cursor-pointer p-2 border rounded inline-block"
+          ref={itemRef}
+        >
           <IconContext.Provider
             value={{
               size: "20px",
@@ -38,7 +59,8 @@ const DropdownTable = () => {
                     <td
                       key={cellIndex}
                       className="hover:bg-lime-200"
-                      onClick={() => handleClick(Icon)}
+                      onClick={() => handleItemSelect(Icon)}
+                      // ref={itemRef}
                     >
                       <IconContext.Provider
                         value={{
