@@ -4,18 +4,35 @@ import DropdownSheet from "../form/dropdownSheet";
 import IconTable from "../../ui/icon-table/iconTable";
 import useClickOutside from "../../../hooks/useClickOutside";
 import { FaQuestionCircle } from "react-icons/fa";
+import { find } from "lodash";
+import { iconsArray } from "../../../assets/icons/iconsImport";
 
 const IconPicker = ({ name, value, color, className, drop, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [itemRef, setItemRef] = useState(null);
-  // const [selectedIcon, setSelectedIcon] = useState(null);
+
+  // console.log(value);
+  // const SelectedIcon = value;
+  console.log(value);
+  console.log(iconsArray[0].name);
+  // const SelectedIcon = find(iconsArray, { name: value });
+  // console.log(SelectedIcon);
+
+  const foundIcon = find(iconsArray, { name: value });
+  console.log(foundIcon);
+
+  const SelectedIcon = foundIcon;
+
+  const IconWithColor = () => {
+    // const color = "blue";
+    return <SelectedIcon color={color} />;
+  };
 
   const handleItemSelect = (Icon) => {
-    // setSelectedIcon(Icon);
     onChange({
       target: {
         name,
-        value: Icon
+        value: Icon.name
       }
     });
 
@@ -30,12 +47,13 @@ const IconPicker = ({ name, value, color, className, drop, onChange }) => {
     setItemRef(ref);
   };
 
-  useClickOutside(itemRef, () => setIsOpen(false));
+  // useClickOutside(itemRef, () => setIsOpen(false));
+  console.log(<FaQuestionCircle color="blue" />);
 
   return (
     <DropdownSheet
       isOpen={isOpen}
-      value={value}
+      value={<IconWithColor />}
       defaultValue={<FaQuestionCircle color="blue" />}
       drop={drop}
       className={className}

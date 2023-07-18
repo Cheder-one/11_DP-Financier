@@ -1,4 +1,4 @@
-const EmptyIcon = () => {
+function EmptyIcon() {
   return (
     <div className="cursor-pointer">
       <svg
@@ -11,6 +11,6 @@ const EmptyIcon = () => {
       </svg>
     </div>
   );
-};
+}
 
 export default EmptyIcon;

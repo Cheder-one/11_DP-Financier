@@ -5,6 +5,7 @@ import Dropdown from "../../common/form/dropdown";
 import TextField from "../../common/form/textField";
 import IconPicker from "../../common/pickers/iconPicker";
 import ColorPicker from "../../common/pickers/colorPicker";
+import { iconsArray } from "../../../assets/icons/iconsImport";
 
 const ITEMS = [
   { id: 1, name: "Наличные" },
@@ -23,8 +24,8 @@ const CreateAccountForm = () => {
   const [inputFields, setInputFields] = useState({
     account: {},
     name: "",
-    icon: () => "",
-    iconColor: "",
+    icon: "VscBlank",
+    iconColor: "#FF0000",
     currency: "",
     sum: "",
     comment: ""
@@ -55,7 +56,7 @@ const CreateAccountForm = () => {
           <IconPicker
             drop={"down"}
             name={"icon"}
-            value={inputFields.icon()}
+            value={inputFields.icon}
             color={inputFields.iconColor}
             onChange={handleInputChange}
           />

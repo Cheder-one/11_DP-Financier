@@ -13,7 +13,7 @@ const ColorPicker = ({ name, value, className, drop, onChange }) => {
     onChange({
       target: {
         name,
-        value: color
+        value: color.hex
       }
     });
 

@@ -28,10 +28,10 @@ import {
   FaHandshake,
   FaTrophy
 } from "react-icons/fa";
-import EmptyIcon from "./emptyIcon";
+import { VscBlank } from "react-icons/vsc";
 
-const iconsArray = [
-  EmptyIcon,
+export const iconsArray = [
+  VscBlank,
   FaDollarSign,
   FaEuroSign,
   FaPoundSign,
