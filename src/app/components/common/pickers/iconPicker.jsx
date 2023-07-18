@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import DropdownSheet from "../form/dropdownSheet";
 import IconTable from "../../ui/icon-table/iconTable";
@@ -11,22 +11,10 @@ const IconPicker = ({ name, value, color, className, drop, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [itemRef, setItemRef] = useState(null);
 
-  // console.log(value);
-  // const SelectedIcon = value;
-  console.log(value);
-  console.log(iconsArray[0].name);
-  // const SelectedIcon = find(iconsArray, { name: value });
-  // console.log(SelectedIcon);
-
-  const foundIcon = find(iconsArray, { name: value });
-  console.log(foundIcon);
-
-  const SelectedIcon = foundIcon;
-
-  const IconWithColor = () => {
-    // const color = "blue";
-    return <SelectedIcon color={color} />;
-  };
+  const SelectedIcon = useMemo(
+    () => find(iconsArray, { name: value }),
+    [value]
+  );
 
   const handleItemSelect = (Icon) => {
     onChange({
@@ -47,13 +35,12 @@ const IconPicker = ({ name, value, color, className, drop, onChange }) => {
     setItemRef(ref);
   };
 
-  // useClickOutside(itemRef, () => setIsOpen(false));
-  console.log(<FaQuestionCircle color="blue" />);
+  useClickOutside(itemRef, () => setIsOpen(false));
 
   return (
     <DropdownSheet
       isOpen={isOpen}
-      value={<IconWithColor />}
+      value={<SelectedIcon color={color} />}
       defaultValue={<FaQuestionCircle color="blue" />}
       drop={drop}
       className={className}
