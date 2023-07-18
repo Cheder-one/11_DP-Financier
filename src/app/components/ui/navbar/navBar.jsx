@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
-import NavBarDropdown from "./navBarDropdown";
 import { Link, useLocation } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
-import HeaderContainer from "../../common/typography/headerContainer";
-import LOGO_SRC from "../../../assets/logo";
 import { useContext, useEffect, useRef, useState } from "react";
+
+import LOGO_SRC from "../../../assets/logo/logo";
+import HeaderContainer from "../../common/typography/headerContainer";
 import { ThemeContext } from "../../common/theme/ThemeContext";
+import NavBarDropdown from "./navBarDropdown";
 
 const NavBar = () => {
   const { darkTheme, handleToggleTheme } = useContext(ThemeContext);

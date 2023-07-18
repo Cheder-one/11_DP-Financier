@@ -28,7 +28,6 @@ import {
   FaHandshake,
   FaTrophy
 } from "react-icons/fa";
-
 import EmptyIcon from "./emptyIcon";
 
 const iconsArray = [

@@ -33,10 +33,8 @@ const TextField = ({
     <>
       <Form.Group controlId={name} as={as} md={md} className={className}>
         <Form.Label>{label}</Form.Label>
-        {/* <label htmlFor={name}>{label}</label> */}
         <InputGroup hasValidation>
           <Form.Control
-            // id={name}
             name={name}
             value={value}
             type={showPass ? "text" : type}
@@ -63,11 +61,11 @@ TextField.defaultProps = {
 };
 
 TextField.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   type: PropTypes.string,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   value: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
   as: PropTypes.object,
   md: PropTypes.string,

@@ -1,8 +1,10 @@
-import Dropdown from "../../common/form/dropdown";
 import { useState } from "react";
-import TextField from "../../common/form/textField";
-import IconPicker from "../../common/icon-picker/iconPicker";
 import { Col, Row } from "react-bootstrap";
+
+import Dropdown from "../../common/form/dropdown";
+import TextField from "../../common/form/textField";
+import IconPicker from "../../common/pickers/iconPicker";
+import ColorPicker from "../../common/pickers/colorPicker";
 
 const ITEMS = [
   { id: 1, name: "Наличные" },
@@ -21,14 +23,16 @@ const CreateAccountForm = () => {
   const [inputFields, setInputFields] = useState({
     account: {},
     name: "",
+    icon: { Icon: "", color: "" },
     currency: "",
     sum: "",
     comment: ""
   });
 
+  // console.log(inputFields);
+
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
-    console.log(name, value);
 
     setInputFields((prev) => ({
       ...prev,
@@ -39,25 +43,28 @@ const CreateAccountForm = () => {
   return (
     <>
       <Dropdown
-        label={"Тип счета"}
         name={"account"}
+        defaultValue={"Тип счета"}
         value={inputFields.account.name}
         items={ITEMS}
         onChange={handleInputChange}
       />
       <Row className="flex items-end">
         <Col md={1}>
-          <IconPicker className={"mt-3"} />
+          <IconPicker className={""} drop={"down"} />
         </Col>
         <Col md={10}>
           <TextField
-            className={"mt-3"}
-            label={"Название счета"}
+            className={"mt-3 ms-0 ms-md-1"}
+            label={<span className="md:ml-[-2.7rem]">Название</span>}
             name={"name"}
             value={inputFields.name}
             onChange={handleInputChange}
             // error={errors.name}
           />
+        </Col>
+        <Col md={1}>
+          <ColorPicker className={" "} drop={"down"} />
         </Col>
       </Row>
     </>

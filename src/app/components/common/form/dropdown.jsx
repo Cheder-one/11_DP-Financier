@@ -3,6 +3,7 @@ import { Dropdown, Form } from "react-bootstrap";
 
 const DropdownComponent = ({
   label,
+  defaultValue,
   name,
   value,
   items,
@@ -20,15 +21,12 @@ const DropdownComponent = ({
     });
   };
 
-  const defaultItem = items.length > 0 ? items[0].name : "";
-  console.log(defaultItem);
-
   return (
     <Form.Group>
       <Form.Label>{label}</Form.Label>
       <Dropdown className={className} drop="down" onSelect={handleSelect}>
         <Dropdown.Toggle variant="light" className="border">
-          {value || defaultItem}
+          {value || defaultValue}
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
@@ -44,7 +42,8 @@ const DropdownComponent = ({
 };
 
 DropdownComponent.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  defaultValue: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   items: PropTypes.array.isRequired,
