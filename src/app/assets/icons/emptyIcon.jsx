@@ -13,9 +13,4 @@ const EmptyIcon = () => {
   );
 };
 
-EmptyIcon.defaultProps = {
-  height: "20px",
-  width: "20px"
-};
-
 export default EmptyIcon;
