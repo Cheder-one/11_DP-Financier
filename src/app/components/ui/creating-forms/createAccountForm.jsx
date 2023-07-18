@@ -23,13 +23,14 @@ const CreateAccountForm = () => {
   const [inputFields, setInputFields] = useState({
     account: {},
     name: "",
-    icon: { Icon: "", color: "" },
+    icon: () => "",
+    iconColor: "",
     currency: "",
     sum: "",
     comment: ""
   });
 
-  // console.log(inputFields);
+  console.log(inputFields);
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
@@ -51,9 +52,15 @@ const CreateAccountForm = () => {
       />
       <Row className="flex items-end">
         <Col md={1}>
-          <IconPicker className={""} drop={"down"} />
+          <IconPicker
+            drop={"down"}
+            name={"icon"}
+            value={inputFields.icon()}
+            color={inputFields.iconColor}
+            onChange={handleInputChange}
+          />
         </Col>
-        <Col md={10}>
+        <Col md={9}>
           <TextField
             className={"mt-3 ms-0 ms-md-1"}
             label={<span className="md:ml-[-2.7rem]">Название</span>}
@@ -64,7 +71,12 @@ const CreateAccountForm = () => {
           />
         </Col>
         <Col md={1}>
-          <ColorPicker className={" "} drop={"down"} />
+          <ColorPicker
+            drop={"down"}
+            name={"iconColor"}
+            value={inputFields.iconColor}
+            onChange={handleInputChange}
+          />
         </Col>
       </Row>
     </>

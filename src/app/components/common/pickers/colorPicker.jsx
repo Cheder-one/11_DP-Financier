@@ -5,13 +5,18 @@ import DropdownSheet from "../form/dropdownSheet";
 import useClickOutside from "../../../hooks/useClickOutside";
 import { MdOutlineFormatColorFill } from "react-icons/md";
 
-const ColorPicker = ({ className, drop }) => {
+const ColorPicker = ({ name, value, className, drop, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [itemRef, setItemRef] = useState(null);
-  const [selectedColor, setSelectedColor] = useState("");
 
   const handleItemSelect = (color) => {
-    setSelectedColor(color.hex);
+    onChange({
+      target: {
+        name,
+        value: color
+      }
+    });
+
     setIsOpen(false);
   };
 
@@ -34,7 +39,7 @@ const ColorPicker = ({ className, drop }) => {
       onToggleShow={handleToggleShow}
       onRef={handleRef}
     >
-      <CompactPicker color={selectedColor} onChange={handleItemSelect} />
+      <CompactPicker color={value} onChange={handleItemSelect} />
     </DropdownSheet>
   );
 };

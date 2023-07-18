@@ -1,17 +1,24 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import DropdownSheet from "../form/dropdownSheet";
 import IconTable from "../../ui/icon-table/iconTable";
 import useClickOutside from "../../../hooks/useClickOutside";
 import { FaQuestionCircle } from "react-icons/fa";
 
-const IconPicker = ({ className, drop }) => {
+const IconPicker = ({ name, value, color, className, drop, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [itemRef, setItemRef] = useState(null);
-  const [selectedIcon, setSelectedIcon] = useState(null);
+  // const [selectedIcon, setSelectedIcon] = useState(null);
 
-  const handleItemSelect = (icon) => {
-    setSelectedIcon(icon);
+  const handleItemSelect = (Icon) => {
+    // setSelectedIcon(Icon);
+    onChange({
+      target: {
+        name,
+        value: Icon
+      }
+    });
+
     setIsOpen(false);
   };
 
@@ -28,7 +35,7 @@ const IconPicker = ({ className, drop }) => {
   return (
     <DropdownSheet
       isOpen={isOpen}
-      value={selectedIcon}
+      value={value}
       defaultValue={<FaQuestionCircle color="blue" />}
       drop={drop}
       className={className}
