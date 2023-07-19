@@ -29,14 +29,14 @@ const DropdownSheet = ({
       ref={itemRef}
       drop={drop}
     >
-      <label className="pb-2">{label}</label>
+      {label ? <label className="pb-2">{label}</label> : ""}
       <Dropdown.Toggle
         as={CustomToggle}
         variant="light"
         className="border"
         onClick={onToggleShow}
       >
-        <div className="flex justify-center cursor-pointer border rounded w-fit p-1">
+        <div className="flex justify-center cursor-pointer border rounded w-fit p-1 relative z-0">
           <IconContext.Provider value={{ size: squareSize }}>
             {value || defaultValue}
           </IconContext.Provider>
