@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from "react";
+import PropTypes from "prop-types";
+import { find } from "lodash";
+import { useMemo, useState } from "react";
+import { FaQuestionCircle } from "react-icons/fa";
 
 import DropdownSheet from "../form/dropdownSheet";
 import IconTable from "../../ui/icon-table/iconTable";
 import useClickOutside from "../../../hooks/useClickOutside";
-import { FaQuestionCircle } from "react-icons/fa";
-import { find } from "lodash";
 import { iconsArray } from "../../../assets/icons/iconsImport";
 
 const IconPicker = ({ name, value, color, className, drop, onChange }) => {
@@ -50,6 +51,15 @@ const IconPicker = ({ name, value, color, className, drop, onChange }) => {
       <IconTable onItemSelect={handleItemSelect} />
     </DropdownSheet>
   );
+};
+
+IconPicker.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  color: PropTypes.string,
+  className: PropTypes.string,
+  drop: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 };
 
 export default IconPicker;

@@ -64,9 +64,10 @@ const CreateAccountForm = () => {
         <Col md={9}>
           <TextField
             className={"mt-3 ms-0 ms-md-1"}
-            label={<span className="md:ml-[-2.7rem]">Название</span>}
+            label={"Название"}
             name={"name"}
             value={inputFields.name}
+            floating={true}
             onChange={handleInputChange}
             // error={errors.name}
           />

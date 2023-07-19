@@ -1,18 +1,19 @@
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, FloatingLabel, Form, InputGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { eyeFill, eyeSlash } from "../../../assets/show-hide-pass-svg";
 
 const TextField = ({
+  as,
+  md,
+  className,
+  floating,
   label,
   type,
   name,
   value,
-  onChange,
   error,
-  as,
-  md,
-  className
+  onChange
 }) => {
   const [showPass, setShowPass] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
@@ -32,17 +33,33 @@ const TextField = ({
   return (
     <>
       <Form.Group controlId={name} as={as} md={md} className={className}>
-        <Form.Label>{label}</Form.Label>
+        {floating ? "" : <Form.Label>{label}</Form.Label>}
         <InputGroup hasValidation>
-          <Form.Control
-            name={name}
-            value={value}
-            type={showPass ? "text" : type}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            isValid={!error && isBlur}
-            isInvalid={!!error && isBlur}
-          />
+          {floating ? (
+            <FloatingLabel label={label}>
+              <Form.Control
+                name={name}
+                value={value}
+                placeholder={label}
+                type={showPass ? "text" : type}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={!error && isBlur}
+                isInvalid={!!error && isBlur}
+              />
+            </FloatingLabel>
+          ) : (
+            <Form.Control
+              name={name}
+              value={value}
+              type={showPass ? "text" : type}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isValid={!error && isBlur}
+              isInvalid={!!error && isBlur}
+            />
+          )}
+
           {type === "password" && (
             <Button variant="outline-secondary" onClick={handleClick}>
               {showPass ? eyeSlash : eyeFill}
