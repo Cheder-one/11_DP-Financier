@@ -44,7 +44,11 @@ const DropdownComponent = ({
       >
         <Dropdown.Toggle
           variant="light"
-          className={`border ${isValid ? "" : "is-invalid"}`}
+          className={`${isValid ? "" : "is-invalid"}`}
+          style={{
+            borderColor: isValid ? "green" : "red",
+            border: "1px solid #CBD5E0"
+          }}
         >
           {value || defaultValue}
         </Dropdown.Toggle>
