@@ -86,7 +86,8 @@ TextField.propTypes = {
   error: PropTypes.string,
   as: PropTypes.object,
   md: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  floating: PropTypes.bool
 };
 
 export default TextField;

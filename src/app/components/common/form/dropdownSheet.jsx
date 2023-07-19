@@ -1,9 +1,7 @@
 import PropTypes from "prop-types";
 import { Dropdown } from "react-bootstrap";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { IconContext } from "react-icons";
-
-import useClickOutside from "../../../hooks/useClickOutside";
 
 const DropdownSheet = ({
   children,
@@ -11,6 +9,7 @@ const DropdownSheet = ({
   value,
   defaultValue,
   className,
+  squareSize,
   drop,
   onRef,
   isOpen,
@@ -37,8 +36,8 @@ const DropdownSheet = ({
         className="border"
         onClick={onToggleShow}
       >
-        <div className="flex justify-center cursor-pointer border rounded w-10 p-2">
-          <IconContext.Provider value={{ size: "20px" }}>
+        <div className="flex justify-center cursor-pointer border rounded w-fit p-1">
+          <IconContext.Provider value={{ size: squareSize }}>
             {value || defaultValue}
           </IconContext.Provider>
         </div>
@@ -63,12 +62,18 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => (
 
 CustomToggle.displayName = "CustomToggle";
 
+DropdownSheet.defaultProps = {
+  squareSize: "20px"
+};
+
 DropdownSheet.propTypes = {
   children: PropTypes.node.isRequired,
   label: PropTypes.string,
   value: PropTypes.any,
   defaultValue: PropTypes.any,
   className: PropTypes.string,
+  squareSize: PropTypes.string,
+  drop: PropTypes.string,
   onRef: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onToggleShow: PropTypes.func.isRequired

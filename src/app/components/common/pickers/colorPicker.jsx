@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { CompactPicker } from "react-color";
 
@@ -36,12 +37,22 @@ const ColorPicker = ({ name, value, className, drop, onChange }) => {
       defaultValue={<MdOutlineFormatColorFill />}
       drop={drop}
       className={className}
+      squareSize={"17px"}
       onToggleShow={handleToggleShow}
       onRef={handleRef}
     >
       <CompactPicker color={value} onChange={handleItemSelect} />
     </DropdownSheet>
   );
+};
+
+ColorPicker.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  color: PropTypes.string,
+  className: PropTypes.string,
+  drop: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 };
 
 export default ColorPicker;

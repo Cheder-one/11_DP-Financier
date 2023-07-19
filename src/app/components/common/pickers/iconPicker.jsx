@@ -45,6 +45,7 @@ const IconPicker = ({ name, value, color, className, drop, onChange }) => {
       defaultValue={<FaQuestionCircle color="blue" />}
       drop={drop}
       className={className}
+      squareSize={"17px"}
       onToggleShow={handleToggleShow}
       onRef={handleRef}
     >

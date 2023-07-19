@@ -25,7 +25,7 @@ const CreateAccountForm = () => {
     account: {},
     name: "",
     icon: "VscBlank",
-    iconColor: "#FF0000",
+    iconColor: "#00000",
     currency: "",
     sum: "",
     comment: ""
@@ -53,31 +53,37 @@ const CreateAccountForm = () => {
       />
       <Row className="flex items-end">
         <Col md={1}>
-          <IconPicker
-            drop={"down"}
-            name={"icon"}
-            value={inputFields.icon}
-            color={inputFields.iconColor}
-            onChange={handleInputChange}
-          />
+          <Row className="h-7">
+            <Col>
+              <IconPicker
+                drop={"down"}
+                name={"icon"}
+                value={inputFields.icon}
+                color={inputFields.iconColor}
+                onChange={handleInputChange}
+              />
+            </Col>
+          </Row>
+          <Row className="pt-1">
+            <Col>
+              <ColorPicker
+                drop={"down"}
+                name={"iconColor"}
+                value={inputFields.iconColor}
+                onChange={handleInputChange}
+              />
+            </Col>
+          </Row>
         </Col>
-        <Col md={9}>
+        <Col md={11} className="ps-0">
           <TextField
             className={"mt-3 ms-0 ms-md-1"}
-            label={"Название"}
+            label={"Название счета"}
             name={"name"}
             value={inputFields.name}
             floating={true}
             onChange={handleInputChange}
             // error={errors.name}
-          />
-        </Col>
-        <Col md={1}>
-          <ColorPicker
-            drop={"down"}
-            name={"iconColor"}
-            value={inputFields.iconColor}
-            onChange={handleInputChange}
           />
         </Col>
       </Row>
