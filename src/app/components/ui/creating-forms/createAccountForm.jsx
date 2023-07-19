@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 
 import Dropdown from "../../common/form/dropdown";
 import TextField from "../../common/form/textField";
 import IconPicker from "../../common/pickers/iconPicker";
 import ColorPicker from "../../common/pickers/colorPicker";
+import { accountSchema } from "../../../utils/validators/validationSchema";
 
 const ITEMS = [
   { id: 1, name: "Наличные" },
@@ -39,11 +40,12 @@ const CreateAccountForm = () => {
     name: "",
     icon: "VscBlank",
     iconColor: "#00000",
-    sum: "",
+    sum: 0,
     comment: ""
   });
+  const [errors, setErrors] = useState({});
 
-  console.log(inputFields);
+  console.log(errors);
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
@@ -53,6 +55,20 @@ const CreateAccountForm = () => {
       [name]: value
     }));
   };
+  console.log(inputFields);
+
+  useEffect(() => {
+    accountSchema
+      .validate(inputFields, { abortEarly: false })
+      .then(setErrors({}))
+      .catch(({ inner }) => {
+        const newErrors = {};
+        for (const error of inner) {
+          newErrors[error.path] = error.message;
+        }
+        setErrors(newErrors);
+      });
+  }, [inputFields]);
 
   return (
     <>
@@ -63,6 +79,7 @@ const CreateAccountForm = () => {
           value={inputFields.account.name}
           items={ITEMS}
           onChange={handleInputChange}
+          error={errors.account}
         />
         <Dropdown
           name={"currency"}
@@ -70,6 +87,7 @@ const CreateAccountForm = () => {
           value={inputFields.currency.code}
           items={CURRENCIES}
           onChange={handleInputChange}
+          error={errors.currency}
         />
       </div>
 
@@ -105,7 +123,7 @@ const CreateAccountForm = () => {
             value={inputFields.name}
             floating={true}
             onChange={handleInputChange}
-            // error={errors.name}
+            error={errors.name}
           />
         </Col>
         <Col md={5}>
@@ -116,7 +134,7 @@ const CreateAccountForm = () => {
             value={inputFields.sum}
             floating={true}
             onChange={handleInputChange}
-            // error={errors.sum}
+            error={errors.sum}
           />
         </Col>
       </Row>
@@ -128,7 +146,6 @@ const CreateAccountForm = () => {
         floating={true}
         textaria={true}
         onChange={handleInputChange}
-        // error={errors.comment}
       />
     </>
   );
