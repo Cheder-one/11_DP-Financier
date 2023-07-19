@@ -35,10 +35,10 @@ const CURRENCIES = [
 const CreateAccountForm = () => {
   const [inputFields, setInputFields] = useState({
     account: {},
+    currency: {},
     name: "",
     icon: "VscBlank",
     iconColor: "#00000",
-    currency: {},
     sum: "",
     comment: ""
   });
@@ -73,42 +73,66 @@ const CreateAccountForm = () => {
         />
       </div>
 
-      <Row className="flex items-end mt-3 mt-md-1">
-        <Col md={1}>
-          <Row className="h-7">
-            <Col>
-              <IconPicker
-                drop={"down"}
-                name={"icon"}
-                value={inputFields.icon}
-                color={inputFields.iconColor}
-                onChange={handleInputChange}
-              />
-            </Col>
-          </Row>
-          <Row className="pt-1">
-            <Col>
-              <ColorPicker
-                drop={"down"}
-                name={"iconColor"}
-                value={inputFields.iconColor}
-                onChange={handleInputChange}
-              />
-            </Col>
-          </Row>
-        </Col>
-        <Col md={11} className="ps-md-0">
-          <TextField
-            className={"mt-3 ms-0 ms-md-1"}
-            label={"Название счета"}
-            name={"name"}
-            value={inputFields.name}
-            floating={true}
-            onChange={handleInputChange}
-            // error={errors.name}
-          />
-        </Col>
+      <Row className="mt-3 mt-md-1">
+        <Row className="flex items-end pe-0">
+          <Col md={1}>
+            <Row className="h-7">
+              <Col>
+                <IconPicker
+                  drop={"down"}
+                  name={"icon"}
+                  value={inputFields.icon}
+                  color={inputFields.iconColor}
+                  onChange={handleInputChange}
+                />
+              </Col>
+            </Row>
+            <Row className="pt-1">
+              <Col>
+                <ColorPicker
+                  drop={"down"}
+                  name={"iconColor"}
+                  value={inputFields.iconColor}
+                  onChange={handleInputChange}
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col md={6} className="ps-md-0">
+            <TextField
+              className={"mt-3 ms-0 ms-md-1"}
+              label={"Название счета"}
+              name={"name"}
+              value={inputFields.name}
+              floating={true}
+              onChange={handleInputChange}
+              // error={errors.name}
+            />
+          </Col>
+          <Col md={5} className="pe-0">
+            <TextField
+              className={"mt-3"}
+              label={"Баланс"}
+              name={"sum"}
+              value={inputFields.sum}
+              floating={true}
+              onChange={handleInputChange}
+              // error={errors.name}
+            />
+          </Col>
+        </Row>
       </Row>
+
+      <TextField
+        className={"mt-3"}
+        label={"Комментарий"}
+        name={"name"}
+        value={inputFields.name}
+        floating={true}
+        textaria={true}
+        onChange={handleInputChange}
+        // error={errors.name}
+      />
     </>
   );
 };

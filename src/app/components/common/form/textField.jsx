@@ -8,6 +8,7 @@ const TextField = ({
   md,
   className,
   floating,
+  textaria,
   label,
   type,
   name,
@@ -38,6 +39,8 @@ const TextField = ({
           {floating ? (
             <FloatingLabel label={label}>
               <Form.Control
+                as={textaria ? "textarea" : undefined}
+                style={textaria ? { height: "100px" } : undefined}
                 name={name}
                 value={value}
                 placeholder={label}
@@ -87,7 +90,8 @@ TextField.propTypes = {
   as: PropTypes.object,
   md: PropTypes.string,
   className: PropTypes.string,
-  floating: PropTypes.bool
+  floating: PropTypes.bool,
+  textaria: PropTypes.bool
 };
 
 export default TextField;
