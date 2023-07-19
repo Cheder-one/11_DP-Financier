@@ -20,16 +20,16 @@ const ITEMS = [
 ];
 
 const CURRENCIES = [
-  { id: 1, name: "Российский Рубль (RUB)" },
-  { id: 2, name: "Доллар США (USD)" },
-  { id: 3, name: "Евро (EUR)" },
-  { id: 4, name: "Британский Фунт (GBP)" },
-  { id: 5, name: "Японская Йена (JPY)" },
-  { id: 6, name: "Швейцарский Франк (CHF)" },
-  { id: 7, name: "Канадский Доллар (CAD)" },
-  { id: 8, name: "Австралийский Доллар (AUD)" },
-  { id: 9, name: "Китайский Юань (CNY)" },
-  { id: 10, name: "Индийская Рупия (INR)" }
+  { id: 1, name: "Российский Рубль (RUB)", code: "RUB" },
+  { id: 2, name: "Доллар США (USD)", code: "USD" },
+  { id: 3, name: "Евро (EUR)", code: "EUR" },
+  { id: 4, name: "Британский Фунт (GBP)", code: "GBP" },
+  { id: 5, name: "Японская Йена (JPY)", code: "JPY" },
+  { id: 6, name: "Швейцарский Франк (CHF)", code: "CHF" },
+  { id: 7, name: "Канадский Доллар (CAD)", code: "CAD" },
+  { id: 8, name: "Австралийский Доллар (AUD)", code: "AUD" },
+  { id: 9, name: "Китайский Юань (CNY)", code: "CNY" },
+  { id: 10, name: "Индийская Рупия (INR)", code: "INR" }
 ];
 
 const CreateAccountForm = () => {
@@ -67,7 +67,7 @@ const CreateAccountForm = () => {
         <Dropdown
           name={"currency"}
           defaultValue={"Валюта счета"}
-          value={inputFields.currency.name}
+          value={inputFields.currency.code}
           items={CURRENCIES}
           onChange={handleInputChange}
         />
