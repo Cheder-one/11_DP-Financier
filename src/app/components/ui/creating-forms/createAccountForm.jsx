@@ -5,7 +5,6 @@ import Dropdown from "../../common/form/dropdown";
 import TextField from "../../common/form/textField";
 import IconPicker from "../../common/pickers/iconPicker";
 import ColorPicker from "../../common/pickers/colorPicker";
-import { iconsArray } from "../../../assets/icons/iconsImport";
 
 const ITEMS = [
   { id: 1, name: "Наличные" },
@@ -20,13 +19,26 @@ const ITEMS = [
   { id: 10, name: "Долг" }
 ];
 
+const CURRENCIES = [
+  { id: 1, name: "Российский Рубль (RUB)" },
+  { id: 2, name: "Доллар США (USD)" },
+  { id: 3, name: "Евро (EUR)" },
+  { id: 4, name: "Британский Фунт (GBP)" },
+  { id: 5, name: "Японская Йена (JPY)" },
+  { id: 6, name: "Швейцарский Франк (CHF)" },
+  { id: 7, name: "Канадский Доллар (CAD)" },
+  { id: 8, name: "Австралийский Доллар (AUD)" },
+  { id: 9, name: "Китайский Юань (CNY)" },
+  { id: 10, name: "Индийская Рупия (INR)" }
+];
+
 const CreateAccountForm = () => {
   const [inputFields, setInputFields] = useState({
     account: {},
     name: "",
     icon: "VscBlank",
     iconColor: "#00000",
-    currency: "",
+    currency: {},
     sum: "",
     comment: ""
   });
@@ -44,13 +56,23 @@ const CreateAccountForm = () => {
 
   return (
     <>
-      <Dropdown
-        name={"account"}
-        defaultValue={"Тип счета"}
-        value={inputFields.account.name}
-        items={ITEMS}
-        onChange={handleInputChange}
-      />
+      <div className="flex gap-3">
+        <Dropdown
+          name={"account"}
+          defaultValue={"Тип счета"}
+          value={inputFields.account.name}
+          items={ITEMS}
+          onChange={handleInputChange}
+        />
+        <Dropdown
+          name={"currency"}
+          defaultValue={"Валюта счета"}
+          value={inputFields.currency.name}
+          items={CURRENCIES}
+          onChange={handleInputChange}
+        />
+      </div>
+
       <Row className="flex items-end">
         <Col md={1}>
           <Row className="h-7">
