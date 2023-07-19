@@ -73,7 +73,7 @@ const CreateAccountForm = () => {
         />
       </div>
 
-      <Row className="flex items-end">
+      <Row className="flex items-end mt-3 mt-md-1">
         <Col md={1}>
           <Row className="h-7">
             <Col>
@@ -97,7 +97,7 @@ const CreateAccountForm = () => {
             </Col>
           </Row>
         </Col>
-        <Col md={11} className="ps-0">
+        <Col md={11} className="ps-md-0">
           <TextField
             className={"mt-3 ms-0 ms-md-1"}
             label={"Название счета"}

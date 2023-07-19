@@ -63,7 +63,8 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => (
 CustomToggle.displayName = "CustomToggle";
 
 DropdownSheet.defaultProps = {
-  squareSize: "20px"
+  squareSize: "20px",
+  className: "dropdown-sheet"
 };
 
 DropdownSheet.propTypes = {
