@@ -1,15 +1,14 @@
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { chain, filter, find, keys } from "lodash";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
 import Loader from "../ui/spinner";
 import { toReadableDate } from "../../utils";
 import TableCardsShell from "../ui/table-cards/tableCardsShell";
-import ModalPopup from "../common/modal/modalPopup";
-import CreateAccountForm from "../ui/creating-forms/createAccountForm";
+import { AccountCreationModal } from "../ui/creating-forms";
 
 // Создает массив уникальных дат транзакций для dropdownList
 const getUniqDates = (data) => {
@@ -41,7 +40,6 @@ const MainPage = ({ userId }) => {
     income: [],
     expense: []
   });
-
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -178,14 +176,6 @@ const MainPage = ({ userId }) => {
     setShowModal(true);
   };
 
-  const handleModalSave = () => {
-    setShowModal(false);
-  };
-
-  const handleSubmit = (e) => {
-    console.log(e);
-  };
-
   return keys(user || {}).length > 0 ? (
     <div className="mx-4">
       <TableCardsShell
@@ -208,15 +198,7 @@ const MainPage = ({ userId }) => {
         </Col>
       </Row>
 
-      <Form onSubmit={handleSubmit}>
-        <ModalPopup
-          title="Новый Счет"
-          onSave={handleModalSave}
-          {...{ showModal, setShowModal }}
-        >
-          <CreateAccountForm />
-        </ModalPopup>
-      </Form>
+      <AccountCreationModal {...{ showModal, setShowModal }} />
     </div>
   ) : (
     <Loader className="flex justify-center items-center vh-30" />

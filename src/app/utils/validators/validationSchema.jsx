@@ -29,7 +29,7 @@ yup.setLocale({
   }
 });
 
-export const loginSchema = yup.object().shape({
+const loginSchema = yup.object().shape({
   email: yup
     .string()
     .required()
@@ -38,7 +38,7 @@ export const loginSchema = yup.object().shape({
   // stayOn: yup.boolean().oneOf([true]).required()
 });
 
-export const registerSchema = yup.object().shape({
+const registerSchema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
@@ -50,7 +50,7 @@ export const registerSchema = yup.object().shape({
   terms: yup.bool().oneOf([true])
 });
 
-export const accountSchema = yup.object().shape({
+const accountSchema = yup.object().shape({
   account: yup
     .object()
     .test("account-required", "Укажите тип счета", dropdownRequired),
@@ -60,3 +60,11 @@ export const accountSchema = yup.object().shape({
   name: yup.string().required(),
   sum: yup.number().typeError("Укажите корректный баланс счета").required()
 });
+
+const validationSchema = {
+  loginSchema,
+  registerSchema,
+  accountSchema
+};
+
+export default validationSchema;

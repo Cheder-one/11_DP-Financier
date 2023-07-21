@@ -1,3 +1,6 @@
-export { default as getAvatar } from "./functions/getAvatar";
-export { default as toReadableDate } from "./functions/toReadableDate";
-export { default as getBorderStyle } from "./styles/getBorderStyle";
+import getAvatar from "./functions/getAvatar";
+import validationSchema from "./validators/validationSchema";
+import toReadableDate from "./functions/toReadableDate";
+import getBorderStyle from "./styles/getBorderStyle";
+
+export { getAvatar, validationSchema, toReadableDate, getBorderStyle };

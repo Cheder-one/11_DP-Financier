@@ -1,9 +1,12 @@
 import { Formik, Field as FormikField, Form as FormikForm } from "formik";
 import { Button, Form, Row, Col } from "react-bootstrap";
+
+import { validationSchema } from "../../../utils";
 import CheckboxField from "../../common/form/checkboxField";
-import { registerSchema } from "../../../utils/validators/validationSchema";
 
 const RegisterForm = () => {
+  const { registerSchema } = validationSchema;
+
   return (
     <Formik
       initialValues={{

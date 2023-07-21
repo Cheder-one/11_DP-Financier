@@ -68,9 +68,9 @@ const DropdownComponent = ({
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
-        <Form.Control.Feedback type="invalid" className="mt-1">
+        {/* <Form.Control.Feedback type="invalid" className="mt-1">
           {error}
-        </Form.Control.Feedback>
+        </Form.Control.Feedback> */}
       </Dropdown>
     </Form.Group>
   );

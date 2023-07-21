@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
+
+import { validationSchema } from "../../../utils";
 import TextField from "../../common/form/textField";
-import { loginSchema } from "../../../utils/validators/validationSchema";
 import CheckboxField from "../../common/form/checkboxField";
 import ContentBetween from "../../common/typography/contentBetween";
 
 const LoginForm = () => {
+  const { loginSchema } = validationSchema;
   const [inputFields, setInputFields] = useState({
     email: "",
     password: "",

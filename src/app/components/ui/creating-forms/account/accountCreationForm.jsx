@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { useEffect, useRef, useState } from "react";
+import { keys } from "lodash";
+import { Col, Form, Row } from "react-bootstrap";
 
-import Dropdown from "../../common/form/dropdown";
-import TextField from "../../common/form/textField";
-import IconPicker from "../../common/pickers/iconPicker";
-import ColorPicker from "../../common/pickers/colorPicker";
-import { accountSchema } from "../../../utils/validators/validationSchema";
+import Dropdown from "../../../common/form/dropdown";
+import TextField from "../../../common/form/textField";
+import { IconPicker, ColorPicker } from "../../../common/pickers";
+import { validationSchema } from "../../../../utils";
 
 const ITEMS = [
   { id: 1, name: "Наличные" },
@@ -33,7 +33,8 @@ const CURRENCIES = [
   { id: 10, name: "Индийская Рупия (INR)", code: "INR" }
 ];
 
-const CreateAccountForm = () => {
+const AccountCreationForm = () => {
+  const { accountSchema } = validationSchema;
   const [inputFields, setInputFields] = useState({
     account: {},
     currency: {},
@@ -45,7 +46,7 @@ const CreateAccountForm = () => {
   });
   const [errors, setErrors] = useState({});
 
-  console.log(errors);
+  const buttonRef = useRef();
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
@@ -54,6 +55,20 @@ const CreateAccountForm = () => {
       ...prev,
       [name]: value
     }));
+  };
+
+  const hasErrors = keys(errors).length;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (hasErrors) return;
+
+    // Отправка на сервер
+    console.log(inputFields);
+
+    // Выполнить вход в систему
+    // login(inputFields.email, inputFields.password);
   };
 
   useEffect(() => {
@@ -71,7 +86,7 @@ const CreateAccountForm = () => {
 
   return (
     <>
-      <div className="flex gap-3">
+      <Form className="flex gap-3">
         <Dropdown
           name={"account"}
           defaultValue={"Тип счета"}
@@ -88,7 +103,7 @@ const CreateAccountForm = () => {
           onChange={handleInputChange}
           error={errors.currency}
         />
-      </div>
+      </Form>
 
       <Row className="flex items-end mt-3 mt-md-0">
         <Col md={1}>
@@ -146,8 +161,9 @@ const CreateAccountForm = () => {
         textaria={true}
         onChange={handleInputChange}
       />
+      <button type="submit" className="hidden" ref={buttonRef}></button>
     </>
   );
 };
 
-export default CreateAccountForm;
+export default AccountCreationForm;
