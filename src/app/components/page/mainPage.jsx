@@ -192,7 +192,7 @@ const MainPage = ({ userId }) => {
 
       <Row style={{ marginTop: "3%" }}>
         <Col>
-          <div className="flex justify-center items-center border border-dark vh-40">
+          <div className="flex justify-center items-center border border-dark h-40vh">
             <h5>Element</h5>
           </div>
         </Col>
@@ -201,7 +201,7 @@ const MainPage = ({ userId }) => {
       <AccountCreationModal {...{ showModal, setShowModal }} />
     </div>
   ) : (
-    <Loader className="flex justify-center items-center vh-30" />
+    <Loader className="flex justify-center items-center h-30vh" />
   );
 };
 

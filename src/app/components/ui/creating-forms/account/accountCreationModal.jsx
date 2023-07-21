@@ -2,23 +2,24 @@ import PropTypes from "prop-types";
 
 import ModalPopup from "../../../common/modal/modalPopup";
 import AccountCreationForm from "./accountCreationForm";
+import { useRef } from "react";
 
 const AccountCreationModal = ({ showModal, setShowModal }) => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const accountFormRef = useRef(null);
+
+  const handleModalSave = () => {
     setShowModal(false);
 
-    // console.log(inputFields);
-    console.log("Form submitted!");
+    accountFormRef.current.handleSubmit();
   };
 
   return (
     <ModalPopup
       title="Новый Счет"
-      onSave={handleSubmit}
+      onSave={handleModalSave}
       {...{ showModal, setShowModal }}
     >
-      <AccountCreationForm />
+      <AccountCreationForm ref={accountFormRef} />
     </ModalPopup>
   );
 };

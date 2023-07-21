@@ -30,7 +30,7 @@ const TableCard = ({ md, route, title, body }) => {
           </Col>
         </Row>
 
-        <ListGroup className="list-group-flush border-gray-400 vh-27 me-0 overflow-auto rounded-bottom">
+        <ListGroup className="list-group-flush border-gray-400 h-28vh me-0 overflow-auto rounded-bottom">
           <ListGroupItem className="p-0">
             {keys(body).map((item) => {
               item = body[item];

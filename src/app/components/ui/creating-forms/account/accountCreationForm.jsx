@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import { keys } from "lodash";
 import { Col, Form, Row } from "react-bootstrap";
 
@@ -33,7 +33,7 @@ const CURRENCIES = [
   { id: 10, name: "Индийская Рупия (INR)", code: "INR" }
 ];
 
-const AccountCreationForm = () => {
+const AccountCreationForm = forwardRef((props, ref) => {
   const { accountSchema } = validationSchema;
   const [inputFields, setInputFields] = useState({
     account: {},
@@ -46,8 +46,6 @@ const AccountCreationForm = () => {
   });
   const [errors, setErrors] = useState({});
 
-  const buttonRef = useRef();
-
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
 
@@ -59,17 +57,15 @@ const AccountCreationForm = () => {
 
   const hasErrors = keys(errors).length;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (hasErrors) return;
 
-    // Отправка на сервер
     console.log(inputFields);
-
-    // Выполнить вход в систему
-    // login(inputFields.email, inputFields.password);
   };
+
+  useImperativeHandle(ref, () => ({
+    handleSubmit
+  }));
 
   useEffect(() => {
     accountSchema
@@ -86,7 +82,7 @@ const AccountCreationForm = () => {
 
   return (
     <>
-      <Form className="flex gap-3">
+      <Form className="flex gap-3" onSubmit={handleSubmit}>
         <Dropdown
           name={"account"}
           defaultValue={"Тип счета"}
@@ -161,9 +157,10 @@ const AccountCreationForm = () => {
         textaria={true}
         onChange={handleInputChange}
       />
-      <button type="submit" className="hidden" ref={buttonRef}></button>
     </>
   );
-};
+});
+
+AccountCreationForm.displayName = AccountCreationForm;
 
 export default AccountCreationForm;
