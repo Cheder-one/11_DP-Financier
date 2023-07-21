@@ -57,10 +57,12 @@ const AccountCreationForm = forwardRef((props, ref) => {
 
   const hasErrors = keys(errors).length;
 
-  const handleSubmit = async () => {
-    if (hasErrors) return;
-
-    console.log(inputFields);
+  const handleSubmit = () => {
+    if (hasErrors) {
+      return undefined;
+    } else {
+      return inputFields;
+    }
   };
 
   useImperativeHandle(ref, () => ({

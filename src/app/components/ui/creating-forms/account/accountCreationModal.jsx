@@ -8,9 +8,12 @@ const AccountCreationModal = ({ showModal, setShowModal }) => {
   const accountFormRef = useRef(null);
 
   const handleModalSave = () => {
-    setShowModal(false);
+    const isDataValid = accountFormRef.current.handleSubmit();
 
-    accountFormRef.current.handleSubmit();
+    if (isDataValid) {
+      console.log(isDataValid);
+      setShowModal(false);
+    }
   };
 
   return (

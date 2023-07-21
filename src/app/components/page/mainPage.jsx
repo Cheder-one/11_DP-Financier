@@ -41,6 +41,7 @@ const MainPage = ({ userId }) => {
     expense: []
   });
   const [showModal, setShowModal] = useState(false);
+  const [cardTypeToAdd, setCardTypeToAdd] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,14 +117,14 @@ const MainPage = ({ userId }) => {
     const dataByCardType = filteredByUniqAndType[cardType];
     let bodyItems = null;
 
-    // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается его title. При любой смене счета устанавливается default значение для dropdown.
+    // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается в его title. При любой смене счета устанавливается default значение для dropdown.
     if (cardType === "account") {
       setResetDropTitle(true);
     }
 
-    // Если фильтруем карточку по критерии "Все"
+    // Если фильтруем карточку по критерию "Все"
     if (id.includes("all")) {
-      // Выбраны все счета. Выводятся все транзакции всех счетов.
+      // Выбраны "Все" счета. Выводятся все транзакции всех счетов.
       if (cardType === "account") {
         setCardBodyItems({
           account: user.transactions,
@@ -172,7 +173,8 @@ const MainPage = ({ userId }) => {
     }
   };
 
-  const handleAddButtonClick = () => {
+  const handleAddButtonClick = (type) => {
+    setCardTypeToAdd(type);
     setShowModal(true);
   };
 
@@ -197,8 +199,11 @@ const MainPage = ({ userId }) => {
           </div>
         </Col>
       </Row>
-
-      <AccountCreationModal {...{ showModal, setShowModal }} />
+      {cardTypeToAdd === "account" ? (
+        <AccountCreationModal {...{ showModal, setShowModal }} />
+      ) : (
+        ""
+      )}
     </div>
   ) : (
     <Loader className="flex justify-center items-center h-30vh" />

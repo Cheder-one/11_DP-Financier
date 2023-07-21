@@ -13,8 +13,8 @@ const TableCardsShell = ({
   onSelect,
   onAddButtonClick
 }) => {
-  const addButton = (
-    <Button variant="" className="p-0" onClick={onAddButtonClick}>
+  const addButton = (type) => (
+    <Button variant="" className="p-0" onClick={() => onAddButtonClick(type)}>
       <PlusSquare style={{ color: "yellowgreen" }} size={25} />
     </Button>
   );

@@ -16,7 +16,7 @@ const AccountCard = ({
         second: (
           <CardDropdown items={account} type="account" onSelect={onSelect} />
         ),
-        third: addButton
+        third: addButton("account")
       }}
       body={bodyItems.account}
     />
@@ -29,6 +29,6 @@ AccountCard.propTypes = {
   }).isRequired,
   bodyItems: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired,
-  addButton: PropTypes.node.isRequired
+  addButton: PropTypes.func.isRequired
 };
 export default AccountCard;

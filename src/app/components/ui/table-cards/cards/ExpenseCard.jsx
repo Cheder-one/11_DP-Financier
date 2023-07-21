@@ -22,7 +22,7 @@ const ExpenseCard = ({
             reset={reset}
           />
         ),
-        third: addButton
+        third: addButton("expense")
       }}
       body={bodyItems.expense}
     />
@@ -38,7 +38,7 @@ ExpenseCard.propTypes = {
   bodyItems: PropTypes.object.isRequired,
   reset: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
-  addButton: PropTypes.node.isRequired
+  addButton: PropTypes.func.isRequired
 };
 
 export default ExpenseCard;

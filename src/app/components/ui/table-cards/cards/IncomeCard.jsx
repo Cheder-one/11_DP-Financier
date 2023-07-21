@@ -22,7 +22,7 @@ const IncomeCard = ({
             onSelect={onSelect}
           />
         ),
-        third: addButton
+        third: addButton("income")
       }}
       body={bodyItems.income}
     />
@@ -38,7 +38,7 @@ IncomeCard.propTypes = {
   bodyItems: PropTypes.object.isRequired,
   reset: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
-  addButton: PropTypes.node.isRequired
+  addButton: PropTypes.func.isRequired
 };
 
 export default IncomeCard;
