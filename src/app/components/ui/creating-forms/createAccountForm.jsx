@@ -40,7 +40,7 @@ const CreateAccountForm = () => {
     name: "",
     icon: "VscBlank",
     iconColor: "#00000",
-    sum: 0,
+    sum: "",
     comment: ""
   });
   const [errors, setErrors] = useState({});
@@ -55,7 +55,6 @@ const CreateAccountForm = () => {
       [name]: value
     }));
   };
-  console.log(inputFields);
 
   useEffect(() => {
     accountSchema
@@ -91,7 +90,7 @@ const CreateAccountForm = () => {
         />
       </div>
 
-      <Row className="flex items-end mt-3 mt-md-1">
+      <Row className="flex items-end mt-3 mt-md-0">
         <Col md={1}>
           <Row className="h-7">
             <Col>

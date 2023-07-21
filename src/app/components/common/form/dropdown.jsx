@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { Dropdown, Form } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { getBorderStyle } from "../../../utils";
 
 const DropdownComponent = ({
   label,
@@ -12,7 +14,20 @@ const DropdownComponent = ({
   error,
   onChange
 }) => {
+  const [touched, setTouched] = useState(false);
+  const [isOpen, setIsOpen] = useState(null);
   const [isValid, setIsValid] = useState(true);
+
+  const handleToggle = (isOpen) => {
+    setTouched(true);
+    setIsOpen(isOpen);
+  };
+
+  useEffect(() => {
+    if (touched && !isOpen && !value) {
+      setIsValid(false);
+    }
+  }, [isOpen, touched, value]);
 
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
@@ -24,18 +39,15 @@ const DropdownComponent = ({
       }
     });
 
-    setIsValid(true); // При выборе значения считаем поле валидным
+    setIsValid(true);
   };
 
-  const handleToggle = (isOpen, event, metadata) => {
-    if (!isOpen && !value) {
-      setIsValid(false); // Если список был закрыт без выбора значения, считаем поле невалидным
-    }
-  };
+  const borderStyle = getBorderStyle(touched, isOpen, isValid);
 
   return (
     <Form.Group>
       <Form.Label>{label}</Form.Label>
+
       <Dropdown
         className={className}
         drop="down"
@@ -44,11 +56,8 @@ const DropdownComponent = ({
       >
         <Dropdown.Toggle
           variant="light"
-          className={`${isValid ? "" : "is-invalid"}`}
-          style={{
-            borderColor: isValid ? "green" : "red",
-            border: "1px solid #CBD5E0"
-          }}
+          className={isValid ? "" : "is-invalid"}
+          style={borderStyle}
         >
           {value || defaultValue}
         </Dropdown.Toggle>
@@ -59,7 +68,9 @@ const DropdownComponent = ({
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
-        <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid" className="mt-1">
+          {error}
+        </Form.Control.Feedback>
       </Dropdown>
     </Form.Group>
   );

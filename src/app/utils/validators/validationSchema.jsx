@@ -56,10 +56,6 @@ export const accountSchema = yup.object().shape({
     .test("account-required", "Укажите тип счета", dropdownRequired),
   currency: yup
     .object()
-    .shape({
-      id: yup.number().required(),
-      name: yup.string().required()
-    })
     .test("account-required", "Укажите валюту счета", dropdownRequired),
   name: yup.string().required(),
   sum: yup.number().typeError("Укажите корректный баланс счета").required()
