@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "react-bootstrap";
 import TextField from "../common/form/textField";
 
 const Calculator = () => {
@@ -14,26 +13,13 @@ const Calculator = () => {
     }
   };
 
-  const handleButtonClick = (buttonValue) => {
-    setDisplay((prevDisplay) => prevDisplay + buttonValue);
-  };
-
-  const handleClear = () => {
-    setDisplay("");
-  };
-
-  const handleCalculate = () => {
-    try {
-      setDisplay(eval(display).toString());
-    } catch (error) {
-      setDisplay("Error");
-    }
-  };
-
   return (
     <div
-      className="flex flex-col items-center rounded"
-      style={{ backgroundColor: "#EBEAE6" }}
+      className="calculator flex flex-col items-center rounded"
+      style={{
+        backgroundColor: "#EBEAE6",
+        fontFamily: "'Space Mono', monospace"
+      }}
     >
       <div className="p-4 mb-4">
         <TextField
@@ -44,7 +30,9 @@ const Calculator = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div className="grid grid-cols-4 gap-2">''</div>
+      <div className="grid grid-cols-4 gap-2">
+        <button>1</button>
+      </div>
     </div>
   );
 };
