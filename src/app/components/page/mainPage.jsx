@@ -16,6 +16,7 @@ import {
   AccountCreationModal,
   TransactCreationModal
 } from "../ui/creating-forms";
+import Calculator from "../ui/calculator";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -165,6 +166,7 @@ const MainPage = ({ userId }) => {
 
   return keys(user || {}).length > 0 ? (
     <div className="mx-4">
+      <Calculator />
       <TableCardsShell
         dropList={{
           account: user.accounts,

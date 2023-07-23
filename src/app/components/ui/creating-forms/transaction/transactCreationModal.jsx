@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
+import { useRef } from "react";
 
 import ModalPopup from "../../../common/modal/modalPopup";
-import { useRef } from "react";
 
 const TransactCreationModal = ({ showModal, setShowModal }) => {
   const accountFormRef = useRef(null);
@@ -26,9 +26,9 @@ const TransactCreationModal = ({ showModal, setShowModal }) => {
   );
 };
 
-// TransactCreationModal.propTypes = {
-//   showModal: PropTypes.bool.isRequired,
-//   setShowModal: PropTypes.func.isRequired
-// };
+TransactCreationModal.propTypes = {
+  showModal: PropTypes.bool.isRequired,
+  setShowModal: PropTypes.func.isRequired
+};
 
 export default TransactCreationModal;

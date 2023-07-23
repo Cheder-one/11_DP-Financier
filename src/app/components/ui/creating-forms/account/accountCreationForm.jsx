@@ -97,7 +97,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
         </Col>
         <Col md={6} className="ps-md-0">
           <TextField
-            className={"mt-3 ms-0 ms-md-1"}
+            containerClass={"mt-3 ms-0 ms-md-1"}
             label={"Название счета"}
             name={"name"}
             value={inputFields.name}
@@ -109,7 +109,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
         </Col>
         <Col md={5}>
           <TextField
-            className={"mt-3"}
+            containerClass={"mt-3"}
             label={"Баланс"}
             name={"sum"}
             value={inputFields.sum}
@@ -121,7 +121,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
         </Col>
       </Row>
       <TextField
-        className={"mt-3"}
+        containerClass={"mt-3"}
         label={"Комментарий"}
         name={"comment"}
         value={inputFields.comment}

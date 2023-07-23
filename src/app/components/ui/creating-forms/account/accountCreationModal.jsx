@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
+import { useRef } from "react";
 
 import ModalPopup from "../../../common/modal/modalPopup";
 import AccountCreationForm from "./accountCreationForm";
-import { useRef } from "react";
 
 const AccountCreationModal = ({ showModal, setShowModal }) => {
   const accountFormRef = useRef(null);

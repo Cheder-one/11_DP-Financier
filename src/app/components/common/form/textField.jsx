@@ -7,14 +7,16 @@ import useBlurOnSubmit from "../../../hooks/useBlurOnSubmit";
 
 const TextField = ({
   as,
-  className,
-  floating,
-  textaria,
+  containerClass,
+  inputClass,
   label,
   type,
   name,
   value,
   error,
+  floating,
+  textaria,
+  validating,
   isSubmit,
   onChange
 }) => {
@@ -24,44 +26,56 @@ const TextField = ({
   const handleClick = () => {
     setShowPass((prev) => !prev);
   };
-
   const handleChange = (e) => {
     onChange(e);
   };
-
   const handleBlur = () => {
     setIsBlur(true);
   };
 
+  const isValidField = () => {
+    return validating ? !error && isBlur : undefined;
+  };
+  const isInvalidField = () => {
+    return !!error && isBlur;
+  };
+  const getClass = () => {
+    return (textaria ? "h-24 " : "") + inputClass;
+  };
+  const getFieldType = () => {
+    return showPass ? "text" : type;
+  };
+
   return (
     <>
-      <Form.Group controlId={name} as={as} className={className}>
+      <Form.Group controlId={name} as={as} className={containerClass}>
         {floating ? "" : <Form.Label>{label}</Form.Label>}
         <InputGroup hasValidation>
           {floating ? (
             <FloatingLabel label={label}>
               <Form.Control
                 as={textaria ? "textarea" : undefined}
-                style={textaria ? { height: "100px" } : undefined}
+                className={getClass()}
                 name={name}
                 value={value}
                 placeholder={label}
-                type={showPass ? "text" : type}
+                type={getFieldType()}
+                isValid={isValidField()}
+                isInvalid={isInvalidField()}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                isValid={!error && isBlur}
-                isInvalid={!!error && isBlur}
               />
             </FloatingLabel>
           ) : (
             <Form.Control
+              className={inputClass}
               name={name}
               value={value}
-              type={showPass ? "text" : type}
+              type={getFieldType()}
+              isValid={isValidField()}
+              isInvalid={isInvalidField()}
               onChange={handleChange}
               onBlur={handleBlur}
-              isValid={!error && isBlur}
-              isInvalid={!!error && isBlur}
             />
           )}
 
@@ -79,7 +93,8 @@ const TextField = ({
 
 TextField.defaultProps = {
   type: "text",
-  className: "mb-3"
+  containerClass: "mb-3",
+  validating: true
 };
 
 TextField.propTypes = {
@@ -90,9 +105,11 @@ TextField.propTypes = {
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
   as: PropTypes.object,
-  className: PropTypes.string,
+  containerClass: PropTypes.string,
+  inputClass: PropTypes.string,
   floating: PropTypes.bool,
   textaria: PropTypes.bool,
+  validating: PropTypes.bool,
   isSubmit: PropTypes.bool
 };
 
