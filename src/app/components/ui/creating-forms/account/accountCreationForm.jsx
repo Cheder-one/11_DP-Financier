@@ -6,7 +6,7 @@ import Dropdown from "../../../common/form/dropdown";
 import TextField from "../../../common/form/textField";
 import { IconPicker, ColorPicker } from "../../../common/pickers";
 import { constantsData, validationSchema } from "../../../../utils";
-import useFormValidation from "../../../../hooks/useValidate";
+import useFormValidation from "../../../../hooks/useFormValidation";
 
 const { accountSchema } = validationSchema;
 const { ACCOUNT_TYPES, CURRENCIES } = constantsData;
@@ -57,6 +57,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
           defaultValue={"Тип счета"}
           value={inputFields.account.name}
           items={ACCOUNT_TYPES}
+          isSubmit={isSubmitClick}
           onChange={handleInputChange}
           error={errors.account}
         />
@@ -65,6 +66,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
           defaultValue={"Валюта счета"}
           value={inputFields.currency.code}
           items={CURRENCIES}
+          isSubmit={isSubmitClick}
           onChange={handleInputChange}
           error={errors.currency}
         />

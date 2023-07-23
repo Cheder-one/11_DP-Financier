@@ -3,6 +3,7 @@ import { Dropdown, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 import { getBorderStyle } from "../../../utils";
+import useBlurOnSubmit from "../../../hooks/useBlurOnSubmit";
 
 const DropdownComponent = ({
   label,
@@ -11,23 +12,24 @@ const DropdownComponent = ({
   value,
   items,
   className,
-  error,
-  onChange
+  isSubmit,
+  onChange,
+  error
 }) => {
-  const [touched, setTouched] = useState(false);
+  const [isBlur, setIsBlur] = useBlurOnSubmit(isSubmit);
   const [isOpen, setIsOpen] = useState(null);
   const [isValid, setIsValid] = useState(true);
 
   const handleToggle = (isOpen) => {
-    setTouched(true);
+    setIsBlur(true);
     setIsOpen(isOpen);
   };
 
   useEffect(() => {
-    if (touched && !isOpen && !value) {
+    if (isBlur && !isOpen && !value) {
       setIsValid(false);
     }
-  }, [isOpen, touched, value]);
+  }, [isOpen, isBlur, value]);
 
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
@@ -42,7 +44,7 @@ const DropdownComponent = ({
     setIsValid(true);
   };
 
-  const borderStyle = getBorderStyle(touched, isOpen, isValid);
+  const borderStyle = getBorderStyle(isBlur, isOpen, isValid);
 
   return (
     <Form.Group>
@@ -84,6 +86,7 @@ DropdownComponent.propTypes = {
   items: PropTypes.array.isRequired,
   className: PropTypes.string,
   error: PropTypes.string,
+  isSubmit: PropTypes.bool,
   onChange: PropTypes.func.isRequired
 };
 

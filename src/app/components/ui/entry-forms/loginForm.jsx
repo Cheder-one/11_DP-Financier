@@ -6,7 +6,7 @@ import { validationSchema } from "../../../utils";
 import TextField from "../../common/form/textField";
 import CheckboxField from "../../common/form/checkboxField";
 import ContentBetween from "../../common/typography/contentBetween";
-import useFormValidation from "../../../hooks/useValidate";
+import useFormValidation from "../../../hooks/useFormValidation";
 
 const LoginForm = () => {
   const { loginSchema } = validationSchema;

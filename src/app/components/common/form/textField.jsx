@@ -1,7 +1,9 @@
 import { Button, FloatingLabel, Form, InputGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import { eyeFill, eyeSlash } from "../../../assets/btn/show-hide-pass-svg";
+import useBlurOnSubmit from "../../../hooks/useBlurOnSubmit";
 
 const TextField = ({
   as,
@@ -16,9 +18,8 @@ const TextField = ({
   isSubmit,
   onChange
 }) => {
-  const [isInitialRender, setIsInitialRender] = useState(true);
   const [showPass, setShowPass] = useState(false);
-  const [isBlur, setIsBlur] = useState(false);
+  const [isBlur, setIsBlur] = useBlurOnSubmit(isSubmit);
 
   const handleClick = () => {
     setShowPass((prev) => !prev);
@@ -31,14 +32,6 @@ const TextField = ({
   const handleBlur = () => {
     setIsBlur(true);
   };
-
-  useEffect(() => {
-    if (!isInitialRender) {
-      setIsBlur(true);
-    } else {
-      setIsInitialRender(false);
-    }
-  }, [isSubmit]);
 
   return (
     <>
@@ -99,7 +92,8 @@ TextField.propTypes = {
   as: PropTypes.object,
   className: PropTypes.string,
   floating: PropTypes.bool,
-  textaria: PropTypes.bool
+  textaria: PropTypes.bool,
+  isSubmit: PropTypes.bool
 };
 
 export default TextField;
