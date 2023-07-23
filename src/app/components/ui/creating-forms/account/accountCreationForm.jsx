@@ -1,40 +1,17 @@
-import { useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { keys } from "lodash";
 import { Col, Form, Row } from "react-bootstrap";
 
 import Dropdown from "../../../common/form/dropdown";
 import TextField from "../../../common/form/textField";
 import { IconPicker, ColorPicker } from "../../../common/pickers";
-import { validationSchema } from "../../../../utils";
+import { constantsData, validationSchema } from "../../../../utils";
+import useFormValidation from "../../../../hooks/useValidate";
 
-const ITEMS = [
-  { id: 1, name: "Наличные" },
-  { id: 2, name: "Интернет деньги" },
-  { id: 3, name: "Дебетовая карта" },
-  { id: 4, name: "Кредитная карта" },
-  { id: 5, name: "Депозит" },
-  { id: 6, name: "Криптовалюта" },
-  { id: 7, name: "Инвестиции" },
-  { id: 8, name: "Имущество" },
-  { id: 9, name: "Кредит" },
-  { id: 10, name: "Долг" }
-];
-
-const CURRENCIES = [
-  { id: 1, name: "Российский Рубль (RUB)", code: "RUB" },
-  { id: 2, name: "Доллар США (USD)", code: "USD" },
-  { id: 3, name: "Евро (EUR)", code: "EUR" },
-  { id: 4, name: "Британский Фунт (GBP)", code: "GBP" },
-  { id: 5, name: "Японская Йена (JPY)", code: "JPY" },
-  { id: 6, name: "Швейцарский Франк (CHF)", code: "CHF" },
-  { id: 7, name: "Канадский Доллар (CAD)", code: "CAD" },
-  { id: 8, name: "Австралийский Доллар (AUD)", code: "AUD" },
-  { id: 9, name: "Китайский Юань (CNY)", code: "CNY" },
-  { id: 10, name: "Индийская Рупия (INR)", code: "INR" }
-];
+const { accountSchema } = validationSchema;
+const { ACCOUNT_TYPES, CURRENCIES } = constantsData;
 
 const AccountCreationForm = forwardRef((props, ref) => {
-  const { accountSchema } = validationSchema;
   const [inputFields, setInputFields] = useState({
     account: {},
     currency: {},
@@ -44,7 +21,10 @@ const AccountCreationForm = forwardRef((props, ref) => {
     sum: "",
     comment: ""
   });
-  const [errors, setErrors] = useState({});
+  const [isSubmitClick, setIsSubmitClick] = useState(false);
+
+  const errors = useFormValidation(inputFields, accountSchema);
+  const hasErrors = keys(errors).length;
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
@@ -55,9 +35,9 @@ const AccountCreationForm = forwardRef((props, ref) => {
     }));
   };
 
-  const hasErrors = keys(errors).length;
-
   const handleSubmit = () => {
+    setIsSubmitClick(true);
+
     if (hasErrors) {
       return undefined;
     } else {
@@ -69,19 +49,6 @@ const AccountCreationForm = forwardRef((props, ref) => {
     handleSubmit
   }));
 
-  useEffect(() => {
-    accountSchema
-      .validate(inputFields, { abortEarly: false })
-      .then(setErrors({}))
-      .catch(({ inner }) => {
-        const newErrors = {};
-        for (const error of inner) {
-          newErrors[error.path] = error.message;
-        }
-        setErrors(newErrors);
-      });
-  }, [inputFields]);
-
   return (
     <>
       <Form className="flex gap-3" onSubmit={handleSubmit}>
@@ -89,7 +56,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
           name={"account"}
           defaultValue={"Тип счета"}
           value={inputFields.account.name}
-          items={ITEMS}
+          items={ACCOUNT_TYPES}
           onChange={handleInputChange}
           error={errors.account}
         />
@@ -134,6 +101,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
             name={"name"}
             value={inputFields.name}
             floating={true}
+            isSubmit={isSubmitClick}
             onChange={handleInputChange}
             error={errors.name}
           />
@@ -145,6 +113,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
             name={"sum"}
             value={inputFields.sum}
             floating={true}
+            isSubmit={isSubmitClick}
             onChange={handleInputChange}
             error={errors.sum}
           />

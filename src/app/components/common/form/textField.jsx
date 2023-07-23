@@ -1,11 +1,10 @@
 import { Button, FloatingLabel, Form, InputGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { eyeFill, eyeSlash } from "../../../assets/btn/show-hide-pass-svg";
 
 const TextField = ({
   as,
-  md,
   className,
   floating,
   textaria,
@@ -14,8 +13,10 @@ const TextField = ({
   name,
   value,
   error,
+  isSubmit,
   onChange
 }) => {
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const [showPass, setShowPass] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
 
@@ -31,9 +32,17 @@ const TextField = ({
     setIsBlur(true);
   };
 
+  useEffect(() => {
+    if (!isInitialRender) {
+      setIsBlur(true);
+    } else {
+      setIsInitialRender(false);
+    }
+  }, [isSubmit]);
+
   return (
     <>
-      <Form.Group controlId={name} as={as} md={md} className={className}>
+      <Form.Group controlId={name} as={as} className={className}>
         {floating ? "" : <Form.Label>{label}</Form.Label>}
         <InputGroup hasValidation>
           {floating ? (
@@ -88,7 +97,6 @@ TextField.propTypes = {
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
   as: PropTypes.object,
-  md: PropTypes.string,
   className: PropTypes.string,
   floating: PropTypes.bool,
   textaria: PropTypes.bool

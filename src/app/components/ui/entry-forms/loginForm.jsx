@@ -6,6 +6,7 @@ import { validationSchema } from "../../../utils";
 import TextField from "../../common/form/textField";
 import CheckboxField from "../../common/form/checkboxField";
 import ContentBetween from "../../common/typography/contentBetween";
+import useFormValidation from "../../../hooks/useValidate";
 
 const LoginForm = () => {
   const { loginSchema } = validationSchema;
@@ -15,7 +16,8 @@ const LoginForm = () => {
     stayOn: false
   });
 
-  const [errors, setErrors] = useState({});
+  const errors = useFormValidation(inputFields, loginSchema);
+  const hasErrors = Object.keys(errors).length;
 
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
@@ -25,21 +27,6 @@ const LoginForm = () => {
       [name]: value
     }));
   };
-
-  useEffect(() => {
-    loginSchema
-      .validate(inputFields, { abortEarly: false })
-      .then(setErrors({}))
-      .catch(({ inner }) => {
-        const newErrors = {};
-        for (const error of inner) {
-          newErrors[error.path] = error.message;
-        }
-        setErrors(newErrors);
-      });
-  }, [inputFields]);
-
-  const hasErrors = Object.keys(errors).length;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

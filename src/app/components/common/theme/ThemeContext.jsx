@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { createContext, useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, createContext } from "react";
 import {
   enable as enableDarkMode,
   disable as disableDarkMode
 } from "darkreader";
-import themeConfig from "../../../utils/data/themeConfig";
+
+import { themeConfig } from "../../../utils";
 
 export const ThemeContext = createContext();
 
