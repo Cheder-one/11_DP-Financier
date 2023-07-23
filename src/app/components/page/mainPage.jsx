@@ -2,34 +2,18 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { chain, filter, find, keys } from "lodash";
+import { filter, find, keys } from "lodash";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
+import {
+  getUniqDates,
+  getUserData,
+  updIncomeExpenseTransacts
+} from "../../utils";
 import Loader from "../ui/spinner";
-import { toReadableDate } from "../../utils";
 import TableCardsShell from "../ui/table-cards/tableCardsShell";
+import useModal from "../../hooks/useModal";
 import { AccountCreationModal } from "../ui/creating-forms";
-
-// Создает массив уникальных дат транзакций для dropdownList
-const getUniqDates = (data) => {
-  return chain(data)
-    .uniqBy("date")
-    .map((uniq) => ({
-      ...uniq,
-      name: toReadableDate(uniq.date).dateOnly
-    }))
-    .reverse()
-    .value();
-};
-
-// Обновляет список транзакций согласно выбранному счету.
-const updIncomeExpenseTransacts = (id, income, expense, setCardBodyItems) => {
-  setCardBodyItems((prev) => ({
-    ...prev,
-    income: filter(income.transacts, { account: id }),
-    expense: filter(expense.transacts, { account: id })
-  }));
-};
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -40,21 +24,19 @@ const MainPage = ({ userId }) => {
     income: [],
     expense: []
   });
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useModal(false);
   const [cardTypeToAdd, setCardTypeToAdd] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/users/${userId}`);
-        const { user: userData } = response.data;
-        setUser(userData);
+        const user = await getUserData(userId);
+        setUser(user);
 
-        const { transactions } = userData;
         setCardBodyItems({
-          account: transactions,
-          income: filter(transactions, { type: "income" }),
-          expense: filter(transactions, { type: "expense" })
+          account: user.transactions,
+          income: filter(user.transactions, { type: "income" }),
+          expense: filter(user.transactions, { type: "expense" })
         });
       } catch (err) {
         console.error(err);
@@ -94,6 +76,7 @@ const MainPage = ({ userId }) => {
 
     types.forEach((type) => {
       const transacts = filter(user.transactions, { type });
+      // Создает массив уникальных дат транзакций для dropdownList
       let uniqDates = getUniqDates(transacts);
 
       // Фильтрует транзакции под конкретный счет (если выбран). Создает массив uniqDates.
