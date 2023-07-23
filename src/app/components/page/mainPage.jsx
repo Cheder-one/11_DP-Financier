@@ -12,7 +12,10 @@ import {
 import Loader from "../ui/spinner";
 import TableCardsShell from "../ui/table-cards/tableCardsShell";
 import useModal from "../../hooks/useModal";
-import { AccountCreationModal } from "../ui/creating-forms";
+import {
+  AccountCreationModal,
+  TransactCreationModal
+} from "../ui/creating-forms";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -184,7 +187,7 @@ const MainPage = ({ userId }) => {
       {cardTypeToAdd === "account" ? (
         <AccountCreationModal {...{ showModal, setShowModal }} />
       ) : (
-        ""
+        <TransactCreationModal {...{ showModal, setShowModal }} />
       )}
     </div>
   ) : (

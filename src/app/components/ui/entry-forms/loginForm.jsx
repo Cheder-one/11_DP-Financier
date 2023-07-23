@@ -15,7 +15,6 @@ const LoginForm = () => {
     password: "",
     stayOn: false
   });
-
   const errors = useFormValidation(inputFields, loginSchema);
   const hasErrors = Object.keys(errors).length;
 

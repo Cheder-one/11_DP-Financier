@@ -21,8 +21,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
     sum: "",
     comment: ""
   });
-  const [isSubmitClick, setIsSubmitClick] = useState(false);
-
+  const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const errors = useFormValidation(inputFields, accountSchema);
   const hasErrors = keys(errors).length;
 
@@ -36,7 +35,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
   };
 
   const handleSubmit = () => {
-    setIsSubmitClick(true);
+    setIsSubmitClicked(true);
 
     if (hasErrors) {
       return undefined;
@@ -57,7 +56,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
           defaultValue={"Тип счета"}
           value={inputFields.account.name}
           items={ACCOUNT_TYPES}
-          isSubmit={isSubmitClick}
+          isSubmit={isSubmitClicked}
           onChange={handleInputChange}
           error={errors.account}
         />
@@ -66,7 +65,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
           defaultValue={"Валюта счета"}
           value={inputFields.currency.code}
           items={CURRENCIES}
-          isSubmit={isSubmitClick}
+          isSubmit={isSubmitClicked}
           onChange={handleInputChange}
           error={errors.currency}
         />
@@ -103,7 +102,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
             name={"name"}
             value={inputFields.name}
             floating={true}
-            isSubmit={isSubmitClick}
+            isSubmit={isSubmitClicked}
             onChange={handleInputChange}
             error={errors.name}
           />
@@ -115,7 +114,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
             name={"sum"}
             value={inputFields.sum}
             floating={true}
-            isSubmit={isSubmitClick}
+            isSubmit={isSubmitClicked}
             onChange={handleInputChange}
             error={errors.sum}
           />
