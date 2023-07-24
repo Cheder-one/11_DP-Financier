@@ -8,6 +8,9 @@ export default {
     //   sm: "320px"
     // },
     extend: {
+      fontFamily: {
+        "space-mono-bold": ["'Space Mono'", "monospace"]
+      },
       height: {
         "0vh": "0vh",
         "2vh": "2vh",
