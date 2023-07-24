@@ -1,56 +1,94 @@
 import { useState } from "react";
+
 import TextField from "../common/form/textField";
+import { constantsData } from "../../utils";
+import useEventListener from "../../hooks/useEventListener";
+import { evaluate } from "mathjs";
+const { NUMPAD, OPERATORS } = constantsData;
 
 const Calculator = () => {
   const [display, setDisplay] = useState("0");
 
   const handleInputChange = ({ target }) => {
     const { value } = target;
-    const isNum = /^[\d+\-*/%().]*$/.test(value);
+    const isValid = /^[\d+\-*/%().]*$/.test(value);
 
-    if (isNum) {
+    if (isValid) {
       setDisplay(value);
     }
   };
 
+  const handleClick = ({ target }) => {
+    const { value } = target;
+
+    if (value) {
+      setDisplay((prev) => {
+        if (prev === "0") {
+          return value;
+        }
+        return (prev += value);
+      });
+    }
+  };
+
+  const handleClear = () => {
+    setDisplay("0");
+  };
+
+  const handleEval = () => {
+    try {
+      const result = evaluate(display);
+      setDisplay(result.toString());
+    } catch (error) {
+      setDisplay("Error");
+    }
+  };
+
+  const handleKeyPress = ({ keyCode }) => {
+    if (keyCode === 13) {
+      handleEval();
+    }
+  };
+
+  useEventListener("keydown", handleKeyPress);
+
   return (
-    <div className="calculator w-44 flex flex-col rounded bg-[#EBEAE6] font-space-mono-bold">
+    <div className="calculator inline-block w-44 rounded bg-[#EBEAE6] font-space-mono-bold select-none">
       <TextField
         containerClass={"px-2 mb-4"}
-        inputClass={"text-right h-1/2"}
+        inputClass={"text-right"}
         name={"calculator"}
         value={display}
         validating={false}
         onChange={handleInputChange}
       />
-      <div className="grid grid-cols-2 pb-4">
+      <div className="numpad grid grid-cols-2 pb-4" onClick={handleClick}>
         <div className="grid grid-cols-3 gap-2 mx-auto">
-          <button className="w-8 h-5">7</button>
-          <button className="w-8 h-5">8</button>
-          <button className="w-8 h-5">9</button>
-          <button className="w-8 h-5">4</button>
-          <button className="w-8 h-5">5</button>
-          <button className="w-8 h-5">6</button>
-          <button className="w-8 h-5">1</button>
-          <button className="w-8 h-5">2</button>
-          <button className="w-8 h-5">3</button>
-          <button className="w-8 h-5">0</button>
-          <button className="w-8 h-5">.</button>
-          <div className="items-end">
+          {NUMPAD.map((num) => (
+            <button key={num} className="w-8 h-5" value={num}>
+              {num}
+            </button>
+          ))}
+          <div className="items-end" onClick={handleClear}>
             <button className="w-8 h-5 text-xs">DEL</button>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 m-auto text-[#ABA6A3]">
-          <button className="w-8 h-5">/</button>
-          <button className="w-8 h-5">(</button>
-          <button className="w-8 h-5">x</button>
-          <button className="w-8 h-5">)</button>
-          <button className="w-8 h-5">-</button>
-          <button className="text-red-50 bg-red-500 focus:outline-none active:bg-red-600 active:text-white rounded-md row-span-2 w-8 h-10 mt-[7px]">
+        <div className="grid grid-cols-2 gap-x-1 gap-y-2 m-auto text-[#ABA6A3]">
+          {OPERATORS.map((num) => (
+            <button key={num} className="w-8 h-5" value={num}>
+              {num}
+            </button>
+          ))}
+          <button
+            className="w-8 h-10 mt-[7px] row-span-2 text-red-50 bg-red-500 active:bg-red-600 rounded-md"
+            onClick={handleEval}
+          >
             =
           </button>
-          <button className="w-8 h-5">+</button>
+          <button className="w-8 h-5" value={"+"}>
+            +
+          </button>
         </div>
       </div>
     </div>

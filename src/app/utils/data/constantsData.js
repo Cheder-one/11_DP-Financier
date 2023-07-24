@@ -24,9 +24,14 @@ const CURRENCIES = [
   { id: 10, name: "Индийская Рупия (INR)", code: "INR" }
 ];
 
+const NUMPAD = ["7", "8", "9", "4", "5", "6", "1", "2", "3", "0", "."];
+const OPERATORS = ["/", "(", "*", ")", "-"];
+
 const constantsData = {
   ACCOUNT_TYPES,
-  CURRENCIES
+  CURRENCIES,
+  NUMPAD,
+  OPERATORS
 };
 
 export default constantsData;
