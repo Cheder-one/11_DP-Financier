@@ -41,11 +41,12 @@ const IconPicker = ({ name, value, color, className, drop, onChange }) => {
   return (
     <DropdownSheet
       isOpen={isOpen}
+      drop={drop}
+      squareSize={"17px"}
       value={<SelectedIcon color={color} />}
       defaultValue={<FaQuestionCircle color="blue" />}
-      drop={drop}
-      className={className}
-      squareSize={"17px"}
+      containerClass={className}
+      dropListClass={"p-0 max-h-max"}
       onToggleShow={handleToggleShow}
       onRef={handleRef}
     >

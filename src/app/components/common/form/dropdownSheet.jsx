@@ -8,7 +8,8 @@ const DropdownSheet = ({
   label,
   value,
   defaultValue,
-  className,
+  containerClass,
+  dropListClass,
   squareSize,
   drop,
   onRef,
@@ -23,7 +24,7 @@ const DropdownSheet = ({
 
   return (
     <Dropdown
-      className={className}
+      className={containerClass}
       autoClose="true"
       show={isOpen}
       ref={itemRef}
@@ -43,7 +44,7 @@ const DropdownSheet = ({
         </div>
       </Dropdown.Toggle>
 
-      <Dropdown.Menu className="p-0">{children}</Dropdown.Menu>
+      <Dropdown.Menu className={dropListClass}>{children}</Dropdown.Menu>
     </Dropdown>
   );
 };
@@ -64,17 +65,19 @@ CustomToggle.displayName = "CustomToggle";
 
 DropdownSheet.defaultProps = {
   squareSize: "20px",
-  className: "dropdown-sheet"
+  className: "dropdown-sheet",
+  dropListClass: "p-0"
 };
 
 DropdownSheet.propTypes = {
   children: PropTypes.node.isRequired,
-  label: PropTypes.string,
-  value: PropTypes.any,
-  defaultValue: PropTypes.any,
-  className: PropTypes.string,
-  squareSize: PropTypes.string,
   drop: PropTypes.string,
+  value: PropTypes.any,
+  label: PropTypes.string,
+  squareSize: PropTypes.string,
+  defaultValue: PropTypes.any,
+  containerClass: PropTypes.string,
+  dropListClass: PropTypes.string,
   onRef: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onToggleShow: PropTypes.func.isRequired

@@ -166,7 +166,6 @@ const MainPage = ({ userId }) => {
 
   return keys(user || {}).length > 0 ? (
     <div className="mx-4">
-      <Calculator />
       <TableCardsShell
         dropList={{
           account: user.accounts,

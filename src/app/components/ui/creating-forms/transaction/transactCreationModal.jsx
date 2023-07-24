@@ -2,12 +2,13 @@ import PropTypes from "prop-types";
 import { useRef } from "react";
 
 import ModalPopup from "../../../common/modal/modalPopup";
+import TransactCreationForm from "./transactCreationForm";
 
 const TransactCreationModal = ({ showModal, setShowModal }) => {
-  const accountFormRef = useRef(null);
+  const transactFormRef = useRef(null);
 
   const handleModalSave = () => {
-    const isDataValid = accountFormRef.current.handleSubmit();
+    const isDataValid = transactFormRef.current.handleSubmit();
 
     if (isDataValid) {
       console.log(isDataValid);
@@ -21,7 +22,7 @@ const TransactCreationModal = ({ showModal, setShowModal }) => {
       onSave={handleModalSave}
       {...{ showModal, setShowModal }}
     >
-      <h1>Блять</h1>
+      <TransactCreationForm ref={transactFormRef} />
     </ModalPopup>
   );
 };

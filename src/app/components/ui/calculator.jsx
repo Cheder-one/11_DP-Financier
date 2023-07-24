@@ -1,14 +1,13 @@
 import { useRef, useState } from "react";
+import { evaluate } from "mathjs";
 
 import TextField from "../common/form/textField";
 import { constantsData } from "../../utils";
 import useEventListener from "../../hooks/useEventListener";
-import { evaluate } from "mathjs";
 const { NUMPAD, OPERATORS } = constantsData;
 
 const Calculator = () => {
   const [display, setDisplay] = useState("");
-
   const evalBtnRef = useRef();
 
   const handleInputChange = ({ target }) => {
