@@ -11,7 +11,6 @@ const AccountCreationModal = ({ showModal, setShowModal }) => {
     const isDataValid = accountFormRef.current.handleSubmit();
 
     if (isDataValid) {
-      console.log(isDataValid);
       setShowModal(false);
     }
   };

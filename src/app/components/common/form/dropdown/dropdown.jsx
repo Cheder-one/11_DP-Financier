@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 import { Dropdown, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
-import { getBorderStyle } from "../../../utils";
-import useBlurOnSubmit from "../../../hooks/useBlurOnSubmit";
+import { getBorderStyle } from "../../../../utils";
+import useBlurOnSubmit from "../../../../hooks/useBlurOnSubmit";
 
 const DropdownComponent = ({
   label,

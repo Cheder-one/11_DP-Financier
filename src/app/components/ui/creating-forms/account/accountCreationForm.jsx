@@ -2,7 +2,7 @@ import { useState, forwardRef, useImperativeHandle } from "react";
 import { keys } from "lodash";
 import { Col, Form, Row } from "react-bootstrap";
 
-import Dropdown from "../../../common/form/dropdown";
+import Dropdown from "../../../common/form/dropdown/dropdown";
 import TextField from "../../../common/form/textField";
 import { IconPicker, ColorPicker } from "../../../common/pickers";
 import { constantsData, validationSchema } from "../../../../utils";
@@ -76,7 +76,6 @@ const AccountCreationForm = forwardRef((props, ref) => {
           <Row className="h-7">
             <Col>
               <IconPicker
-                drop={"down"}
                 name={"icon"}
                 value={inputFields.icon}
                 color={inputFields.iconColor}
@@ -87,7 +86,6 @@ const AccountCreationForm = forwardRef((props, ref) => {
           <Row className="pt-1">
             <Col>
               <ColorPicker
-                drop={"down"}
                 name={"iconColor"}
                 value={inputFields.iconColor}
                 onChange={handleInputChange}

@@ -1,14 +1,12 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useRef } from "react";
 import { CompactPicker } from "react-color";
 
-import DropdownSheet from "../form/dropdownSheet";
-import useClickOutside from "../../../hooks/useClickOutside";
+import DropdownSheet from "../form/dropdown/dropdownSheet";
 import { MdOutlineFormatColorFill } from "react-icons/md";
 
 const ColorPicker = ({ name, value, className, drop, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [itemRef, setItemRef] = useState(null);
+  const dropdownSheetRef = useRef(null);
 
   const handleItemSelect = (color) => {
     onChange({
@@ -18,28 +16,15 @@ const ColorPicker = ({ name, value, className, drop, onChange }) => {
       }
     });
 
-    setIsOpen(false);
+    dropdownSheetRef?.current.toggleShow();
   };
-
-  const handleToggleShow = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const handleRef = (ref) => {
-    setItemRef(ref);
-  };
-
-  useClickOutside(itemRef, () => setIsOpen(false));
 
   return (
     <DropdownSheet
-      isOpen={isOpen}
-      defaultValue={<MdOutlineFormatColorFill />}
-      drop={drop}
-      className={className}
       squareSize={"17px"}
-      onToggleShow={handleToggleShow}
-      onRef={handleRef}
+      className={className}
+      ref={dropdownSheetRef}
+      defaultValue={<MdOutlineFormatColorFill />}
     >
       <CompactPicker color={value} onChange={handleItemSelect} />
     </DropdownSheet>
