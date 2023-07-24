@@ -14,6 +14,7 @@ const TextField = ({
   name,
   value,
   error,
+  placeholder,
   floating,
   textaria,
   validating,
@@ -72,6 +73,7 @@ const TextField = ({
               name={name}
               value={value}
               type={getFieldType()}
+              placeholder={placeholder}
               isValid={isValidField()}
               isInvalid={isInvalidField()}
               onChange={handleChange}
@@ -107,6 +109,7 @@ TextField.propTypes = {
   as: PropTypes.object,
   containerClass: PropTypes.string,
   inputClass: PropTypes.string,
+  placeholder: PropTypes.string,
   floating: PropTypes.bool,
   textaria: PropTypes.bool,
   validating: PropTypes.bool,

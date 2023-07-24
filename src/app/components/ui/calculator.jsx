@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import TextField from "../common/form/textField";
 import { constantsData } from "../../utils";
@@ -7,7 +7,9 @@ import { evaluate } from "mathjs";
 const { NUMPAD, OPERATORS } = constantsData;
 
 const Calculator = () => {
-  const [display, setDisplay] = useState("0");
+  const [display, setDisplay] = useState("");
+
+  const evalBtnRef = useRef();
 
   const handleInputChange = ({ target }) => {
     const { value } = target;
@@ -22,31 +24,26 @@ const Calculator = () => {
     const { value } = target;
 
     if (value) {
-      setDisplay((prev) => {
-        if (prev === "0") {
-          return value;
-        }
-        return (prev += value);
-      });
+      setDisplay((prev) => (prev += value));
     }
   };
 
   const handleClear = () => {
-    setDisplay("0");
+    setDisplay("");
   };
 
   const handleEval = () => {
     try {
       const result = evaluate(display);
       setDisplay(result.toString());
-    } catch (error) {
+    } catch (err) {
       setDisplay("Error");
     }
   };
 
   const handleKeyPress = ({ keyCode }) => {
     if (keyCode === 13) {
-      handleEval();
+      evalBtnRef.current.click();
     }
   };
 
@@ -59,6 +56,7 @@ const Calculator = () => {
         inputClass={"text-right"}
         name={"calculator"}
         value={display}
+        placeholder={"0"}
         validating={false}
         onChange={handleInputChange}
       />
@@ -83,6 +81,7 @@ const Calculator = () => {
           <button
             className="w-8 h-10 mt-[7px] row-span-2 text-red-50 bg-red-500 active:bg-red-600 rounded-md"
             onClick={handleEval}
+            ref={evalBtnRef}
           >
             =
           </button>
