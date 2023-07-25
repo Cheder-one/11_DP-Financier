@@ -95,7 +95,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
 
           <Col md={11}>
             <Row className="flex items-end">
-              <Col md={7}>
+              <Col md={7} className="pl-0.5">
                 <TextField
                   containerClass={"mb-0"}
                   label={"Название счета"}
