@@ -1,3 +1,4 @@
+// Utils
 import themeConfig from "./styles/themeConfig.js";
 import validationSchema from "./validators/validationSchema";
 import getAvatar from "./functions/getAvatar";
@@ -7,6 +8,7 @@ import getBorderStyle from "./styles/getBorderStyle";
 import updIncomeExpenseTransacts from "./functions/updIncomeExpenseTransacts";
 import getUserData from "./service/getUserData";
 import constantsData from "./data/constantsData.js";
+import inputChange from "./functions/inputChange";
 
 export {
   themeConfig,
@@ -17,5 +19,6 @@ export {
   getBorderStyle,
   updIncomeExpenseTransacts,
   getUserData,
-  constantsData
+  constantsData,
+  inputChange
 };

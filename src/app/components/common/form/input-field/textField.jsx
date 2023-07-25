@@ -50,7 +50,7 @@ const TextField = ({
   return (
     <>
       <Form.Group controlId={name} as={as} className={containerClass}>
-        {floating ? "" : <Form.Label>{label}</Form.Label>}
+        {!floating && label && <Form.Label>{label}</Form.Label>}
         <InputGroup hasValidation>
           {floating ? (
             <FloatingLabel label={label}>

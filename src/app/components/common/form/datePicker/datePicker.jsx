@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { useClickOutside } from "../../../../hooks";
 registerLocale("ru", ru);
 
-const DatePicker = ({ containerClass, childrenClass }) => {
+const DatePicker = ({ containerClass, childrenClass, children }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,7 +28,7 @@ const DatePicker = ({ containerClass, childrenClass }) => {
         open={isOpen}
         className={childrenClass}
         selected={selectedDate}
-        // customInput={<CustomInput />}
+        customInput={children}
         onChange={handleDateChange}
         onInputClick={onInputClick}
         locale="ru"
@@ -41,8 +41,8 @@ const DatePicker = ({ containerClass, childrenClass }) => {
 };
 
 DatePicker.defaultProps = {
-  containerClass: " rounded w-fit",
-  childrenClass: "w-28 pl-1"
+  // containerClass: "rounded w-fit",
+  // childrenClass: "w-28 pl-1"
 };
 
 DatePicker.propTypes = {

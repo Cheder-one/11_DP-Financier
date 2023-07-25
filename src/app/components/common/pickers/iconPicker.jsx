@@ -3,7 +3,7 @@ import { find } from "lodash";
 import { useMemo, useRef } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
 
-import DropdownSheet from "../form/dropdown/dropdownSheet";
+import DropdownSheet from "../form/dropdown/drop-sheet/dropdownSheet";
 import IconTable from "../../ui/icon-table/iconTable";
 import { iconsArray } from "../../../assets/icons/iconsImport";
 

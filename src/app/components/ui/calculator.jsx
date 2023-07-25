@@ -50,9 +50,9 @@ const Calculator = () => {
   useEventListener("keydown", handleKeyPress);
 
   return (
-    <div className="calculator w-44 rounded bg-[#EBEAE6] font-space-mono-bold select-none">
+    <div className="calculator w-44 rounded bg-[#EBEAE6] font-space-mono-bold select-none ">
       <TextField
-        containerClass={"px-2 mb-4"}
+        containerClass={"px-2 py-3"}
         childrenClass={"text-right"}
         name={"calculator"}
         value={display}

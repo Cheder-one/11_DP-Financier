@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { Dropdown } from "react-bootstrap";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { IconContext } from "react-icons";
 
-import { useClickOutside } from "../../../../hooks";
+import { useClickOutside } from "../../../../../hooks";
 import CustomToggle from "./customToggle";
+import IconProvider from "./iconProvider";
 
 const DropdownSheet = forwardRef(
   (
@@ -15,6 +15,7 @@ const DropdownSheet = forwardRef(
       defaultValue,
       containerClass,
       childrenClass,
+      iconClass,
       squareSize,
       drop
     },
@@ -48,11 +49,12 @@ const DropdownSheet = forwardRef(
           className="border"
           onClick={handleToggleShow}
         >
-          <div className="flex justify-center cursor-pointer border rounded w-fit p-1 relative z-0">
-            <IconContext.Provider value={{ size: squareSize }}>
-              {value || defaultValue}
-            </IconContext.Provider>
-          </div>
+          <IconProvider
+            iconClass={iconClass}
+            squareSize={squareSize}
+            value={value}
+            defaultValue={defaultValue}
+          />
         </Dropdown.Toggle>
 
         <Dropdown.Menu className={childrenClass}>{children}</Dropdown.Menu>
@@ -66,7 +68,8 @@ DropdownSheet.displayName = "CustomToggle";
 DropdownSheet.defaultProps = {
   squareSize: "20px",
   containerClass: "dropdown-sheet w-fit",
-  childrenClass: "p-0"
+  childrenClass: "p-0",
+  iconClass: "flex justify-center cursor-pointer border rounded w-fit p-1"
 };
 
 DropdownSheet.propTypes = {
@@ -77,7 +80,8 @@ DropdownSheet.propTypes = {
   squareSize: PropTypes.string,
   defaultValue: PropTypes.any,
   containerClass: PropTypes.string,
-  childrenClass: PropTypes.string
+  childrenClass: PropTypes.string,
+  iconClass: PropTypes.string
 };
 
 export default DropdownSheet;
