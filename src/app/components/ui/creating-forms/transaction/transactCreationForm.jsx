@@ -1,46 +1,71 @@
 import { forwardRef, useState } from "react";
-
-import DropdownSheet from "../../../common/form/dropdown/dropdownSheet";
-import Calculator from "../../calculator";
-import useClickOutside from "../../../../hooks/useClickOutside";
 import { BiSolidCalculator } from "react-icons/bi";
+import { Row, Col } from "react-bootstrap";
+
+import {
+  DropdownComponent,
+  DropdownSheet,
+  DatePicker,
+  TextField
+} from "../../../common/form";
+import Calculator from "../../calculator";
 
 const TransactCreationForm = forwardRef((props, ref) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [itemRef, setItemRef] = useState(null);
+  const [inputFields, setInputFields] = useState({
+    account: {},
+    date: {},
+    category: "",
+    sum: "",
+    comment: ""
+  });
 
-  // const handleItemSelect = (color) => {
-  //   onChange({
-  //     target: {
-  //       name,
-  //       value: color.hex
-  //     }
-  //   });
+  // const errors = useFormValidation(inputFields, '');
+  // const hasErrors = keys(errors).length;
 
-  //   setIsOpen(false);
-  // };
+  const handleInputChange = ({ target }) => {
+    const { name, value } = target;
 
-  const handleToggleShow = () => {
-    setIsOpen((prev) => !prev);
+    setInputFields((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
-  const handleRef = (ref) => {
-    setItemRef(ref);
-  };
-
-  useClickOutside(itemRef, () => setIsOpen(false));
 
   return (
-    <DropdownSheet
-      isOpen={isOpen}
-      dropListClass={"p-0 max-h-max"}
-      defaultValue={<BiSolidCalculator size={21} />}
-      squareSize={"17px"}
-      onToggleShow={handleToggleShow}
-      onRef={handleRef}
-    >
-      <Calculator />
-    </DropdownSheet>
+    <>
+      <DropdownComponent
+        name={"account"}
+        defaultValue={"Счет"}
+        value={inputFields.account.name}
+        items={[]}
+        // isSubmit={isSubmitClicked}
+        onChange={handleInputChange}
+        // error={errors.account}
+      />
+
+      {/* Creatable Multiselect Component  */}
+
+      <TextField
+        containerClass={"mt-3"}
+        label={"Сумма"}
+        name={"sum"}
+        value={inputFields.sum}
+        floating={true}
+        // isSubmit={isSubmitClicked}
+        // onChange={handleInputChange}
+        // error={errors.sum}
+      />
+
+      <DropdownSheet
+        squareSize={"17px"}
+        dropListClass={"p-0 max-h-max"}
+        defaultValue={<BiSolidCalculator size={21} />}
+      >
+        <Calculator />
+      </DropdownSheet>
+
+      <DatePicker />
+    </>
   );
 });
 

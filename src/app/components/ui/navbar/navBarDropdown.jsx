@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Dropdown, DropdownButton, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
-import SwitchForm from "../../common/form/switchField";
+import { SwitchField } from "../../common/form";
 import { getAvatar } from "../../../utils";
 
 const NavBarDropdown = ({ darkTheme, onSelect }) => {
@@ -30,7 +30,7 @@ const NavBarDropdown = ({ darkTheme, onSelect }) => {
           Профиль
         </Dropdown.Item>
         <Dropdown.Item eventKey="switch-theme">
-          <SwitchForm label="Ночь" darkTheme={darkTheme} />
+          <SwitchField label="Ночь" darkTheme={darkTheme} />
         </Dropdown.Item>
         <Dropdown.Item eventKey="settings" as={Link} to={"/settings"}>
           Настройки

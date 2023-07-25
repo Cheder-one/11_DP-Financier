@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import { evaluate } from "mathjs";
 
-import TextField from "../common/form/textField";
+import { TextField } from "../common/form";
 import { constantsData } from "../../utils";
-import useEventListener from "../../hooks/useEventListener";
+import { useEventListener } from "../../hooks";
+
 const { NUMPAD, OPERATORS } = constantsData;
 
 const Calculator = () => {
@@ -49,7 +50,7 @@ const Calculator = () => {
   useEventListener("keydown", handleKeyPress);
 
   return (
-    <div className="calculator inline-block w-44 rounded bg-[#EBEAE6] font-space-mono-bold select-none">
+    <div className="calculator w-44 rounded bg-[#EBEAE6] font-space-mono-bold select-none">
       <TextField
         containerClass={"px-2 mb-4"}
         inputClass={"text-right"}

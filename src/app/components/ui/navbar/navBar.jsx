@@ -4,7 +4,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import { useContext, useEffect, useRef, useState } from "react";
 
 import LOGO_SRC from "../../../assets/logo/logo";
-import HeaderContainer from "../../common/typography/headerContainer";
+import { HeaderContainer } from "../../common/typography";
 import { ThemeContext } from "../../common/theme/ThemeContext";
 import NavBarDropdown from "./navBarDropdown";
 

@@ -18,7 +18,7 @@ const TransactCreationModal = ({ showModal, setShowModal }) => {
 
   return (
     <ModalPopup
-      title="Новая операция"
+      title="Новый Расход"
       onSave={handleModalSave}
       {...{ showModal, setShowModal }}
     >

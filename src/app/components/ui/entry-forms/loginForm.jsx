@@ -4,9 +4,9 @@ import { Alert, Button, Form } from "react-bootstrap";
 
 import { validationSchema } from "../../../utils";
 import TextField from "../../common/form/textField";
-import CheckboxField from "../../common/form/checkboxField";
-import ContentBetween from "../../common/typography/contentBetween";
-import useFormValidation from "../../../hooks/useFormValidation";
+import { CheckboxField } from "../../common/form";
+import { ContentBetween } from "../../common/typography";
+import { useFormValidation } from "../../../hooks";
 
 const LoginForm = () => {
   const { loginSchema } = validationSchema;

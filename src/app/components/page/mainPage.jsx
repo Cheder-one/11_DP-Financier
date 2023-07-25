@@ -10,8 +10,8 @@ import {
   updIncomeExpenseTransacts
 } from "../../utils";
 import Loader from "../ui/spinner";
-import TableCardsShell from "../ui/table-cards/tableCardsShell";
-import useModal from "../../hooks/useModal";
+import { TableCardsShell } from "../ui/table-cards";
+import { useModal } from "../../hooks";
 import {
   AccountCreationModal,
   TransactCreationModal

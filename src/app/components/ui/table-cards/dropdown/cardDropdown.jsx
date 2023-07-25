@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
-import OverlayTooltip from "../../../common/typography/overlayTooltip";
-import useClickOutside from "../../../../hooks/useClickOutside";
+import { OverlayTooltip } from "../../../common/typography";
+import { useClickOutside } from "../../../../hooks";
 
 const getIdAllItem = (type) => {
   return {

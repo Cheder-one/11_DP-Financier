@@ -2,11 +2,11 @@ import { useState, forwardRef, useImperativeHandle } from "react";
 import { keys } from "lodash";
 import { Col, Form, Row } from "react-bootstrap";
 
-import Dropdown from "../../../common/form/dropdown/dropdown";
+import { DropdownComponent } from "../../../common/form";
 import TextField from "../../../common/form/textField";
 import { IconPicker, ColorPicker } from "../../../common/pickers";
 import { constantsData, validationSchema } from "../../../../utils";
-import useFormValidation from "../../../../hooks/useFormValidation";
+import { useFormValidation } from "../../../../hooks";
 
 const { accountSchema } = validationSchema;
 const { ACCOUNT_TYPES, CURRENCIES } = constantsData;
@@ -51,7 +51,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
   return (
     <>
       <Form className="flex gap-3" onSubmit={handleSubmit}>
-        <Dropdown
+        <DropdownComponent
           name={"account"}
           defaultValue={"Тип счета"}
           value={inputFields.account.name}
@@ -60,7 +60,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
           onChange={handleInputChange}
           error={errors.account}
         />
-        <Dropdown
+        <DropdownComponent
           name={"currency"}
           defaultValue={"Валюта счета"}
           value={inputFields.currency.code}

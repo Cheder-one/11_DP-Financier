@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { IconContext } from "react-icons";
 
-import useClickOutside from "../../../../hooks/useClickOutside";
+import { useClickOutside } from "../../../../hooks";
 import CustomToggle from "./customToggle";
 
 const DropdownSheet = forwardRef(
@@ -65,7 +65,7 @@ DropdownSheet.displayName = "CustomToggle";
 
 DropdownSheet.defaultProps = {
   squareSize: "20px",
-  className: "dropdown-sheet",
+  containerClass: "dropdown-sheet w-fit",
   dropListClass: "p-0"
 };
 

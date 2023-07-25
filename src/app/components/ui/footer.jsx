@@ -1,6 +1,6 @@
 import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Divider from "../common/typography/divider";
+import { Divider } from "../common/typography";
 
 const Footer = () => {
   return (

@@ -1,10 +1,8 @@
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./app/components/ui/navbar/navBar";
 import Footer from "./app/components/ui/footer";
-import Welcome from "./app/layout/welcome";
-import StickyFooter from "./app/components/common/typography/stickyFooter";
-import Main from "./app/layout/main";
-import Divider from "./app/components/common/typography/divider";
+import { Welcome, Main } from "./app/layout";
+import { StickyFooter, Divider } from "./app/components/common/typography";
 import { ThemeProvider } from "./app/components/common/theme/ThemeContext";
 
 const App = () => {

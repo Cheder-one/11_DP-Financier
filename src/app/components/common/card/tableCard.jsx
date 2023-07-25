@@ -3,7 +3,7 @@ import { keys } from "lodash";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 
-import OverlayTooltip from "../typography/overlayTooltip";
+import { OverlayTooltip } from "../typography";
 
 const TableCard = ({ md, route, title, body }) => {
   return (

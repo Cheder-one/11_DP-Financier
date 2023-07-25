@@ -1,7 +1,7 @@
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-const SwitchForm = ({ label, darkTheme }) => {
+const SwitchField = ({ label, darkTheme }) => {
   console.log(darkTheme);
 
   const handleChange = (e) => {};
@@ -22,10 +22,10 @@ const SwitchForm = ({ label, darkTheme }) => {
   );
 };
 
-SwitchForm.propTypes = {
+SwitchField.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
   darkTheme: PropTypes.bool
 };
 
-export default SwitchForm;
+export default SwitchField;

@@ -3,7 +3,7 @@ import { Dropdown, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 import { getBorderStyle } from "../../../../utils";
-import useBlurOnSubmit from "../../../../hooks/useBlurOnSubmit";
+import { useBlurOnSubmit } from "../../../../hooks";
 
 const DropdownComponent = ({
   label,
