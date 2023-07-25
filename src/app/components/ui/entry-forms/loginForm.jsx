@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 
 import { validationSchema } from "../../../utils";
-import TextField from "../../common/form/textField";
+import TextField from "../../common/form/input-field/textField";
 import { CheckboxField } from "../../common/form";
-import { ContentBetween } from "../../common/typography";
 import { useFormValidation } from "../../../hooks";
 
 const LoginForm = () => {
@@ -87,7 +86,7 @@ const LoginForm = () => {
         onChange={handleInputChange}
         error={errors.password}
       />
-      <ContentBetween className="my-3">
+      <div className="flex justify-between my-3">
         <CheckboxField
           name="stayOn"
           value={inputFields.stayOn}
@@ -102,7 +101,7 @@ const LoginForm = () => {
         >
           Забыли пароль?
         </Button>
-      </ContentBetween>
+      </div>
       <Button
         className="w-100 mx-auto "
         variant="primary"

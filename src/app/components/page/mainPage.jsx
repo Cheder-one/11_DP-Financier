@@ -9,14 +9,13 @@ import {
   getUserData,
   updIncomeExpenseTransacts
 } from "../../utils";
-import Loader from "../ui/spinner";
-import { TableCardsShell } from "../ui/table-cards";
-import { useModal } from "../../hooks";
 import {
   AccountCreationModal,
   TransactCreationModal
 } from "../ui/creating-forms";
-import Calculator from "../ui/calculator";
+import Loader from "../ui/spinner";
+import { TableCardsShell } from "../ui/table-cards";
+import { useModal } from "../../hooks";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});

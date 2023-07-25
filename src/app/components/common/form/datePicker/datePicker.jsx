@@ -3,20 +3,14 @@ import ReactDatePicker, { registerLocale } from "react-datepicker";
 import ru from "date-fns/locale/ru";
 import { useRef, useState } from "react";
 
-import { toReadableDate } from "../../../../utils";
 import { useClickOutside } from "../../../../hooks";
-import CustomInput from "./customInput";
-import TextField from "../textField";
 registerLocale("ru", ru);
 
-const DatePicker = ({ containerClass }) => {
+const DatePicker = ({ containerClass, childrenClass }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
   const calendarRef = useRef(null);
-
-  console.log(toReadableDate(selectedDate).dateOnly);
-  console.log({ selectedDate });
 
   const onInputClick = () => {
     setIsOpen((prev) => !prev);
@@ -31,22 +25,24 @@ const DatePicker = ({ containerClass }) => {
   return (
     <div className={containerClass} ref={calendarRef}>
       <ReactDatePicker
+        open={isOpen}
+        className={childrenClass}
         selected={selectedDate}
-        customInput={<TextField />}
+        // customInput={<CustomInput />}
+        onChange={handleDateChange}
+        onInputClick={onInputClick}
         locale="ru"
         calendarStartDay={1}
         todayButton="Сегодня"
         dateFormat="dd.MM.yyyy"
-        onChange={handleDateChange}
-        onInputClick={onInputClick}
-        open={isOpen}
       />
     </div>
   );
 };
 
 DatePicker.defaultProps = {
-  containerClass: "inline-block p-0 m-0"
+  containerClass: "border-2 rounded w-fit",
+  childrenClass: "w-28 pl-1"
 };
 
 DatePicker.propTypes = {

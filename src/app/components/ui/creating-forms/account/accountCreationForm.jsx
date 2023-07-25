@@ -3,7 +3,7 @@ import { keys } from "lodash";
 import { Col, Form, Row } from "react-bootstrap";
 
 import { DropdownComponent } from "../../../common/form";
-import TextField from "../../../common/form/textField";
+import TextField from "../../../common/form/input-field/textField";
 import { IconPicker, ColorPicker } from "../../../common/pickers";
 import { constantsData, validationSchema } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";

@@ -2,8 +2,8 @@ import { Button, FloatingLabel, Form, InputGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-import { eyeFill, eyeSlash } from "../../../assets/btn/show-hide-pass-svg";
-import { useBlurOnSubmit } from "../../../hooks";
+import { eyeFill, eyeSlash } from "../../../../assets/btn/show-hide-pass-svg";
+import { useBlurOnSubmit } from "../../../../hooks";
 
 const TextField = ({
   as,

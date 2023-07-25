@@ -3,9 +3,9 @@ import CustomInput from "./datePicker/customInput";
 import DatePicker from "./datePicker/datePicker";
 import DropdownComponent from "./dropdown/dropdownComponent";
 import DropdownSheet from "./dropdown/dropdownSheet";
-import CheckboxField from "./checkboxField";
-import SwitchField from "./switchField";
-import TextField from "./textField";
+import CheckboxField from "./checkbox/checkboxField";
+import SwitchField from "./switch/switchField";
+import TextField from "./input-field/textField";
 
 export {
   CustomToggle,
