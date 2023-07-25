@@ -50,83 +50,89 @@ const AccountCreationForm = forwardRef((props, ref) => {
 
   return (
     <>
-      <Form className="flex gap-3" onSubmit={handleSubmit}>
-        <DropdownComponent
-          name={"account"}
-          defaultValue={"Тип счета"}
-          value={inputFields.account.name}
-          items={ACCOUNT_TYPES}
-          isSubmit={isSubmitClicked}
-          onChange={handleInputChange}
-          error={errors.account}
-        />
-        <DropdownComponent
-          name={"currency"}
-          defaultValue={"Валюта счета"}
-          value={inputFields.currency.code}
-          items={CURRENCIES}
-          isSubmit={isSubmitClicked}
-          onChange={handleInputChange}
-          error={errors.currency}
-        />
-      </Form>
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col className="flex gap-3">
+            <DropdownComponent
+              name={"account"}
+              defaultValue={"Тип счета"}
+              value={inputFields.account.name}
+              items={ACCOUNT_TYPES}
+              isSubmit={isSubmitClicked}
+              onChange={handleInputChange}
+              error={errors.account}
+            />
+            <DropdownComponent
+              name={"currency"}
+              defaultValue={"Валюта счета"}
+              value={inputFields.currency.code}
+              items={CURRENCIES}
+              isSubmit={isSubmitClicked}
+              onChange={handleInputChange}
+              error={errors.currency}
+            />
+          </Col>
+        </Row>
 
-      <Row className="flex items-end mt-3 mt-md-0">
-        <Col md={1}>
-          <Row className="h-7">
-            <Col>
+        <Row className="items-end pt-3">
+          <Col md={1} className="grid gap-1">
+            <Row>
               <IconPicker
                 name={"icon"}
                 value={inputFields.icon}
                 color={inputFields.iconColor}
                 onChange={handleInputChange}
               />
-            </Col>
-          </Row>
-          <Row className="pt-1">
-            <Col>
+            </Row>
+            <Row>
               <ColorPicker
                 name={"iconColor"}
                 value={inputFields.iconColor}
                 onChange={handleInputChange}
               />
-            </Col>
-          </Row>
-        </Col>
-        <Col md={6} className="ps-md-0">
-          <TextField
-            containerClass={"mt-3 ms-0 ms-md-1"}
-            label={"Название счета"}
-            name={"name"}
-            value={inputFields.name}
-            floating={true}
-            isSubmit={isSubmitClicked}
-            onChange={handleInputChange}
-            error={errors.name}
-          />
-        </Col>
-        <Col md={5}>
-          <TextField
-            containerClass={"mt-3"}
-            label={"Баланс"}
-            name={"sum"}
-            value={inputFields.sum}
-            floating={true}
-            isSubmit={isSubmitClicked}
-            onChange={handleInputChange}
-            error={errors.sum}
-          />
-        </Col>
-      </Row>
-      <TextField
-        containerClass={"mt-3"}
-        label={"Комментарий"}
-        name={"comment"}
-        value={inputFields.comment}
-        floating={true}
-        textaria={true}
-        onChange={handleInputChange}
-      />
+            </Row>
+          </Col>
+
+          <Col md={11}>
+            <Row className="flex items-end">
+              <Col md={7}>
+                <TextField
+                  containerClass={"mb-0"}
+                  label={"Название счета"}
+                  name={"name"}
+                  value={inputFields.name}
+                  floating={true}
+                  isSubmit={isSubmitClicked}
+                  onChange={handleInputChange}
+                  error={errors.name}
+                />
+              </Col>
+              <Col md={5}>
+                <TextField
+                  containerClass={"mb-0"}
+                  label={"Баланс"}
+                  name={"sum"}
+                  value={inputFields.sum}
+                  floating={true}
+                  isSubmit={isSubmitClicked}
+                  onChange={handleInputChange}
+                  error={errors.sum}
+                />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
+        <TextField
+          containerClass={"mt-3"}
+          label={"Комментарий"}
+          name={"comment"}
+          value={inputFields.comment}
+          floating={true}
+          textaria={true}
+          onChange={handleInputChange}
+        />
+      </Form>
     </>
   );
 });

@@ -11,7 +11,7 @@ const DropdownComponent = ({
   name,
   value,
   items,
-  className,
+  containerClass,
   isSubmit,
   onChange,
   error
@@ -47,15 +47,10 @@ const DropdownComponent = ({
   const borderStyle = getBorderStyle(isBlur, isOpen, isValid);
 
   return (
-    <Form.Group>
+    <Form.Group className={containerClass}>
       <Form.Label>{label}</Form.Label>
 
-      <Dropdown
-        className={className}
-        drop="down"
-        onSelect={handleSelect}
-        onToggle={handleToggle}
-      >
+      <Dropdown drop="down" onSelect={handleSelect} onToggle={handleToggle}>
         <Dropdown.Toggle
           variant="light"
           className={isValid ? "" : "is-invalid"}
@@ -84,7 +79,7 @@ DropdownComponent.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   items: PropTypes.array.isRequired,
-  className: PropTypes.string,
+  containerClass: PropTypes.string,
   error: PropTypes.string,
   isSubmit: PropTypes.bool,
   onChange: PropTypes.func.isRequired

@@ -32,7 +32,6 @@ const TransactCreationForm = forwardRef((props, ref) => {
       <DropdownComponent
         name={"account"}
         defaultValue={"Счет"}
-        containerClass={"w-100"}
         value={inputFields.account.name}
         items={[]}
         // isSubmit={isSubmitClicked}
