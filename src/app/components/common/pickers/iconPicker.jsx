@@ -32,7 +32,7 @@ const IconPicker = ({ name, value, color, className, drop, onChange }) => {
       value={<SelectedIcon color={color} />}
       defaultValue={<FaQuestionCircle color="blue" />}
       containerClass={className}
-      dropListClass={"p-0 max-h-max"}
+      childrenClass={"p-0 max-h-max"}
       ref={dropdownSheetRef}
     >
       <IconTable onItemSelect={handleItemSelect} />

@@ -41,12 +41,13 @@ const DatePicker = ({ containerClass, childrenClass }) => {
 };
 
 DatePicker.defaultProps = {
-  containerClass: "border-2 rounded w-fit",
+  containerClass: " rounded w-fit",
   childrenClass: "w-28 pl-1"
 };
 
 DatePicker.propTypes = {
-  containerClass: PropTypes.string
+  containerClass: PropTypes.string,
+  childrenClass: PropTypes.string
 };
 
 export default DatePicker;

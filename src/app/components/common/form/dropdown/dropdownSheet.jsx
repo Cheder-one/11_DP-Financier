@@ -14,7 +14,7 @@ const DropdownSheet = forwardRef(
       value,
       defaultValue,
       containerClass,
-      dropListClass,
+      childrenClass,
       squareSize,
       drop
     },
@@ -55,7 +55,7 @@ const DropdownSheet = forwardRef(
           </div>
         </Dropdown.Toggle>
 
-        <Dropdown.Menu className={dropListClass}>{children}</Dropdown.Menu>
+        <Dropdown.Menu className={childrenClass}>{children}</Dropdown.Menu>
       </Dropdown>
     );
   }
@@ -66,7 +66,7 @@ DropdownSheet.displayName = "CustomToggle";
 DropdownSheet.defaultProps = {
   squareSize: "20px",
   containerClass: "dropdown-sheet w-fit",
-  dropListClass: "p-0"
+  childrenClass: "p-0"
 };
 
 DropdownSheet.propTypes = {
@@ -77,7 +77,7 @@ DropdownSheet.propTypes = {
   squareSize: PropTypes.string,
   defaultValue: PropTypes.any,
   containerClass: PropTypes.string,
-  dropListClass: PropTypes.string
+  childrenClass: PropTypes.string
 };
 
 export default DropdownSheet;

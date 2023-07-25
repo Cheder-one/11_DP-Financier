@@ -52,13 +52,13 @@ const TransactCreationForm = forwardRef((props, ref) => {
         value={inputFields.sum}
         floating={true}
         // isSubmit={isSubmitClicked}
-        // onChange={handleInputChange}
+        onChange={handleInputChange}
         // error={errors.sum}
       />
 
       <DropdownSheet
         squareSize={"17px"}
-        dropListClass={"p-0 max-h-max"}
+        childrenClass={"p-0 max-h-max"}
         defaultValue={<BiSolidCalculator size={21} />}
       >
         <Calculator />

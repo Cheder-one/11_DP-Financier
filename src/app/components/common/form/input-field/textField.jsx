@@ -8,7 +8,7 @@ import { useBlurOnSubmit } from "../../../../hooks";
 const TextField = ({
   as,
   containerClass,
-  inputClass,
+  childrenClass,
   label,
   type,
   name,
@@ -41,7 +41,7 @@ const TextField = ({
     return !!error && isBlur;
   };
   const getClass = () => {
-    return (textaria ? "h-24 " : "") + inputClass;
+    return (textaria ? "h-24 " : "") + childrenClass;
   };
   const getFieldType = () => {
     return showPass ? "text" : type;
@@ -69,7 +69,7 @@ const TextField = ({
             </FloatingLabel>
           ) : (
             <Form.Control
-              className={inputClass}
+              className={childrenClass}
               name={name}
               value={value}
               type={getFieldType()}
@@ -108,7 +108,7 @@ TextField.propTypes = {
   error: PropTypes.string,
   as: PropTypes.object,
   containerClass: PropTypes.string,
-  inputClass: PropTypes.string,
+  childrenClass: PropTypes.string,
   placeholder: PropTypes.string,
   floating: PropTypes.bool,
   textaria: PropTypes.bool,

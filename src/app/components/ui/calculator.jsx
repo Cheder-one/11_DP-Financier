@@ -53,7 +53,7 @@ const Calculator = () => {
     <div className="calculator w-44 rounded bg-[#EBEAE6] font-space-mono-bold select-none">
       <TextField
         containerClass={"px-2 mb-4"}
-        inputClass={"text-right"}
+        childrenClass={"text-right"}
         name={"calculator"}
         value={display}
         placeholder={"0"}
