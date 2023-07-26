@@ -14,6 +14,7 @@ const DropdownComponent = ({
   items,
   defaultValue,
   containerClass,
+  isAdditionEnabled,
   isCustomToggle,
   isSubmit,
   onChange,
@@ -36,6 +37,7 @@ const DropdownComponent = ({
 
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
+    console.log(selectedItem);
 
     onChange({
       target: {
@@ -78,6 +80,9 @@ const DropdownComponent = ({
               {item.name}
             </Dropdown.Item>
           ))}
+          {isAdditionEnabled && (
+            <Dropdown.Item eventKey="X">Добавить категорию</Dropdown.Item>
+          )}
         </Dropdown.Menu>
 
         {error && (
@@ -102,6 +107,7 @@ DropdownComponent.propTypes = {
   value: PropTypes.string,
   items: PropTypes.array.isRequired,
   containerClass: PropTypes.string,
+  isAdditionEnabled: PropTypes.bool,
   isCustomToggle: PropTypes.bool,
   isSubmit: PropTypes.bool,
   onChange: PropTypes.func.isRequired,

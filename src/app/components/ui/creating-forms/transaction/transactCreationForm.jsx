@@ -15,15 +15,15 @@ import { updateInputFields } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
 
 const TransactCreationForm = forwardRef(({ user }, ref) => {
+  const { accounts, categories } = user;
   const [inputFields, setInputFields] = useState({
-    account: {},
+    account: { name: "" },
     date: new Date(),
-    categories: [],
+    category: { name: "" },
     sum: "",
     comment: ""
   });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  const { accounts, categories } = user;
 
   // const errors = useFormValidation(inputFields, "");
   // const hasErrors = keys(errors).length;
@@ -53,6 +53,17 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
         items={accounts}
         defaultValue={"Счет"}
         value={inputFields.account.name}
+        isSubmit={isSubmitClicked}
+        onChange={handleInputChange}
+        // error={errors.account}
+      />
+
+      <DropdownComponent
+        name={"category"}
+        items={categories}
+        defaultValue={"Категория"}
+        value={inputFields.category.name}
+        isAdditionEnabled={true}
         isSubmit={isSubmitClicked}
         onChange={handleInputChange}
         // error={errors.account}
