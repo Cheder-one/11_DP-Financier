@@ -8,7 +8,7 @@ import getBorderStyle from "./styles/getBorderStyle";
 import updIncomeExpenseTransacts from "./functions/updIncomeExpenseTransacts";
 import getUserData from "./service/getUserData";
 import constantsData from "./data/constantsData.js";
-import inputChange from "./functions/inputChange";
+import updateInputFields from "./functions/updateInputFields";
 
 export {
   themeConfig,
@@ -20,5 +20,5 @@ export {
   updIncomeExpenseTransacts,
   getUserData,
   constantsData,
-  inputChange
+  updateInputFields
 };

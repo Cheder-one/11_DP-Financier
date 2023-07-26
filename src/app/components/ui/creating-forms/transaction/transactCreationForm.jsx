@@ -9,12 +9,12 @@ import {
   TextField
 } from "../../../common/form";
 import Calculator from "../../calculator";
-import { inputChange } from "../../../../utils";
+import { updateInputFields } from "../../../../utils";
 
 const TransactCreationForm = forwardRef((props, ref) => {
   const [inputFields, setInputFields] = useState({
     account: {},
-    date: {},
+    date: new Date(),
     category: "",
     sum: "",
     comment: ""
@@ -24,12 +24,13 @@ const TransactCreationForm = forwardRef((props, ref) => {
   // const hasErrors = keys(errors).length;
 
   const handleInputChange = ({ target }) => {
-    inputChange(target, setInputFields);
+    updateInputFields(target, setInputFields);
   };
 
   return (
     <>
       <DropdownComponent
+        containerClass={"mb-3"}
         name={"account"}
         defaultValue={"Счет"}
         value={inputFields.account.name}
@@ -41,19 +42,17 @@ const TransactCreationForm = forwardRef((props, ref) => {
 
       {/* Creatable Multiselect Component  */}
 
-      <Row className="flex items-center mt-3">
+      <Row className="pt-3">
         <Col md={1}>
           <DropdownSheet
             iconClass={"p-1.5"}
-            childrenClass={"p-0 max-h-max"}
             defaultValue={<BiSolidCalculator size={23} />}
           >
             <Calculator />
           </DropdownSheet>
         </Col>
-        <Col md={5}>
+        <Col md={6}>
           <TextField
-            containerClass={"max-w-sm"}
             name={"sum"}
             placeholder={"Сумма"}
             value={inputFields.sum}
@@ -63,11 +62,24 @@ const TransactCreationForm = forwardRef((props, ref) => {
           />
         </Col>
         <Col md={5}>
-          <DatePicker childrenClass={"max-w-sm"}>
+          <DatePicker
+            name={"date"}
+            value={inputFields.date}
+            onChange={handleInputChange}
+          >
             <Form.Control />
           </DatePicker>
         </Col>
       </Row>
+
+      <TextField
+        label={"Комментарий"}
+        name={"comment"}
+        value={inputFields.comment}
+        floating={true}
+        textaria={true}
+        onChange={handleInputChange}
+      />
     </>
   );
 });

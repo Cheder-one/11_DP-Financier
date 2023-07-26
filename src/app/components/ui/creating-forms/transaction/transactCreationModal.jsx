@@ -3,6 +3,7 @@ import { useRef } from "react";
 
 import ModalPopup from "../../../common/modal/modalPopup";
 import TransactCreationForm from "./transactCreationForm";
+import { useEventListener } from "../../../../hooks";
 
 const TransactCreationModal = ({ showModal, setShowModal }) => {
   const transactFormRef = useRef(null);
@@ -15,6 +16,14 @@ const TransactCreationModal = ({ showModal, setShowModal }) => {
       setShowModal(false);
     }
   };
+
+  const handleKeyPress = ({ keyCode }) => {
+    if (keyCode === 13) {
+      transactFormRef.current.handleSubmit();
+    }
+  };
+
+  useEventListener("keydown", handleKeyPress);
 
   return (
     <ModalPopup

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 
-import { validationSchema } from "../../../utils";
+import { updateInputFields, validationSchema } from "../../../utils";
 import TextField from "../../common/form/input-field/textField";
 import { CheckboxField } from "../../common/form";
 import { useFormValidation } from "../../../hooks";
@@ -18,12 +18,7 @@ const LoginForm = () => {
   const hasErrors = Object.keys(errors).length;
 
   const handleInputChange = ({ target }) => {
-    const { name, value } = target;
-
-    setInputFields((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    updateInputFields(target, setInputFields);
   };
 
   const handleSubmit = async (e) => {

@@ -3,6 +3,7 @@ import { useRef } from "react";
 
 import ModalPopup from "../../../common/modal/modalPopup";
 import AccountCreationForm from "./accountCreationForm";
+import { useEventListener } from "../../../../hooks";
 
 const AccountCreationModal = ({ showModal, setShowModal }) => {
   const accountFormRef = useRef(null);
@@ -14,6 +15,14 @@ const AccountCreationModal = ({ showModal, setShowModal }) => {
       setShowModal(false);
     }
   };
+
+  const handleKeyPress = ({ keyCode }) => {
+    if (keyCode === 13) {
+      accountFormRef.current.handleSubmit();
+    }
+  };
+
+  useEventListener("keydown", handleKeyPress);
 
   return (
     <ModalPopup

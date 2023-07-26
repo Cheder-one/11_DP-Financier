@@ -4,9 +4,12 @@ export default {
   important: true,
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    // screens: {
-    //   sm: "320px"
-    // },
+    screens: {
+      xs: "320px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px"
+    },
     extend: {
       fontFamily: {
         "space-mono-bold": ["'Space Mono'", "monospace"]

@@ -5,7 +5,11 @@ import { Col, Form, Row } from "react-bootstrap";
 import { DropdownComponent } from "../../../common/form";
 import TextField from "../../../common/form/input-field/textField";
 import { IconPicker, ColorPicker } from "../../../common/pickers";
-import { constantsData, validationSchema } from "../../../../utils";
+import {
+  constantsData,
+  updateInputFields,
+  validationSchema
+} from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
 
 const { accountSchema } = validationSchema;
@@ -26,12 +30,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
   const hasErrors = keys(errors).length;
 
   const handleInputChange = ({ target }) => {
-    const { name, value } = target;
-
-    setInputFields((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    updateInputFields(target, setInputFields);
   };
 
   const handleSubmit = () => {
@@ -74,8 +73,8 @@ const AccountCreationForm = forwardRef((props, ref) => {
           </Col>
         </Row>
 
-        <Row className="items-end pt-3">
-          <Col md={1} className="grid gap-1">
+        <Row className="md:pt-3">
+          <Col md={1} className="md:grid mb-md-0 gap-1 | mb-3 flex">
             <Row>
               <IconPicker
                 name={"icon"}
@@ -94,8 +93,8 @@ const AccountCreationForm = forwardRef((props, ref) => {
           </Col>
 
           <Col md={11}>
-            <Row className="flex items-end">
-              <Col md={7} className="pl-0.5">
+            <Row className="d-md-flex gap-md-0 | grid gap-3">
+              <Col md={7} className="md:pl-0.5">
                 <TextField
                   containerClass={"mb-0"}
                   label={"Название счета"}

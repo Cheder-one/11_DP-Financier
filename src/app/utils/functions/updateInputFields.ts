@@ -1,4 +1,4 @@
-const inputChange = (target, setInputFields) => {
+const updateInputFields = (target, setInputFields) => {
   const { name, value } = target;
 
   setInputFields((prev) => ({
@@ -7,4 +7,4 @@ const inputChange = (target, setInputFields) => {
   }));
 };
 
-export default inputChange;
+export default updateInputFields;

@@ -6,8 +6,14 @@ import { useRef, useState } from "react";
 import { useClickOutside } from "../../../../hooks";
 registerLocale("ru", ru);
 
-const DatePicker = ({ containerClass, childrenClass, children }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+const DatePicker = ({
+  name,
+  value,
+  children,
+  containerClass,
+  childrenClass,
+  onChange
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const calendarRef = useRef(null);
@@ -17,7 +23,12 @@ const DatePicker = ({ containerClass, childrenClass, children }) => {
   };
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    onChange({
+      target: {
+        name,
+        value: date
+      }
+    });
   };
 
   useClickOutside(calendarRef, () => setIsOpen(false));
@@ -26,9 +37,9 @@ const DatePicker = ({ containerClass, childrenClass, children }) => {
     <div className={containerClass} ref={calendarRef}>
       <ReactDatePicker
         open={isOpen}
-        className={childrenClass}
-        selected={selectedDate}
+        selected={value}
         customInput={children}
+        className={childrenClass}
         onChange={handleDateChange}
         onInputClick={onInputClick}
         locale="ru"
@@ -46,6 +57,7 @@ DatePicker.defaultProps = {
 };
 
 DatePicker.propTypes = {
+  children: PropTypes.node,
   containerClass: PropTypes.string,
   childrenClass: PropTypes.string
 };
