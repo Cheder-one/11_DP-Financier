@@ -14,11 +14,11 @@ import { updateInputFields } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
 import { keys } from "lodash";
 
-const TransactCreationForm = forwardRef((user, ref) => {
+const TransactCreationForm = forwardRef(({ user }, ref) => {
   const [inputFields, setInputFields] = useState({
     account: {},
     date: new Date(),
-    category: "",
+    categories: [],
     sum: "",
     comment: ""
   });
@@ -45,8 +45,6 @@ const TransactCreationForm = forwardRef((user, ref) => {
     handleSubmit
   }));
 
-  console.log(user.id || []);
-
   return (
     <>
       <DropdownComponent
@@ -54,13 +52,18 @@ const TransactCreationForm = forwardRef((user, ref) => {
         name={"account"}
         defaultValue={"Счет"}
         value={inputFields.account.name}
-        items={user?.categories || []}
+        items={user?.accounts}
         isSubmit={isSubmitClicked}
         onChange={handleInputChange}
         // error={errors.account}
       />
 
-      <Multiselect />
+      <Multiselect
+        name={"categories"}
+        value={inputFields.categories}
+        options={user?.categories}
+        onChange={handleInputChange}
+      />
 
       <Row className="pt-3 ">
         <Col md={1}>

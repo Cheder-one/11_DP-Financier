@@ -1,12 +1,24 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import CreatableSelect from "react-select/creatable";
 
-const Multiselect = ({ selectClass }) => {
+const Multiselect = ({ name, value, options, onChange, selectClass }) => {
+  const handleChange = (selectedOptions) => {
+    onChange({
+      target: {
+        name,
+        value: selectedOptions
+      }
+    });
+  };
+
   return (
     <CreatableSelect
       isMulti
-      options={[]}
+      options={options}
+      value={value}
       className={selectClass ? selectClass + " relative z-10" : "relative z-10"}
+      onChange={handleChange}
     />
   );
 };
