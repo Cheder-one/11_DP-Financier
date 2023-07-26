@@ -50,7 +50,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Row className=" ">
+        <Row className="mb-4">
           <Col className="flex gap-3">
             <DropdownComponent
               name={"account"}
@@ -73,7 +73,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
           </Col>
         </Row>
 
-        <Row className="md:pt-3">
+        <Row className="">
           <Col md={1} className="md:grid mb-md-0 gap-1 | mb-3 flex">
             <Row>
               <IconPicker

@@ -48,28 +48,32 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
 
   return (
     <>
-      <DropdownComponent
-        name={"account"}
-        items={accounts}
-        defaultValue={"Счет"}
-        value={inputFields.account.name}
-        isSubmit={isSubmitClicked}
-        onChange={handleInputChange}
-        // error={errors.account}
-      />
+      <Row className="mb-4">
+        <Col className="flex gap-3">
+          <DropdownComponent
+            name={"account"}
+            items={accounts}
+            defaultValue={"Счет"}
+            value={inputFields.account.name}
+            isSubmit={isSubmitClicked}
+            onChange={handleInputChange}
+            // error={errors.account}
+          />
 
-      <DropdownComponent
-        name={"category"}
-        items={categories}
-        defaultValue={"Категория"}
-        value={inputFields.category.name}
-        isAdditionEnabled={true}
-        isSubmit={isSubmitClicked}
-        onChange={handleInputChange}
-        // error={errors.account}
-      />
+          <DropdownComponent
+            name={"category"}
+            items={categories}
+            defaultValue={"Категория"}
+            value={inputFields.category.name}
+            isAdditionEnabled={true}
+            isSubmit={isSubmitClicked}
+            onChange={handleInputChange}
+            // error={errors.account}
+          />
+        </Col>
+      </Row>
 
-      <Row className="pt-3 ">
+      <Row className="">
         <Col md={1}>
           <DropdownSheet
             iconClass={"p-1.5"}

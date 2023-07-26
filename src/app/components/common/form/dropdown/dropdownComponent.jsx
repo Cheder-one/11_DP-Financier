@@ -5,7 +5,7 @@ import { VscChevronDown } from "react-icons/vsc";
 
 import { getBorderStyle } from "../../../../utils";
 import { useBlurOnSubmit } from "../../../../hooks";
-import { CustomToggleContainer, CustomToggle } from "../index";
+import { CustomToggleContainer, CustomToggle, InputField } from "../index";
 
 const DropdownComponent = ({
   label,
@@ -23,6 +23,7 @@ const DropdownComponent = ({
   const [isBlur, setIsBlur] = useBlurOnSubmit(isSubmit);
   const [isOpen, setIsOpen] = useState(null);
   const [isValid, setIsValid] = useState(true);
+  const [isElemAdding, setIsElemAdding] = useState(false);
 
   const handleToggle = (isOpen) => {
     setIsBlur(true);
@@ -37,36 +38,43 @@ const DropdownComponent = ({
 
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
-    console.log(selectedItem);
 
-    onChange({
-      target: {
-        name,
-        value: selectedItem
-      }
-    });
-
-    setIsValid(true);
+    if (selectedItem.id === "__addNew__") {
+      setIsElemAdding(true);
+      setIsValid(false);
+    } else {
+      onChange({
+        target: {
+          name,
+          value: selectedItem
+        }
+      });
+      setIsElemAdding(false);
+      setIsValid(true);
+    }
   };
 
   const borderClass = getBorderStyle(isBlur, isOpen, isValid);
 
-  const getDropdownClass = () => {
+  const getIsDropdownValid = () => {
     return isValid ? borderClass : borderClass + " is-invalid";
   };
 
   return (
     <Form.Group className={containerClass}>
       {label && <Form.Label>{label}</Form.Label>}
-      <Dropdown onSelect={handleSelect} onToggle={handleToggle}>
+      <Dropdown onSelect={handleSelect} onToggle={handleToggle} show={isOpen}>
         <Dropdown.Toggle
           variant="light"
-          className={getDropdownClass()}
+          className={getIsDropdownValid()}
           as={isCustomToggle ? CustomToggleContainer : undefined}
         >
           {isCustomToggle ? (
-            <CustomToggle borderClass={borderClass}>
-              {value || defaultValue}
+            <CustomToggle
+              borderClass={borderClass}
+              variant={isElemAdding ? "" : "light"}
+            >
+              {isElemAdding ? <InputField /> : value || defaultValue}
               <VscChevronDown className="pl-0.5" />
             </CustomToggle>
           ) : (
@@ -80,8 +88,14 @@ const DropdownComponent = ({
               {item.name}
             </Dropdown.Item>
           ))}
+
           {isAdditionEnabled && (
-            <Dropdown.Item eventKey="X">Добавить категорию</Dropdown.Item>
+            <Dropdown.Item
+              eventKey={JSON.stringify({ id: "__addNew__" })}
+              className="text-blue-700 text-sm border-top"
+            >
+              Добавить категорию
+            </Dropdown.Item>
           )}
         </Dropdown.Menu>
 

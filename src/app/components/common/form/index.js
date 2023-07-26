@@ -8,6 +8,7 @@ import DropdownSheet from "./dropdown/drop-sheet/dropdownSheet";
 import CheckboxField from "./checkbox/checkboxField";
 import SwitchField from "./switch/switchField";
 import TextField from "./input-field/textField";
+import InputField from "./input-field/inputField";
 import Multiselect from "./select/multiSelect";
 
 export {
@@ -20,5 +21,6 @@ export {
   CheckboxField,
   SwitchField,
   TextField,
+  InputField,
   Multiselect
 };
