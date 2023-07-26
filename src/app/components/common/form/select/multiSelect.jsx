@@ -1,34 +1,70 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 import CreatableSelect from "react-select/creatable";
 
-const Multiselect = ({ name, value, options, onChange, selectClass }) => {
+import { Span } from "../../typography";
+import { getNanoId } from "../../../../utils";
+import { useState } from "react";
+
+const Multiselect = ({
+  name,
+  value,
+  options,
+  onChange,
+  selectClass,
+  error
+}) => {
+  const [isValid, setIsValid] = useState(false);
+
+  const getCategoryId = () => {
+    return "category-id-" + getNanoId();
+  };
+
+  const toInitFormat = (items) => {
+    return items.map(({ label, value, __isNew__ }) => ({
+      id: __isNew__ ? getCategoryId() : value,
+      name: label
+    }));
+  };
+
   const handleChange = (selectedOptions) => {
     onChange({
       target: {
         name,
-        value: selectedOptions
+        value: toInitFormat(selectedOptions)
       }
     });
   };
 
+  const getClassName = () => {
+    return selectClass ? selectClass + " relative z-10" : "relative z-10";
+  };
+
   return (
-    <CreatableSelect
-      isMulti
-      options={options}
-      value={value}
-      className={selectClass ? selectClass + " relative z-10" : "relative z-10"}
-      onChange={handleChange}
-    />
+    <>
+      <CreatableSelect
+        isMulti
+        required
+        value={value}
+        options={options}
+        placeholder={<Span text={"Категория"} />}
+        className={getClassName()}
+        onChange={handleChange}
+      />
+      {error && (
+        <div className="text-red-500 mt-1 text-sm">
+          Выберите хотя бы одну категорию
+        </div>
+      )}
+    </>
   );
 };
 
-Multiselect.defaultProps = {
-  // selectClass: "relative z-10"
-};
-
 Multiselect.propTypes = {
-  selectClass: PropTypes.string
+  name: PropTypes.string.isRequired,
+  value: PropTypes.array,
+  options: PropTypes.array.isRequired,
+  selectClass: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 };
 
 export default Multiselect;

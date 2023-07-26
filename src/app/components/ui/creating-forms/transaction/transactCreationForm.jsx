@@ -1,6 +1,8 @@
+import PropTypes from "prop-types";
 import { forwardRef, useState, useImperativeHandle } from "react";
 import { BiSolidCalculator } from "react-icons/bi";
 import { Row, Col, Form } from "react-bootstrap";
+import { keys } from "lodash";
 
 import {
   DropdownComponent,
@@ -12,7 +14,6 @@ import {
 import Calculator from "../../calculator";
 import { updateInputFields } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
-import { keys } from "lodash";
 
 const TransactCreationForm = forwardRef(({ user }, ref) => {
   const [inputFields, setInputFields] = useState({
@@ -23,6 +24,7 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     comment: ""
   });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  const { accounts, categories } = user;
 
   // const errors = useFormValidation(inputFields, "");
   // const hasErrors = keys(errors).length;
@@ -45,6 +47,11 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     handleSubmit
   }));
 
+  const transformCategoryFormat = categories.map(({ id, name }) => ({
+    value: id,
+    label: name
+  }));
+
   return (
     <>
       <DropdownComponent
@@ -52,7 +59,7 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
         name={"account"}
         defaultValue={"Счет"}
         value={inputFields.account.name}
-        items={user?.accounts}
+        items={accounts}
         isSubmit={isSubmitClicked}
         onChange={handleInputChange}
         // error={errors.account}
@@ -60,8 +67,8 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
 
       <Multiselect
         name={"categories"}
-        value={inputFields.categories}
-        options={user?.categories}
+        value={inputFields.categories.name}
+        options={transformCategoryFormat}
         onChange={handleInputChange}
       />
 
@@ -109,5 +116,12 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
 });
 
 TransactCreationForm.displayName = TransactCreationForm;
+
+TransactCreationForm.propTypes = {
+  user: PropTypes.shape({
+    accounts: PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired
+  }).isRequired
+};
 
 export default TransactCreationForm;

@@ -9,6 +9,7 @@ import updIncomeExpenseTransacts from "./functions/updIncomeExpenseTransacts";
 import getUserData from "./service/getUserData";
 import constantsData from "./data/constantsData.js";
 import updateInputFields from "./functions/updateInputFields";
+import getNanoId from "./functions/getNanoId.ts";
 
 export {
   themeConfig,
@@ -20,5 +21,6 @@ export {
   updIncomeExpenseTransacts,
   getUserData,
   constantsData,
-  updateInputFields
+  updateInputFields,
+  getNanoId
 };
