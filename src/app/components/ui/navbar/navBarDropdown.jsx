@@ -15,12 +15,11 @@ const NavBarDropdown = ({ darkTheme, onSelect }) => {
         title={
           <Navbar.Brand className="m-0 items-center">
             <img
-              alt=""
-              src={avatarSrc}
               width="30"
               height="30"
+              src={avatarSrc}
               className="inline-block items-center rounded-full"
-            />{" "}
+            />
             <span className="font-normal text-base">Username</span>
           </Navbar.Brand>
         }
@@ -30,7 +29,7 @@ const NavBarDropdown = ({ darkTheme, onSelect }) => {
           Профиль
         </Dropdown.Item>
         <Dropdown.Item eventKey="switch-theme">
-          <SwitchField label="Ночь" darkTheme={darkTheme} />
+          <SwitchField label="Ночь" isCheck={darkTheme} />
         </Dropdown.Item>
         <Dropdown.Item eventKey="settings" as={Link} to={"/settings"}>
           Настройки

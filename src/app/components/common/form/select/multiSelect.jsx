@@ -9,7 +9,8 @@ const Multiselect = ({
   options,
   placeholder,
   onChange,
-  selectClass,
+  containerClass,
+  multiSelectClass,
   error
 }) => {
   const getCategoryId = () => {
@@ -35,13 +36,16 @@ const Multiselect = ({
   const getClassName = () => {
     const defaultClass = " relative z-10";
 
-    return selectClass ? selectClass + defaultClass : defaultClass;
+    if (multiSelectClass) {
+      return multiSelectClass + defaultClass;
+    }
+    return defaultClass;
   };
 
   return (
-    <>
+    <div className={containerClass}>
       <CreatableSelect
-        isMulti
+        isClearable
         required
         value={value}
         options={options}
@@ -54,7 +58,7 @@ const Multiselect = ({
           Выберите хотя бы одну категорию
         </div>
       )}
-    </>
+    </div>
   );
 };
 
@@ -63,7 +67,8 @@ Multiselect.propTypes = {
   value: PropTypes.array,
   options: PropTypes.array.isRequired,
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  selectClass: PropTypes.string,
+  containerClass: PropTypes.string,
+  multiSelectClass: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.bool
 };

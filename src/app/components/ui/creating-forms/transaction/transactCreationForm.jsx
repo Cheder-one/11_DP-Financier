@@ -8,13 +8,11 @@ import {
   DropdownComponent,
   DropdownSheet,
   DatePicker,
-  TextField,
-  Multiselect
+  TextField
 } from "../../../common/form";
 import Calculator from "../../calculator";
 import { updateInputFields } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
-import { Span } from "../../../common/typography";
 
 const TransactCreationForm = forwardRef(({ user }, ref) => {
   const [inputFields, setInputFields] = useState({
@@ -48,30 +46,16 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     handleSubmit
   }));
 
-  const transformCategoryFormat = categories.map(({ id, name }) => ({
-    value: id,
-    label: name
-  }));
-
   return (
     <>
       <DropdownComponent
-        containerClass={"mb-3"}
         name={"account"}
+        items={accounts}
         defaultValue={"Счет"}
         value={inputFields.account.name}
-        items={accounts}
         isSubmit={isSubmitClicked}
         onChange={handleInputChange}
         // error={errors.account}
-      />
-
-      <Multiselect
-        name={"categories"}
-        value={inputFields.categories.name}
-        options={transformCategoryFormat}
-        placeholder={<Span text={"Категория"} />}
-        onChange={handleInputChange}
       />
 
       <Row className="pt-3 ">

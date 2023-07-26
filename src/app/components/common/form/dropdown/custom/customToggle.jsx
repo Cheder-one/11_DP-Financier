@@ -6,7 +6,7 @@ const CustomToggle = ({ children, borderClass }) => {
     <Button
       variant="light"
       className={
-        "flex items-center rounded cursor-pointer select-none p-1 px-2 w-fit " +
+        "items-center rounded cursor-pointer select-none p-1 px-2 inline-flex " +
         borderClass
       }
     >

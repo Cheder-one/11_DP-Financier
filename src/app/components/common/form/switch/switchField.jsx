@@ -1,9 +1,7 @@
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-const SwitchField = ({ label, darkTheme }) => {
-  console.log(darkTheme);
-
+const SwitchField = ({ label, isCheck }) => {
   const handleChange = (e) => {};
 
   return (
@@ -15,7 +13,7 @@ const SwitchField = ({ label, darkTheme }) => {
         className="m-0"
         type="switch"
         id="theme-switcher"
-        checked={darkTheme}
+        checked={isCheck}
         onChange={handleChange}
       />
     </Form>
@@ -25,7 +23,7 @@ const SwitchField = ({ label, darkTheme }) => {
 SwitchField.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
-  darkTheme: PropTypes.bool
+  isCheck: PropTypes.bool
 };
 
 export default SwitchField;

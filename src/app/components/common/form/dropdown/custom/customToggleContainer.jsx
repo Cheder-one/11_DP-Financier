@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { forwardRef } from "react";
 
 const CustomToggleContainer = forwardRef(({ children, onClick }, ref) => (
-  <button
+  <div
     ref={ref}
     onClick={(e) => {
       e.preventDefault();
@@ -10,7 +10,7 @@ const CustomToggleContainer = forwardRef(({ children, onClick }, ref) => (
     }}
   >
     {children}
-  </button>
+  </div>
 ));
 
 CustomToggleContainer.displayName = "CustomToggleContainer";

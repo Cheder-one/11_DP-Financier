@@ -55,13 +55,12 @@ const DropdownComponent = ({
 
   return (
     <Form.Group className={containerClass}>
-      <Form.Label>{label}</Form.Label>
-
-      <Dropdown drop="down" onSelect={handleSelect} onToggle={handleToggle}>
+      {label && <Form.Label>{label}</Form.Label>}
+      <Dropdown onSelect={handleSelect} onToggle={handleToggle}>
         <Dropdown.Toggle
-          as={isCustomToggle ? CustomToggleContainer : undefined}
           variant="light"
           className={getDropdownClass()}
+          as={isCustomToggle ? CustomToggleContainer : undefined}
         >
           {isCustomToggle ? (
             <CustomToggle borderClass={borderClass}>
@@ -92,6 +91,7 @@ const DropdownComponent = ({
 };
 
 DropdownComponent.defaultProps = {
+  containerClass: "w-fit mt-3",
   isCustomToggle: true
 };
 

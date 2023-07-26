@@ -50,22 +50,22 @@ const AccountCreationForm = forwardRef((props, ref) => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Row>
+        <Row className=" ">
           <Col className="flex gap-3">
             <DropdownComponent
               name={"account"}
+              items={ACCOUNT_TYPES}
               defaultValue={"Тип счета"}
               value={inputFields.account.name}
-              items={ACCOUNT_TYPES}
               isSubmit={isSubmitClicked}
               onChange={handleInputChange}
               // error={errors.account}
             />
             <DropdownComponent
               name={"currency"}
+              items={CURRENCIES}
               defaultValue={"Валюта счета"}
               value={inputFields.currency.code}
-              items={CURRENCIES}
               isSubmit={isSubmitClicked}
               onChange={handleInputChange}
               // error={errors.currency}

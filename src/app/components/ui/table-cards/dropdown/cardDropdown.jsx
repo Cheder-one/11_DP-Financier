@@ -6,14 +6,7 @@ import { VscChevronDown } from "react-icons/vsc";
 
 import { OverlayTooltip } from "../../../common/typography";
 import { useClickOutside } from "../../../../hooks";
-
-const getIdAllItem = (type) => {
-  return {
-    id: "all-" + (type ? `${type}-ids` : "ids"),
-    type,
-    name: "Все"
-  };
-};
+import { getIdAllItem } from "../../../../utils";
 
 const CardDropdown = ({ items, type, onSelect, reset }) => {
   const ALL_ITEM = getIdAllItem(type);
@@ -59,6 +52,7 @@ const CardDropdown = ({ items, type, onSelect, reset }) => {
         <OverlayTooltip text={selectedItem?.name || selectedItem} />
         <VscChevronDown size="" className="pl-0.5" />
       </button>
+
       {isOpen && (
         <div
           className="dropdown-menu show bg-white rounded-md shadow-lg cursor-pointer absolute left-1/2 transform -translate-x-1/2 z-10 w-44 py-1 mt-1"
@@ -70,6 +64,7 @@ const CardDropdown = ({ items, type, onSelect, reset }) => {
           >
             Все
           </a>
+
           {items.map((item) => (
             <a
               id={JSON.stringify(item)}
