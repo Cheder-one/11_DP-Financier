@@ -1,3 +1,4 @@
+// Forms
 import CustomToggle from "./dropdown/drop-sheet/customToggle";
 import CustomInput from "./datePicker/customInputDate";
 import DatePicker from "./datePicker/datePicker";
@@ -6,6 +7,7 @@ import DropdownSheet from "./dropdown/drop-sheet/dropdownSheet";
 import CheckboxField from "./checkbox/checkboxField";
 import SwitchField from "./switch/switchField";
 import TextField from "./input-field/textField";
+import Multiselect from "./select/multiSelect";
 
 export {
   CustomToggle,
@@ -15,5 +17,6 @@ export {
   DropdownSheet,
   CheckboxField,
   SwitchField,
-  TextField
+  TextField,
+  Multiselect
 };

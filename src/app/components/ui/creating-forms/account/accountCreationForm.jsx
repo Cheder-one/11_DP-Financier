@@ -59,7 +59,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
               items={ACCOUNT_TYPES}
               isSubmit={isSubmitClicked}
               onChange={handleInputChange}
-              error={errors.account}
+              // error={errors.account}
             />
             <DropdownComponent
               name={"currency"}
@@ -68,7 +68,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
               items={CURRENCIES}
               isSubmit={isSubmitClicked}
               onChange={handleInputChange}
-              error={errors.currency}
+              // error={errors.currency}
             />
           </Col>
         </Row>
@@ -129,6 +129,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
           value={inputFields.comment}
           floating={true}
           textaria={true}
+          isSubmit={isSubmitClicked}
           onChange={handleInputChange}
         />
       </Form>

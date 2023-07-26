@@ -187,7 +187,7 @@ const MainPage = ({ userId }) => {
       {cardTypeToAdd === "account" ? (
         <AccountCreationModal {...{ showModal, setShowModal }} />
       ) : (
-        <TransactCreationModal {...{ showModal, setShowModal }} />
+        <TransactCreationModal {...{ user, showModal, setShowModal }} />
       )}
     </div>
   ) : (

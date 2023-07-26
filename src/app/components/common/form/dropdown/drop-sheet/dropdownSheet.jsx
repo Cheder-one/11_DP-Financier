@@ -68,7 +68,7 @@ DropdownSheet.displayName = "CustomToggle";
 DropdownSheet.defaultProps = {
   squareSize: "20px",
   containerClass: "dropdown-sheet w-fit",
-  childrenClass: "p-0",
+  childrenClass: "p-0 max-h-max border",
   iconClass: "flex justify-center cursor-pointer border rounded w-fit p-1"
 };
 

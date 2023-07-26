@@ -5,7 +5,7 @@ import ModalPopup from "../../../common/modal/modalPopup";
 import TransactCreationForm from "./transactCreationForm";
 import { useEventListener } from "../../../../hooks";
 
-const TransactCreationModal = ({ showModal, setShowModal }) => {
+const TransactCreationModal = ({ user, showModal, setShowModal }) => {
   const transactFormRef = useRef(null);
 
   const handleModalSave = () => {
@@ -31,7 +31,7 @@ const TransactCreationModal = ({ showModal, setShowModal }) => {
       onSave={handleModalSave}
       {...{ showModal, setShowModal }}
     >
-      <TransactCreationForm ref={transactFormRef} />
+      <TransactCreationForm user={user} ref={transactFormRef} />
     </ModalPopup>
   );
 };
