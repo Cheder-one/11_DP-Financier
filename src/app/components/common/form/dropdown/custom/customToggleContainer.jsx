@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
 
-const CustomToggle = forwardRef(({ children, onClick }, ref) => (
-  <div
+const CustomToggleContainer = forwardRef(({ children, onClick }, ref) => (
+  <button
     ref={ref}
     onClick={(e) => {
       e.preventDefault();
@@ -10,14 +10,14 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => (
     }}
   >
     {children}
-  </div>
+  </button>
 ));
 
-CustomToggle.displayName = "CustomToggle";
+CustomToggleContainer.displayName = "CustomToggleContainer";
 
-CustomToggle.propTypes = {
+CustomToggleContainer.propTypes = {
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired
 };
 
-export default CustomToggle;
+export default CustomToggleContainer;

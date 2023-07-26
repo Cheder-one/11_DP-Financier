@@ -14,6 +14,7 @@ import {
 import Calculator from "../../calculator";
 import { updateInputFields } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
+import { Span } from "../../../common/typography";
 
 const TransactCreationForm = forwardRef(({ user }, ref) => {
   const [inputFields, setInputFields] = useState({
@@ -69,6 +70,7 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
         name={"categories"}
         value={inputFields.categories.name}
         options={transformCategoryFormat}
+        placeholder={<Span text={"Категория"} />}
         onChange={handleInputChange}
       />
 

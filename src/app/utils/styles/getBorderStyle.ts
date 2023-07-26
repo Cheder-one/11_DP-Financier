@@ -2,15 +2,15 @@ const getBorderStyle = (
   touched: boolean,
   isOpen: boolean | null,
   isValid: boolean
-): React.CSSProperties => {
+): string => {
   if (touched && isOpen === true) {
-    return { border: "1px solid #cbd5e1" }; // gray
+    return "border-[#dee2e6]"; // gray
   } else if (touched && isValid) {
-    return { border: "1px solid #20AF6D" }; // green
+    return "border-[#198754]"; // green
   } else if (touched && !isValid) {
-    return { border: "1px solid red" }; // red
+    return "border-[#dc3545]"; // red
   } else {
-    return { border: "1px solid #cbd5e1" };
+    return "border-[#cbd5e1]";
   }
 };
 

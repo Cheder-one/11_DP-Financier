@@ -1,20 +1,17 @@
 import PropTypes from "prop-types";
 import CreatableSelect from "react-select/creatable";
 
-import { Span } from "../../typography";
 import { getNanoId } from "../../../../utils";
-import { useState } from "react";
 
 const Multiselect = ({
   name,
   value,
   options,
+  placeholder,
   onChange,
   selectClass,
   error
 }) => {
-  const [isValid, setIsValid] = useState(false);
-
   const getCategoryId = () => {
     return "category-id-" + getNanoId();
   };
@@ -36,7 +33,9 @@ const Multiselect = ({
   };
 
   const getClassName = () => {
-    return selectClass ? selectClass + " relative z-10" : "relative z-10";
+    const defaultClass = " relative z-10";
+
+    return selectClass ? selectClass + defaultClass : defaultClass;
   };
 
   return (
@@ -46,7 +45,7 @@ const Multiselect = ({
         required
         value={value}
         options={options}
-        placeholder={<Span text={"Категория"} />}
+        placeholder={placeholder}
         className={getClassName()}
         onChange={handleChange}
       />
@@ -63,8 +62,10 @@ Multiselect.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.array,
   options: PropTypes.array.isRequired,
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   selectClass: PropTypes.string,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.bool
 };
 
 export default Multiselect;

@@ -1,17 +1,20 @@
 import PropTypes from "prop-types";
 import { Dropdown, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import { VscChevronDown } from "react-icons/vsc";
 
 import { getBorderStyle } from "../../../../utils";
 import { useBlurOnSubmit } from "../../../../hooks";
+import { CustomToggleContainer, CustomToggle } from "../index";
 
 const DropdownComponent = ({
   label,
-  defaultValue,
   name,
   value,
   items,
+  defaultValue,
   containerClass,
+  isCustomToggle,
   isSubmit,
   onChange,
   error
@@ -44,7 +47,11 @@ const DropdownComponent = ({
     setIsValid(true);
   };
 
-  const borderStyle = getBorderStyle(isBlur, isOpen, isValid);
+  const borderClass = getBorderStyle(isBlur, isOpen, isValid);
+
+  const getDropdownClass = () => {
+    return isValid ? borderClass : borderClass + " is-invalid";
+  };
 
   return (
     <Form.Group className={containerClass}>
@@ -52,12 +59,20 @@ const DropdownComponent = ({
 
       <Dropdown drop="down" onSelect={handleSelect} onToggle={handleToggle}>
         <Dropdown.Toggle
+          as={isCustomToggle ? CustomToggleContainer : undefined}
           variant="light"
-          className={isValid ? "" : "is-invalid"}
-          style={borderStyle}
+          className={getDropdownClass()}
         >
-          {value || defaultValue}
+          {isCustomToggle ? (
+            <CustomToggle borderClass={borderClass}>
+              {value || defaultValue}
+              <VscChevronDown className="pl-0.5" />
+            </CustomToggle>
+          ) : (
+            value || defaultValue
+          )}
         </Dropdown.Toggle>
+
         <Dropdown.Menu>
           {items.map((item) => (
             <Dropdown.Item key={item.id} eventKey={JSON.stringify(item)}>
@@ -65,6 +80,7 @@ const DropdownComponent = ({
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
+
         {error && (
           <Form.Control.Feedback type="invalid" className="mt-1">
             {error}
@@ -75,6 +91,10 @@ const DropdownComponent = ({
   );
 };
 
+DropdownComponent.defaultProps = {
+  isCustomToggle: true
+};
+
 DropdownComponent.propTypes = {
   label: PropTypes.string,
   defaultValue: PropTypes.string,
@@ -82,9 +102,10 @@ DropdownComponent.propTypes = {
   value: PropTypes.string,
   items: PropTypes.array.isRequired,
   containerClass: PropTypes.string,
-  error: PropTypes.string,
+  isCustomToggle: PropTypes.bool,
   isSubmit: PropTypes.bool,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string
 };
 
 export default DropdownComponent;

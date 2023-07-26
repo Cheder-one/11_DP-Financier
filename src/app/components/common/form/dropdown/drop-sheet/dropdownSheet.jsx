@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 
 import { useClickOutside } from "../../../../../hooks";
-import CustomToggle from "./customToggle";
+import CustomToggleContainer from "../custom/customToggleContainer";
 import IconProvider from "./iconProvider";
 
 const DropdownSheet = forwardRef(
@@ -44,15 +44,15 @@ const DropdownSheet = forwardRef(
       >
         {label ? <label className="pb-2">{label}</label> : ""}
         <Dropdown.Toggle
-          as={CustomToggle}
+          as={CustomToggleContainer}
           variant="light"
           className="border"
           onClick={handleToggleShow}
         >
           <IconProvider
+            value={value}
             iconClass={iconClass}
             squareSize={squareSize}
-            value={value}
             defaultValue={defaultValue}
           />
         </Dropdown.Toggle>
@@ -63,7 +63,7 @@ const DropdownSheet = forwardRef(
   }
 );
 
-DropdownSheet.displayName = "CustomToggle";
+DropdownSheet.displayName = "CustomToggleContainer";
 
 DropdownSheet.defaultProps = {
   squareSize: "20px",

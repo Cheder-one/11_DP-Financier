@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
-import { RiArrowDropDownLine } from "react-icons/ri";
+// import { RiArrowDropDownLine } from "react-icons/ri";
+import { VscChevronDown } from "react-icons/vsc";
 
 import { OverlayTooltip } from "../../../common/typography";
 import { useClickOutside } from "../../../../hooks";
@@ -56,7 +57,7 @@ const CardDropdown = ({ items, type, onSelect, reset }) => {
         onClick={handleClick}
       >
         <OverlayTooltip text={selectedItem?.name || selectedItem} />
-        <RiArrowDropDownLine size="20px" />
+        <VscChevronDown size="" className="pl-0.5" />
       </button>
       {isOpen && (
         <div
