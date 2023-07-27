@@ -11,10 +11,10 @@ import {
 } from "../../utils";
 import {
   AccountCreationModal,
-  TransactCreationModal
-} from "../ui/creating-form";
-import Loader from "../ui/spinner";
-import { TableCardsShell } from "../ui/table-cards";
+  TransactCreationModal,
+  TableCardsShell,
+  Spinner
+} from "../ui";
 import { useModal } from "../../hooks";
 
 const MainPage = ({ userId }) => {
@@ -191,7 +191,7 @@ const MainPage = ({ userId }) => {
       )}
     </div>
   ) : (
-    <Loader className="flex justify-center items-center h-30vh" />
+    <Spinner className="flex justify-center items-center h-30vh" />
   );
 };
 

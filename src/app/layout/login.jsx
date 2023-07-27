@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Col, Container, Nav, Row } from "react-bootstrap";
-import { LoginForm, RegisterForm } from "../components/ui/entry-form";
+import { LoginForm, RegisterForm } from "../components/ui";
 
 const Login = ({ formType, setFormType }) => {
   const handleSelect = (selectedKey) => {
