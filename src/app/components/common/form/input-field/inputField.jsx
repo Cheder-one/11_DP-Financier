@@ -34,4 +34,14 @@ const InputField = ({
   );
 };
 
+InputField.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  placeholder: PropTypes.string,
+  inputClass: PropTypes.string,
+  containerClass: PropTypes.string,
+  children: PropTypes.node,
+  onChange: PropTypes.func.isRequired
+};
+
 export default InputField;

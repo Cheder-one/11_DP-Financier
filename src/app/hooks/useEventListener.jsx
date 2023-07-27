@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 
-const useEventListener = (event, callback) => {
+const useEventListener = (event, callback, area = document) => {
   useEffect(() => {
-    document.addEventListener(event, callback);
+    area.addEventListener(event, callback);
 
     return () => {
-      document.removeEventListener(event, callback);
+      area.removeEventListener(event, callback);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 

@@ -16,9 +16,9 @@ const DropdownComponent = ({
   defaultValue,
   containerClass,
   isAdditionEnabled,
-  isCustomToggle,
   isSubmit,
   onChange,
+  onAddNewElem,
   error
 }) => {
   const [isBlur, setIsBlur] = useBlurOnSubmit(isSubmit);
@@ -29,13 +29,6 @@ const DropdownComponent = ({
   const handleToggle = (isOpen) => {
     setIsBlur(true);
     setIsOpen(isOpen);
-  };
-
-  const handleChange = ({ target }) => {
-    const { name, value } = target;
-    onChange({
-      target: { name, value }
-    });
   };
 
   const handleSelect = (eventKey) => {
@@ -53,7 +46,6 @@ const DropdownComponent = ({
         value: selectedItem
       }
     });
-
     setIsValid(true);
     setIsElemAdding(false);
   };
@@ -73,23 +65,20 @@ const DropdownComponent = ({
   return (
     <Form.Group className={containerClass}>
       {label && <Form.Label>{label}</Form.Label>}
+
       <Dropdown onSelect={handleSelect} onToggle={handleToggle} show={isOpen}>
         <Dropdown.Toggle
           variant="light"
+          as={CustomToggleContainer}
           className={getIsDropdownValid()}
-          as={isCustomToggle ? CustomToggleContainer : undefined}
         >
-          {isCustomToggle ? (
-            <CustomToggle
-              borderClass={borderClass}
-              variant={isElemAdding ? "" : "light"}
-            >
-              {isElemAdding ? <InputWithButton /> : value || defaultValue}
-              <VscChevronDown className="pl-0.5" />
-            </CustomToggle>
-          ) : (
-            value || defaultValue
-          )}
+          <CustomToggle
+            borderClass={borderClass}
+            variant={isElemAdding ? "" : "light"}
+          >
+            {value || defaultValue}
+            <VscChevronDown className="pl-0.5" />
+          </CustomToggle>
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
@@ -120,8 +109,7 @@ const DropdownComponent = ({
 };
 
 DropdownComponent.defaultProps = {
-  containerClass: "w-fit mt-3",
-  isCustomToggle: true
+  containerClass: "w-fit mt-3"
 };
 
 DropdownComponent.propTypes = {
@@ -132,7 +120,6 @@ DropdownComponent.propTypes = {
   items: PropTypes.array.isRequired,
   containerClass: PropTypes.string,
   isAdditionEnabled: PropTypes.bool,
-  isCustomToggle: PropTypes.bool,
   isSubmit: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string

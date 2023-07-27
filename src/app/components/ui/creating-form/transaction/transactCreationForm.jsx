@@ -1,8 +1,8 @@
 import axios from "axios";
 import PropTypes from "prop-types";
-import { forwardRef, useState, useImperativeHandle } from "react";
-import { BiSolidCalculator } from "react-icons/bi";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { Row, Col, Form } from "react-bootstrap";
+import { BiSolidCalculator } from "react-icons/bi";
 import { keys } from "lodash";
 
 import {
@@ -11,8 +11,8 @@ import {
   DatePicker,
   TextField
 } from "../../../common/form";
-import Calculator from "../../calculator";
 import { getNanoId, updateInputFields } from "../../../../utils";
+import { InputWithButton, Calculator } from "../../index.js";
 import { useFormValidation } from "../../../../hooks";
 
 const TransactCreationForm = forwardRef(({ user }, ref) => {
@@ -25,9 +25,6 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     comment: ""
   });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-
-  console.log(inputFields);
-  console.log(...categories);
 
   // const errors = useFormValidation(inputFields, "");
   // const hasErrors = keys(errors).length;
@@ -54,6 +51,10 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     updateInputFields(target, setInputFields);
   };
 
+  const handleAddNewCategory = () => {
+    //
+  };
+
   const handleSubmit = () => {
     setIsSubmitClicked(true);
 
@@ -71,7 +72,7 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
   return (
     <>
       <Row className="mb-4">
-        <Col className="flex gap-3">
+        <Col className="flex gap-3 items-end">
           <DropdownComponent
             name={"account"}
             items={accounts}
@@ -90,7 +91,15 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
             isAdditionEnabled={true}
             isSubmit={isSubmitClicked}
             onChange={handleInputChange}
+            onAddNewElem={handleAddNewCategory}
             // error={errors.account}
+          />
+
+          <InputWithButton
+            name={"newCategory"}
+            containerClass={"m-0"}
+            placeholder={"Введите категорию"}
+            onChange={handleInputChange}
           />
         </Col>
       </Row>
