@@ -3,6 +3,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import { useRef, useState } from "react";
 
 import { updateInputFields } from "../../../utils";
+import { useFocus } from "../../../hooks";
 
 const InputWithButton = ({
   name,
