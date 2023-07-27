@@ -62,13 +62,11 @@ export function makeServer({ environment = "development" } = {}) {
 
       this.post("/users/:user_id/categories", (schema, request) => {
         const userId = request.params.user_id;
-        console.log(userId);
+
         const newCategory = JSON.parse(request.requestBody);
-        console.log(newCategory);
 
         // Находим пользователя по id
         const user = schema.users.find(userId);
-        console.log(user);
 
         // // Генерируем уникальный id для новой категории
         // newCategory.id = `category-id-${Date.now()}`;
@@ -77,8 +75,6 @@ export function makeServer({ environment = "development" } = {}) {
         user.update({
           categories: [...user.categories, newCategory]
         });
-
-        console.log(user);
 
         return user;
       });

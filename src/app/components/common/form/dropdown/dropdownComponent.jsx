@@ -16,15 +16,14 @@ const DropdownComponent = ({
   defaultValue,
   containerClass,
   isAdditionEnabled,
+  isElemAdding,
   isSubmit,
   onChange,
-  onAddNewElem,
   error
 }) => {
   const [isBlur, setIsBlur] = useBlurOnSubmit(isSubmit);
   const [isOpen, setIsOpen] = useState(null);
   const [isValid, setIsValid] = useState(true);
-  const [isElemAdding, setIsElemAdding] = useState(false);
 
   const handleToggle = (isOpen) => {
     setIsBlur(true);
@@ -36,7 +35,7 @@ const DropdownComponent = ({
 
     if (selectedItem.id === "__addNew__") {
       setIsValid(false);
-      setIsElemAdding(true);
+      isElemAdding(true);
       return;
     }
 
@@ -47,7 +46,7 @@ const DropdownComponent = ({
       }
     });
     setIsValid(true);
-    setIsElemAdding(false);
+    isElemAdding(false);
   };
 
   useEffect(() => {
@@ -57,6 +56,7 @@ const DropdownComponent = ({
   }, [isOpen, isBlur, value]);
 
   const borderClass = getBorderStyle(isBlur, isOpen, isValid);
+  console.log({ isBlur, isOpen, isValid });
 
   const getIsDropdownValid = () => {
     return isValid ? borderClass : borderClass + " is-invalid";
@@ -72,10 +72,7 @@ const DropdownComponent = ({
           as={CustomToggleContainer}
           className={getIsDropdownValid()}
         >
-          <CustomToggle
-            borderClass={borderClass}
-            variant={isElemAdding ? "" : "light"}
-          >
+          <CustomToggle borderClass={borderClass} variant={"light"}>
             {value || defaultValue}
             <VscChevronDown className="pl-0.5" />
           </CustomToggle>

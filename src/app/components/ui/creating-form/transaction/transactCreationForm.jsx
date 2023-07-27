@@ -24,14 +24,37 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     sum: "",
     comment: ""
   });
+  const [isElemAdding, setIsElemAdding] = useState(false);
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+
+  console.log(inputFields);
 
   // const errors = useFormValidation(inputFields, "");
   // const hasErrors = keys(errors).length;
 
-  const handleInputChange = async ({ target }) => {
-    const { name, value } = target;
+  const handleInputChange = ({ target }) => {
+    updateInputFields(target, setInputFields);
+  };
 
+  const handleElemAdding = (isAdding) => {
+    setIsElemAdding(isAdding);
+  };
+
+  const handleAddNewCategory = ({ name, value }) => {
+    const newCategory = {
+      id: `category-id-${getNanoId(5)}`,
+      type: "category",
+      name: value
+    };
+
+    setInputFields((prev) => ({
+      ...prev,
+      category: newCategory
+    }));
+    setIsElemAdding(false);
+  };
+
+  const postDataToUser = (name, value) => {
     const newCategory = {
       id: "category-id-" + getNanoId(5),
       type: "category",
@@ -40,19 +63,12 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
       transactions: ["transaction-id-2"]
     };
 
-    if (name === "newCategory") {
-      try {
-        axios.post(`/api/users/${user.id}/categories`, newCategory);
-      } catch (error) {
-        console.error("Ошибка при создании категории:", error);
-      }
+    try {
+      axios.post(`/api/users/${user.id}/categories`, newCategory);
+      console.log(newCategory);
+    } catch (error) {
+      console.error("Ошибка при создании категории:", error);
     }
-
-    updateInputFields(target, setInputFields);
-  };
-
-  const handleAddNewCategory = () => {
-    //
   };
 
   const handleSubmit = () => {
@@ -61,6 +77,17 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     if ("hasErrors") {
       return undefined;
     } else {
+      const newCategory = {
+        id: `category-id-${getNanoId(5)}`,
+        type: "category",
+        name: inputFields.category.name,
+        accounts: [inputFields.account.id],
+        transactions: ""
+        // [`transaction-id-${getNanoId(5)}`]
+      };
+
+      console.log({ newCategory });
+
       return inputFields;
     }
   };
@@ -82,25 +109,27 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
             onChange={handleInputChange}
             // error={errors.account}
           />
-
-          <DropdownComponent
-            name={"category"}
-            items={categories}
-            defaultValue={"Категория"}
-            value={inputFields.category.name}
-            isAdditionEnabled={true}
-            isSubmit={isSubmitClicked}
-            onChange={handleInputChange}
-            onAddNewElem={handleAddNewCategory}
-            // error={errors.account}
-          />
-
-          <InputWithButton
-            name={"newCategory"}
-            containerClass={"m-0"}
-            placeholder={"Введите категорию"}
-            onChange={handleInputChange}
-          />
+          {isElemAdding ? (
+            <InputWithButton
+              name={"newCategory"}
+              containerClass={"m-0"}
+              placeholder={"Введите категорию"}
+              // onChange={handleInputChange}
+              onSubmit={handleAddNewCategory}
+            />
+          ) : (
+            <DropdownComponent
+              name={"category"}
+              items={categories}
+              defaultValue={"Категория"}
+              value={inputFields.category.name}
+              isAdditionEnabled={true}
+              isSubmit={isSubmitClicked}
+              onChange={handleInputChange}
+              isElemAdding={handleElemAdding}
+              // error={errors.account}
+            />
+          )}
         </Col>
       </Row>
 
@@ -151,6 +180,7 @@ TransactCreationForm.displayName = TransactCreationForm;
 
 TransactCreationForm.propTypes = {
   user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     accounts: PropTypes.array.isRequired,
     categories: PropTypes.array.isRequired
   }).isRequired

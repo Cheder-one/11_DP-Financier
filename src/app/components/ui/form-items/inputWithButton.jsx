@@ -11,7 +11,8 @@ const InputWithButton = ({
   containerClass,
   inputClass,
   buttonClass,
-  onChange
+  onChange,
+  onSubmit
 }) => {
   const [inputField, setInputField] = useState({
     [name]: ""
@@ -28,12 +29,9 @@ const InputWithButton = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    onChange({
-      target: {
-        name,
-        value: inputField[name]
-      }
+    onSubmit({
+      name,
+      value: inputField[name]
     });
   };
 
@@ -69,7 +67,8 @@ InputWithButton.propTypes = {
   containerClass: PropTypes.string,
   inputClass: PropTypes.string,
   buttonClass: PropTypes.string,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func,
+  onSubmit: PropTypes.func
 };
 
 export default InputWithButton;
