@@ -1,5 +1,6 @@
 import { createServer, Model } from "miragejs";
 import users from "../data/users.json";
+import { getNanoId } from "../../utils";
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({
@@ -49,31 +50,31 @@ export function makeServer({ environment = "development" } = {}) {
       //   return user;
       // });
 
-      // // Маршрут создания категории
-      // this.post("/categories", (schema, request) => {
-      //   const attrs = JSON.parse(request.requestBody);
-
-      //   // Создаем новую категорию
-      //   const category = schema.categories.create(attrs);
-
-      //   // Возвращаем созданную категорию
-      //   return category;
-      // });
-
+      // Маршрут создания категории
       this.post("/users/:user_id/categories", (schema, request) => {
         const userId = request.params.user_id;
-
-        const newCategory = JSON.parse(request.requestBody);
-
-        // Находим пользователя по id
         const user = schema.users.find(userId);
 
-        // // Генерируем уникальный id для новой категории
-        // newCategory.id = `category-id-${Date.now()}`;
+        const newCategory = JSON.parse(request.requestBody);
 
         // Добавляем новую категорию в массив categories пользователя
         user.update({
           categories: [...user.categories, newCategory]
+        });
+
+        return user;
+      });
+
+      // Маршрут создания транзакции
+      this.post("/users/:user_id/transactions", (schema, request) => {
+        const userId = request.params.user_id;
+        const user = schema.users.find(userId);
+
+        const newCategory = JSON.parse(request.requestBody);
+        newCategory.id = `category-id-${getNanoId(5)}`;
+
+        user.update({
+          transactions: [...user.transactions, newCategory]
         });
 
         return user;

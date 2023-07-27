@@ -15,13 +15,13 @@ import { getNanoId, updateInputFields } from "../../../../utils";
 import { InputWithButton, Calculator } from "../../index.js";
 import { useFormValidation } from "../../../../hooks";
 
-const TransactCreationForm = forwardRef(({ user }, ref) => {
+const TransactCreationForm = forwardRef(({ user, type }, ref) => {
   const { accounts, categories } = user;
   const [inputFields, setInputFields] = useState({
     account: { name: "" },
     date: new Date(),
     category: { name: "" },
-    sum: "",
+    amount: "",
     comment: ""
   });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
@@ -50,18 +50,40 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     }));
   };
 
-  const postDataToUser = (name, value) => {
+  const postDataToUser = () => {
+    const { account, date, category, amount, comment } = inputFields;
+
+    // {
+    //   id: 'transaction-id-1',
+    //   amount: 150000,
+    //   type: 'income',
+    //   account: 'account-id-1',
+    //   category: 'category-id-1',
+    //   date: '2022-03-01T10:00:00Z'
+    // }
+
+    const newTransaction = {
+      amount,
+      type,
+      account,
+      category,
+      date
+    };
+
     const newCategory = {
-      id: "category-id-" + getNanoId(5),
       type: "category",
-      name: value,
-      accounts: ["account-id-2"],
-      transactions: ["transaction-id-2"]
+      name: inputFields.category.name,
+      accounts: [inputFields.account.id],
+      transactions: ""
+      // [`transaction-id-${getNanoId(5)}`]
     };
 
     try {
       axios.post(`/api/users/${user.id}/categories`, newCategory);
+
       console.log(newCategory);
+
+      // axios.post(`/api/users/${user.id}/transactions`, ?);
     } catch (error) {
       console.error("Ошибка при создании категории:", error);
     }
@@ -71,18 +93,21 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     setIsSubmitClicked(true);
 
     if ("hasErrors") {
+      postDataToUser();
+
       return undefined;
     } else {
-      const newCategory = {
-        id: `category-id-${getNanoId(5)}`,
-        type: "category",
-        name: inputFields.category.name,
-        accounts: [inputFields.account.id],
-        transactions: ""
-        // [`transaction-id-${getNanoId(5)}`]
-      };
+      postDataToUser();
+      // const newCategory = {
+      //   // id: `category-id-${getNanoId(5)}`,
+      //   type: "category",
+      //   name: inputFields.category.name,
+      //   accounts: [inputFields.account.id],
+      //   transactions: ""
+      //   // [`transaction-id-${getNanoId(5)}`]
+      // };
 
-      console.log({ newCategory });
+      // console.log({ newCategory });
 
       return inputFields;
     }
@@ -132,10 +157,10 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
         </Col>
         <Col md={6}>
           <TextField
-            name={"sum"}
+            name={"amount"}
             placeholder={"Сумма"}
-            value={inputFields.sum}
-            // error={errors.sum}
+            value={inputFields.amount}
+            // error={errors.amount}
             isSubmit={isSubmitClicked}
             onChange={handleInputChange}
           />

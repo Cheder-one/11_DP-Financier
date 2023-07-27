@@ -16,9 +16,9 @@ const DropdownComponent = ({
   placeholder,
   defaultValue,
   containerClass,
+  isSubmit,
   isAdditionEnabled,
   onElemAdding,
-  isSubmit,
   onChange,
   error
 }) => {
@@ -63,7 +63,6 @@ const DropdownComponent = ({
   }, [isOpen, isBlur, value]);
 
   const borderClass = getBorderStyle(isBlur, isOpen, isValid);
-  console.log({ isBlur, isOpen, isValid });
 
   const getIsDropdownValid = () => {
     return isValid ? borderClass : borderClass + " is-invalid";
@@ -137,8 +136,10 @@ DropdownComponent.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   items: PropTypes.array.isRequired,
+  placeholder: PropTypes.string,
   containerClass: PropTypes.string,
   isAdditionEnabled: PropTypes.bool,
+  onElemAdding: PropTypes.func,
   isSubmit: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string
