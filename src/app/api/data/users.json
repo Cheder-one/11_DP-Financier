@@ -19,7 +19,8 @@
           "transaction-id-2",
           "transaction-id-5",
           "transaction-id-6"
-        ]
+        ],
+        "comment": ""
       },
       {
         "id": "account-id-2",
@@ -28,7 +29,8 @@
         "public": false,
         "category": "category-id-2",
         "balance": 80000,
-        "transactions": ["transaction-id-3", "transaction-id-4"]
+        "transactions": ["transaction-id-3", "transaction-id-4"],
+        "comment": ""
       }
     ],
     "categories": [
@@ -41,16 +43,14 @@
           "transaction-id-1",
           "transaction-id-3",
           "transaction-id-5"
-        ],
-        "comment": ""
+        ]
       },
       {
         "id": "category-id-2",
         "type": "category",
         "name": "Аренда",
         "accounts": ["account-id-2"],
-        "transactions": ["transaction-id-2"],
-        "comment": ""
+        "transactions": ["transaction-id-2"]
       }
     ],
     "transactions": [
@@ -125,7 +125,8 @@
         "public": true,
         "category": "category-id-3",
         "balance": 100,
-        "transactions": ["transaction-id-6"]
+        "transactions": ["transaction-id-6"],
+        "comment": ""
       }
     ],
     "categories": [
@@ -134,8 +135,7 @@
         "type": "category",
         "name": "Кредит",
         "accounts": ["account-id-3"],
-        "transactions": ["transaction-id-6"],
-        "comment": ""
+        "transactions": ["transaction-id-6"]
       }
     ],
     "transactions": [

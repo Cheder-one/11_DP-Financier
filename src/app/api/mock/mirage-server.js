@@ -1,6 +1,5 @@
 import { createServer, Model } from "miragejs";
 import users from "../data/users.json";
-import { getNanoId } from "../../utils";
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({

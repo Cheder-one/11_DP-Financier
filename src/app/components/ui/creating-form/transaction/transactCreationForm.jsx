@@ -64,12 +64,11 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
     // }
 
     const newCategory = {
-      id: `category-id-${getNanoId(5)}`,
+      id: category.id,
       type: "category",
       name: category.name,
       accounts: [account.id],
-      transactions: [idForNewTransact],
-      comment: ""
+      transactions: [idForNewTransact]
     };
 
     console.log(newCategory);
@@ -89,15 +88,13 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
       type: cardType,
       account: account.id,
       category: category.id,
-      date: date.toISOString(),
+      date: date?.toISOString(),
       comment
     };
     console.log(newTransaction);
 
     try {
       axios.post(`/api/users/${user.id}/categories`, newCategory);
-
-      console.log(newCategory);
 
       // axios.post(`/api/users/${user.id}/transactions`, ?);
     } catch (error) {
@@ -114,17 +111,6 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
       return undefined;
     } else {
       postDataToUser();
-      // const newCategory = {
-      //   // id: `category-id-${getNanoId(5)}`,
-      //   type: "category",
-      //   name: inputFields.category.name,
-      //   accounts: [inputFields.account.id],
-      //   transactions: ""
-      //   // [`transaction-id-${getNanoId(5)}`]
-      // };
-
-      // console.log({ newCategory });
-
       return inputFields;
     }
   };
