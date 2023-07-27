@@ -1,3 +1,4 @@
+import axios from "axios";
 import PropTypes from "prop-types";
 import { forwardRef, useState, useImperativeHandle } from "react";
 import { BiSolidCalculator } from "react-icons/bi";
@@ -11,7 +12,7 @@ import {
   TextField
 } from "../../../common/form";
 import Calculator from "../../calculator";
-import { updateInputFields } from "../../../../utils";
+import { getNanoId, updateInputFields } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
 
 const TransactCreationForm = forwardRef(({ user }, ref) => {
@@ -25,10 +26,31 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
   });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
+  console.log(inputFields);
+  console.log(...categories);
+
   // const errors = useFormValidation(inputFields, "");
   // const hasErrors = keys(errors).length;
 
-  const handleInputChange = ({ target }) => {
+  const handleInputChange = async ({ target }) => {
+    const { name, value } = target;
+
+    const newCategory = {
+      id: "category-id-" + getNanoId(5),
+      type: "category",
+      name: value,
+      accounts: ["account-id-2"],
+      transactions: ["transaction-id-2"]
+    };
+
+    if (name === "newCategory") {
+      try {
+        axios.post(`/api/users/${user.id}/categories`, newCategory);
+      } catch (error) {
+        console.error("Ошибка при создании категории:", error);
+      }
+    }
+
     updateInputFields(target, setInputFields);
   };
 

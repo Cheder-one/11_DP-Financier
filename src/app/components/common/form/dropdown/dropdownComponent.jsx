@@ -5,7 +5,8 @@ import { VscChevronDown } from "react-icons/vsc";
 
 import { getBorderStyle } from "../../../../utils";
 import { useBlurOnSubmit } from "../../../../hooks";
-import { CustomToggleContainer, CustomToggle, InputField } from "../index";
+import { CustomToggleContainer, CustomToggle } from "../index";
+import InputWithButton from "../../../ui/form-items/inputWithButton";
 
 const DropdownComponent = ({
   label,
@@ -30,29 +31,38 @@ const DropdownComponent = ({
     setIsOpen(isOpen);
   };
 
-  useEffect(() => {
-    if (isBlur && !isOpen && !value) {
-      setIsValid(false);
-    }
-  }, [isOpen, isBlur, value]);
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    onChange({
+      target: { name, value }
+    });
+  };
 
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
 
     if (selectedItem.id === "__addNew__") {
-      setIsElemAdding(true);
       setIsValid(false);
-    } else {
-      onChange({
-        target: {
-          name,
-          value: selectedItem
-        }
-      });
-      setIsElemAdding(false);
-      setIsValid(true);
+      setIsElemAdding(true);
+      return;
     }
+
+    onChange({
+      target: {
+        name,
+        value: selectedItem
+      }
+    });
+
+    setIsValid(true);
+    setIsElemAdding(false);
   };
+
+  useEffect(() => {
+    if (isBlur && !isOpen && !value) {
+      setIsValid(false);
+    }
+  }, [isOpen, isBlur, value]);
 
   const borderClass = getBorderStyle(isBlur, isOpen, isValid);
 
@@ -74,7 +84,7 @@ const DropdownComponent = ({
               borderClass={borderClass}
               variant={isElemAdding ? "" : "light"}
             >
-              {isElemAdding ? <InputField /> : value || defaultValue}
+              {isElemAdding ? <InputWithButton /> : value || defaultValue}
               <VscChevronDown className="pl-0.5" />
             </CustomToggle>
           ) : (

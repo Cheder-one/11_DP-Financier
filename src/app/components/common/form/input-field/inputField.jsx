@@ -1,15 +1,22 @@
 import PropTypes from "prop-types";
+import { useEffect, useRef } from "react";
+import { useFocus } from "../../../../hooks";
 
 const InputField = ({
   name,
   value,
+  children,
   placeholder,
   inputClass,
   containerClass,
   onChange
 }) => {
+  const inputRef = useRef();
+
+  useFocus(inputRef);
+
   const handleChange = ({ target }) => {
-    onChange(target);
+    onChange({ target });
   };
 
   return (
@@ -18,9 +25,11 @@ const InputField = ({
         name={name}
         value={value}
         placeholder={placeholder}
-        className="rounded-lg w-full border-2 px-1.5 focus:outline-none focus:border-blue-500"
+        className={inputClass}
         onChange={handleChange}
+        ref={inputRef}
       />
+      <div>{children}</div>
     </div>
   );
 };

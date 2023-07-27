@@ -12,7 +12,7 @@ import {
 import {
   AccountCreationModal,
   TransactCreationModal
-} from "../ui/creating-forms";
+} from "../ui/creating-form";
 import Loader from "../ui/spinner";
 import { TableCardsShell } from "../ui/table-cards";
 import { useModal } from "../../hooks";
