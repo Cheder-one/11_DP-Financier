@@ -13,10 +13,11 @@ const DropdownComponent = ({
   name,
   value,
   items,
+  placeholder,
   defaultValue,
   containerClass,
   isAdditionEnabled,
-  isElemAdding,
+  onElemAdding,
   isSubmit,
   onChange,
   error
@@ -24,6 +25,7 @@ const DropdownComponent = ({
   const [isBlur, setIsBlur] = useBlurOnSubmit(isSubmit);
   const [isOpen, setIsOpen] = useState(null);
   const [isValid, setIsValid] = useState(true);
+  const [isOpenToAdding, setIsOpenToAdding] = useState(false);
 
   const handleToggle = (isOpen) => {
     setIsBlur(true);
@@ -34,19 +36,24 @@ const DropdownComponent = ({
     const selectedItem = JSON.parse(eventKey);
 
     if (selectedItem.id === "__addNew__") {
-      setIsValid(false);
-      isElemAdding(true);
-      return;
+      setIsOpenToAdding(true);
+    } else {
+      onChange({
+        target: {
+          name,
+          value: selectedItem
+        }
+      });
+      setIsOpenToAdding(false);
+      setIsValid(true);
     }
+  };
 
-    onChange({
-      target: {
-        name,
-        value: selectedItem
-      }
-    });
-    setIsValid(true);
-    isElemAdding(false);
+  const handleAddItem = (target) => {
+    handleToggle(false);
+    setIsOpenToAdding(false);
+
+    onElemAdding(target);
   };
 
   useEffect(() => {
@@ -63,45 +70,60 @@ const DropdownComponent = ({
   };
 
   return (
-    <Form.Group className={containerClass}>
-      {label && <Form.Label>{label}</Form.Label>}
+    <>
+      {!isOpenToAdding ? (
+        <Form.Group className={containerClass}>
+          {label && <Form.Label>{label}</Form.Label>}
 
-      <Dropdown onSelect={handleSelect} onToggle={handleToggle} show={isOpen}>
-        <Dropdown.Toggle
-          variant="light"
-          as={CustomToggleContainer}
-          className={getIsDropdownValid()}
-        >
-          <CustomToggle borderClass={borderClass} variant={"light"}>
-            {value || defaultValue}
-            <VscChevronDown className="pl-0.5" />
-          </CustomToggle>
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          {items.map((item) => (
-            <Dropdown.Item key={item.id} eventKey={JSON.stringify(item)}>
-              {item.name}
-            </Dropdown.Item>
-          ))}
-
-          {isAdditionEnabled && (
-            <Dropdown.Item
-              eventKey={JSON.stringify({ id: "__addNew__" })}
-              className="text-blue-700 text-sm border-top"
+          <Dropdown
+            onSelect={handleSelect}
+            onToggle={handleToggle}
+            show={isOpen}
+          >
+            <Dropdown.Toggle
+              variant="light"
+              as={CustomToggleContainer}
+              className={getIsDropdownValid()}
             >
-              Добавить категорию
-            </Dropdown.Item>
-          )}
-        </Dropdown.Menu>
+              <CustomToggle borderClass={borderClass} variant={"light"}>
+                {value || defaultValue}
+                <VscChevronDown className="pl-0.5" />
+              </CustomToggle>
+            </Dropdown.Toggle>
 
-        {error && (
-          <Form.Control.Feedback type="invalid" className="mt-1">
-            {error}
-          </Form.Control.Feedback>
-        )}
-      </Dropdown>
-    </Form.Group>
+            <Dropdown.Menu>
+              {items.map((item) => (
+                <Dropdown.Item key={item.id} eventKey={JSON.stringify(item)}>
+                  {item.name}
+                </Dropdown.Item>
+              ))}
+
+              {isAdditionEnabled && (
+                <Dropdown.Item
+                  eventKey={JSON.stringify({ id: "__addNew__" })}
+                  className="text-blue-700 text-sm border-top"
+                >
+                  Добавить категорию
+                </Dropdown.Item>
+              )}
+            </Dropdown.Menu>
+
+            {error && (
+              <Form.Control.Feedback type="invalid" className="mt-1">
+                {error}
+              </Form.Control.Feedback>
+            )}
+          </Dropdown>
+        </Form.Group>
+      ) : (
+        <InputWithButton
+          name={name}
+          containerClass={"m-0"}
+          placeholder={placeholder}
+          onSubmit={handleAddItem}
+        />
+      )}
+    </>
   );
 };
 

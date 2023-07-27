@@ -24,7 +24,6 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     sum: "",
     comment: ""
   });
-  const [isElemAdding, setIsElemAdding] = useState(false);
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
   console.log(inputFields);
@@ -36,11 +35,9 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
     updateInputFields(target, setInputFields);
   };
 
-  const handleElemAdding = (isAdding) => {
-    setIsElemAdding(isAdding);
-  };
+  const handleAddNewCategory = ({ target }) => {
+    const { name, value } = target;
 
-  const handleAddNewCategory = ({ name, value }) => {
     const newCategory = {
       id: `category-id-${getNanoId(5)}`,
       type: "category",
@@ -49,9 +46,8 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
 
     setInputFields((prev) => ({
       ...prev,
-      category: newCategory
+      [name]: newCategory
     }));
-    setIsElemAdding(false);
   };
 
   const postDataToUser = (name, value) => {
@@ -109,27 +105,19 @@ const TransactCreationForm = forwardRef(({ user }, ref) => {
             onChange={handleInputChange}
             // error={errors.account}
           />
-          {isElemAdding ? (
-            <InputWithButton
-              name={"newCategory"}
-              containerClass={"m-0"}
-              placeholder={"Введите категорию"}
-              // onChange={handleInputChange}
-              onSubmit={handleAddNewCategory}
-            />
-          ) : (
-            <DropdownComponent
-              name={"category"}
-              items={categories}
-              defaultValue={"Категория"}
-              value={inputFields.category.name}
-              isAdditionEnabled={true}
-              isSubmit={isSubmitClicked}
-              onChange={handleInputChange}
-              isElemAdding={handleElemAdding}
-              // error={errors.account}
-            />
-          )}
+
+          <DropdownComponent
+            name={"category"}
+            items={categories}
+            placeholder={"Введите категорию"}
+            defaultValue={"Категория"}
+            value={inputFields.category.name}
+            isAdditionEnabled={true}
+            isSubmit={isSubmitClicked}
+            onChange={handleInputChange}
+            onElemAdding={handleAddNewCategory}
+            // error={errors.account}
+          />
         </Col>
       </Row>
 

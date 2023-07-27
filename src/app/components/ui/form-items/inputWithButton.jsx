@@ -30,8 +30,10 @@ const InputWithButton = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
-      name,
-      value: inputField[name]
+      target: {
+        name,
+        value: inputField[name]
+      }
     });
   };
 
