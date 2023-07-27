@@ -15,7 +15,7 @@ import { getNanoId, updateInputFields } from "../../../../utils";
 import { InputWithButton, Calculator } from "../../index.js";
 import { useFormValidation } from "../../../../hooks";
 
-const TransactCreationForm = forwardRef(({ user, type }, ref) => {
+const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
   const { accounts, categories } = user;
   const [inputFields, setInputFields] = useState({
     account: { name: "" },
@@ -26,7 +26,7 @@ const TransactCreationForm = forwardRef(({ user, type }, ref) => {
   });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
-  console.log(inputFields);
+  // console.log(inputFields);
 
   // const errors = useFormValidation(inputFields, "");
   // const hasErrors = keys(errors).length;
@@ -53,6 +53,27 @@ const TransactCreationForm = forwardRef(({ user, type }, ref) => {
   const postDataToUser = () => {
     const { account, date, category, amount, comment } = inputFields;
 
+    const idForNewTransact = `transaction-id-${getNanoId(5)}`;
+    // {
+    //   id: 'category-id-1',
+    //   type: 'category',
+    //   name: 'Зарплата',
+    //   accounts: [ 'account-id-1' ],
+    //   transactions: [ 'transaction-id-1', 'transaction-id-3', 'transaction-id-5' ],
+    //   comment: ''
+    // }
+
+    const newCategory = {
+      id: `category-id-${getNanoId(5)}`,
+      type: "category",
+      name: category.name,
+      accounts: [account.id],
+      transactions: [idForNewTransact],
+      comment: ""
+    };
+
+    console.log(newCategory);
+
     // {
     //   id: 'transaction-id-1',
     //   amount: 150000,
@@ -63,20 +84,15 @@ const TransactCreationForm = forwardRef(({ user, type }, ref) => {
     // }
 
     const newTransaction = {
-      amount,
-      type,
-      account,
-      category,
-      date
+      id: idForNewTransact,
+      amount: -parseInt(amount, 10),
+      type: cardType,
+      account: account.id,
+      category: category.id,
+      date: date.toISOString(),
+      comment
     };
-
-    const newCategory = {
-      type: "category",
-      name: inputFields.category.name,
-      accounts: [inputFields.account.id],
-      transactions: ""
-      // [`transaction-id-${getNanoId(5)}`]
-    };
+    console.log(newTransaction);
 
     try {
       axios.post(`/api/users/${user.id}/categories`, newCategory);
@@ -196,7 +212,8 @@ TransactCreationForm.propTypes = {
     id: PropTypes.string.isRequired,
     accounts: PropTypes.array.isRequired,
     categories: PropTypes.array.isRequired
-  }).isRequired
+  }).isRequired,
+  cardType: PropTypes.string
 };
 
 export default TransactCreationForm;

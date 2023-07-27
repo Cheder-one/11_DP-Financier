@@ -58,7 +58,7 @@ const accountSchema = yup.object().shape({
     .object()
     .test("account-required", "Укажите валюту счета", dropdownRequired),
   name: yup.string().required(),
-  sum: yup.number().typeError("Укажите корректный баланс счета").required()
+  balance: yup.number().typeError("Укажите корректный баланс счета").required()
 });
 
 const validationSchema = {

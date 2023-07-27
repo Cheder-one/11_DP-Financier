@@ -22,7 +22,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
     name: "",
     icon: "VscBlank",
     iconColor: "#00000",
-    sum: "",
+    balance: "",
     comment: ""
   });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
@@ -110,12 +110,12 @@ const AccountCreationForm = forwardRef((props, ref) => {
                 <TextField
                   containerClass={"mb-0"}
                   label={"Баланс"}
-                  name={"sum"}
-                  value={inputFields.sum}
+                  name={"balance"}
+                  value={inputFields.balance}
                   floating={true}
                   isSubmit={isSubmitClicked}
                   onChange={handleInputChange}
-                  error={errors.sum}
+                  error={errors.balance}
                 />
               </Col>
             </Row>

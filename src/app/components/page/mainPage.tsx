@@ -1,24 +1,28 @@
+import React from "react";
 import PropTypes from "prop-types";
-import { useEffect, useMemo, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+// @ts-ignore
 import { filter, find, keys } from "lodash";
+import { Button, Col, Row } from "react-bootstrap";
+import { useEffect, useMemo, useState } from "react";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
 
 import {
-  getUniqDates,
+  Spinner,
+  TableCardsShell,
+  AccountCreationModal,
+  TransactCreationModal
+} from "../ui";
+import {
   getUserData,
+  getUniqDates,
   updIncomeExpenseTransacts
 } from "../../utils";
-import {
-  AccountCreationModal,
-  TransactCreationModal,
-  TableCardsShell,
-  Spinner
-} from "../ui";
 import { useModal } from "../../hooks";
+import { User, Transaction } from "../../types";
 
-const MainPage = ({ userId }) => {
-  const [user, setUser] = useState({});
+const MainPage = ({ userId }: { userId: string }) => {
+  // @ts-ignore
+  const [user, setUser] = useState<User>({});
   const [selectedAccount, setSelectedAccount] = useState({ id: "" });
   const [resetDropTitle, setResetDropTitle] = useState(false);
   const [cardBodyItems, setCardBodyItems] = useState({
@@ -52,9 +56,9 @@ const MainPage = ({ userId }) => {
   const transformedBodyItems = useMemo(() => {
     const updatedCards = {};
 
-    keys(cardBodyItems).forEach((key) => {
+    keys(cardBodyItems).forEach((key: string) => {
       const card = cardBodyItems[key];
-      const updatedCard = card.map((item) => ({
+      const updatedCard = card.map((item: Transaction) => ({
         ...item,
         firstCol: item.amount,
         secondCol: find(user.categories, { id: item.category }).name,
@@ -93,10 +97,15 @@ const MainPage = ({ userId }) => {
     return result;
   }, [user.transactions, selectedAccount]);
 
+  // @ts-ignore
   const { income, expense } = filteredByUniqAndType;
 
   // Обработчик dropdown.
-  const handleDropdownSelect = (eventKey) => {
+  const handleDropdownSelect = (eventKey: {
+    id: string;
+    type: string;
+    date: string;
+  }) => {
     const { id, type: cardType, date } = eventKey;
     const { id: selAccId } = selectedAccount;
     const dataByCardType = filteredByUniqAndType[cardType];
@@ -112,6 +121,7 @@ const MainPage = ({ userId }) => {
       // Выбраны "Все" счета. Выводятся все транзакции всех счетов.
       if (cardType === "account") {
         setCardBodyItems({
+          // @ts-ignore
           account: user.transactions,
           income: income.transacts,
           expense: expense.transacts
@@ -188,7 +198,7 @@ const MainPage = ({ userId }) => {
         <AccountCreationModal {...{ showModal, setShowModal }} />
       ) : (
         <TransactCreationModal
-          type={cardTypeToAdd}
+          cardType={cardTypeToAdd}
           {...{ user, showModal, setShowModal }}
         />
       )}
