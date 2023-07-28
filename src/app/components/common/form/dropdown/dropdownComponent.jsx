@@ -16,6 +16,8 @@ const DropdownComponent = ({
   placeholder,
   defaultValue,
   containerClass,
+  inputContainerClass,
+  inputClass,
   isSubmit,
   isAdditionEnabled,
   onElemAdding,
@@ -52,6 +54,7 @@ const DropdownComponent = ({
   const handleAddItem = (target) => {
     handleToggle(false);
     setIsOpenToAdding(false);
+    // setIsValid(true);
 
     onElemAdding(target);
   };
@@ -117,7 +120,8 @@ const DropdownComponent = ({
       ) : (
         <InputWithButton
           name={name}
-          containerClass={"m-0"}
+          containerClass={inputContainerClass}
+          inputClass={inputClass}
           placeholder={placeholder}
           onSubmit={handleAddItem}
         />
@@ -138,6 +142,8 @@ DropdownComponent.propTypes = {
   items: PropTypes.array.isRequired,
   placeholder: PropTypes.string,
   containerClass: PropTypes.string,
+  inputContainerClass: PropTypes.string,
+  inputClass: PropTypes.string,
   isAdditionEnabled: PropTypes.bool,
   onElemAdding: PropTypes.func,
   isSubmit: PropTypes.bool,

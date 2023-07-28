@@ -7,10 +7,11 @@ import getUniqDates from "./functions/getUniqDates";
 import getBorderStyle from "./styles/getBorderStyle";
 import updIncomeExpenseTransacts from "./functions/updIncomeExpenseTransacts";
 import getUserData from "./service/getUserData";
-import constantsData from "./data/constantsData.js";
+import dataConstants from "./data/dataConstants.js";
 import updateInputFields from "./functions/updateInputFields";
 import getNanoId from "./functions/getNanoId";
 import getIdAllItem from "./functions/getIdAllItem";
+import validateDropdownRequired from "./functions/validateDropdownRequired";
 
 export {
   themeConfig,
@@ -21,8 +22,9 @@ export {
   getBorderStyle,
   updIncomeExpenseTransacts,
   getUserData,
-  constantsData,
+  dataConstants,
   updateInputFields,
   getNanoId,
-  getIdAllItem
+  getIdAllItem,
+  validateDropdownRequired
 };

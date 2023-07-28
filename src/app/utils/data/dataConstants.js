@@ -1,3 +1,4 @@
+// Dropdown Creating Account
 const ACCOUNT_TYPES = [
   { id: 1, name: "Наличные" },
   { id: 2, name: "Интернет деньги" },
@@ -10,7 +11,6 @@ const ACCOUNT_TYPES = [
   { id: 9, name: "Кредит" },
   { id: 10, name: "Долг" }
 ];
-
 const CURRENCIES = [
   { id: 1, name: "Российский Рубль (RUB)", code: "RUB" },
   { id: 2, name: "Доллар США (USD)", code: "USD" },
@@ -24,14 +24,15 @@ const CURRENCIES = [
   { id: 10, name: "Индийская Рупия (INR)", code: "INR" }
 ];
 
+// Calculator
 const NUMPAD = ["7", "8", "9", "4", "5", "6", "1", "2", "3", "0", "."];
 const OPERATORS = ["/", "(", "*", ")", "-"];
 
-const constantsData = {
+const dataConstants = {
   ACCOUNT_TYPES,
   CURRENCIES,
   NUMPAD,
   OPERATORS
 };
 
-export default constantsData;
+export default dataConstants;

@@ -58,7 +58,7 @@ const InputWithButton = ({
 
 InputWithButton.defaultProps = {
   containerClass: "m-0",
-  inputClass: "py-[3px]",
+  inputClass: "py-[4px]",
   buttonClass:
     "py-[3px] border-2 bg-white text-black transition-transform transform duration-200 hover:border-green-600 hover:outline-none hover:ring-opacity-50 hover:scale-100 active:scale-95"
 };

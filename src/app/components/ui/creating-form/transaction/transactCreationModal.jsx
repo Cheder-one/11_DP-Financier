@@ -5,8 +5,18 @@ import ModalPopup from "../../../common/modal/modalPopup";
 import TransactCreationForm from "./transactCreationForm";
 import { useEventListener } from "../../../../hooks";
 
-const TransactCreationModal = ({ user, cardType, showModal, setShowModal }) => {
+const TransactCreationModal = ({
+  user,
+  updateUser,
+  cardType,
+  showModal,
+  setShowModal
+}) => {
   const transactFormRef = useRef(null);
+
+  const getCardTitle = (cardType) => {
+    return "Новый " + (cardType === "income" ? "Доход" : "Расход");
+  };
 
   const handleModalSave = () => {
     const isDataValid = transactFormRef.current.handleSubmit();
@@ -27,13 +37,14 @@ const TransactCreationModal = ({ user, cardType, showModal, setShowModal }) => {
 
   return (
     <ModalPopup
-      title="Новый Расход"
+      title={getCardTitle()}
       onSave={handleModalSave}
       {...{ showModal, setShowModal }}
     >
       <TransactCreationForm
         user={user}
         cardType={cardType}
+        updateUser={updateUser}
         ref={transactFormRef}
       />
     </ModalPopup>

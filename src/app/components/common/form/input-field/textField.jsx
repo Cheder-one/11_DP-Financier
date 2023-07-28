@@ -86,7 +86,9 @@ const TextField = ({
               {showPass ? eyeSlash : eyeFill}
             </Button>
           )}
-          <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid" className="text-sm">
+            {error}
+          </Form.Control.Feedback>
         </InputGroup>
       </Form.Group>
     </>

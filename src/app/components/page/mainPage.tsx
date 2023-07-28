@@ -52,6 +52,10 @@ const MainPage = ({ userId }: { userId: string }) => {
     fetchData();
   }, [userId]);
 
+  const updateUser = (newUserData) => {
+    setUser(newUserData); // Обновление состояния пользователя
+  };
+
   // Универсализирует данные для отправки в TableCard, чтобы компонент не был привязан к конкретным переменным.
   const transformedBodyItems = useMemo(() => {
     const updatedCards = {};
@@ -168,7 +172,7 @@ const MainPage = ({ userId }: { userId: string }) => {
     }
   };
 
-  const handleAddButtonClick = (type) => {
+  const handleAddButtonClick = (type: string) => {
     setCardTypeToAdd(type);
     setShowModal(true);
   };
@@ -198,6 +202,7 @@ const MainPage = ({ userId }: { userId: string }) => {
         <AccountCreationModal {...{ showModal, setShowModal }} />
       ) : (
         <TransactCreationModal
+          updateUser={updateUser}
           cardType={cardTypeToAdd}
           {...{ user, showModal, setShowModal }}
         />

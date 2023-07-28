@@ -6,14 +6,14 @@ import { DropdownComponent } from "../../../common/form";
 import TextField from "../../../common/form/input-field/textField";
 import { IconPicker, ColorPicker } from "../../../common/pickers";
 import {
-  constantsData,
+  dataConstants,
   updateInputFields,
   validationSchema
 } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
 
 const { accountSchema } = validationSchema;
-const { ACCOUNT_TYPES, CURRENCIES } = constantsData;
+const { ACCOUNT_TYPES, CURRENCIES } = dataConstants;
 
 const AccountCreationForm = forwardRef((props, ref) => {
   const [inputFields, setInputFields] = useState({

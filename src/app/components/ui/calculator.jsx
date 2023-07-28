@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 import { evaluate } from "mathjs";
 
 import { TextField } from "../common/form";
-import { constantsData } from "../../utils";
+import { dataConstants } from "../../utils";
 import { useEventListener } from "../../hooks";
 
-const { NUMPAD, OPERATORS } = constantsData;
+const { NUMPAD, OPERATORS } = dataConstants;
 
 const Calculator = () => {
   const [display, setDisplay] = useState("");

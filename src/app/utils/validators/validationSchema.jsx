@@ -1,15 +1,9 @@
 import * as yup from "yup";
+import validateDropdownRequired from "../functions/validateDropdownRequired";
 
 const MIN_PASSWORD_LENGTH = 8;
 const INCORRECT_EMAIL = `Некорректный email`;
 const INCORRECT_PASSWORD = `Должен содержать как минимум одну заглавную букву, одну строчную букву и одну цифру`;
-
-const dropdownRequired = (value) => {
-  if (value && typeof value === "object") {
-    return "id" in value && "name" in value;
-  }
-  return false;
-};
 
 yup.setLocale({
   mixed: {
@@ -53,18 +47,30 @@ const registerSchema = yup.object().shape({
 const accountSchema = yup.object().shape({
   account: yup
     .object()
-    .test("account-required", "Укажите тип счета", dropdownRequired),
+    .test("account-required", "Укажите тип счета", validateDropdownRequired),
   currency: yup
     .object()
-    .test("account-required", "Укажите валюту счета", dropdownRequired),
+    .test("account-required", "Укажите валюту счета", validateDropdownRequired),
   name: yup.string().required(),
   balance: yup.number().typeError("Укажите корректный баланс счета").required()
+});
+
+const transactSchema = yup.object().shape({
+  account: yup
+    .object()
+    .test("account-required", "Укажите тип счета", validateDropdownRequired),
+  date: yup.string().required(),
+  category: yup
+    .object()
+    .test("account-required", "Укажите валюту счета", validateDropdownRequired),
+  amount: yup.number().typeError("Укажите корректную сумму").required()
 });
 
 const validationSchema = {
   loginSchema,
   registerSchema,
-  accountSchema
+  accountSchema,
+  transactSchema
 };
 
 export default validationSchema;

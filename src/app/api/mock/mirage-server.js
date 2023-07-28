@@ -70,7 +70,6 @@ export function makeServer({ environment = "development" } = {}) {
         const user = schema.users.find(userId);
 
         const newCategory = JSON.parse(request.requestBody);
-        // newCategory.id = `category-id-${getNanoId(5)}`;
 
         user.update({
           transactions: [...user.transactions, newCategory]

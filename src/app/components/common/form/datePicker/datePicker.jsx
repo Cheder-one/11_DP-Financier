@@ -36,16 +36,16 @@ const DatePicker = ({
   return (
     <div className={containerClass} ref={calendarRef}>
       <ReactDatePicker
+        locale="ru"
+        calendarStartDay={1}
+        todayButton="Сегодня"
+        dateFormat="dd.MM.yyyy"
         open={isOpen}
         selected={value}
         customInput={children}
         className={childrenClass}
         onChange={handleDateChange}
         onInputClick={onInputClick}
-        locale="ru"
-        calendarStartDay={1}
-        todayButton="Сегодня"
-        dateFormat="dd.MM.yyyy"
       />
     </div>
   );
@@ -59,7 +59,10 @@ DatePicker.defaultProps = {
 DatePicker.propTypes = {
   children: PropTypes.node,
   containerClass: PropTypes.string,
-  childrenClass: PropTypes.string
+  childrenClass: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default DatePicker;
