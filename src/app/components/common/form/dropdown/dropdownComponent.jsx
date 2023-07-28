@@ -66,15 +66,10 @@ const DropdownComponent = ({
     }
   }, [value]);
 
-  const borderClass = getDynamicBorderClass(isBlur, isOpen, isValid);
-
-  // prettier-ignore
-  const getDropdownClass = () => {
-    if (validating) {
-      return isValid
-        ? borderClass
-        : borderClass + " is-invalid";
-    }
+  const getBorderClass = () => {
+    return validating
+      ? getDynamicBorderClass(isBlur, isOpen, isValid)
+      : "border-gray-light";
   };
 
   return (
@@ -88,12 +83,8 @@ const DropdownComponent = ({
             onToggle={handleToggle}
             show={isOpen}
           >
-            <Dropdown.Toggle
-              variant="light"
-              as={CustomToggleContainer}
-              className={getDropdownClass()}
-            >
-              <CustomToggle borderClass={getDropdownClass()} variant={"light"}>
+            <Dropdown.Toggle as={CustomToggleContainer} variant="light">
+              <CustomToggle borderClass={getBorderClass()} variant={"light"}>
                 {value || defaultValue}
                 <VscChevronDown className="pl-0.5" />
               </CustomToggle>
