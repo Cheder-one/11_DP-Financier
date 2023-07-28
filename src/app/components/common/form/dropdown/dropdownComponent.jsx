@@ -3,10 +3,10 @@ import { Dropdown, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { VscChevronDown } from "react-icons/vsc";
 
-import { getBorderStyle } from "../../../../utils";
 import { useBlurOnSubmit } from "../../../../hooks";
 import { CustomToggleContainer, CustomToggle } from "../index";
-import InputWithButton from "../../../ui/form-items/inputWithButton";
+import { InputWithButton } from "../../../ui";
+import { getDynamicBorderClass } from "../../../../utils";
 
 const DropdownComponent = ({
   label,
@@ -18,6 +18,7 @@ const DropdownComponent = ({
   containerClass,
   inputContainerClass,
   inputClass,
+  validating,
   isSubmit,
   isAdditionEnabled,
   onElemAdding,
@@ -26,7 +27,7 @@ const DropdownComponent = ({
 }) => {
   const [isBlur, setIsBlur] = useBlurOnSubmit(isSubmit);
   const [isOpen, setIsOpen] = useState(null);
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(null);
   const [isOpenToAdding, setIsOpenToAdding] = useState(false);
 
   const handleToggle = (isOpen) => {
@@ -51,24 +52,29 @@ const DropdownComponent = ({
     }
   };
 
-  const handleAddItem = (target) => {
-    handleToggle(false);
+  const handleNewItemSubmit = (target) => {
     setIsOpenToAdding(false);
-    // setIsValid(true);
+    handleToggle(false);
+    setIsValid(true);
 
     onElemAdding(target);
   };
 
   useEffect(() => {
-    if (isBlur && !isOpen && !value) {
+    if (!value) {
       setIsValid(false);
     }
-  }, [isOpen, isBlur, value]);
+  }, [value]);
 
-  const borderClass = getBorderStyle(isBlur, isOpen, isValid);
+  const borderClass = getDynamicBorderClass(isBlur, isOpen, isValid);
 
-  const getIsDropdownValid = () => {
-    return isValid ? borderClass : borderClass + " is-invalid";
+  // prettier-ignore
+  const getDropdownClass = () => {
+    if (validating) {
+      return isValid
+        ? borderClass
+        : borderClass + " is-invalid";
+    }
   };
 
   return (
@@ -85,9 +91,9 @@ const DropdownComponent = ({
             <Dropdown.Toggle
               variant="light"
               as={CustomToggleContainer}
-              className={getIsDropdownValid()}
+              className={getDropdownClass()}
             >
-              <CustomToggle borderClass={borderClass} variant={"light"}>
+              <CustomToggle borderClass={getDropdownClass()} variant={"light"}>
                 {value || defaultValue}
                 <VscChevronDown className="pl-0.5" />
               </CustomToggle>
@@ -123,7 +129,7 @@ const DropdownComponent = ({
           containerClass={inputContainerClass}
           inputClass={inputClass}
           placeholder={placeholder}
-          onSubmit={handleAddItem}
+          onSubmit={handleNewItemSubmit}
         />
       )}
     </>
@@ -131,7 +137,8 @@ const DropdownComponent = ({
 };
 
 DropdownComponent.defaultProps = {
-  containerClass: "w-fit mt-3"
+  containerClass: "w-fit mt-3",
+  validating: true
 };
 
 DropdownComponent.propTypes = {
@@ -147,6 +154,7 @@ DropdownComponent.propTypes = {
   isAdditionEnabled: PropTypes.bool,
   onElemAdding: PropTypes.func,
   isSubmit: PropTypes.bool,
+  validating: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string
 };

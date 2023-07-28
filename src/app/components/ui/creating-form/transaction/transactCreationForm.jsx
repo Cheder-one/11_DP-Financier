@@ -102,11 +102,6 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
     handleSubmit
   }));
 
-  const getDatePickerClass = (errors) => {
-    return errors?.date ? "is-invalid" : "is-valid";
-  };
-  console.log(errors);
-
   return (
     <>
       <Row className="mb-4">

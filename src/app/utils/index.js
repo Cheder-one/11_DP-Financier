@@ -4,7 +4,7 @@ import validationSchema from "./validators/validationSchema";
 import getAvatar from "./functions/getAvatar";
 import toReadableDate from "./functions/toReadableDate";
 import getUniqDates from "./functions/getUniqDates";
-import getBorderStyle from "./styles/getBorderStyle";
+import getDynamicBorderClass from "./styles/getDynamicBorderClass";
 import updIncomeExpenseTransacts from "./functions/updIncomeExpenseTransacts";
 import getUserData from "./service/getUserData";
 import dataConstants from "./data/dataConstants.js";
@@ -20,7 +20,7 @@ export {
   getAvatar,
   toReadableDate,
   getUniqDates,
-  getBorderStyle,
+  getDynamicBorderClass,
   updIncomeExpenseTransacts,
   getUserData,
   dataConstants,

@@ -11,6 +11,9 @@ export default {
       lg: "1024px"
     },
     extend: {
+      colors: {
+        "gray-light": "#DEE2E6"
+      },
       fontFamily: {
         "space-mono-bold": ["'Space Mono'", "monospace"]
       },
