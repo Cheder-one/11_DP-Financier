@@ -29,7 +29,6 @@ const loginSchema = yup.object().shape({
     .required()
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, INCORRECT_EMAIL),
   password: yup.string().required()
-  // stayOn: yup.boolean().oneOf([true]).required()
 });
 
 const registerSchema = yup.object().shape({
@@ -50,7 +49,11 @@ const accountSchema = yup.object().shape({
     .test("account-required", "Укажите тип счета", validateDropdownRequired),
   currency: yup
     .object()
-    .test("account-required", "Укажите валюту счета", validateDropdownRequired),
+    .test(
+      "currency-required",
+      "Укажите валюту счета",
+      validateDropdownRequired
+    ),
   name: yup.string().required(),
   balance: yup.number().typeError("Укажите корректный баланс счета").required()
 });
@@ -62,7 +65,11 @@ const transactSchema = yup.object().shape({
   date: yup.string().required("Укажите дату транзакции"),
   category: yup
     .object()
-    .test("account-required", "Укажите валюту счета", validateDropdownRequired),
+    .test(
+      "category-required",
+      "Укажите валюту счета",
+      validateDropdownRequired
+    ),
   amount: yup.number().typeError("Укажите корректную сумму").required()
 });
 

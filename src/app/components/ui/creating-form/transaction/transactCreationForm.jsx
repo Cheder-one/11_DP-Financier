@@ -1,4 +1,3 @@
-import axios from "axios";
 import PropTypes from "prop-types";
 import { useState, forwardRef, useImperativeHandle } from "react";
 import { Row, Col, Form } from "react-bootstrap";
@@ -15,7 +14,9 @@ import {
   getNanoId,
   validationSchema,
   updateInputFields,
-  getAmountByType
+  getAmountByType,
+  postUserCategory,
+  postUserTransact
 } from "../../../../utils";
 import { Calculator } from "../../index.js";
 import { useFormValidation } from "../../../../hooks";
@@ -33,9 +34,6 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
   });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
-  const errors = useFormValidation(inputFields, transactSchema);
-  const hasErrors = keys(errors).length;
-
   const handleInputChange = ({ target }) => {
     updateInputFields(target, setInputFields);
   };
@@ -44,7 +42,7 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
     const { name, value } = target;
 
     const newCategory = {
-      id: `category-id-${getNanoId()}`,
+      id: "isNew",
       type: "category",
       name: value
     };
@@ -55,21 +53,25 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
     }));
   };
 
+  const errors = useFormValidation(inputFields, transactSchema);
+  const hasErrors = keys(errors).length;
+
+  // TODO  Разделить логику postDataToUser на две функции
   const postDataToUser = () => {
     const { account, date, category, amount, comment } = inputFields;
-
-    const idForNewTransact = `transaction-id-${getNanoId()}`;
+    const newTransactId = `transaction-id-${getNanoId()}`;
+    const newCategoryId = `category-id-${getNanoId()}`;
 
     const newCategory = {
       id: category.id,
       type: "category",
       name: category.name,
       accounts: [account.id],
-      transactions: [idForNewTransact]
+      transactions: [newTransactId]
     };
 
     const newTransaction = {
-      id: idForNewTransact,
+      id: newTransactId,
       amount: getAmountByType(amount, cardType),
       type: cardType,
       account: account.id,
@@ -78,23 +80,24 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
       comment
     };
 
-    try {
-      axios.post(`/api/users/${user.id}/transactions`, newTransaction);
-      axios.post(`/api/users/${user.id}/categories`, newCategory);
-    } catch (error) {
-      console.error("Ошибка при создании", error);
+    if (category.id === "isNew") {
+      newCategory.id = newCategoryId;
+      newTransaction.category.id = newCategoryId;
+
+      postUserCategory(user.id, newCategory);
     }
+
+    postUserTransact(user.id, newTransaction);
   };
 
   const handleSubmit = () => {
     setIsSubmitClicked(true);
 
     if (hasErrors) {
-      postDataToUser();
-
-      return undefined;
+      return false;
     } else {
       postDataToUser();
+      return true;
     }
   };
 

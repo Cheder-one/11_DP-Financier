@@ -13,6 +13,8 @@ import getNanoId from "./functions/getNanoId";
 import getIdAllItem from "./functions/getIdAllItem";
 import validateDropdownRequired from "./functions/validateDropdownRequired";
 import getAmountByType from "./functions/getAmountByType";
+import postUserCategory from "./service/postUserCategory";
+import postUserTransact from "./service/postUserTransact";
 
 export {
   themeConfig,
@@ -28,5 +30,7 @@ export {
   getNanoId,
   getIdAllItem,
   validateDropdownRequired,
-  getAmountByType
+  getAmountByType,
+  postUserCategory,
+  postUserTransact
 };

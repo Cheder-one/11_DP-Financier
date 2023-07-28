@@ -16,7 +16,6 @@ const TransactCreationModal = ({ user, cardType, showModal, setShowModal }) => {
     const isDataValid = transactFormRef.current.handleSubmit();
 
     if (isDataValid) {
-      console.log(isDataValid);
       setShowModal(false);
     }
   };
