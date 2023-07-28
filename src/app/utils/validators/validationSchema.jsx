@@ -59,7 +59,7 @@ const transactSchema = yup.object().shape({
   account: yup
     .object()
     .test("account-required", "Укажите тип счета", validateDropdownRequired),
-  date: yup.string().required(),
+  date: yup.string().required("Укажите дату транзакции"),
   category: yup
     .object()
     .test("account-required", "Укажите валюту счета", validateDropdownRequired),

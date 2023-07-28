@@ -40,9 +40,9 @@ const MainPage = ({ userId }: { userId: string }) => {
         setUser(user);
 
         setCardBodyItems({
-          account: user.transactions,
-          income: filter(user.transactions, { type: "income" }),
-          expense: filter(user.transactions, { type: "expense" })
+          account: user?.transactions,
+          income: filter(user?.transactions, { type: "income" }),
+          expense: filter(user?.transactions, { type: "expense" })
         });
       } catch (err) {
         console.error(err);
@@ -51,10 +51,6 @@ const MainPage = ({ userId }: { userId: string }) => {
 
     fetchData();
   }, [userId]);
-
-  const updateUser = (newUserData) => {
-    setUser(newUserData); // Обновление состояния пользователя
-  };
 
   // Универсализирует данные для отправки в TableCard, чтобы компонент не был привязан к конкретным переменным.
   const transformedBodyItems = useMemo(() => {
@@ -202,7 +198,6 @@ const MainPage = ({ userId }: { userId: string }) => {
         <AccountCreationModal {...{ showModal, setShowModal }} />
       ) : (
         <TransactCreationModal
-          updateUser={updateUser}
           cardType={cardTypeToAdd}
           {...{ user, showModal, setShowModal }}
         />

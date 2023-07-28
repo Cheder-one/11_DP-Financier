@@ -12,6 +12,7 @@ import updateInputFields from "./functions/updateInputFields";
 import getNanoId from "./functions/getNanoId";
 import getIdAllItem from "./functions/getIdAllItem";
 import validateDropdownRequired from "./functions/validateDropdownRequired";
+import getAmountByType from "./functions/getAmountByType";
 
 export {
   themeConfig,
@@ -26,5 +27,6 @@ export {
   updateInputFields,
   getNanoId,
   getIdAllItem,
-  validateDropdownRequired
+  validateDropdownRequired,
+  getAmountByType
 };

@@ -1,15 +1,19 @@
-import { useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { evaluate } from "mathjs";
+import { useRef, useState } from "react";
 
 import { TextField } from "../common/form";
 import { dataConstants } from "../../utils";
-import { useEventListener } from "../../hooks";
+import { useEventListener, useFocus } from "../../hooks";
 
 const { NUMPAD, OPERATORS } = dataConstants;
 
-const Calculator = () => {
+const Calculator = ({ name, onEval }) => {
   const [display, setDisplay] = useState("");
+  const [isError, setIsError] = useState(false);
+
   const evalBtnRef = useRef();
+  const inputRef = useRef();
 
   const handleInputChange = ({ target }) => {
     const { value } = target;
@@ -29,15 +33,26 @@ const Calculator = () => {
   };
 
   const handleClear = () => {
+    setIsError(false);
     setDisplay("");
+  };
+
+  const pastResultToField = (result) => {
+    onEval({
+      target: { name, value: result }
+    });
   };
 
   const handleEval = () => {
     try {
       const result = evaluate(display);
+
       setDisplay(result.toString());
+      setIsError(false);
+
+      pastResultToField(result);
     } catch (err) {
-      setDisplay("Error");
+      setIsError(true);
     }
   };
 
@@ -48,17 +63,19 @@ const Calculator = () => {
   };
 
   useEventListener("keydown", handleKeyPress);
+  useFocus(inputRef);
 
   return (
-    <div className="calculator w-44 rounded bg-[#EBEAE6] font-space-mono-bold select-none ">
+    <div className="calculator w-44 rounded bg-[#EBEAE6] font-space-mono-bold select-none border-1 border-gray-300">
       <TextField
         containerClass={"px-2 py-3"}
         childrenClass={"text-right"}
         name={"calculator"}
         value={display}
-        placeholder={"0"}
+        placeholder={isError ? "Error" : "0"}
         validating={false}
         onChange={handleInputChange}
+        inputRef={inputRef}
       />
       <div className="numpad grid grid-cols-2 pb-4" onClick={handleClick}>
         <div className="grid grid-cols-3 gap-2 mx-auto">
@@ -92,6 +109,11 @@ const Calculator = () => {
       </div>
     </div>
   );
+};
+
+Calculator.propTypes = {
+  name: PropTypes.string,
+  onEval: PropTypes.func
 };
 
 export default Calculator;

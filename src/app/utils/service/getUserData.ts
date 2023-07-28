@@ -5,8 +5,8 @@ const getUserData = async (userId: string) => {
     const response = await axios.get(`/api/users/${userId}`);
     const { user } = response.data;
     return user;
-  } catch (error) {
-    throw new Error("Failed to fetch user data");
+  } catch (err) {
+    console.error("Ошибка при получении данных о пользователе:", err);
   }
 };
 

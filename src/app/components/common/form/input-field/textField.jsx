@@ -19,7 +19,8 @@ const TextField = ({
   textaria,
   validating,
   isSubmit,
-  onChange
+  onChange,
+  inputRef
 }) => {
   const [showPass, setShowPass] = useState(false);
   const [isBlur, setIsBlur] = useBlurOnSubmit(isSubmit);
@@ -65,6 +66,7 @@ const TextField = ({
                 isInvalid={isInvalidField()}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                ref={inputRef}
               />
             </FloatingLabel>
           ) : (
@@ -78,6 +80,7 @@ const TextField = ({
               isInvalid={isInvalidField()}
               onChange={handleChange}
               onBlur={handleBlur}
+              ref={inputRef}
             />
           )}
 
@@ -105,7 +108,7 @@ TextField.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   type: PropTypes.string,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
   as: PropTypes.object,
@@ -115,7 +118,8 @@ TextField.propTypes = {
   floating: PropTypes.bool,
   textaria: PropTypes.bool,
   validating: PropTypes.bool,
-  isSubmit: PropTypes.bool
+  isSubmit: PropTypes.bool,
+  inputRef: PropTypes.object
 };
 
 export default TextField;

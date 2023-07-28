@@ -6,10 +6,7 @@ export function makeServer({ environment = "development" } = {}) {
     environment,
 
     models: {
-      user: Model,
-      account: Model,
-      category: Model,
-      transaction: Model
+      user: Model
     },
 
     seeds(server) {
@@ -25,42 +22,38 @@ export function makeServer({ environment = "development" } = {}) {
         return schema.users.all();
       });
 
+      // Маршрут поиска user-а
       this.get(
         "/users/:user_id",
         (schema, request) => {
           const userId = request.params.user_id;
-          return schema.users.find(userId);
+          const user = schema.users.find(userId);
+          return user;
         },
         { timing: 500 }
       );
 
-      // // Маршрут обновления пользователя
-      // this.put("/users/:user_id", (schema, request) => {
-      //   const userId = request.params.user_id;
-      //   const attrs = JSON.parse(request.requestBody);
+      // Маршрут создания счета
+      this.post("/users/:user_id/accounts", (schema, request) => {
+        const userId = request.params.user_id;
+        const user = schema.users.find(userId);
 
-      //   // Находим пользователя по ID
-      //   const user = schema.users.find(userId);
+        const newTransaction = JSON.parse(request.requestBody);
 
-      //   // Обновляем данные пользователя
-      //   user.update(attrs);
-
-      //   // Возвращаем обновленного пользователя
-      //   return user;
-      // });
+        user.accounts.push(newTransaction);
+        user.save();
+        return user;
+      });
 
       // Маршрут создания категории
       this.post("/users/:user_id/categories", (schema, request) => {
         const userId = request.params.user_id;
         const user = schema.users.find(userId);
 
-        const newCategory = JSON.parse(request.requestBody);
+        const newTransaction = JSON.parse(request.requestBody);
 
-        // Добавляем новую категорию в массив categories пользователя
-        user.update({
-          categories: [...user.categories, newCategory]
-        });
-
+        user.categories.push(newTransaction);
+        user.save();
         return user;
       });
 
@@ -69,12 +62,10 @@ export function makeServer({ environment = "development" } = {}) {
         const userId = request.params.user_id;
         const user = schema.users.find(userId);
 
-        const newCategory = JSON.parse(request.requestBody);
+        const newTransaction = JSON.parse(request.requestBody);
 
-        user.update({
-          transactions: [...user.transactions, newCategory]
-        });
-
+        user.transactions.push(newTransaction);
+        user.save();
         return user;
       });
     }
