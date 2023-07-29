@@ -56,10 +56,8 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
 
   const errors = useFormValidation(inputFields, transactSchema);
   const hasErrors = keys(errors).length;
-  console.log(errors);
 
   // TODO Починить обновление state user после post
-  // TODO Исправить стили DropdownComponent и пропуск с ошибками
 
   // TODO Разделить логику postDataToUser на две функции
   const postDataToUser = () => {
@@ -112,8 +110,8 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
 
   return (
     <>
-      <Row className="mb-4">
-        <Col className="flex gap-3 items-end">
+      <Row className="mb-4 mt-3">
+        <Col className="flex gap-3">
           <DropdownComponent
             name={"account"}
             items={accounts}

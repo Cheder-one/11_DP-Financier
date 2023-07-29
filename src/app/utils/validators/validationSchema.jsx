@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import validateDropdownRequired from "../functions/validateDropdownRequired";
+import validateDropdownRequired from "../func/validateDropdownRequired";
 
 const MIN_PASSWORD_LENGTH = 8;
 const INCORRECT_EMAIL = `Некорректный email`;
@@ -54,8 +54,17 @@ const accountSchema = yup.object().shape({
       "Укажите валюту счета",
       validateDropdownRequired
     ),
-  name: yup.string().required(),
-  balance: yup.number().typeError("Укажите корректный баланс счета").required()
+  name: yup
+    .string()
+    .matches(/^\S(.*\S)?$/, "Пробелы в начале и конце строки запрещены")
+    .required(),
+  balance: yup
+    .string()
+    .matches(
+      /^(?=\S+$)[^a-zA-Zа-яА-Я]*$/,
+      "Значение должно состоять только из чисел."
+    )
+    .required()
 });
 
 const transactSchema = yup.object().shape({
@@ -65,12 +74,14 @@ const transactSchema = yup.object().shape({
   date: yup.string().required("Укажите дату транзакции"),
   category: yup
     .object()
-    .test(
-      "category-required",
-      "Укажите валюту счета",
-      validateDropdownRequired
-    ),
-  amount: yup.number().typeError("Укажите корректную сумму").required()
+    .test("category-required", "Укажите категорию", validateDropdownRequired),
+  amount: yup
+    .string()
+    .matches(
+      /^(?=\S+$)[^a-zA-Zа-яА-Я]*$/,
+      "Значение должно состоять только из чисел."
+    )
+    .required()
 });
 
 const validationSchema = {

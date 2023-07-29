@@ -50,7 +50,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Row className="mb-4">
+        <Row className="mb-4 mt-3">
           <Col className="flex gap-3">
             <DropdownComponent
               name={"account"}
@@ -59,7 +59,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
               value={inputFields.account.name}
               isSubmit={isSubmitClicked}
               onChange={handleInputChange}
-              // error={errors.account}
+              error={errors.account}
             />
             <DropdownComponent
               name={"currency"}
@@ -68,7 +68,7 @@ const AccountCreationForm = forwardRef((props, ref) => {
               value={inputFields.currency.code}
               isSubmit={isSubmitClicked}
               onChange={handleInputChange}
-              // error={errors.currency}
+              error={errors.currency}
             />
           </Col>
         </Row>

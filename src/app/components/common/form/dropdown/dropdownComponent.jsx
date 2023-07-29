@@ -7,6 +7,7 @@ import { useBlurOnSubmit } from "../../../../hooks";
 import { CustomToggleContainer, CustomToggle } from "../index";
 import { InputWithButton } from "../../../ui";
 import { getDynamicBorderClass } from "../../../../utils";
+import FormControlFeedback from "../../formControlFeedback";
 
 const DropdownComponent = ({
   label,
@@ -19,6 +20,7 @@ const DropdownComponent = ({
   inputContainerClass,
   inputClass,
   validating,
+  isErrorTooltip,
   isSubmit,
   isAdditionEnabled,
   onElemAdding,
@@ -78,9 +80,9 @@ const DropdownComponent = ({
   };
 
   return (
-    <>
+    <div className={containerClass + (validating && "relative")}>
       {!isOpenToAdding ? (
-        <Form.Group className={containerClass}>
+        <Form.Group>
           {label && <Form.Label>{label}</Form.Label>}
 
           <Dropdown
@@ -89,7 +91,7 @@ const DropdownComponent = ({
             show={isOpen}
           >
             <Dropdown.Toggle as={CustomToggleContainer} variant="light">
-              <CustomToggle borderClass={getBorderClass()} variant={"light"}>
+              <CustomToggle variant={"light"} borderClass={getBorderClass()}>
                 {value || defaultValue}
                 <VscChevronDown className="pl-0.5" />
               </CustomToggle>
@@ -112,10 +114,10 @@ const DropdownComponent = ({
               )}
             </Dropdown.Menu>
 
-            {error && (
-              <Form.Control.Feedback type="invalid" className="mt-1">
+            {validating && error && isBlur && (
+              <FormControlFeedback isTooltip={isErrorTooltip}>
                 {error}
-              </Form.Control.Feedback>
+              </FormControlFeedback>
             )}
           </Dropdown>
         </Form.Group>
@@ -128,13 +130,14 @@ const DropdownComponent = ({
           onSubmit={handleNewItemSubmit}
         />
       )}
-    </>
+    </div>
   );
 };
 
 DropdownComponent.defaultProps = {
   containerClass: "w-fit mt-3",
-  validating: true
+  validating: true,
+  isErrorTooltip: true
 };
 
 DropdownComponent.propTypes = {
@@ -151,6 +154,7 @@ DropdownComponent.propTypes = {
   onElemAdding: PropTypes.func,
   isSubmit: PropTypes.bool,
   validating: PropTypes.bool,
+  isErrorTooltip: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string
 };

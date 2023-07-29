@@ -4,10 +4,10 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const OverlayTooltip = ({ text, children }) => {
   const [showTooltip, setShowTooltip] = useState(false);
-  const ref = useRef(null);
+  const tooltipRef = useRef(null);
 
   const handleMouseEnter = () => {
-    const { current } = ref;
+    const { current } = tooltipRef;
 
     if (current.offsetWidth < current.scrollWidth) {
       setShowTooltip(true);
@@ -21,9 +21,14 @@ const OverlayTooltip = ({ text, children }) => {
   const tooltip = <Tooltip id="tooltip">{text || children}</Tooltip>;
 
   return (
-    <OverlayTrigger placement="top" overlay={tooltip} show={showTooltip}>
+    <OverlayTrigger
+      placement="top"
+      overlay={tooltip}
+      show={showTooltip}
+      delay={{ show: 250, hide: 400 }}
+    >
       <div
-        ref={ref}
+        ref={tooltipRef}
         className="whitespace-nowrap overflow-hidden overflow-ellipsis"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

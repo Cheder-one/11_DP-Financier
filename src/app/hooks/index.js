@@ -5,6 +5,7 @@ import useEventListener from "./useEventListener";
 import useFormValidation from "./useFormValidation";
 import useModal from "./useModal";
 import useFocus from "./useFocus";
+import useTooltipArrowRemoval from "./useTooltipArrowRemoval";
 
 export {
   useBlurOnSubmit,
@@ -12,5 +13,6 @@ export {
   useEventListener,
   useFormValidation,
   useModal,
-  useFocus
+  useFocus,
+  useTooltipArrowRemoval
 };

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useFocus } from "../../../../hooks";
 
 const InputField = ({
