@@ -1,12 +1,5 @@
 import axios from "axios";
-
-interface Category {
-  id: string;
-  type: string;
-  name: string;
-  accounts: string[];
-  transactions: string[];
-}
+import { Category } from "../../types/userTypes";
 
 const postUserCategory = (userId: string, newCategory: Category) => {
   try {

@@ -23,6 +23,7 @@ const TransactCreationModal = ({ user, cardType, showModal, setShowModal }) => {
   const handleKeyPress = ({ keyCode }) => {
     if (keyCode === 13) {
       transactFormRef.current.handleSubmit();
+      setShowModal(false);
     }
   };
 

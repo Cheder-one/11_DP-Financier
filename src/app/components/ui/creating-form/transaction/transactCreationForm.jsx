@@ -14,13 +14,13 @@ import {
   getNanoId,
   validationSchema,
   updateInputFields,
-  getAmountByType,
   postUserCategory,
-  postUserTransact
+  postUserTransact,
+  createNewCategory,
+  createNewTransact
 } from "../../../../utils";
 import { Calculator } from "../../index.js";
 import { useFormValidation } from "../../../../hooks";
-
 const { transactSchema } = validationSchema;
 
 const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
@@ -61,32 +61,22 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
 
   // TODO Разделить логику postDataToUser на две функции
   const postDataToUser = () => {
-    const { account, date, category, amount, comment } = inputFields;
+    const { category } = inputFields;
     const newTransactId = `transaction-id-${getNanoId()}`;
     const newCategoryId = `category-id-${getNanoId()}`;
 
-    const newCategory = {
-      id: category.id,
-      type: "category",
-      name: category.name,
-      accounts: [account.id],
-      transactions: [newTransactId]
+    const dataToCreate = {
+      ...inputFields,
+      newTransactId,
+      cardType
     };
 
-    const newTransaction = {
-      id: newTransactId,
-      amount: getAmountByType(amount, cardType),
-      type: cardType,
-      account: account.id,
-      category: category.id,
-      date: date?.toISOString(),
-      comment
-    };
+    const newCategory = createNewCategory(dataToCreate);
+    const newTransaction = createNewTransact(dataToCreate);
 
     if (category.id === "isNew") {
       newCategory.id = newCategoryId;
       newTransaction.category = newCategoryId;
-
       postUserCategory(user.id, newCategory);
     }
 

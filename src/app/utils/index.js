@@ -15,6 +15,9 @@ import validateDropdownRequired from "./func/validateDropdownRequired";
 import getAmountByType from "./func/getAmountByType";
 import postUserCategory from "./service/postUserCategory";
 import postUserTransact from "./service/postUserTransact";
+import getTooltipClass from "./styles/getTooltipClass.js";
+import createNewCategory from "./func/createNewCategory";
+import createNewTransact from "./func/createNewTransaction";
 
 export {
   themeConfig,
@@ -32,5 +35,8 @@ export {
   validateDropdownRequired,
   getAmountByType,
   postUserCategory,
-  postUserTransact
+  postUserTransact,
+  getTooltipClass,
+  createNewCategory,
+  createNewTransact
 };

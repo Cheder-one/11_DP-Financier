@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    // Версия ECMAScript, к которой будет компилироваться код
+    "module": "ESNext",
+    // Формат модулей (ESNext для использования import/export)
+    "jsx": "react",
+    // Тип JSX, используемый в React
+    "strict": true,
+    // Включить строгие настройки TypeScript
+    "esModuleInterop": true
+    // Разрешить импорт модулей в стиле ES6
+  },
+  "include": ["src"]
+  // Папки, которые нужно включить в компиляцию (замените "src" на вашу папку с кодом)
+}

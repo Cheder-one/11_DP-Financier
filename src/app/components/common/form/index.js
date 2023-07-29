@@ -9,7 +9,7 @@ import CheckboxField from "./checkbox/checkboxField";
 import SwitchField from "./switch/switchField";
 import TextField from "./input-field/textField";
 import InputField from "./input-field/inputField";
-import Multiselect from "./select/multiSelect";
+import Multiselect from "../../../../archive/select/multiSelect";
 
 export {
   CustomToggleContainer,

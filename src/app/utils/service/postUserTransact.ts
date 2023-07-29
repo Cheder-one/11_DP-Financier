@@ -1,14 +1,5 @@
 import axios from "axios";
-
-interface Transaction {
-  id: string;
-  amount: number;
-  type: string;
-  account: string;
-  category: string;
-  date: string;
-  comment: string;
-}
+import { Transaction } from "../../types/userTypes";
 
 const postUserTransact = (userId: string, newTransaction: Transaction) => {
   try {

@@ -6,6 +6,7 @@ export interface Account {
   category: string;
   balance: number;
   transactions: string[];
+  comment: string;
 }
 
 export interface Category {
@@ -14,7 +15,6 @@ export interface Category {
   name: string;
   accounts: string[];
   transactions: string[];
-  comment: string;
 }
 
 export interface Transaction {

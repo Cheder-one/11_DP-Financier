@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import CreatableSelect from "react-select/creatable";
+// import CreatableSelect from "react-select/creatable";
 
-import { getNanoId } from "../../../../utils";
+import { getNanoId } from "../../app/utils";
 
 const Multiselect = ({
   name,
