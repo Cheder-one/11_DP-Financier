@@ -38,7 +38,7 @@ const DropdownComponent = ({
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
 
-    if (selectedItem.id === "__addNew__") {
+    if (selectedItem.id === "newItem") {
       setIsOpenToAdding(true);
     } else {
       onChange({
@@ -52,12 +52,17 @@ const DropdownComponent = ({
     }
   };
 
-  const handleNewItemSubmit = (target) => {
+  const handleNewItemSubmit = (e) => {
+    const { value } = e.target;
+
     setIsOpenToAdding(false);
-    handleToggle(false);
+
+    if (!value) return;
+
+    setIsOpenToAdding(false);
     setIsValid(true);
 
-    onElemAdding(target);
+    onElemAdding(e);
   };
 
   useEffect(() => {
@@ -99,10 +104,10 @@ const DropdownComponent = ({
 
               {isAdditionEnabled && (
                 <Dropdown.Item
-                  eventKey={JSON.stringify({ id: "__addNew__" })}
+                  eventKey={JSON.stringify({ id: "newItem" })}
                   className="text-blue-700 text-sm border-top"
                 >
-                  Добавить категорию
+                  Добавить
                 </Dropdown.Item>
               )}
             </Dropdown.Menu>

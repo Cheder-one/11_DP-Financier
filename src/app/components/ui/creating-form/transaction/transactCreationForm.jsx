@@ -40,6 +40,7 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
 
   const handleAddNewCategory = ({ target }) => {
     const { name, value } = target;
+    if (!value) return;
 
     const newCategory = {
       id: "isNew",
@@ -55,8 +56,12 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
 
   const errors = useFormValidation(inputFields, transactSchema);
   const hasErrors = keys(errors).length;
+  console.log(errors);
 
-  // TODO  Разделить логику postDataToUser на две функции
+  // TODO Починить обновление state user после post
+  // TODO Исправить стили DropdownComponent и пропуск с ошибками
+
+  // TODO Разделить логику postDataToUser на две функции
   const postDataToUser = () => {
     const { account, date, category, amount, comment } = inputFields;
     const newTransactId = `transaction-id-${getNanoId()}`;
@@ -82,7 +87,7 @@ const TransactCreationForm = forwardRef(({ user, cardType }, ref) => {
 
     if (category.id === "isNew") {
       newCategory.id = newCategoryId;
-      newTransaction.category.id = newCategoryId;
+      newTransaction.category = newCategoryId;
 
       postUserCategory(user.id, newCategory);
     }
