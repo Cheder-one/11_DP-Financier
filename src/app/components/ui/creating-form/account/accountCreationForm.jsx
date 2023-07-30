@@ -23,7 +23,7 @@ const { ACCOUNT_TYPES, CURRENCIES } = dataConstants;
 
 const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
   const [inputFields, setInputFields] = useState({
-    account: {},
+    entity: {},
     currency: {},
     name: "",
     icon: "VscBlank",
@@ -47,7 +47,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
     const newCategoryId = `category-id-${getNanoId()}`;
 
     // const [inputFields, setInputFields] = useState({
-    //   account: {},
+    //   entity: {},
     //   currency: {},
     //   name: "",
     //   icon: "VscBlank",
@@ -57,8 +57,8 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
     // });
 
     // {
-    //   "id": "account-id-1",
-    //   "type": "account",
+    //   "id": "entity-id-1",
+    //   "type": "entity",
     //   "name": "Сбербанк",
     //   "public": false,
     //   "category": "category-id-1",
@@ -110,13 +110,13 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
         <Row className="mb-4 mt-3">
           <Col className="flex gap-3">
             <DropdownComponent
-              name={"account"}
+              name={"entity"}
               items={ACCOUNT_TYPES}
               defaultValue={"Тип счета"}
-              value={inputFields.account.name}
+              value={inputFields.entity.name}
               isSubmit={isSubmitClicked}
               onChange={handleInputChange}
-              error={errors.account}
+              error={errors.entity}
             />
             <DropdownComponent
               name={"currency"}
