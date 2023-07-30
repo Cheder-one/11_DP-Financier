@@ -54,15 +54,12 @@ const accountSchema = yup.object().shape({
       "Укажите валюту счета",
       validateDropdownRequired
     ),
-  name: yup
-    .string()
-    .matches(/^\S(.*\S)?$/, "Пробелы в начале и конце строки запрещены")
-    .required(),
+  name: yup.string().required(),
   balance: yup
     .string()
     .matches(
       /^(?=\S+$)[^a-zA-Zа-яА-Я]*$/,
-      "Значение должно состоять только из чисел."
+      "Значение должно состоять только из чисел"
     )
     .required()
 });
@@ -78,8 +75,8 @@ const transactSchema = yup.object().shape({
   amount: yup
     .string()
     .matches(
-      /^(?=\S+$)[^a-zA-Zа-яА-Я]*$/,
-      "Значение должно состоять только из чисел."
+      /^(?=\S+$)[^a-zA-Zа-яА-Яё]*$/,
+      "Значение должно состоять только из чисел"
     )
     .required()
 });

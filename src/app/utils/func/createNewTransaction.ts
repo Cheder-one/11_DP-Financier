@@ -1,8 +1,6 @@
 import { Account, Category } from "../../types/userTypes";
 import getAmountByType from "./getAmountByType";
 
-interface NewTransact {}
-
 const createNewTransact = ({
   newTransactId,
   amount,

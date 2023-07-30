@@ -58,7 +58,6 @@ const TransactCreationForm = forwardRef(
     const errors = useFormValidation(inputFields, transactSchema);
     const hasErrors = keys(errors).length;
 
-    // TODO Написать grid стили для sm экранов
     // TODO Настроить отправку данных при создании account
 
     // TODO Разделить логику postDataToUser на две функции
@@ -132,7 +131,7 @@ const TransactCreationForm = forwardRef(
         </Row>
 
         <Row>
-          <Col md={1}>
+          <Col md={1} className="pb-3 md:pb-0">
             <DropdownSheet
               iconClass={"p-1.5"}
               defaultValue={<BiSolidCalculator size={23} />}
@@ -150,7 +149,7 @@ const TransactCreationForm = forwardRef(
               error={errors.amount}
             />
           </Col>
-          <Col md={5}>
+          <Col md={5} className="pb-3 md:pb-0">
             <DatePicker
               name={"date"}
               value={inputFields.date}
@@ -161,9 +160,7 @@ const TransactCreationForm = forwardRef(
               />
             </DatePicker>
             {errors.date && (
-              <div className="text-sm text-[#DC3545] pt-1 mb-3">
-                {errors.date}
-              </div>
+              <div className="text-sm text-danger pt-1 mb-3">{errors.date}</div>
             )}
           </Col>
         </Row>

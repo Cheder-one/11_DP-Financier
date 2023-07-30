@@ -18,7 +18,11 @@ const AccountCreationModal = ({ showModal, setShowModal }) => {
 
   const handleKeyPress = ({ keyCode }) => {
     if (keyCode === 13) {
-      accountFormRef.current.handleSubmit();
+      const isFormValid = accountFormRef.current.handleSubmit();
+
+      if (isFormValid) {
+        setShowModal(false);
+      }
     }
   };
 

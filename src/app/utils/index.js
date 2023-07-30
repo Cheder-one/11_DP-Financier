@@ -13,11 +13,13 @@ import getNanoId from "./func/getNanoId";
 import getIdAllItem from "./func/getIdAllItem";
 import validateDropdownRequired from "./func/validateDropdownRequired";
 import getAmountByType from "./func/getAmountByType";
+import postUserAccount from "./service/postUserAccount";
 import postUserCategory from "./service/postUserCategory";
 import postUserTransact from "./service/postUserTransact";
 import getTooltipClass from "./styles/getTooltipClass.js";
 import createNewCategory from "./func/createNewCategory";
 import createNewTransact from "./func/createNewTransaction";
+import createNewAccount from "./func/createNewAccount";
 
 export {
   themeConfig,
@@ -34,9 +36,11 @@ export {
   getIdAllItem,
   validateDropdownRequired,
   getAmountByType,
+  postUserAccount,
   postUserCategory,
   postUserTransact,
   getTooltipClass,
+  createNewAccount,
   createNewCategory,
   createNewTransact
 };

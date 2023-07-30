@@ -9,7 +9,9 @@ import {
   DropdownComponent
 } from "../../../common/form";
 import {
+  createNewAccount,
   dataConstants,
+  getNanoId,
   updateInputFields,
   validationSchema
 } from "../../../../utils";
@@ -36,11 +38,62 @@ const AccountCreationForm = forwardRef((props, ref) => {
     updateInputFields(target, setInputFields);
   };
 
+  console.log(inputFields);
+
+  const postDataToUser = () => {
+    const { category } = inputFields;
+    const newTransactId = `transaction-id-${getNanoId()}`;
+    const newCategoryId = `category-id-${getNanoId()}`;
+
+    // const [inputFields, setInputFields] = useState({
+    //   account: {},
+    //   currency: {},
+    //   name: "",
+    //   icon: "VscBlank",
+    //   iconColor: "#00000",
+    //   balance: "",
+    //   comment: ""
+    // });
+
+    // {
+    //   "id": "account-id-1",
+    //   "type": "account",
+    //   "name": "Сбербанк",
+    //   "public": false,
+    //   "category": "category-id-1",
+    //   "balance": 90000,
+    //   "transactions": [
+    //     "transaction-id-1",
+    //     "transaction-id-2",
+    //     "transaction-id-5",
+    //     "transaction-id-6"
+    //   ],
+    //   "comment": ""
+    // }
+
+    const dataToCreate = {
+      ...inputFields,
+      newTransactId,
+      cardType
+    };
+
+    const newTransaction = createNewAccount(dataToCreate);
+
+    if (category.id === "isNew") {
+      newCategory.id = newCategoryId;
+      newTransaction.category = newCategoryId;
+      postUserCategory(user.id, newCategory);
+    }
+    postUserTransact(user.id, newTransaction);
+
+    onSuccess();
+  };
+
   const handleSubmit = () => {
     setIsSubmitClicked(true);
 
     if (hasErrors) {
-      return undefined;
+      return false;
     } else {
       return inputFields;
     }

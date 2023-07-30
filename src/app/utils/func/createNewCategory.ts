@@ -12,7 +12,7 @@ const createNewCategory = ({
   const newCategory = {
     id: category.id,
     type: "category",
-    name: category.name,
+    name: category.name.trim(),
     accounts: [account.id],
     transactions: [newTransactId]
   };
