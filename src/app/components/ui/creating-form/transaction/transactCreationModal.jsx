@@ -5,7 +5,13 @@ import ModalPopup from "../../../common/modal/modalPopup";
 import TransactCreationForm from "./transactCreationForm";
 import { useEventListener } from "../../../../hooks";
 
-const TransactCreationModal = ({ user, cardType, showModal, setShowModal }) => {
+const TransactCreationModal = ({
+  user,
+  cardType,
+  onSuccess,
+  showModal,
+  setShowModal
+}) => {
   const transactFormRef = useRef(null);
 
   const getCardTitle = (cardType) => {
@@ -38,6 +44,7 @@ const TransactCreationModal = ({ user, cardType, showModal, setShowModal }) => {
       <TransactCreationForm
         user={user}
         cardType={cardType}
+        onSuccess={onSuccess}
         ref={transactFormRef}
       />
     </ModalPopup>
@@ -47,6 +54,7 @@ const TransactCreationModal = ({ user, cardType, showModal, setShowModal }) => {
 TransactCreationModal.propTypes = {
   user: PropTypes.object.isRequired,
   cardType: PropTypes.string.isRequired,
+  onSuccess: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,
   setShowModal: PropTypes.func.isRequired
 };

@@ -33,24 +33,31 @@ const MainPage = ({ userId }: { userId: string }) => {
   const [showModal, setShowModal] = useModal(false);
   const [cardTypeToAdd, setCardTypeToAdd] = useState("");
 
+  const fetchUserData = async () => {
+    try {
+      const user = await getUserData(userId);
+      setUser(user);
+
+      setCardBodyItems({
+        account: user?.transactions,
+        income: filter(user?.transactions, { type: "income" }),
+        expense: filter(user?.transactions, { type: "expense" })
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const user = await getUserData(userId);
-        setUser(user);
-
-        setCardBodyItems({
-          account: user?.transactions,
-          income: filter(user?.transactions, { type: "income" }),
-          expense: filter(user?.transactions, { type: "expense" })
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
+    // Получаем данные пользователя при монтировании компонента
+    fetchUserData();
   }, [userId]);
+
+  // Функция для обработки успешного POST запроса
+  const handlePostSuccess = () => {
+    // Получаем обновленные данные пользователя после успешного POST запроса
+    fetchUserData();
+  };
 
   // Универсализирует данные для отправки в TableCard, чтобы компонент не был привязан к конкретным переменным.
   const transformedBodyItems = useMemo(() => {
@@ -195,10 +202,14 @@ const MainPage = ({ userId }: { userId: string }) => {
         </Col>
       </Row>
       {cardTypeToAdd === "account" ? (
-        <AccountCreationModal {...{ showModal, setShowModal }} />
+        <AccountCreationModal
+          onSuccess={handlePostSuccess}
+          {...{ showModal, setShowModal }}
+        />
       ) : (
         <TransactCreationModal
           cardType={cardTypeToAdd}
+          onSuccess={handlePostSuccess}
           {...{ user, showModal, setShowModal }}
         />
       )}
