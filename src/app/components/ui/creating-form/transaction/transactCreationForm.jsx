@@ -185,11 +185,9 @@ TransactCreationForm.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     accounts: PropTypes.array.isRequired,
-    categories: PropTypes.array.isRequired,
-    transactions: PropTypes.array.isRequired
+    categories: PropTypes.array.isRequired
   }).isRequired,
   onSuccess: PropTypes.func.isRequired,
-  updateUser: PropTypes.func,
   cardType: PropTypes.string
 };
 

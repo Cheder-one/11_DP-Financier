@@ -11,7 +11,8 @@
         "id": "account-id-1",
         "type": "account",
         "name": "Сбербанк",
-        "accountType": "",
+        "wallet": "account-type-id-3",
+        "currency": "currency-id-1",
         "category": "category-id-1",
         "balance": 90000,
         "transactions": [
@@ -26,7 +27,8 @@
         "id": "account-id-2",
         "type": "account",
         "name": "Альфа-банк",
-        "accountType": "",
+        "wallet": "account-type-id-3",
+        "currency": "currency-id-1",
         "category": "category-id-2",
         "balance": 80000,
         "transactions": ["transaction-id-3", "transaction-id-4"],
@@ -120,6 +122,58 @@
       { "id": "account-type-id-8", "name": "Имущество" },
       { "id": "account-type-id-9", "name": "Кредит" },
       { "id": "account-type-id-10", "name": "Долг" }
+    ],
+    "currencies": [
+      {
+        "id": "currency-id-1",
+        "name": "Российский Рубль (RUB)",
+        "code": "RUB"
+      },
+      {
+        "id": "currency-id-2",
+        "name": "Доллар США (USD)",
+        "code": "USD"
+      },
+      {
+        "id": "currency-id-3",
+        "name": "Евро (EUR)",
+        "code": "EUR"
+      },
+      {
+        "id": "currency-id-4",
+        "name": "Британский Фунт (GBP)",
+        "code": "GBP"
+      },
+      {
+        "id": "currency-id-5",
+        "name": "Японская Йена (JPY)",
+        "code": "JPY"
+      },
+      {
+        "id": "currency-id-6",
+        "name": "Швейцарский Франк (CHF)",
+        "code": "CHF"
+      },
+      {
+        "id": "currency-id-7",
+        "name": "Канадский Доллар (CAD)",
+        "code": "CAD"
+      },
+      {
+        "id": "currency-id-8",
+        "name": "Австралийский Доллар (AUD)",
+        "code": "AUD"
+      },
+      {
+        "id": "currency-id-9",
+        "name": "Китайский Юань (CNY)",
+        "code": "CNY"
+      },
+      {
+        "id": "currency-id-10",
+        "name": "Индийская Рупия (INR)",
+        "code": "INR"
+      }
     ]
   },
   {
@@ -134,7 +188,8 @@
         "id": "account-id-3",
         "type": "account",
         "name": "Тинькофф",
-        "accountType": "",
+        "wallet": "account-type-id-3",
+        "currency": "currency-id-1",
         "category": "category-id-3",
         "balance": 100,
         "transactions": ["transaction-id-6"],
@@ -172,6 +227,58 @@
       { "id": "account-type-id-8", "name": "Имущество" },
       { "id": "account-type-id-9", "name": "Кредит" },
       { "id": "account-type-id-10", "name": "Долг" }
+    ],
+    "currencies": [
+      {
+        "id": "currency-id-1",
+        "name": "Российский Рубль (RUB)",
+        "code": "RUB"
+      },
+      {
+        "id": "currency-id-2",
+        "name": "Доллар США (USD)",
+        "code": "USD"
+      },
+      {
+        "id": "currency-id-3",
+        "name": "Евро (EUR)",
+        "code": "EUR"
+      },
+      {
+        "id": "currency-id-4",
+        "name": "Британский Фунт (GBP)",
+        "code": "GBP"
+      },
+      {
+        "id": "currency-id-5",
+        "name": "Японская Йена (JPY)",
+        "code": "JPY"
+      },
+      {
+        "id": "currency-id-6",
+        "name": "Швейцарский Франк (CHF)",
+        "code": "CHF"
+      },
+      {
+        "id": "currency-id-7",
+        "name": "Канадский Доллар (CAD)",
+        "code": "CAD"
+      },
+      {
+        "id": "currency-id-8",
+        "name": "Австралийский Доллар (AUD)",
+        "code": "AUD"
+      },
+      {
+        "id": "currency-id-9",
+        "name": "Китайский Юань (CNY)",
+        "code": "CNY"
+      },
+      {
+        "id": "currency-id-10",
+        "name": "Индийская Рупия (INR)",
+        "code": "INR"
+      }
     ]
   }
 ]

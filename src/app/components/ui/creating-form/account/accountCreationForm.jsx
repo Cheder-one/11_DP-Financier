@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState, forwardRef, useImperativeHandle } from "react";
 import { keys } from "lodash";
 import { Col, Form, Row } from "react-bootstrap";
@@ -20,7 +21,7 @@ import { useFormValidation } from "../../../../hooks";
 const { accountSchema } = validationSchema;
 const { ACCOUNT_TYPES, CURRENCIES } = dataConstants;
 
-const AccountCreationForm = forwardRef((props, ref) => {
+const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
   const [inputFields, setInputFields] = useState({
     account: {},
     currency: {},
@@ -194,5 +195,14 @@ const AccountCreationForm = forwardRef((props, ref) => {
 });
 
 AccountCreationForm.displayName = AccountCreationForm;
+
+AccountCreationForm.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    accounts: PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired
+  }).isRequired,
+  onSuccess: PropTypes.func.isRequired
+};
 
 export default AccountCreationForm;
