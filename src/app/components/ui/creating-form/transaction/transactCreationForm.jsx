@@ -58,7 +58,8 @@ const TransactCreationForm = forwardRef(
     const errors = useFormValidation(inputFields, transactSchema);
     const hasErrors = keys(errors).length;
 
-    // TODO Починить обновление state user после post
+    // TODO Написать grid стили для sm экранов
+    // TODO Настроить отправку данных при создании account
 
     // TODO Разделить логику postDataToUser на две функции
     const postDataToUser = () => {
@@ -190,6 +191,7 @@ TransactCreationForm.propTypes = {
     categories: PropTypes.array.isRequired,
     transactions: PropTypes.array.isRequired
   }).isRequired,
+  onSuccess: PropTypes.func.isRequired,
   updateUser: PropTypes.func,
   cardType: PropTypes.string
 };
