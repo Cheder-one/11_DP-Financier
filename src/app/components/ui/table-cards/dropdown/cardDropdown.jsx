@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
-// import { RiArrowDropDownLine } from "react-icons/ri";
 import { VscChevronDown } from "react-icons/vsc";
 
-import { OverlayTooltip } from "../../../common/typography";
+import { OverlayTooltip } from "../../../common/tooltip";
 import { useClickOutside } from "../../../../hooks";
 import { getIdAllItem } from "../../../../utils";
 

@@ -127,3 +127,11 @@ body::-webkit-scrollbar-thumb:hover {
   max-height: 11rem;
   overflow-x: hidden;
 }
+
+#is-hide-tooltip .tooltip-inner {
+  background-color: whitesmoke;
+  color: black;
+}
+
+#is-hide-tooltip .tooltip-arrow {
+}

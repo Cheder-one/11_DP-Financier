@@ -1,6 +1,6 @@
 // Hooks
 import useBlurOnSubmit from "./useBlurOnSubmit";
-import useClickOutside from "./useClickOutside";
+import useClickOutside from "./useClickOutside.tsx";
 import useEventListener from "./useEventListener";
 import useFormValidation from "./useFormValidation";
 import useModal from "./useModal";

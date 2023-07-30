@@ -2,9 +2,12 @@ import { useState, forwardRef, useImperativeHandle } from "react";
 import { keys } from "lodash";
 import { Col, Form, Row } from "react-bootstrap";
 
-import { DropdownComponent } from "../../../common/form";
-import TextField from "../../../common/form/input-field/textField";
-import { IconPicker, ColorPicker } from "../../../common/pickers";
+import {
+  TextField,
+  IconPicker,
+  ColorPicker,
+  DropdownComponent
+} from "../../../common/form";
 import {
   dataConstants,
   updateInputFields,
@@ -73,9 +76,9 @@ const AccountCreationForm = forwardRef((props, ref) => {
           </Col>
         </Row>
 
-        <Row className="">
-          <Col md={1} className="md:grid mb-md-0 gap-1 | mb-3 flex">
-            <Row>
+        <Row>
+          <Col md={1} className="mb-md-0 gap-1 d-md-block | mb-3 flex">
+            <Row className="mb-md-1">
               <IconPicker
                 name={"icon"}
                 value={inputFields.icon}

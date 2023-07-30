@@ -28,8 +28,11 @@ const TransactCreationModal = ({
 
   const handleKeyPress = ({ keyCode }) => {
     if (keyCode === 13) {
-      transactFormRef.current.handleSubmit();
-      setShowModal(false);
+      const isFormValid = transactFormRef.current.handleSubmit();
+
+      if (isFormValid) {
+        setShowModal(false);
+      }
     }
   };
 

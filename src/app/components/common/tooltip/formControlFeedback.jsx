@@ -1,33 +1,30 @@
 import PropTypes from "prop-types";
 import { useRef, useState } from "react";
 
-import { useClickOutside } from "../../hooks";
-import { getTooltipClass } from "../../utils";
+import { useClickOutside } from "../../../hooks";
+import { getTooltipClass } from "../../../utils";
 
 const FormControlFeedback = ({ children, className, isTooltip }) => {
-  const [isHideError, setIsHideError] = useState(false);
+  const [isClickedHide, setIsClickedHide] = useState(false);
 
   const feedbackRef = useRef();
 
   // prettier-ignore
   const getFinalClass = () => {
-    return (
-      (isTooltip
-        ? getTooltipClass() + className
-        : className) +
-          " cursor-default"
-    );
+    return isTooltip
+      ? className + getTooltipClass()
+      : className;
   };
 
   const clickByError = () => {
-    setIsHideError(true);
+    setIsClickedHide(true);
   };
 
   useClickOutside(feedbackRef, undefined, clickByError);
 
-  return isTooltip && isHideError ? null : (
+  return isTooltip && isClickedHide ? null : (
     <div ref={feedbackRef} className={getFinalClass()}>
-      {children}
+      <span className="cursor-pointer"> {children}</span>
     </div>
   );
 };

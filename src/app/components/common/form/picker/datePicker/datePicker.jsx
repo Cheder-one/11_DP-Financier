@@ -3,7 +3,7 @@ import ReactDatePicker, { registerLocale } from "react-datepicker";
 import ru from "date-fns/locale/ru";
 import { useRef, useState } from "react";
 
-import { useClickOutside } from "../../../../hooks";
+import { useClickOutside } from "../../../../../hooks";
 registerLocale("ru", ru);
 
 const DatePicker = ({

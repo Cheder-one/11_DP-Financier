@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useRef } from "react";
 import { CompactPicker } from "react-color";
 
-import { DropdownSheet } from "../form";
+import { DropdownSheet } from "../index.js";
 import { MdOutlineFormatColorFill } from "react-icons/md";
 
 const ColorPicker = ({ name, value, className, drop, onChange }) => {
