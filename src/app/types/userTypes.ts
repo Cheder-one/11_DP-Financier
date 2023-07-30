@@ -3,6 +3,8 @@ export interface Account {
   type: "account";
   name: string;
   public: boolean;
+  entity: string;
+  currency: string;
   category: string;
   balance: number;
   transactions: string[];
@@ -27,6 +29,17 @@ export interface Transaction {
   comment: string;
 }
 
+export interface Entity {
+  id: string;
+  name: string;
+}
+
+export interface Currency {
+  id: string;
+  name: string;
+  code: string;
+}
+
 export interface User {
   id: string;
   name: string;
@@ -37,4 +50,6 @@ export interface User {
   accounts: Account[];
   categories: Category[];
   transactions: Transaction[];
+  entities: Entity[];
+  currencies: Currency[];
 }

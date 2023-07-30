@@ -11,7 +11,7 @@
         "id": "account-id-1",
         "type": "account",
         "name": "Сбербанк",
-        "wallet": "account-type-id-3",
+        "entity": "account-type-id-3",
         "currency": "currency-id-1",
         "category": "category-id-1",
         "balance": 90000,
@@ -27,7 +27,7 @@
         "id": "account-id-2",
         "type": "account",
         "name": "Альфа-банк",
-        "wallet": "account-type-id-3",
+        "entity": "account-type-id-3",
         "currency": "currency-id-1",
         "category": "category-id-2",
         "balance": 80000,
@@ -111,7 +111,7 @@
         "comment": ""
       }
     ],
-    "accountTypes": [
+    "entities": [
       { "id": "account-type-id-1", "name": "Наличные" },
       { "id": "account-type-id-2", "name": "Интернет деньги" },
       { "id": "account-type-id-3", "name": "Дебетовая карта" },
@@ -188,7 +188,7 @@
         "id": "account-id-3",
         "type": "account",
         "name": "Тинькофф",
-        "wallet": "account-type-id-3",
+        "entity": "account-type-id-3",
         "currency": "currency-id-1",
         "category": "category-id-3",
         "balance": 100,
@@ -216,7 +216,7 @@
         "comment": ""
       }
     ],
-    "accountTypes": [
+    "entities": [
       { "id": "account-type-id-1", "name": "Наличные" },
       { "id": "account-type-id-2", "name": "Интернет деньги" },
       { "id": "account-type-id-3", "name": "Дебетовая карта" },
