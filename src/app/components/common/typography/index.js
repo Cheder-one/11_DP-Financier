@@ -1,3 +1,4 @@
+// typography
 import Divider from "./divider";
 import HeaderContainer from "./headerContainer";
 import StickyFooter from "./stickyFooter";

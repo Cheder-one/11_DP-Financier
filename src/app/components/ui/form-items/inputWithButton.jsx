@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { updateInputFields } from "../../../utils";
 import { useEventListener, useFocus } from "../../../hooks";
 
+// TODO Переделать InputWithButton в записывание?
 const InputWithButton = ({
   name,
   placeholder,

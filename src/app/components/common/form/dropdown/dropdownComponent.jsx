@@ -24,7 +24,7 @@ const DropdownComponent = ({
   touched,
   isAdditionEnabled,
   onElemAdding,
-  onChange,
+  onSelect,
   error
 }) => {
   const [isBlur, setIsBlur] = useBlurOnSubmit(touched);
@@ -44,28 +44,30 @@ const DropdownComponent = ({
     if (selectedItem.id === "newItem") {
       setIsOpenToAdding(true);
     } else {
-      onChange({
+      onSelect({
         target: {
           name,
           value: selectedItem
         }
       });
+
       setIsOpenToAdding(false);
       setIsValid(true);
     }
   };
 
-  const handleNewItemSubmit = (e) => {
-    const { value } = e.target;
+  const handleNewItemSubmit = (event) => {
+    const { value } = event.target;
 
     setIsOpenToAdding(false);
 
-    if (!value) return;
-
+    if (!value) {
+      return;
+    }
     setIsOpenToAdding(false);
     setIsValid(true);
 
-    onElemAdding(e);
+    onElemAdding(event);
   };
 
   useEffect(() => {
@@ -164,7 +166,7 @@ DropdownComponent.propTypes = {
       props.isAdditionEnabled,
       componentName
     ),
-  onChange: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
   error: PropTypes.string
 };
 

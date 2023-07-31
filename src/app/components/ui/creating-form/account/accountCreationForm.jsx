@@ -42,7 +42,6 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
   const handleAddNewEntity = ({ target }) => {
     const { name, value } = target;
     if (!value) return;
-    console.log("New Entity:", value);
 
     const newEntity = {
       id: "isNew",
@@ -55,6 +54,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
     }));
   };
 
+  // TODO Все же надо разбить postDataToUser
   const postDataToUser = () => {
     const { entity } = inputFields;
 
@@ -77,9 +77,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
         name: entity.name
       });
     }
-
     postUserAccount(user.id, newAccount);
-
     onSuccess();
   };
 
@@ -110,7 +108,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
             placeholder={"Введите тип счета"}
             isAdditionEnabled={true}
             touched={isSubmitClicked}
-            onChange={handleInputChange}
+            onSelect={handleInputChange}
             onElemAdding={handleAddNewEntity}
             error={errors.entity}
           />
@@ -120,7 +118,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
             defaultValue={"Валюта счета"}
             value={inputFields.currency.code}
             touched={isSubmitClicked}
-            onChange={handleInputChange}
+            onSelect={handleInputChange}
             error={errors.currency}
           />
         </Col>

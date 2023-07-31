@@ -26,8 +26,8 @@ const TransactCreationModal = ({
     }
   };
 
-  const handleKeyPress = ({ keyCode }) => {
-    if (keyCode === 13) {
+  const handleKeyPress = (event) => {
+    if (event.keyCode === 13) {
       const isFormValid = transactFormRef.current.handleSubmit();
 
       if (isFormValid) {

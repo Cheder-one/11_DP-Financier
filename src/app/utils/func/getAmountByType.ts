@@ -1,12 +1,10 @@
 const getAmountByType = (amount: string, cardType: string) => {
   if (cardType === "expense") {
-    const num = parseInt(amount);
-    const absoluteNum = Math.abs(num);
-    return -parseFloat(absoluteNum, 10);
+    const absoluteNum = Math.abs(parseFloat(amount));
+    return String(-absoluteNum);
   } else {
-    const num = parseInt(amount);
-    const absoluteNum = Math.abs(num);
-    return parseFloat(absoluteNum, 10);
+    const absoluteNum = Math.abs(parseFloat(amount));
+    return String(absoluteNum);
   }
 };
 

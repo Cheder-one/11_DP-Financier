@@ -78,10 +78,11 @@ const TransactCreationForm = forwardRef(
       if (category.id === "isNew") {
         newCategory.id = newCategoryId;
         newTransaction.category = newCategoryId;
+
         postUserCategory(user.id, newCategory);
       }
-      postUserTransact(user.id, newTransaction);
 
+      postUserTransact(user.id, newTransaction);
       onSuccess();
     };
 
@@ -109,8 +110,8 @@ const TransactCreationForm = forwardRef(
               items={accounts}
               defaultValue={"Счет"}
               value={inputFields.account.name}
-              isSubmit={isSubmitClicked}
-              onChange={handleInputChange}
+              touched={isSubmitClicked}
+              onSelect={handleInputChange}
               error={errors.account}
             />
 
@@ -121,8 +122,8 @@ const TransactCreationForm = forwardRef(
               value={inputFields.category.name}
               placeholder={"Введите категорию"}
               isAdditionEnabled={true}
-              isSubmit={isSubmitClicked}
-              onChange={handleInputChange}
+              touched={isSubmitClicked}
+              onSelect={handleInputChange}
               onElemAdding={handleAddNewCategory}
               error={errors.category}
             />

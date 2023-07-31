@@ -19,13 +19,16 @@ const createNewAccount = ({
   iconColor: string;
   comment: string;
 }) => {
+  const absoluteNum = Math.abs(parseFloat(balance));
+  const cleanBalance = String(absoluteNum);
+
   const newAccount = {
     id: newAccountId,
     type: "account",
     name: name.trim(),
     entity: entity.id,
     currency: currency.id,
-    balance: Math.abs(parseInt(balance)),
+    balance: cleanBalance,
     transactions: [],
     icon: { name: iconName, color: iconColor },
     comment
