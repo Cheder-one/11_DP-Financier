@@ -1,13 +1,12 @@
+import { useRef } from "react";
 import PropTypes from "prop-types";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { useRef, useState } from "react";
 
-import { updateInputFields } from "../../../utils";
 import { useEventListener, useFocus } from "../../../hooks";
 
-// TODO Переделать InputWithButton в записывание?
 const InputWithButton = ({
   name,
+  value,
   placeholder,
   containerClass,
   inputClass,
@@ -15,24 +14,16 @@ const InputWithButton = ({
   onChange,
   onSubmit
 }) => {
-  const [inputField, setInputField] = useState({
-    [name]: ""
-  });
-
   const inputRef = useRef();
   const addBtnRef = useRef();
 
-  const handleChange = ({ target }) => {
-    updateInputFields(target, setInputField);
+  const handleChange = (event) => {
+    onChange(event);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     onSubmit({
-      target: {
-        name,
-        value: inputField[name]
-      }
+      target: { name, value }
     });
   };
 
@@ -46,21 +37,19 @@ const InputWithButton = ({
   useFocus(inputRef);
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <InputGroup className={containerClass}>
-        <Form.Control
-          name={name}
-          value={inputField[name]}
-          className={inputClass}
-          placeholder={placeholder}
-          onChange={handleChange}
-          ref={inputRef}
-        />
-        <Button type="submit" className={buttonClass} ref={addBtnRef}>
-          +
-        </Button>
-      </InputGroup>
-    </Form>
+    <InputGroup className={containerClass}>
+      <Form.Control
+        name={name}
+        value={value}
+        className={inputClass}
+        placeholder={placeholder}
+        onChange={handleChange}
+        ref={inputRef}
+      />
+      <Button className={buttonClass} ref={addBtnRef} onClick={handleSubmit}>
+        +
+      </Button>
+    </InputGroup>
   );
 };
 
@@ -73,6 +62,7 @@ InputWithButton.defaultProps = {
 
 InputWithButton.propTypes = {
   name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   containerClass: PropTypes.string,
   inputClass: PropTypes.string,

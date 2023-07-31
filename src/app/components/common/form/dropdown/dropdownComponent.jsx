@@ -39,7 +39,6 @@ const DropdownComponent = ({
 
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
-    console.log(selectedItem);
 
     if (selectedItem.id === "newItem") {
       setIsOpenToAdding(true);
@@ -56,18 +55,16 @@ const DropdownComponent = ({
     }
   };
 
-  const handleNewItemSubmit = (event) => {
-    const { value } = event.target;
+  const handleInputChange = (event) => {
+    onElemAdding(event);
+  };
 
+  const handleSubmit = ({ target }) => {
     setIsOpenToAdding(false);
-
-    if (!value) {
+    if (!target.value) {
       return;
     }
-    setIsOpenToAdding(false);
     setIsValid(true);
-
-    onElemAdding(event);
   };
 
   useEffect(() => {
@@ -127,10 +124,12 @@ const DropdownComponent = ({
       ) : (
         <InputWithButton
           name={name}
+          value={value}
           containerClass={inputContainerClass}
           inputClass={inputClass}
           placeholder={placeholder}
-          onSubmit={handleNewItemSubmit}
+          onChange={handleInputChange}
+          onSubmit={handleSubmit}
         />
       )}
     </div>

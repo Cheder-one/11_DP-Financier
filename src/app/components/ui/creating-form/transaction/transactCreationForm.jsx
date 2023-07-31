@@ -41,7 +41,6 @@ const TransactCreationForm = forwardRef(
 
     const handleAddNewCategory = ({ target }) => {
       const { name, value } = target;
-      if (!value) return;
 
       const newCategory = {
         id: "isNew",
@@ -58,7 +57,7 @@ const TransactCreationForm = forwardRef(
     const errors = useFormValidation(inputFields, transactSchema);
     const hasErrors = keys(errors).length;
 
-    // TODO Настроить отправку данных при создании account
+    // TODO Запретить дубликаты названий
 
     // TODO Разделить логику postDataToUser на две функции
     const postDataToUser = () => {
