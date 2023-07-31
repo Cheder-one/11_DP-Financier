@@ -6,7 +6,7 @@ import { VscChevronDown } from "react-icons/vsc";
 import { useBlurOnSubmit } from "../../../../hooks";
 import { CustomToggleContainer, CustomToggle } from "../index";
 import { InputWithButton } from "../../../ui";
-import { getDynamicBorderClass } from "../../../../utils";
+import { checkOnPropRequired, getDynamicBorderClass } from "../../../../utils";
 import FormControlFeedback from "../../tooltip/formControlFeedback";
 
 const DropdownComponent = ({
@@ -21,13 +21,13 @@ const DropdownComponent = ({
   inputClass,
   validating,
   isErrorTooltip,
-  isSubmit,
+  touched,
   isAdditionEnabled,
   onElemAdding,
   onChange,
   error
 }) => {
-  const [isBlur, setIsBlur] = useBlurOnSubmit(isSubmit);
+  const [isBlur, setIsBlur] = useBlurOnSubmit(touched);
   const [isOpen, setIsOpen] = useState(null);
   const [isValid, setIsValid] = useState(null);
   const [isOpenToAdding, setIsOpenToAdding] = useState(false);
@@ -39,6 +39,7 @@ const DropdownComponent = ({
 
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
+    console.log(selectedItem);
 
     if (selectedItem.id === "newItem") {
       setIsOpenToAdding(true);
@@ -136,6 +137,7 @@ const DropdownComponent = ({
 
 DropdownComponent.defaultProps = {
   containerClass: "w-fit mt-3",
+  inputClass: "max-w-[12rem] py-[4px]",
   validating: true,
   isErrorTooltip: true
 };
@@ -151,10 +153,17 @@ DropdownComponent.propTypes = {
   inputContainerClass: PropTypes.string,
   inputClass: PropTypes.string,
   isAdditionEnabled: PropTypes.bool,
-  onElemAdding: PropTypes.func,
-  isSubmit: PropTypes.bool,
+  touched: PropTypes.bool,
   validating: PropTypes.bool,
   isErrorTooltip: PropTypes.bool,
+  // Если isAdditionEnabled === true, то onElemAdding required
+  onElemAdding: (props, propName, componentName) =>
+    checkOnPropRequired(
+      props,
+      propName,
+      props.isAdditionEnabled,
+      componentName
+    ),
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string
 };

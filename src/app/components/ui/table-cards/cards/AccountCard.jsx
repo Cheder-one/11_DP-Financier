@@ -9,7 +9,6 @@ const AccountCard = ({
   addButton,
   onSelect
 }) => {
-  console.log("AccountCard", reset);
   return (
     <TableCard
       route="/"

@@ -120,7 +120,6 @@ const TransactCreationForm = forwardRef(
               defaultValue={"Категория"}
               value={inputFields.category.name}
               placeholder={"Введите категорию"}
-              inputClass={"max-w-[12rem] py-[4px]"}
               isAdditionEnabled={true}
               isSubmit={isSubmitClicked}
               onChange={handleInputChange}

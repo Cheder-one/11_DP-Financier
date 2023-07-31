@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState, forwardRef, useImperativeHandle } from "react";
 import { keys } from "lodash";
-import { Col, Form, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 import {
   TextField,
@@ -11,11 +11,11 @@ import {
 } from "../../../common/form";
 import {
   getNanoId,
-  dataConstants,
   createNewAccount,
   updateInputFields,
   validationSchema,
-  postUserAccount
+  postUserAccount,
+  postUserEntity
 } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
 
@@ -39,13 +39,27 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
     updateInputFields(target, setInputFields);
   };
 
-  console.log(inputFields);
+  const handleAddNewEntity = ({ target }) => {
+    const { name, value } = target;
+    if (!value) return;
+    console.log("New Entity:", value);
+
+    const newEntity = {
+      id: "isNew",
+      name: value
+    };
+
+    setInputFields((prev) => ({
+      ...prev,
+      [name]: newEntity
+    }));
+  };
 
   const postDataToUser = () => {
-    const { name, entity, currency, comment, balance, iconName, iconColor } =
-      inputFields;
+    const { entity } = inputFields;
 
     const newAccountId = `account-id-${getNanoId()}`;
+    const newEntityId = `entity-id-${getNanoId()}`;
 
     const dataToCreate = {
       ...inputFields,
@@ -53,16 +67,18 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
     };
 
     const newAccount = createNewAccount(dataToCreate);
+
+    if (entity.id === "isNew") {
+      entity.id = newEntityId;
+      newAccount.entity = newEntityId;
+
+      postUserEntity(user.id, {
+        id: newEntityId,
+        name: entity.name
+      });
+    }
+
     postUserAccount(user.id, newAccount);
-
-    // const newTransaction = createNewAccount(dataToCreate);
-
-    // if (category.id === "isNew") {
-    //   newCategory.id = newCategoryId;
-    //   newTransaction.category = newCategoryId;
-    //   postUserCategory(user.id, newCategory);
-    // }
-    // postUserTransact(user.id, newTransaction);
 
     onSuccess();
   };
@@ -84,90 +100,91 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Row className="mb-4 mt-3">
-          <Col className="flex gap-3">
-            <DropdownComponent
-              name={"entity"}
-              items={user.entities}
-              defaultValue={"Тип счета"}
-              value={inputFields.entity.name}
-              isSubmit={isSubmitClicked}
+      <Row className="mb-4 mt-3">
+        <Col className="flex gap-3">
+          <DropdownComponent
+            name={"entity"}
+            items={user.entities}
+            defaultValue={"Тип счета"}
+            value={inputFields.entity.name}
+            placeholder={"Введите тип счета"}
+            isAdditionEnabled={true}
+            touched={isSubmitClicked}
+            onChange={handleInputChange}
+            onElemAdding={handleAddNewEntity}
+            error={errors.entity}
+          />
+          <DropdownComponent
+            name={"currency"}
+            items={user.currencies}
+            defaultValue={"Валюта счета"}
+            value={inputFields.currency.code}
+            touched={isSubmitClicked}
+            onChange={handleInputChange}
+            error={errors.currency}
+          />
+        </Col>
+      </Row>
+
+      <Row>
+        <Col md={1} className="mb-md-0 gap-1 d-md-block | mb-3 flex">
+          <Row className="mb-md-1">
+            <IconPicker
+              name={"iconName"}
+              value={inputFields.iconName}
+              color={inputFields.iconColor}
               onChange={handleInputChange}
-              error={errors.entity}
             />
-            <DropdownComponent
-              name={"currency"}
-              items={user.currencies}
-              defaultValue={"Валюта счета"}
-              value={inputFields.currency.code}
-              isSubmit={isSubmitClicked}
+          </Row>
+          <Row>
+            <ColorPicker
+              name={"iconColor"}
+              value={inputFields.iconColor}
               onChange={handleInputChange}
-              error={errors.currency}
             />
-          </Col>
-        </Row>
+          </Row>
+        </Col>
 
-        <Row>
-          <Col md={1} className="mb-md-0 gap-1 d-md-block | mb-3 flex">
-            <Row className="mb-md-1">
-              <IconPicker
-                name={"iconName"}
-                value={inputFields.iconName}
-                color={inputFields.iconColor}
+        <Col md={11}>
+          <Row className="d-md-flex gap-md-0 | grid gap-3">
+            <Col md={7} className="md:pl-0.5">
+              <TextField
+                containerClass={"mb-0"}
+                label={"Название счета"}
+                name={"name"}
+                value={inputFields.name}
+                floating={true}
+                isSubmit={isSubmitClicked}
                 onChange={handleInputChange}
+                error={errors.name}
               />
-            </Row>
-            <Row>
-              <ColorPicker
-                name={"iconColor"}
-                value={inputFields.iconColor}
+            </Col>
+            <Col md={5}>
+              <TextField
+                containerClass={"mb-0"}
+                label={"Баланс"}
+                name={"balance"}
+                value={inputFields.balance}
+                floating={true}
+                isSubmit={isSubmitClicked}
                 onChange={handleInputChange}
+                error={errors.balance}
               />
-            </Row>
-          </Col>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
 
-          <Col md={11}>
-            <Row className="d-md-flex gap-md-0 | grid gap-3">
-              <Col md={7} className="md:pl-0.5">
-                <TextField
-                  containerClass={"mb-0"}
-                  label={"Название счета"}
-                  name={"name"}
-                  value={inputFields.name}
-                  floating={true}
-                  isSubmit={isSubmitClicked}
-                  onChange={handleInputChange}
-                  error={errors.name}
-                />
-              </Col>
-              <Col md={5}>
-                <TextField
-                  containerClass={"mb-0"}
-                  label={"Баланс"}
-                  name={"balance"}
-                  value={inputFields.balance}
-                  floating={true}
-                  isSubmit={isSubmitClicked}
-                  onChange={handleInputChange}
-                  error={errors.balance}
-                />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-
-        <TextField
-          containerClass={"mt-3"}
-          label={"Комментарий"}
-          name={"comment"}
-          value={inputFields.comment}
-          floating={true}
-          textaria={true}
-          isSubmit={isSubmitClicked}
-          onChange={handleInputChange}
-        />
-      </Form>
+      <TextField
+        containerClass={"mt-3"}
+        label={"Комментарий"}
+        name={"comment"}
+        value={inputFields.comment}
+        floating={true}
+        textaria={true}
+        isSubmit={isSubmitClicked}
+        onChange={handleInputChange}
+      />
     </>
   );
 });
@@ -178,7 +195,9 @@ AccountCreationForm.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     accounts: PropTypes.array.isRequired,
-    categories: PropTypes.array.isRequired
+    categories: PropTypes.array.isRequired,
+    entities: PropTypes.array.isRequired,
+    currencies: PropTypes.array.isRequired
   }).isRequired,
   onSuccess: PropTypes.func.isRequired
 };

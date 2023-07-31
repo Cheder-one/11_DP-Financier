@@ -3,7 +3,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import { useRef, useState } from "react";
 
 import { updateInputFields } from "../../../utils";
-import { useFocus } from "../../../hooks";
+import { useEventListener, useFocus } from "../../../hooks";
 
 const InputWithButton = ({
   name,
@@ -21,8 +21,6 @@ const InputWithButton = ({
   const inputRef = useRef();
   const addBtnRef = useRef();
 
-  useFocus(inputRef);
-
   const handleChange = ({ target }) => {
     updateInputFields(target, setInputField);
   };
@@ -36,6 +34,15 @@ const InputWithButton = ({
       }
     });
   };
+
+  const handleKeyPress = ({ keyCode }) => {
+    if (keyCode === 13) {
+      addBtnRef.current.click();
+    }
+  };
+
+  useEventListener("keydown", handleKeyPress);
+  useFocus(inputRef);
 
   return (
     <Form onSubmit={handleSubmit}>

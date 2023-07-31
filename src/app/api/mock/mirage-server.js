@@ -68,6 +68,18 @@ export function makeServer({ environment = "development" } = {}) {
         user.save();
         return user;
       });
+
+      // Маршрут создания вида счета (entity)
+      this.post("/users/:user_id/entities", (schema, request) => {
+        const userId = request.params.user_id;
+        const user = schema.users.find(userId);
+
+        const newEntity = JSON.parse(request.requestBody);
+
+        user.entities.push(newEntity);
+        user.save();
+        return user;
+      });
     }
   });
 

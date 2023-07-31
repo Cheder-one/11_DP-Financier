@@ -16,31 +16,35 @@ import getAmountByType from "./func/getAmountByType";
 import postUserAccount from "./service/postUserAccount";
 import postUserCategory from "./service/postUserCategory";
 import postUserTransact from "./service/postUserTransact";
+import postUserEntity from "./service/postUserEntity";
 import getTooltipClass from "./styles/getTooltipClass.js";
 import createNewCategory from "./func/createNewCategory";
 import createNewTransact from "./func/createNewTransaction";
 import createNewAccount from "./func/createNewAccount";
+import checkOnPropRequired from "./func/checkOnPropRequired";
 
 export {
-  themeConfig,
-  validationSchema,
-  getAvatar,
-  toReadableDate,
-  getUniqDates,
-  getDynamicBorderClass,
-  updIncomeExpenseTransacts,
-  getUserData,
-  dataConstants,
-  updateInputFields,
-  getNanoId,
-  getIdAllItem,
-  validateDropdownRequired,
-  getAmountByType,
-  postUserAccount,
-  postUserCategory,
-  postUserTransact,
-  getTooltipClass,
-  createNewAccount,
+  checkOnPropRequired,
+  createNewTransact,
   createNewCategory,
-  createNewTransact
+  createNewAccount,
+  getTooltipClass,
+  postUserEntity,
+  postUserTransact,
+  postUserCategory,
+  postUserAccount,
+  getAmountByType,
+  validateDropdownRequired,
+  getIdAllItem,
+  getNanoId,
+  updateInputFields,
+  dataConstants,
+  getUserData,
+  updIncomeExpenseTransacts,
+  getDynamicBorderClass,
+  getUniqDates,
+  toReadableDate,
+  getAvatar,
+  validationSchema,
+  themeConfig
 };
