@@ -1,11 +1,8 @@
-import React from "react";
+import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-// @ts-ignore
 import { filter, find, keys } from "lodash";
 import { Button, Col, Row } from "react-bootstrap";
-import { useEffect, useMemo, useState } from "react";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
-
 import {
   Spinner,
   TableCardsShell,
@@ -18,13 +15,14 @@ import {
   updIncomeExpenseTransacts
 } from "../../utils";
 import { useModal } from "../../hooks";
-import { User, Transaction } from "../../types";
 
-const MainPage = ({ userId }: { userId: string }) => {
-  // @ts-ignore
-  const [user, setUser] = useState<User>({});
+const MainPage = ({ userId }) => {
+  const [user, setUser] = useState({});
   const [selectedAccount, setSelectedAccount] = useState({ id: "" });
-  const [resetDropTitle, setResetDropTitle] = useState(false);
+  const [resetDropTitle, setResetDropTitle] = useState({
+    account: false,
+    transacts: false
+  });
   const [cardBodyItems, setCardBodyItems] = useState({
     account: [],
     income: [],
@@ -48,24 +46,37 @@ const MainPage = ({ userId }: { userId: string }) => {
     }
   };
 
+  // Получаем данные пользователя при монтировании компонента
   useEffect(() => {
-    // Получаем данные пользователя при монтировании компонента
     fetchUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   // Функция для обработки успешного POST запроса
   const handlePostSuccess = () => {
     // Получаем обновленные данные пользователя после успешного POST запроса
     fetchUserData();
+
+    setResetDropTitle((prev) => ({
+      ...prev,
+      account: true
+    }));
   };
+
+  useEffect(() => {
+    setResetDropTitle((prev) => ({
+      ...prev,
+      account: false
+    }));
+  }, [resetDropTitle.account]);
 
   // Универсализирует данные для отправки в TableCard, чтобы компонент не был привязан к конкретным переменным.
   const transformedBodyItems = useMemo(() => {
     const updatedCards = {};
 
-    keys(cardBodyItems).forEach((key: string) => {
+    keys(cardBodyItems).forEach((key) => {
       const card = cardBodyItems[key];
-      const updatedCard = card.map((item: Transaction) => ({
+      const updatedCard = card.map((item) => ({
         ...item,
         firstCol: item.amount,
         secondCol: find(user.categories, { id: item.category }).name,
@@ -104,15 +115,10 @@ const MainPage = ({ userId }: { userId: string }) => {
     return result;
   }, [user.transactions, selectedAccount]);
 
-  // @ts-ignore
   const { income, expense } = filteredByUniqAndType;
 
   // Обработчик dropdown.
-  const handleDropdownSelect = (eventKey: {
-    id: string;
-    type: string;
-    date: string;
-  }) => {
+  const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
     const { id: selAccId } = selectedAccount;
     const dataByCardType = filteredByUniqAndType[cardType];
@@ -120,7 +126,10 @@ const MainPage = ({ userId }: { userId: string }) => {
 
     // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается в его title. При любой смене счета устанавливается default значение для dropdown.
     if (cardType === "account") {
-      setResetDropTitle(true);
+      setResetDropTitle((prev) => ({
+        ...prev,
+        transacts: true
+      }));
     }
 
     // Если фильтруем карточку по критерию "Все"
@@ -128,7 +137,6 @@ const MainPage = ({ userId }: { userId: string }) => {
       // Выбраны "Все" счета. Выводятся все транзакции всех счетов.
       if (cardType === "account") {
         setCardBodyItems({
-          // @ts-ignore
           account: user.transactions,
           income: income.transacts,
           expense: expense.transacts
@@ -164,7 +172,10 @@ const MainPage = ({ userId }: { userId: string }) => {
       bodyItems = filter(dataByCardType.transacts, { date });
 
       // Отключаем сброс title в dropdown для отображения выбранной даты для фильтрации
-      setResetDropTitle(false);
+      setResetDropTitle((prev) => ({
+        ...prev,
+        transacts: false
+      }));
     }
 
     if (bodyItems) {
@@ -175,7 +186,7 @@ const MainPage = ({ userId }: { userId: string }) => {
     }
   };
 
-  const handleAddButtonClick = (type: string) => {
+  const handleAddButtonClick = (type) => {
     setCardTypeToAdd(type);
     setShowModal(true);
   };

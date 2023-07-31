@@ -1,5 +1,14 @@
+// Calculator
+const OPERATORS = ["/", "(", "*", ")", "-"];
+// prettier-ignore
+const NUMPAD = [
+  "7", "8", "9", "4",
+  "5", "6", "1", "2",
+  "3", "0", "."
+];
+
 // Dropdown Creating Account
-const ACCOUNT_TYPES = [
+const ENTITIES = [
   { id: 1, name: "Наличные" },
   { id: 2, name: "Интернет деньги" },
   { id: 3, name: "Дебетовая карта" },
@@ -24,15 +33,26 @@ const CURRENCIES = [
   { id: 10, name: "Индийская Рупия (INR)", code: "INR" }
 ];
 
-// Calculator
-const NUMPAD = ["7", "8", "9", "4", "5", "6", "1", "2", "3", "0", "."];
-const OPERATORS = ["/", "(", "*", ")", "-"];
+const INIT_USER_DATA = {
+  id: "",
+  name: "",
+  email: "",
+  password: "",
+  gender: "",
+  avatarUrl: "",
+  accounts: [],
+  categories: [],
+  transactions: [],
+  entities: [],
+  currencies: []
+};
 
 const dataConstants = {
-  ACCOUNT_TYPES,
+  ENTITIES,
   CURRENCIES,
   NUMPAD,
-  OPERATORS
+  OPERATORS,
+  INIT_USER_DATA
 };
 
 export default dataConstants;

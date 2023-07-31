@@ -11,7 +11,7 @@
         "id": "account-id-1",
         "type": "account",
         "name": "Сбербанк",
-        "entity": "account-type-id-3",
+        "entity": "entity-id-3",
         "currency": "currency-id-1",
         "balance": 90000,
         "transactions": [
@@ -20,16 +20,24 @@
           "transaction-id-5",
           "transaction-id-6"
         ],
+        "icon": {
+          "name": "VscBlank",
+          "color": "#00000"
+        },
         "comment": ""
       },
       {
         "id": "account-id-2",
         "type": "account",
         "name": "Альфа-банк",
-        "entity": "account-type-id-3",
+        "entity": "entity-id-3",
         "currency": "currency-id-1",
         "balance": 80000,
         "transactions": ["transaction-id-3", "transaction-id-4"],
+        "icon": {
+          "name": "VscBlank",
+          "color": "#00000"
+        },
         "comment": ""
       }
     ],
@@ -110,16 +118,16 @@
       }
     ],
     "entities": [
-      { "id": "account-type-id-1", "name": "Наличные" },
-      { "id": "account-type-id-2", "name": "Интернет деньги" },
-      { "id": "account-type-id-3", "name": "Дебетовая карта" },
-      { "id": "account-type-id-4", "name": "Кредитная карта" },
-      { "id": "account-type-id-5", "name": "Депозит" },
-      { "id": "account-type-id-6", "name": "Криптовалюта" },
-      { "id": "account-type-id-7", "name": "Инвестиции" },
-      { "id": "account-type-id-8", "name": "Имущество" },
-      { "id": "account-type-id-9", "name": "Кредит" },
-      { "id": "account-type-id-10", "name": "Долг" }
+      { "id": "entity-id-1", "name": "Наличные" },
+      { "id": "entity-id-2", "name": "Интернет деньги" },
+      { "id": "entity-id-3", "name": "Дебетовая карта" },
+      { "id": "entity-id-4", "name": "Кредитная карта" },
+      { "id": "entity-id-5", "name": "Депозит" },
+      { "id": "entity-id-6", "name": "Криптовалюта" },
+      { "id": "entity-id-7", "name": "Инвестиции" },
+      { "id": "entity-id-8", "name": "Имущество" },
+      { "id": "entity-id-9", "name": "Кредит" },
+      { "id": "entity-id-10", "name": "Долг" }
     ],
     "currencies": [
       {
@@ -186,10 +194,14 @@
         "id": "account-id-3",
         "type": "account",
         "name": "Тинькофф",
-        "entity": "account-type-id-3",
+        "entity": "entity-id-3",
         "currency": "currency-id-1",
         "balance": 100,
         "transactions": ["transaction-id-6"],
+        "icon": {
+          "name": "VscBlank",
+          "color": "#00000"
+        },
         "comment": ""
       }
     ],
@@ -214,16 +226,16 @@
       }
     ],
     "entities": [
-      { "id": "account-type-id-1", "name": "Наличные" },
-      { "id": "account-type-id-2", "name": "Интернет деньги" },
-      { "id": "account-type-id-3", "name": "Дебетовая карта" },
-      { "id": "account-type-id-4", "name": "Кредитная карта" },
-      { "id": "account-type-id-5", "name": "Депозит" },
-      { "id": "account-type-id-6", "name": "Криптовалюта" },
-      { "id": "account-type-id-7", "name": "Инвестиции" },
-      { "id": "account-type-id-8", "name": "Имущество" },
-      { "id": "account-type-id-9", "name": "Кредит" },
-      { "id": "account-type-id-10", "name": "Долг" }
+      { "id": "entity-id-1", "name": "Наличные" },
+      { "id": "entity-id-2", "name": "Интернет деньги" },
+      { "id": "entity-id-3", "name": "Дебетовая карта" },
+      { "id": "entity-id-4", "name": "Кредитная карта" },
+      { "id": "entity-id-5", "name": "Депозит" },
+      { "id": "entity-id-6", "name": "Криптовалюта" },
+      { "id": "entity-id-7", "name": "Инвестиции" },
+      { "id": "entity-id-8", "name": "Имущество" },
+      { "id": "entity-id-9", "name": "Кредит" },
+      { "id": "entity-id-10", "name": "Долг" }
     ],
     "currencies": [
       {

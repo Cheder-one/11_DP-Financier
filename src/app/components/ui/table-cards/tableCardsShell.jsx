@@ -15,20 +15,29 @@ const TableCardsShell = ({
 }) => {
   const addButton = (type) => (
     <Button variant="" className="p-0" onClick={() => onAddButtonClick(type)}>
-      <PlusSquare style={{ color: "yellowgreen" }} size={25} />
+      <PlusSquare className="text-lime-500" size={25} />
     </Button>
   );
 
   return (
-    <Row style={{ marginTop: "3%" }}>
+    <Row className="mt-3%">
       <Col md="4" className="mb-3 mb-md-0">
-        <IncomeCard {...{ dropList, bodyItems, reset, onSelect, addButton }} />
+        <IncomeCard
+          reset={reset.transacts}
+          {...{ dropList, bodyItems, onSelect, addButton }}
+        />
       </Col>
       <Col md="4" className="mb-3 mb-md-0">
-        <AccountCard {...{ dropList, bodyItems, onSelect, addButton }} />
+        <AccountCard
+          reset={reset.account}
+          {...{ dropList, bodyItems, onSelect, addButton }}
+        />
       </Col>
       <Col md="4" className="mb-3 mb-md-0">
-        <ExpenseCard {...{ dropList, bodyItems, reset, onSelect, addButton }} />
+        <ExpenseCard
+          reset={reset.transacts}
+          {...{ dropList, bodyItems, onSelect, addButton }}
+        />
       </Col>
     </Row>
   );
@@ -41,7 +50,10 @@ TableCardsShell.propTypes = {
     expense: PropTypes.object.isRequired
   }),
   bodyItems: PropTypes.object.isRequired,
-  reset: PropTypes.bool.isRequired,
+  reset: PropTypes.shape({
+    account: PropTypes.bool.isRequired,
+    transacts: PropTypes.bool.isRequired
+  }).isRequired,
   onSelect: PropTypes.func.isRequired,
   onAddButtonClick: PropTypes.func.isRequired
 };

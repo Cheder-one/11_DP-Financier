@@ -14,19 +14,19 @@ import {
   dataConstants,
   createNewAccount,
   updateInputFields,
-  validationSchema
+  validationSchema,
+  postUserAccount
 } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
 
 const { accountSchema } = validationSchema;
-const { ACCOUNT_TYPES, CURRENCIES } = dataConstants;
 
 const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
   const [inputFields, setInputFields] = useState({
+    name: "",
     entity: {},
     currency: {},
-    name: "",
-    icon: "VscBlank",
+    iconName: "VscBlank",
     iconColor: "#00000",
     balance: "",
     comment: ""
@@ -42,50 +42,27 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
   console.log(inputFields);
 
   const postDataToUser = () => {
-    const { category } = inputFields;
-    const newTransactId = `transaction-id-${getNanoId()}`;
-    const newCategoryId = `category-id-${getNanoId()}`;
+    const { name, entity, currency, comment, balance, iconName, iconColor } =
+      inputFields;
 
-    // const [inputFields, setInputFields] = useState({
-    //   entity: {},
-    //   currency: {},
-    //   name: "",
-    //   icon: "VscBlank",
-    //   iconColor: "#00000",
-    //   balance: "",
-    //   comment: ""
-    // });
-
-    // {
-    //   "id": "entity-id-1",
-    //   "type": "entity",
-    //   "name": "Сбербанк",
-    //   "public": false,
-    //   "category": "category-id-1",
-    //   "balance": 90000,
-    //   "transactions": [
-    //     "transaction-id-1",
-    //     "transaction-id-2",
-    //     "transaction-id-5",
-    //     "transaction-id-6"
-    //   ],
-    //   "comment": ""
-    // }
+    const newAccountId = `account-id-${getNanoId()}`;
 
     const dataToCreate = {
       ...inputFields,
-      newTransactId,
-      cardType
+      newAccountId
     };
 
-    const newTransaction = createNewAccount(dataToCreate);
+    const newAccount = createNewAccount(dataToCreate);
+    postUserAccount(user.id, newAccount);
 
-    if (category.id === "isNew") {
-      newCategory.id = newCategoryId;
-      newTransaction.category = newCategoryId;
-      postUserCategory(user.id, newCategory);
-    }
-    postUserTransact(user.id, newTransaction);
+    // const newTransaction = createNewAccount(dataToCreate);
+
+    // if (category.id === "isNew") {
+    //   newCategory.id = newCategoryId;
+    //   newTransaction.category = newCategoryId;
+    //   postUserCategory(user.id, newCategory);
+    // }
+    // postUserTransact(user.id, newTransaction);
 
     onSuccess();
   };
@@ -94,9 +71,10 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
     setIsSubmitClicked(true);
 
     if (hasErrors) {
-      return false;
+      return undefined;
     } else {
-      return inputFields;
+      postDataToUser();
+      return true;
     }
   };
 
@@ -111,7 +89,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
           <Col className="flex gap-3">
             <DropdownComponent
               name={"entity"}
-              items={ACCOUNT_TYPES}
+              items={user.entities}
               defaultValue={"Тип счета"}
               value={inputFields.entity.name}
               isSubmit={isSubmitClicked}
@@ -120,7 +98,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
             />
             <DropdownComponent
               name={"currency"}
-              items={CURRENCIES}
+              items={user.currencies}
               defaultValue={"Валюта счета"}
               value={inputFields.currency.code}
               isSubmit={isSubmitClicked}
@@ -134,8 +112,8 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
           <Col md={1} className="mb-md-0 gap-1 d-md-block | mb-3 flex">
             <Row className="mb-md-1">
               <IconPicker
-                name={"icon"}
-                value={inputFields.icon}
+                name={"iconName"}
+                value={inputFields.iconName}
                 color={inputFields.iconColor}
                 onChange={handleInputChange}
               />

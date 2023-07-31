@@ -9,7 +9,6 @@ import CheckboxField from "./checkbox/checkboxField";
 import SwitchField from "./switch/switchField";
 import TextField from "./input-field/textField";
 import InputField from "./input-field/inputField";
-
 import IconPicker from "./picker/iconPicker";
 import ColorPicker from "./picker/colorPicker";
 

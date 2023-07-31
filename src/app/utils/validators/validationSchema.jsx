@@ -44,9 +44,10 @@ const registerSchema = yup.object().shape({
 });
 
 const accountSchema = yup.object().shape({
-  account: yup
+  name: yup.string().required(),
+  entity: yup
     .object()
-    .test("account-required", "Укажите тип счета", validateDropdownRequired),
+    .test("entity-required", "Укажите тип счета", validateDropdownRequired),
   currency: yup
     .object()
     .test(
@@ -54,7 +55,6 @@ const accountSchema = yup.object().shape({
       "Укажите валюту счета",
       validateDropdownRequired
     ),
-  name: yup.string().required(),
   balance: yup
     .string()
     .matches(

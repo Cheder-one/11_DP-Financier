@@ -5,16 +5,23 @@ import CardDropdown from "../dropdown/cardDropdown";
 const AccountCard = ({
   dropList: { account },
   bodyItems,
-  onSelect,
-  addButton
+  reset,
+  addButton,
+  onSelect
 }) => {
+  console.log("AccountCard", reset);
   return (
     <TableCard
       route="/"
       title={{
         first: "Счет",
         second: (
-          <CardDropdown items={account} type="account" onSelect={onSelect} />
+          <CardDropdown
+            items={account}
+            type="account"
+            reset={reset}
+            onSelect={onSelect}
+          />
         ),
         third: addButton("account")
       }}
@@ -28,7 +35,8 @@ AccountCard.propTypes = {
     account: PropTypes.arrayOf(PropTypes.object)
   }).isRequired,
   bodyItems: PropTypes.object.isRequired,
-  onSelect: PropTypes.func.isRequired,
-  addButton: PropTypes.func.isRequired
+  reset: PropTypes.bool.isRequired,
+  addButton: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired
 };
 export default AccountCard;

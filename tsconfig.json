@@ -8,8 +8,12 @@
     // Тип JSX, используемый в React
     "strict": true,
     // Включить строгие настройки TypeScript
-    "esModuleInterop": true
+    "esModuleInterop": true,
     // Разрешить импорт модулей в стиле ES6
+    // "skipLibCheck": false,
+    // "noImplicitAny": false
+    "moduleResolution": "node"
+    // Отключение ошибок для импортов
   },
   "include": ["src"]
   // Папки, которые нужно включить в компиляцию (замените "src" на вашу папку с кодом)

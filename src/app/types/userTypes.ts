@@ -1,13 +1,28 @@
+export interface Icon {
+  name: string;
+  color: string;
+}
+
+export interface Entity {
+  id: string;
+  name: string;
+}
+
+export interface Currency {
+  id: string;
+  name: string;
+  code: string;
+}
+
 export interface Account {
   id: string;
   type: "account";
   name: string;
-  public: boolean;
   entity: string;
   currency: string;
-  category: string;
   balance: number;
   transactions: string[];
+  icon: Icon;
   comment: string;
 }
 
@@ -27,17 +42,6 @@ export interface Transaction {
   category: string;
   date: string;
   comment: string;
-}
-
-export interface Entity {
-  id: string;
-  name: string;
-}
-
-export interface Currency {
-  id: string;
-  name: string;
-  code: string;
 }
 
 export interface User {
