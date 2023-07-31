@@ -13,7 +13,6 @@
         "name": "Сбербанк",
         "entity": "account-type-id-3",
         "currency": "currency-id-1",
-        "category": "category-id-1",
         "balance": 90000,
         "transactions": [
           "transaction-id-1",
@@ -29,7 +28,6 @@
         "name": "Альфа-банк",
         "entity": "account-type-id-3",
         "currency": "currency-id-1",
-        "category": "category-id-2",
         "balance": 80000,
         "transactions": ["transaction-id-3", "transaction-id-4"],
         "comment": ""
@@ -190,7 +188,6 @@
         "name": "Тинькофф",
         "entity": "account-type-id-3",
         "currency": "currency-id-1",
-        "category": "category-id-3",
         "balance": 100,
         "transactions": ["transaction-id-6"],
         "comment": ""
