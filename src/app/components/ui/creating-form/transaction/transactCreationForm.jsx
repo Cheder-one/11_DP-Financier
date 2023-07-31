@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState, forwardRef, useImperativeHandle } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import { BiSolidCalculator } from "react-icons/bi";
-import { keys } from "lodash";
+import { keys, some } from "lodash";
 
 import {
   DropdownComponent,
@@ -26,6 +26,7 @@ const { transactSchema } = validationSchema;
 const TransactCreationForm = forwardRef(
   ({ user, onSuccess, cardType }, ref) => {
     const { accounts, categories } = user;
+    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [inputFields, setInputFields] = useState({
       account: { name: "" },
       date: new Date(),
@@ -33,7 +34,8 @@ const TransactCreationForm = forwardRef(
       amount: "",
       comment: ""
     });
-    const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    const { category } = inputFields;
+    console.log(inputFields);
 
     const handleInputChange = ({ target }) => {
       updateInputFields(target, setInputFields);
@@ -54,14 +56,22 @@ const TransactCreationForm = forwardRef(
       }));
     };
 
-    const errors = useFormValidation(inputFields, transactSchema);
-    const hasErrors = keys(errors).length;
+    let isUniqName = true;
 
-    // TODO Запретить дубликаты названий
+    if (category.id === "isNew") {
+      isUniqName = !some(user.categories, {
+        name: category.name
+      });
+    }
+
+    // prettier-ignore
+    const errors =
+      useFormValidation(inputFields, transactSchema(isUniqName));
+
+    const hasErrors = keys(errors).length;
 
     // TODO Разделить логику postDataToUser на две функции
     const postDataToUser = () => {
-      const { category } = inputFields;
       const newTransactId = `transaction-id-${getNanoId()}`;
       const newCategoryId = `category-id-${getNanoId()}`;
 

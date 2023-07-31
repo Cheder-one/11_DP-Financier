@@ -4,11 +4,11 @@ const getDynamicBorderClass = (
   isValid: boolean
 ): string => {
   if (touched && isOpen === true) {
-    return "border-gray-light"; // gray
+    return "border-gray-light";
   } else if (touched && isValid) {
-    return "border-success"; // green
+    return "border-success";
   } else if (touched && isValid === false) {
-    return "border-danger"; // red
+    return "border-danger";
   } else {
     return "border-gray-light";
   }

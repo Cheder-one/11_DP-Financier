@@ -64,22 +64,24 @@ const accountSchema = yup.object().shape({
     .required()
 });
 
-const transactSchema = yup.object().shape({
-  account: yup
-    .object()
-    .test("account-required", "Укажите тип счета", validateDropdownRequired),
-  date: yup.string().required("Укажите дату транзакции"),
-  category: yup
-    .object()
-    .test("category-required", "Укажите категорию", validateDropdownRequired),
-  amount: yup
-    .string()
-    .matches(
-      /^(?=\S+$)[^a-zA-Zа-яА-Яё]*$/,
-      "Значение должно состоять только из чисел"
-    )
-    .required()
-});
+const transactSchema = (isNameUnique) =>
+  yup.object().shape({
+    account: yup
+      .object()
+      .test("account-required", "Укажите тип счета", validateDropdownRequired),
+    date: yup.string().required("Укажите дату транзакции"),
+    category: yup
+      .object()
+      .test("category-required", "Укажите категорию", validateDropdownRequired)
+      .test("category-is-unique", "Категория не уникальна", () => isNameUnique),
+    amount: yup
+      .string()
+      .matches(
+        /^(?=\S+$)[^a-zA-Zа-яА-Яё]*$/,
+        "Значение должно состоять только из чисел"
+      )
+      .required()
+  });
 
 const validationSchema = {
   loginSchema,

@@ -61,7 +61,7 @@ const DropdownComponent = ({
 
   const handleSubmit = ({ target }) => {
     setIsOpenToAdding(false);
-    if (!target.value) {
+    if (!target.value || error) {
       return;
     }
     setIsValid(true);
