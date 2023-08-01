@@ -37,6 +37,8 @@ const DropdownComponent = ({
     setIsOpen(isOpen);
   };
 
+  // TODO Исправить стили Dropdown
+
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
 
@@ -52,6 +54,7 @@ const DropdownComponent = ({
 
       setIsOpenToAdding(false);
       setIsValid(true);
+      console.log("пидор 1");
     }
   };
 

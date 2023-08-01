@@ -43,26 +43,28 @@ const registerSchema = yup.object().shape({
   terms: yup.bool().oneOf([true])
 });
 
-const accountSchema = yup.object().shape({
-  name: yup.string().required(),
-  entity: yup
-    .object()
-    .test("entity-required", "Укажите тип счета", validateDropdownRequired),
-  currency: yup
-    .object()
-    .test(
-      "currency-required",
-      "Укажите валюту счета",
-      validateDropdownRequired
-    ),
-  balance: yup
-    .string()
-    .matches(
-      /^(?=\S+$)[^a-zA-Zа-яА-Я]*$/,
-      "Значение должно состоять только из чисел"
-    )
-    .required()
-});
+const accountSchema = (isNameUnique) =>
+  yup.object().shape({
+    name: yup.string().required(),
+    entity: yup
+      .object()
+      .test("entity-required", "Укажите тип счета", validateDropdownRequired)
+      .test("category-is-unique", "Категория не уникальна", () => isNameUnique),
+    currency: yup
+      .object()
+      .test(
+        "currency-required",
+        "Укажите валюту счета",
+        validateDropdownRequired
+      ),
+    balance: yup
+      .string()
+      .matches(
+        /^(?=\S+$)[^a-zA-Zа-яА-Я]*$/,
+        "Значение должно состоять только из чисел"
+      )
+      .required()
+  });
 
 const transactSchema = (isNameUnique) =>
   yup.object().shape({

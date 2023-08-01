@@ -35,7 +35,6 @@ const TransactCreationForm = forwardRef(
       comment: ""
     });
     const { category } = inputFields;
-    console.log(inputFields);
 
     const handleInputChange = ({ target }) => {
       updateInputFields(target, setInputFields);

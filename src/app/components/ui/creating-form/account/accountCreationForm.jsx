@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useState, forwardRef, useImperativeHandle } from "react";
-import { keys } from "lodash";
+import { keys, some } from "lodash";
 import { Col, Row } from "react-bootstrap";
 
 import {
@@ -22,17 +22,30 @@ import { useFormValidation } from "../../../../hooks";
 const { accountSchema } = validationSchema;
 
 const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
+  const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [inputFields, setInputFields] = useState({
     name: "",
-    entity: {},
-    currency: {},
+    entity: { id: "", name: "" },
+    currency: { id: "", name: "", code: "" },
     iconName: "VscBlank",
     iconColor: "#00000",
     balance: "",
     comment: ""
   });
-  const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  const errors = useFormValidation(inputFields, accountSchema);
+  const { entity } = inputFields;
+
+  let isUniqName = true;
+
+  if (entity.id === "isNew") {
+    isUniqName = !some(user.entities, {
+      name: entity.name
+    });
+  }
+
+  // prettier-ignore
+  const errors =
+    useFormValidation(inputFields, accountSchema(isUniqName));
+
   const hasErrors = keys(errors).length;
 
   const handleInputChange = ({ target }) => {
@@ -41,7 +54,6 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
 
   const handleAddNewEntity = ({ target }) => {
     const { name, value } = target;
-    if (!value) return;
 
     const newEntity = {
       id: "isNew",
@@ -56,8 +68,6 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
 
   // TODO Все же надо разбить postDataToUser
   const postDataToUser = () => {
-    const { entity } = inputFields;
-
     const newAccountId = `account-id-${getNanoId()}`;
     const newEntityId = `entity-id-${getNanoId()}`;
 
