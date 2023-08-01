@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import validateDropdownRequired from "../func/validateDropdownRequired";
+import validateDropdownRequired from "../func/validate/validateDropdownRequired";
 
 const MIN_PASSWORD_LENGTH = 8;
 const INCORRECT_EMAIL = `Некорректный email`;
@@ -39,17 +39,35 @@ const registerSchema = yup.object().shape({
     .string()
     .required()
     .min(MIN_PASSWORD_LENGTH)
-    .matches(/(?=.*[A-ZА-Я])(?=.*[a-zа-я])(?=.*\d)/g, INCORRECT_PASSWORD),
+    .matches(
+      /(?=.*[A-ZА-Я])(?=.*[a-zа-я])(?=.*\d)/g,
+      INCORRECT_PASSWORD
+    ),
   terms: yup.bool().oneOf([true])
 });
 
-const accountSchema = (isNameUnique) =>
+const accountSchema = (isAccountUniq, isEntityUnique) =>
   yup.object().shape({
-    name: yup.string().required(),
+    name: yup
+      .string()
+      .required()
+      .test(
+        "account-is-unique",
+        "Название уже существует",
+        () => isAccountUniq
+      ),
     entity: yup
       .object()
-      .test("entity-required", "Укажите тип счета", validateDropdownRequired)
-      .test("category-is-unique", "Категория не уникальна", () => isNameUnique),
+      .test(
+        "entity-is-unique",
+        "Категория уже существует",
+        () => isEntityUnique
+      )
+      .test(
+        "entity-required",
+        "Укажите тип счета",
+        validateDropdownRequired
+      ),
     currency: yup
       .object()
       .test(
@@ -66,23 +84,36 @@ const accountSchema = (isNameUnique) =>
       .required()
   });
 
-const transactSchema = (isNameUnique) =>
+const transactSchema = (isCategoryUnique) =>
   yup.object().shape({
     account: yup
       .object()
-      .test("account-required", "Укажите тип счета", validateDropdownRequired),
-    date: yup.string().required("Укажите дату транзакции"),
+      .test(
+        "account-required",
+        "Укажите счет",
+        validateDropdownRequired
+      )
+      .required(),
     category: yup
       .object()
-      .test("category-required", "Укажите категорию", validateDropdownRequired)
-      .test("category-is-unique", "Категория не уникальна", () => isNameUnique),
+      .test(
+        "category-is-unique",
+        "Категория уже существует",
+        () => isCategoryUnique
+      )
+      .test(
+        "category-required",
+        "Укажите категорию",
+        validateDropdownRequired
+      ),
     amount: yup
       .string()
       .matches(
         /^(?=\S+$)[^a-zA-Zа-яА-Яё]*$/,
         "Значение должно состоять только из чисел"
       )
-      .required()
+      .required(),
+    date: yup.string().required("Укажите дату транзакции")
   });
 
 const validationSchema = {

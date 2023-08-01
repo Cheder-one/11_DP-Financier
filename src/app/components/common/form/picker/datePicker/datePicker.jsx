@@ -61,7 +61,10 @@ DatePicker.propTypes = {
   containerClass: PropTypes.string,
   childrenClass: PropTypes.string,
   name: PropTypes.string.isRequired,
-  value: PropTypes.object.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.oneOf([null])
+  ]).isRequired,
   onChange: PropTypes.func.isRequired
 };
 

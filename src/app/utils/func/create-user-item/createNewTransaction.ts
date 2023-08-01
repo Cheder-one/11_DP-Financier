@@ -1,5 +1,5 @@
-import { Account, Category } from "../../types/userTypes";
-import getAmountByType from "./getAmountByType";
+import { Account, Category } from "../../../types/userTypes";
+import getAmountByType from "../getAmountByType";
 
 const createNewTransact = ({
   amount,

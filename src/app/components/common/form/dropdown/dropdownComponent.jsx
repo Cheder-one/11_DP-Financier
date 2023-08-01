@@ -6,7 +6,10 @@ import { VscChevronDown } from "react-icons/vsc";
 import { useBlurOnSubmit } from "../../../../hooks";
 import { CustomToggleContainer, CustomToggle } from "../index";
 import { InputWithButton } from "../../../ui";
-import { checkOnPropRequired, getDynamicBorderClass } from "../../../../utils";
+import {
+  checkOnPropRequired,
+  getDynamicBorderClass
+} from "../../../../utils";
 import FormControlFeedback from "../../tooltip/formControlFeedback";
 
 const DropdownComponent = ({
@@ -37,8 +40,6 @@ const DropdownComponent = ({
     setIsOpen(isOpen);
   };
 
-  // TODO Исправить стили Dropdown
-
   const handleSelect = (eventKey) => {
     const selectedItem = JSON.parse(eventKey);
 
@@ -54,11 +55,11 @@ const DropdownComponent = ({
 
       setIsOpenToAdding(false);
       setIsValid(true);
-      console.log("пидор 1");
     }
   };
 
   const handleInputChange = (event) => {
+    setIsValid(false);
     onElemAdding(event);
   };
 
@@ -93,8 +94,14 @@ const DropdownComponent = ({
             onToggle={handleToggle}
             show={isOpen}
           >
-            <Dropdown.Toggle as={CustomToggleContainer} variant="light">
-              <CustomToggle variant={"light"} borderClass={getBorderClass()}>
+            <Dropdown.Toggle
+              as={CustomToggleContainer}
+              variant="light"
+            >
+              <CustomToggle
+                variant={"light"}
+                borderClass={getBorderClass()}
+              >
                 {value || defaultValue}
                 <VscChevronDown className="pl-0.5" />
               </CustomToggle>
@@ -102,7 +109,10 @@ const DropdownComponent = ({
 
             <Dropdown.Menu>
               {items.map((item) => (
-                <Dropdown.Item key={item.id} eventKey={JSON.stringify(item)}>
+                <Dropdown.Item
+                  key={item.id}
+                  eventKey={JSON.stringify(item)}
+                >
                   {item.name}
                 </Dropdown.Item>
               ))}

@@ -1,4 +1,4 @@
-import { Currency, Entity } from "../../types/userTypes";
+import { Currency, Entity } from "../../../types/userTypes";
 
 const createNewAccount = ({
   newAccountId,

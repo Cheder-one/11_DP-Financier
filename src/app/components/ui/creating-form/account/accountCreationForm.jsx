@@ -20,7 +20,8 @@ import {
   updateInputFields,
   validationSchema,
   postUserAccount,
-  postUserEntity
+  postUserEntity,
+  checkIsNewNameUniq
 } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
 
@@ -53,21 +54,25 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
     }));
   };
 
-  const checkIsNewNameUniq = () => {
-    return entity.id === "isNew"
-      ? !some(user.entities, { name: entity.name })
-      : true;
+  const checkIsAccountNameUniq = () => {
+    return !some(user.accounts, { name: inputFields.name });
   };
-  const isUniqName = checkIsNewNameUniq();
+  const checkIsEntityNameUniq = () => {
+    return checkIsNewNameUniq(entity, user.entities);
+  };
+
+  const isAccountNameUniq = checkIsAccountNameUniq();
+  const isEntityNameUniq = checkIsEntityNameUniq();
 
   useEffect(() => {
-    checkIsNewNameUniq();
+    checkIsAccountNameUniq();
+    checkIsEntityNameUniq();
     // eslint-disable-next-line
   }, [entity]);
 
   const errors = useFormValidation(
     inputFields,
-    accountSchema(isUniqName)
+    accountSchema(isAccountNameUniq, isEntityNameUniq)
   );
   const hasErrors = keys(errors).length;
 

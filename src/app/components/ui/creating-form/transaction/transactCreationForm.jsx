@@ -22,7 +22,8 @@ import {
   postUserCategory,
   postUserTransact,
   createNewCategory,
-  createNewTransact
+  createNewTransact,
+  checkIsNewNameUniq
 } from "../../../../utils";
 import { Calculator } from "../../index.js";
 import { useFormValidation } from "../../../../hooks";
@@ -33,9 +34,9 @@ const TransactCreationForm = forwardRef(
     const { accounts, categories } = user;
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [inputFields, setInputFields] = useState({
-      account: { name: "" },
+      account: { id: "", name: "" },
       date: new Date(),
-      category: { name: "" },
+      category: { id: "", name: "" },
       amount: "",
       comment: ""
     });
@@ -60,21 +61,19 @@ const TransactCreationForm = forwardRef(
       }));
     };
 
-    const checkIsNewNameUniq = () => {
-      return category.id === "isNew"
-        ? !some(user.categories, { name: category.name })
-        : true;
+    const checkIsCategoryNameUniq = () => {
+      return checkIsNewNameUniq(category, user.categories);
     };
-    const isUniqName = checkIsNewNameUniq();
+    const isCategoryNameUniq = checkIsCategoryNameUniq();
 
     useEffect(() => {
-      checkIsNewNameUniq();
+      checkIsCategoryNameUniq();
       // eslint-disable-next-line
     }, [category]);
 
     const errors = useFormValidation(
       inputFields,
-      transactSchema(isUniqName)
+      transactSchema(isCategoryNameUniq)
     );
     const hasErrors = keys(errors).length;
 
@@ -101,10 +100,8 @@ const TransactCreationForm = forwardRef(
           newCategoryId,
           newTransactId
         });
-        console.log({ newCategory });
         postUserCategory(user.id, newCategory);
       }
-      console.log({ newTransaction });
 
       postUserTransact(user.id, newTransaction);
       onSuccess();
