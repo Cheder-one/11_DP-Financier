@@ -1,5 +1,10 @@
 import PropTypes from "prop-types";
-import { useState, forwardRef, useImperativeHandle } from "react";
+import {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect
+} from "react";
 import { keys, some } from "lodash";
 import { Col, Row } from "react-bootstrap";
 
@@ -34,31 +39,13 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
   });
   const { entity } = inputFields;
 
-  let isUniqName = true;
-
-  if (entity.id === "isNew") {
-    isUniqName = !some(user.entities, {
-      name: entity.name
-    });
-  }
-
-  // prettier-ignore
-  const errors =
-    useFormValidation(inputFields, accountSchema(isUniqName));
-
-  const hasErrors = keys(errors).length;
-
   const handleInputChange = ({ target }) => {
     updateInputFields(target, setInputFields);
   };
 
   const handleAddNewEntity = ({ target }) => {
     const { name, value } = target;
-
-    const newEntity = {
-      id: "isNew",
-      name: value
-    };
+    const newEntity = { id: "isNew", name: value };
 
     setInputFields((prev) => ({
       ...prev,
@@ -66,27 +53,45 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
     }));
   };
 
-  // TODO Все же надо разбить postDataToUser
-  const postDataToUser = () => {
+  const checkIsNewNameUniq = () => {
+    return entity.id === "isNew"
+      ? !some(user.entities, { name: entity.name })
+      : true;
+  };
+  const isUniqName = checkIsNewNameUniq();
+
+  useEffect(() => {
+    checkIsNewNameUniq();
+    // eslint-disable-next-line
+  }, [entity]);
+
+  const errors = useFormValidation(
+    inputFields,
+    accountSchema(isUniqName)
+  );
+  const hasErrors = keys(errors).length;
+
+  const generateNewIds = () => {
     const newAccountId = `account-id-${getNanoId()}`;
     const newEntityId = `entity-id-${getNanoId()}`;
+    return { newAccountId, newEntityId };
+  };
 
-    const dataToCreate = {
+  const postDataToUser = () => {
+    const { newAccountId, newEntityId } = generateNewIds();
+
+    const newAccount = createNewAccount({
       ...inputFields,
       newAccountId
-    };
-
-    const newAccount = createNewAccount(dataToCreate);
+    });
 
     if (entity.id === "isNew") {
-      entity.id = newEntityId;
       newAccount.entity = newEntityId;
 
-      postUserEntity(user.id, {
-        id: newEntityId,
-        name: entity.name
-      });
+      const newEntity = { id: newEntityId, name: entity.name };
+      postUserEntity(user.id, newEntity);
     }
+
     postUserAccount(user.id, newAccount);
     onSuccess();
   };

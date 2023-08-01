@@ -2,13 +2,13 @@ import { Account, Category } from "../../types/userTypes";
 import getAmountByType from "./getAmountByType";
 
 const createNewTransact = ({
-  newTransactId,
   amount,
-  cardType,
   account,
   category,
   date,
-  comment
+  comment,
+  cardType,
+  newTransactId
 }: {
   newTransactId: string;
   amount: string;

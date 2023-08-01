@@ -1,5 +1,10 @@
 import PropTypes from "prop-types";
-import { useState, forwardRef, useImperativeHandle } from "react";
+import {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect
+} from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import { BiSolidCalculator } from "react-icons/bi";
 import { keys, some } from "lodash";
@@ -55,40 +60,51 @@ const TransactCreationForm = forwardRef(
       }));
     };
 
-    let isUniqName = true;
+    const checkIsNewNameUniq = () => {
+      return category.id === "isNew"
+        ? !some(user.categories, { name: category.name })
+        : true;
+    };
+    const isUniqName = checkIsNewNameUniq();
 
-    if (category.id === "isNew") {
-      isUniqName = !some(user.categories, {
-        name: category.name
-      });
-    }
+    useEffect(() => {
+      checkIsNewNameUniq();
+      // eslint-disable-next-line
+    }, [category]);
 
-    // prettier-ignore
-    const errors =
-      useFormValidation(inputFields, transactSchema(isUniqName));
-
+    const errors = useFormValidation(
+      inputFields,
+      transactSchema(isUniqName)
+    );
     const hasErrors = keys(errors).length;
 
-    // TODO Разделить логику postDataToUser на две функции
-    const postDataToUser = () => {
+    const generateNewIds = () => {
       const newTransactId = `transaction-id-${getNanoId()}`;
       const newCategoryId = `category-id-${getNanoId()}`;
+      return { newTransactId, newCategoryId };
+    };
 
-      const dataToCreate = {
+    const postDataToUser = () => {
+      const { newTransactId, newCategoryId } = generateNewIds();
+
+      const newTransaction = createNewTransact({
         ...inputFields,
         newTransactId,
         cardType
-      };
-
-      const newCategory = createNewCategory(dataToCreate);
-      const newTransaction = createNewTransact(dataToCreate);
+      });
 
       if (category.id === "isNew") {
-        newCategory.id = newCategoryId;
         newTransaction.category = newCategoryId;
 
+        const newCategory = createNewCategory({
+          ...inputFields,
+          newCategoryId,
+          newTransactId
+        });
+        console.log({ newCategory });
         postUserCategory(user.id, newCategory);
       }
+      console.log({ newTransaction });
 
       postUserTransact(user.id, newTransaction);
       onSuccess();
@@ -144,7 +160,10 @@ const TransactCreationForm = forwardRef(
               iconClass={"p-1.5"}
               defaultValue={<BiSolidCalculator size={23} />}
             >
-              <Calculator name={"amount"} onEval={handleInputChange} />
+              <Calculator
+                name={"amount"}
+                onEval={handleInputChange}
+              />
             </DropdownSheet>
           </Col>
           <Col md={6}>
@@ -168,7 +187,9 @@ const TransactCreationForm = forwardRef(
               />
             </DatePicker>
             {errors.date && (
-              <div className="text-sm text-danger pt-1 mb-3">{errors.date}</div>
+              <div className="text-sm text-danger pt-1 mb-3">
+                {errors.date}
+              </div>
             )}
           </Col>
         </Row>
