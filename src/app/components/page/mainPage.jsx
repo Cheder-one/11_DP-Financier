@@ -49,12 +49,12 @@ const MainPage = ({ userId }) => {
   // Получаем данные пользователя при монтировании компонента
   useEffect(() => {
     fetchUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [userId]);
 
   // Функция для обработки успешного POST запроса
   const handlePostSuccess = () => {
-    // Получаем обновленные данные пользователя после успешного POST запроса
+    // Получаем обновленные данные пользователя
     fetchUserData();
 
     setResetDropTitle((prev) => ({
@@ -63,6 +63,7 @@ const MainPage = ({ userId }) => {
     }));
   };
 
+  // Возвращаем в init значение reset для title Счетов
   useEffect(() => {
     setResetDropTitle((prev) => ({
       ...prev,
@@ -70,18 +71,34 @@ const MainPage = ({ userId }) => {
     }));
   }, [resetDropTitle.account]);
 
+  const getTransactionCategory = (item) => {
+    return find(user.categories, { id: item.category }).name;
+  };
+
+  const handleDelButtonClick = (event) => {
+    const buttonId = event.currentTarget.id;
+    console.log("Button ID:", buttonId);
+  };
+
   // Универсализирует данные для отправки в TableCard, чтобы компонент не был привязан к конкретным переменным.
   const transformedBodyItems = useMemo(() => {
     const updatedCards = {};
 
     keys(cardBodyItems).forEach((key) => {
       const card = cardBodyItems[key];
+
       const updatedCard = card.map((item) => ({
         ...item,
         firstCol: item.amount,
-        secondCol: find(user.categories, { id: item.category }).name,
+        secondCol: getTransactionCategory(item),
         thirdCol: (
-          <Button variant="" size="sm" className="p-0">
+          <Button
+            id={item.id}
+            variant=""
+            size="sm"
+            className="p-0"
+            onClick={handleDelButtonClick}
+          >
             <CloseX style={{ color: "red" }} size={19} />
           </Button>
         )
@@ -90,6 +107,7 @@ const MainPage = ({ userId }) => {
     });
 
     return updatedCards;
+    // eslint-disable-next-line
   }, [cardBodyItems, user.categories]);
 
   // Фильтрует транзакции по типу (расход/доход). Создает под каждый тип массив уникальных дат для возможности отображения транзакций по датам.
@@ -162,7 +180,12 @@ const MainPage = ({ userId }) => {
       });
 
       // Обновляем транзакции в карточках расход/доход под выбранный счет
-      updIncomeExpenseTransacts(id, income, expense, setCardBodyItems);
+      updIncomeExpenseTransacts(
+        id,
+        income,
+        expense,
+        setCardBodyItems
+      );
 
       // Обозначаем что сейчас выбран счет и любые фильтрации должны опираться на него
       setSelectedAccount({ id });

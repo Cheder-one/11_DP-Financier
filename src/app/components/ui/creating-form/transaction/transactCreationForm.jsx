@@ -1,13 +1,13 @@
+import { keys } from "lodash";
 import PropTypes from "prop-types";
+import { Row, Col, Form } from "react-bootstrap";
+import { BiSolidCalculator } from "react-icons/bi";
 import {
   useState,
   forwardRef,
   useImperativeHandle,
   useEffect
 } from "react";
-import { Row, Col, Form } from "react-bootstrap";
-import { BiSolidCalculator } from "react-icons/bi";
-import { keys, some } from "lodash";
 
 import {
   DropdownComponent,
@@ -35,8 +35,8 @@ const TransactCreationForm = forwardRef(
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [inputFields, setInputFields] = useState({
       account: { id: "", name: "" },
-      date: new Date(),
       category: { id: "", name: "" },
+      date: new Date(),
       amount: "",
       comment: ""
     });

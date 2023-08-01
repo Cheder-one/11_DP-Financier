@@ -7,7 +7,7 @@ const useEventListener = (event, callback, area = document) => {
     return () => {
       area.removeEventListener(event, callback);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 };
 

@@ -10,7 +10,7 @@ const useBlurOnSubmit = (isSubmit) => {
     } else {
       setIsInitialRender(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [isSubmit]);
 
   return [isBlur, setIsBlur];

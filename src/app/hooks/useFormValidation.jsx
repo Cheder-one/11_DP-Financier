@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 
-const useFormValidation = (inputFields, validationSchema, dependents) => {
+const useFormValidation = (
+  inputFields,
+  validationSchema,
+  dependents
+) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -16,7 +20,7 @@ const useFormValidation = (inputFields, validationSchema, dependents) => {
         }
         setErrors(newErrors);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, dependents || [inputFields]);
 
   return errors;

@@ -83,5 +83,26 @@ export function makeServer({ environment = "development" } = {}) {
     }
   });
 
+  // Маршрут удаления транзакции по id
+  this.delete(
+    "/users/:user_id/transactions/:transaction_id",
+    (schema, request) => {
+      const userId = request.params.user_id;
+      const transactionId = request.params.transaction_id;
+      const user = schema.users.find(userId);
+
+      // Находим индекс удаляемой транзакции в массиве и удаляем ее
+      const transactionIndex = user.transactions.findIndex(
+        (transaction) => transaction.id === transactionId
+      );
+      if (transactionIndex !== -1) {
+        user.transactions.splice(transactionIndex, 1);
+        user.save();
+      }
+
+      return user;
+    }
+  );
+
   return server;
 }
