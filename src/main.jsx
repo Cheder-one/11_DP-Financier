@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { BrowserRouter } from "react-router-dom";
 import { makeServer } from "./app/api/mock/mirage-server.js";
+import "react-toastify/dist/ReactToastify.css";
 
 if (process.env.NODE_ENV === "development") {
   makeServer({ environment: "development" });

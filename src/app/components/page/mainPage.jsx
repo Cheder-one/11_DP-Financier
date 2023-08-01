@@ -12,7 +12,8 @@ import {
 import {
   getUserData,
   getUniqDates,
-  updIncomeExpenseTransacts
+  updIncomeExpenseTransacts,
+  deleteUserTransact
 } from "../../utils";
 import { useModal } from "../../hooks";
 
@@ -76,8 +77,11 @@ const MainPage = ({ userId }) => {
   };
 
   const handleDelButtonClick = (event) => {
-    const buttonId = event.currentTarget.id;
-    console.log("Button ID:", buttonId);
+    const transactId = event.currentTarget.id;
+    console.log("Button ID:", transactId);
+
+    deleteUserTransact(user.id, transactId);
+    handlePostSuccess();
   };
 
   // Универсализирует данные для отправки в TableCard, чтобы компонент не был привязан к конкретным переменным.

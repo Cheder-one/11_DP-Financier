@@ -23,8 +23,10 @@ import createNewTransact from "./func/create-user-item/createNewTransaction";
 import createNewAccount from "./func/create-user-item/createNewAccount";
 import checkOnPropRequired from "./func/validate/checkOnPropRequired";
 import checkIsNewNameUniq from "./func/checkIsNewNameUniq";
+import deleteUserTransact from "./service/deleteUserTransact.ts";
 
 export {
+  deleteUserTransact,
   checkIsNewNameUniq,
   checkOnPropRequired,
   createNewTransact,

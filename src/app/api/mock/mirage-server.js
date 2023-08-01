@@ -1,4 +1,6 @@
+import { remove } from "lodash";
 import { createServer, Model } from "miragejs";
+
 import users from "../data/users.json";
 
 export function makeServer({ environment = "development" } = {}) {
@@ -80,29 +82,46 @@ export function makeServer({ environment = "development" } = {}) {
         user.save();
         return user;
       });
+
+      // // Маршрут для удаления транзакций
+      // this.delete(
+      //   "/users/:user_id/transactions/:transaction_id",
+      //   (schema, request) => {
+      //     const userId = request.params.user_id;
+      //     const transactionId = request.params.transaction_id;
+      //     const user = schema.users.find(userId);
+
+      //     // Найти индекс транзакции в массиве транзакций пользователя
+      //     const transactionIndex = user.transactions.findIndex(
+      //       (t) => t.id === transactionId
+      //     );
+
+      //     // Если транзакция существует, удалить ее из массива
+      //     if (transactionIndex !== -1) {
+      //       user.transactions.splice(transactionIndex, 1);
+      //       user.save();
+      //     }
+
+      //     // Вернуть обновленные данные пользователя
+      //     return user;
+      //   }
+      // );
+
+      this.delete(
+        "/users/:user_id/transactions/:transaction_id",
+        (schema, request) => {
+          const userId = request.params.user_id;
+          const transactId = request.params.transaction_id;
+          const user = schema.users.find(userId);
+
+          remove(user.transactions, { id: transactId });
+          user.save();
+
+          return user;
+        }
+      );
     }
   });
-
-  // Маршрут удаления транзакции по id
-  this.delete(
-    "/users/:user_id/transactions/:transaction_id",
-    (schema, request) => {
-      const userId = request.params.user_id;
-      const transactionId = request.params.transaction_id;
-      const user = schema.users.find(userId);
-
-      // Находим индекс удаляемой транзакции в массиве и удаляем ее
-      const transactionIndex = user.transactions.findIndex(
-        (transaction) => transaction.id === transactionId
-      );
-      if (transactionIndex !== -1) {
-        user.transactions.splice(transactionIndex, 1);
-        user.save();
-      }
-
-      return user;
-    }
-  );
 
   return server;
 }
