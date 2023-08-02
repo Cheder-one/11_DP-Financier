@@ -7,7 +7,8 @@ const AccountCard = ({
   bodyItems,
   reset,
   addButton,
-  onSelect
+  onSelect,
+  onPostSuccess
 }) => {
   return (
     <TableCard
@@ -20,6 +21,7 @@ const AccountCard = ({
             type="account"
             reset={reset}
             onSelect={onSelect}
+            onPostSuccess={onPostSuccess}
           />
         ),
         third: addButton("account")

@@ -6,8 +6,9 @@ const IncomeCard = ({
   dropList: { income },
   bodyItems,
   reset,
+  addButton,
   onSelect,
-  addButton
+  onPostSuccess
 }) => {
   return (
     <TableCard
@@ -20,6 +21,7 @@ const IncomeCard = ({
             items={income.uniqDates}
             reset={reset}
             onSelect={onSelect}
+            onPostSuccess={onPostSuccess}
           />
         ),
         third: addButton("income")

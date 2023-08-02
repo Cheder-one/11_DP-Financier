@@ -7,11 +7,15 @@ import { OverlayTooltip } from "../../../common/tooltip";
 import { useClickOutside } from "../../../../hooks";
 import { getIdAllItem } from "../../../../utils";
 
-const CardDropdown = ({ items, type, onSelect, reset }) => {
+const CardDropdown = ({ items, type, onSelect, onPostSuccess, reset }) => {
   const ALL_ITEM = getIdAllItem(type);
   const isInitialRender = useRef(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(ALL_ITEM);
+
+  useEffect(() => {
+    onPostSuccess(selectedItem);
+  }, [items]);
 
   const handleClick = ({ target }) => {
     const { id: eventKey } = target;
@@ -22,12 +26,14 @@ const CardDropdown = ({ items, type, onSelect, reset }) => {
   };
 
   useEffect(() => {
-    // Вызов onSelect только после первого рендера
-    if (!isInitialRender.current) {
-      onSelect(selectedItem);
-    } else {
-      isInitialRender.current = false;
-    }
+    onSelect(selectedItem);
+
+    // // Вызов onSelect только после первого рендера
+    // if (!isInitialRender.current) {
+    //   onSelect(selectedItem);
+    // } else {
+    //   isInitialRender.current = false;
+    // }
   }, [selectedItem]);
 
   useEffect(() => {

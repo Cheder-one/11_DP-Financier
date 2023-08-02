@@ -11,10 +11,15 @@ const TableCardsShell = ({
   bodyItems,
   reset,
   onSelect,
+  onPostSuccess,
   onAddButtonClick
 }) => {
   const addButton = (type) => (
-    <Button variant="" className="p-0" onClick={() => onAddButtonClick(type)}>
+    <Button
+      variant=""
+      className="p-0"
+      onClick={() => onAddButtonClick(type)}
+    >
       <PlusSquare className="text-lime-500" size={25} />
     </Button>
   );
@@ -24,19 +29,19 @@ const TableCardsShell = ({
       <Col md="4" className="mb-3 mb-md-0">
         <IncomeCard
           reset={reset.transacts}
-          {...{ dropList, bodyItems, onSelect, addButton }}
+          {...{ dropList, bodyItems, onSelect, onPostSuccess, addButton }}
         />
       </Col>
       <Col md="4" className="mb-3 mb-md-0">
         <AccountCard
           reset={reset.account}
-          {...{ dropList, bodyItems, onSelect, addButton }}
+          {...{ dropList, bodyItems, onSelect, onPostSuccess, addButton }}
         />
       </Col>
       <Col md="4" className="mb-3 mb-md-0">
         <ExpenseCard
           reset={reset.transacts}
-          {...{ dropList, bodyItems, onSelect, addButton }}
+          {...{ dropList, bodyItems, onSelect, onPostSuccess, addButton }}
         />
       </Col>
     </Row>

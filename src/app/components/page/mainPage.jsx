@@ -20,8 +20,15 @@ import {
   useTransformedBodyItems
 } from "../../hooks";
 
+// TODO Исправить переключение на отображение Всех элементов при добавлении/удалении
+
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
+  const [selectedFilters, setSelectedFilters] = useState({
+    account: {},
+    income: {},
+    expense: {}
+  });
   const [selectedAccount, setSelectedAccount] = useState({ id: "" });
   const [resetDropTitle, setResetDropTitle] = useState({
     account: false,
@@ -32,8 +39,8 @@ const MainPage = ({ userId }) => {
     income: [],
     expense: []
   });
-  const [showModal, setShowModal] = useModal(false);
   const [cardToWhichAdded, setCardToWhichAdded] = useState("");
+  const [showModal, setShowModal] = useModal(false);
 
   const fetchUserData = async () => {
     try {
@@ -53,13 +60,20 @@ const MainPage = ({ userId }) => {
   useEffect(() => {
     if (keys(user).length > 0) {
       setCardBodyItems({
-        account: user?.transactions,
-        income: filter(user?.transactions, { type: "income" }),
-        expense: filter(user?.transactions, { type: "expense" })
+        account: user.transactions,
+        income: filter(user.transactions, { type: "income" }),
+        expense: filter(user.transactions, { type: "expense" })
       });
     }
     // eslint-disable-next-line
   }, [user.transactions]);
+
+  const handleSelectedFilters = (filter) => {
+    setSelectedFilters((prev) => ({
+      ...prev,
+      [filter.type]: filter
+    }));
+  };
 
   // Функция для обработки успешного POST запроса
   const handlePostSuccess = () => {
@@ -100,8 +114,6 @@ const MainPage = ({ userId }) => {
     selectedAccount
   );
   const { income, expense } = filterByUniqAndType;
-
-  // TODO Исправить переключение на отображение Всех элементов при добавлении/удалении
 
   // Обработчик dropdown.
   const handleDropdownSelect = (eventKey) => {
@@ -145,9 +157,7 @@ const MainPage = ({ userId }) => {
       }
       // Выбран конкретный счет для фильтрации
     } else if (id.includes("account")) {
-      bodyItems = filter(user.transactions, {
-        account: id
-      });
+      bodyItems = filter(user.transactions, { account: id });
 
       // prettier-ignore
       // Обновляем транзакции в cards расход/доход под выбранный счет
@@ -158,9 +168,7 @@ const MainPage = ({ userId }) => {
 
       // Карточки Расход/Доход. Фильтруем транзакции по типу карточки.
     } else if (id.includes("transaction")) {
-      bodyItems = filter(dataByCardType.transacts, {
-        date
-      });
+      bodyItems = filter(dataByCardType.transacts, { date });
 
       // Отключаем сброс title в dropdown для отображения выбранной даты для фильтрации
       setResetDropTitle((prev) => ({
@@ -193,6 +201,7 @@ const MainPage = ({ userId }) => {
         bodyItems={transformedBodyItems}
         reset={resetDropTitle}
         onSelect={handleDropdownSelect}
+        onPostSuccess={handleSelectedFilters}
         onAddButtonClick={handleAddButtonClick}
       />
 

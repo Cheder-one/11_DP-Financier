@@ -6,8 +6,9 @@ const ExpenseCard = ({
   dropList: { expense },
   bodyItems,
   reset,
+  addButton,
   onSelect,
-  addButton
+  onPostSuccess
 }) => {
   return (
     <TableCard
@@ -18,8 +19,9 @@ const ExpenseCard = ({
           <CardDropdown
             items={expense.uniqDates}
             type="expense"
-            onSelect={onSelect}
             reset={reset}
+            onSelect={onSelect}
+            onPostSuccess={onPostSuccess}
           />
         ),
         third: addButton("expense")
