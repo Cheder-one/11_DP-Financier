@@ -4,9 +4,9 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif !important;
 
   font-synthesis: none !important;
   text-rendering: optimizeLegibility !important;
@@ -118,7 +118,7 @@ body::-webkit-scrollbar-thumb:hover {
   margin-bottom: 4px !important;
 }
 
-/* ----------Calendar---------- */
+/* ----------Toastify---------- */
 
 /* ----------/main .account-cards---------- */
 /* Размер и переполнение списка счетов */

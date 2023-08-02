@@ -1,7 +1,13 @@
 import PropTypes from "prop-types";
 import { keys } from "lodash";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  ListGroup,
+  ListGroupItem,
+  Row
+} from "react-bootstrap";
 
 import { OverlayTooltip } from "../tooltip";
 
@@ -25,7 +31,10 @@ const TableCard = ({ md, route, title, body }) => {
           <Col md={md[1]} className="mx-auto p-0">
             {title?.second}
           </Col>
-          <Col md={md[2]} className="flex justify-center items-center">
+          <Col
+            md={md[2]}
+            className="flex justify-center items-center"
+          >
             {title?.third}
           </Col>
         </Row>

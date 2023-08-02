@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { filter, find, keys } from "lodash";
-import { Button, Col, Row } from "react-bootstrap";
-import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
+import { filter, keys } from "lodash";
+import { Col, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+
 import {
   Spinner,
   TableCardsShell,
@@ -11,11 +11,14 @@ import {
 } from "../ui";
 import {
   getUserData,
-  getUniqDates,
   updIncomeExpenseTransacts,
   deleteUserTransact
 } from "../../utils";
-import { useModal } from "../../hooks";
+import {
+  useFilterByUniqAndType,
+  useModal,
+  useTransformedBodyItems
+} from "../../hooks";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -30,7 +33,7 @@ const MainPage = ({ userId }) => {
     expense: []
   });
   const [showModal, setShowModal] = useModal(false);
-  const [cardTypeToAdd, setCardTypeToAdd] = useState("");
+  const [cardToWhichAdded, setCardToWhichAdded] = useState("");
 
   const fetchUserData = async () => {
     try {
@@ -55,95 +58,52 @@ const MainPage = ({ userId }) => {
 
   // Функция для обработки успешного POST запроса
   const handlePostSuccess = () => {
-    // Получаем обновленные данные пользователя
-    fetchUserData();
+    fetchUserData(); // Получаем обновленные данные пользователя
 
-    setResetDropTitle((prev) => ({
-      ...prev,
-      account: true
-    }));
+    // setResetDropTitle((prev) => ({
+    //   ...prev,
+    //   account: true
+    // }));
   };
 
   // Возвращаем в init значение reset для title Счетов
-  useEffect(() => {
-    setResetDropTitle((prev) => ({
-      ...prev,
-      account: false
-    }));
-  }, [resetDropTitle.account]);
-
-  const getTransactionCategory = (item) => {
-    return find(user.categories, { id: item.category }).name;
-  };
+  // useEffect(() => {
+  //   setResetDropTitle((prev) => ({
+  //     ...prev,
+  //     account: false
+  //   }));
+  // }, [resetDropTitle.account]);
 
   const handleDelButtonClick = (event) => {
     const transactId = event.currentTarget.id;
-    console.log("Button ID:", transactId);
+    console.log("Transact ID:", transactId);
 
     deleteUserTransact(user.id, transactId);
     handlePostSuccess();
   };
 
   // Универсализирует данные для отправки в TableCard, чтобы компонент не был привязан к конкретным переменным.
-  const transformedBodyItems = useMemo(() => {
-    const updatedCards = {};
-
-    keys(cardBodyItems).forEach((key) => {
-      const card = cardBodyItems[key];
-
-      const updatedCard = card.map((item) => ({
-        ...item,
-        firstCol: item.amount,
-        secondCol: getTransactionCategory(item),
-        thirdCol: (
-          <Button
-            id={item.id}
-            variant=""
-            size="sm"
-            className="p-0"
-            onClick={handleDelButtonClick}
-          >
-            <CloseX style={{ color: "red" }} size={19} />
-          </Button>
-        )
-      }));
-      updatedCards[key] = updatedCard;
-    });
-
-    return updatedCards;
-    // eslint-disable-next-line
-  }, [cardBodyItems, user.categories]);
+  const transformedBodyItems = useTransformedBodyItems(
+    user,
+    cardBodyItems,
+    handleDelButtonClick
+  );
 
   // Фильтрует транзакции по типу (расход/доход). Создает под каждый тип массив уникальных дат для возможности отображения транзакций по датам.
-  const filteredByUniqAndType = useMemo(() => {
-    const types = ["income", "expense"];
-    const { id } = selectedAccount;
-    const result = {};
+  const filterByUniqAndType = useFilterByUniqAndType(
+    user,
+    selectedAccount
+  );
 
-    types.forEach((type) => {
-      const transacts = filter(user.transactions, { type });
-      // Создает массив уникальных дат транзакций для dropdownList
-      let uniqDates = getUniqDates(transacts);
+  const { income, expense } = filterByUniqAndType;
 
-      // Фильтрует транзакции под конкретный счет (если выбран). Создает массив uniqDates.
-      if (id.includes("account-id-")) {
-        const accountTransacts = filter(transacts, { account: id });
-        uniqDates = getUniqDates(accountTransacts);
-      }
-
-      result[type] = { transacts, uniqDates };
-    });
-
-    return result;
-  }, [user.transactions, selectedAccount]);
-
-  const { income, expense } = filteredByUniqAndType;
+  // TODO Исправить переключение на отображение Всех элементов при добавлении/удалении
 
   // Обработчик dropdown.
   const handleDropdownSelect = (eventKey) => {
     const { id, type: cardType, date } = eventKey;
     const { id: selAccId } = selectedAccount;
-    const dataByCardType = filteredByUniqAndType[cardType];
+    const dataByCardType = filterByUniqAndType[cardType];
     let bodyItems = null;
 
     // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается в его title. При любой смене счета устанавливается default значение для dropdown.
@@ -183,20 +143,18 @@ const MainPage = ({ userId }) => {
         account: id
       });
 
-      // Обновляем транзакции в карточках расход/доход под выбранный счет
-      updIncomeExpenseTransacts(
-        id,
-        income,
-        expense,
-        setCardBodyItems
-      );
+      // prettier-ignore
+      // Обновляем транзакции в cards расход/доход под выбранный счет
+      updIncomeExpenseTransacts(id, income, expense, setCardBodyItems);
 
       // Обозначаем что сейчас выбран счет и любые фильтрации должны опираться на него
       setSelectedAccount({ id });
 
       // Карточки Расход/Доход. Фильтруем транзакции по типу карточки.
     } else if (id.includes("transaction")) {
-      bodyItems = filter(dataByCardType.transacts, { date });
+      bodyItems = filter(dataByCardType.transacts, {
+        date
+      });
 
       // Отключаем сброс title в dropdown для отображения выбранной даты для фильтрации
       setResetDropTitle((prev) => ({
@@ -214,7 +172,7 @@ const MainPage = ({ userId }) => {
   };
 
   const handleAddButtonClick = (type) => {
-    setCardTypeToAdd(type);
+    setCardToWhichAdded(type);
     setShowModal(true);
   };
 
@@ -239,14 +197,14 @@ const MainPage = ({ userId }) => {
           </div>
         </Col>
       </Row>
-      {cardTypeToAdd === "account" ? (
+      {cardToWhichAdded === "account" ? (
         <AccountCreationModal
           onSuccess={handlePostSuccess}
           {...{ user, showModal, setShowModal }}
         />
       ) : (
         <TransactCreationModal
-          cardType={cardTypeToAdd}
+          cardType={cardToWhichAdded}
           onSuccess={handlePostSuccess}
           {...{ user, showModal, setShowModal }}
         />
