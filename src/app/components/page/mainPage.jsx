@@ -39,12 +39,6 @@ const MainPage = ({ userId }) => {
     try {
       const user = await getUserData(userId);
       setUser(user);
-
-      setCardBodyItems({
-        account: user?.transactions,
-        income: filter(user?.transactions, { type: "income" }),
-        expense: filter(user?.transactions, { type: "expense" })
-      });
     } catch (err) {
       console.error(err);
     }
@@ -55,6 +49,17 @@ const MainPage = ({ userId }) => {
     fetchUserData();
     // eslint-disable-next-line
   }, [userId]);
+
+  useEffect(() => {
+    if (keys(user).length > 0) {
+      setCardBodyItems({
+        account: user?.transactions,
+        income: filter(user?.transactions, { type: "income" }),
+        expense: filter(user?.transactions, { type: "expense" })
+      });
+    }
+    // eslint-disable-next-line
+  }, [user.transactions]);
 
   // Функция для обработки успешного POST запроса
   const handlePostSuccess = () => {
@@ -94,7 +99,6 @@ const MainPage = ({ userId }) => {
     user,
     selectedAccount
   );
-
   const { income, expense } = filterByUniqAndType;
 
   // TODO Исправить переключение на отображение Всех элементов при добавлении/удалении
@@ -104,9 +108,11 @@ const MainPage = ({ userId }) => {
     const { id, type: cardType, date } = eventKey;
     const { id: selAccId } = selectedAccount;
     const dataByCardType = filterByUniqAndType[cardType];
+
     let bodyItems = null;
 
-    // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается в его title. При любой смене счета устанавливается default значение для dropdown.
+    // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается в его title.
+    // При любой смене счета устанавливается default значение для dropdown.
     if (cardType === "account") {
       setResetDropTitle((prev) => ({
         ...prev,

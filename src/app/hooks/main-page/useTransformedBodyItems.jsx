@@ -24,6 +24,7 @@ const useTransformedBodyItems = (
   cardBodyItems,
   handleDelButtonClick
 ) => {
+  console.log("Call:", "transformedBodyItems");
   const transformedBodyItems = useMemo(() => {
     const updatedCards = {};
 

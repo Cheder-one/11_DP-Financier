@@ -20,7 +20,7 @@ export interface Account {
   name: string;
   entity: string;
   currency: string;
-  balance: number;
+  balance: string;
   transactions: string[];
   icon: Icon;
   comment: string;
