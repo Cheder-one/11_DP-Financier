@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { filter, keys } from "lodash";
+import { filter, isEmpty, keys } from "lodash";
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
@@ -15,11 +15,12 @@ import {
   deleteUserTransact
 } from "../../utils";
 import {
-  useFilterByUniqAndType,
+  useFilterByUniqNType,
   useModal,
   useTransformedBodyItems
 } from "../../hooks";
 
+// TODO Добавить POST новой транзакции при ее create в Account
 // TODO Исправить переключение на отображение Всех элементов при добавлении/удалении
 
 const MainPage = ({ userId }) => {
@@ -29,6 +30,7 @@ const MainPage = ({ userId }) => {
     income: {},
     expense: {}
   });
+  console.log(selectedFilters);
   const [selectedAccount, setSelectedAccount] = useState({ id: "" });
   const [resetDropTitle, setResetDropTitle] = useState({
     account: false,
@@ -57,14 +59,22 @@ const MainPage = ({ userId }) => {
     // eslint-disable-next-line
   }, [userId]);
 
+  // Utils-функции
+
+  const getAccountTransacts = (id) => {
+    return filter(user.transactions, { account: id });
+  };
+
+  const setAllItemsToDisplay = () => {
+    setCardBodyItems({
+      account: user.transactions,
+      income: income.transacts,
+      expense: expense.transacts
+    });
+  };
+
+  // Установка данных согласно фильтрам
   useEffect(() => {
-    if (keys(user).length > 0) {
-      setCardBodyItems({
-        account: user.transactions,
-        income: filter(user.transactions, { type: "income" }),
-        expense: filter(user.transactions, { type: "expense" })
-      });
-    }
     // eslint-disable-next-line
   }, [user.transactions]);
 
@@ -77,7 +87,8 @@ const MainPage = ({ userId }) => {
 
   // Функция для обработки успешного POST запроса
   const handlePostSuccess = () => {
-    fetchUserData(); // Получаем обновленные данные пользователя
+    fetchUserData();
+    // Получаем обновленные данные пользователя
 
     // setResetDropTitle((prev) => ({
     //   ...prev,
@@ -109,19 +120,18 @@ const MainPage = ({ userId }) => {
   );
 
   // Фильтрует транзакции по типу (расход/доход). Создает под каждый тип массив уникальных дат для возможности отображения транзакций по датам.
-  const filterByUniqAndType = useFilterByUniqAndType(
-    user,
-    selectedAccount
-  );
-  const { income, expense } = filterByUniqAndType;
+  const filterByUniqNType = useFilterByUniqNType(user, selectedAccount);
+  const { income, expense } = filterByUniqNType;
 
   // Обработчик dropdown.
   const handleDropdownSelect = (eventKey) => {
-    const { id, type: cardType, date } = eventKey;
     const { id: selAccId } = selectedAccount;
-    const dataByCardType = filterByUniqAndType[cardType];
+    const { id, type: cardType, date } = eventKey;
 
     let bodyItems = null;
+    const dataByCardType = filterByUniqNType[cardType];
+
+    console.log("Called:", "handleDropdownSelect");
 
     // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается в его title.
     // При любой смене счета устанавливается default значение для dropdown.
@@ -136,11 +146,7 @@ const MainPage = ({ userId }) => {
     if (id.includes("all")) {
       // Выбраны "Все" счета. Выводятся все транзакции всех счетов.
       if (cardType === "account") {
-        setCardBodyItems({
-          account: user.transactions,
-          income: income.transacts,
-          expense: expense.transacts
-        });
+        setAllItemsToDisplay();
         // Обозначаем что нет конкретного счета для фильтрации
         setSelectedAccount({ id: "all" });
         // Если выбрано "Все" для карточек расход/доход
@@ -157,9 +163,8 @@ const MainPage = ({ userId }) => {
       }
       // Выбран конкретный счет для фильтрации
     } else if (id.includes("account")) {
-      bodyItems = filter(user.transactions, { account: id });
+      bodyItems = getAccountTransacts(id);
 
-      // prettier-ignore
       // Обновляем транзакции в cards расход/доход под выбранный счет
       updIncomeExpenseTransacts(id, income, expense, setCardBodyItems);
 

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { VscChevronDown } from "react-icons/vsc";
@@ -7,33 +6,25 @@ import { OverlayTooltip } from "../../../common/tooltip";
 import { useClickOutside } from "../../../../hooks";
 import { getIdAllItem } from "../../../../utils";
 
+/* eslint-disable react-hooks/exhaustive-deps */
 const CardDropdown = ({ items, type, onSelect, onPostSuccess, reset }) => {
   const ALL_ITEM = getIdAllItem(type);
-  const isInitialRender = useRef(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(ALL_ITEM);
 
-  useEffect(() => {
-    onPostSuccess(selectedItem);
-  }, [items]);
-
   const handleClick = ({ target }) => {
-    const { id: eventKey } = target;
-    if (eventKey) {
-      setSelectedItem(JSON.parse(eventKey));
+    if (target.id) {
+      setSelectedItem(JSON.parse(target.id));
     }
     setIsOpen((prev) => !prev);
   };
 
   useEffect(() => {
     onSelect(selectedItem);
+  }, [selectedItem]);
 
-    // // Вызов onSelect только после первого рендера
-    // if (!isInitialRender.current) {
-    //   onSelect(selectedItem);
-    // } else {
-    //   isInitialRender.current = false;
-    // }
+  useEffect(() => {
+    onPostSuccess(selectedItem);
   }, [selectedItem]);
 
   useEffect(() => {
@@ -54,7 +45,7 @@ const CardDropdown = ({ items, type, onSelect, onPostSuccess, reset }) => {
         className="flex items-center justify-center w-full px-1 py-0.5 text-black"
         onClick={handleClick}
       >
-        <OverlayTooltip text={selectedItem?.name || selectedItem} />
+        <OverlayTooltip text={selectedItem?.name} />
         <VscChevronDown size="" className="pl-0.5" />
       </button>
 

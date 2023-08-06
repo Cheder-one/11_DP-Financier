@@ -2,11 +2,11 @@ import { filter } from "lodash";
 import { useMemo } from "react";
 import { getUniqDates } from "../../utils";
 
-const useFilterByUniqAndType = (user, selectedAccount) => {
+const useFilterByUniqNType = (user, selectedAccount) => {
   const filterByUniqAndType = useMemo(() => {
-    const types = ["income", "expense"];
-    const { id } = selectedAccount;
     const result = {};
+    const { id } = selectedAccount;
+    const types = ["income", "expense"];
 
     types.forEach((type) => {
       const transacts = filter(user.transactions, { type });
@@ -28,4 +28,4 @@ const useFilterByUniqAndType = (user, selectedAccount) => {
   return filterByUniqAndType;
 };
 
-export default useFilterByUniqAndType;
+export default useFilterByUniqNType;

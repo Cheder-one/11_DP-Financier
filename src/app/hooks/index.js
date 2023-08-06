@@ -7,12 +7,12 @@ import useModal from "./useModal";
 import useFocus from "./useFocus";
 import useTooltipArrowRemoval from "./useTooltipArrowRemoval";
 import useTransformedBodyItems from "./main-page/useTransformedBodyItems";
-import useFilterByUniqAndType from "./main-page/useFilterByUniqAndType.jsx";
+import useFilterByUniqNType from "./main-page/useFilterByUniqNType.jsx";
 import useRenderCount from "./useRenderCount.jsx";
 
 export {
   useRenderCount,
-  useFilterByUniqAndType,
+  useFilterByUniqNType,
   useTransformedBodyItems,
   useBlurOnSubmit,
   useClickOutside,
