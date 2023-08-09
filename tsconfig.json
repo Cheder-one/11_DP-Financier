@@ -4,17 +4,23 @@
     // Версия ECMAScript, к которой будет компилироваться код
     "module": "ESNext",
     // Формат модулей (ESNext для использования import/export)
+    "allowJs": true,
+    // "sourceMap": true,
+    // "noEmitOnError": true,
+    // Не создает файлы JS, если во время компиляции возникают ошибки.
+    "forceConsistentCasingInFileNames": true,
+    // Гарантирует, что при импорте будет указан правильный регистр имени файла.
     "jsx": "react",
     // Тип JSX, используемый в React
     "strict": true,
     // Включить строгие настройки TypeScript
     "esModuleInterop": true,
     // Разрешить импорт модулей в стиле ES6
-    // "skipLibCheck": false,
-    // "noImplicitAny": false
     "moduleResolution": "node"
     // Отключение ошибок для импортов
+    // "outDir": "dist"
   },
-  "include": ["src"]
-  // Папки, которые нужно включить в компиляцию (замените "src" на вашу папку с кодом)
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.ts"]
+  // Папки, которые нужно включить в компиляцию
 }

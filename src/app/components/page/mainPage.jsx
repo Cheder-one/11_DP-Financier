@@ -20,18 +20,16 @@ import {
   useTransformedBodyItems
 } from "../../hooks";
 
-// TODO Добавить POST новой транзакции при ее create в Account
-// TODO Исправить переключение на отображение Всех элементов при добавлении/удалении
+/* eslint-disable react-hooks/exhaustive-deps */
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
-  const [selectedFilters, setSelectedFilters] = useState({
-    account: {},
-    income: {},
-    expense: {}
+  const [selectedFilter, setSelectedFilter] = useState({
+    account: { id: "" },
+    income: { id: "" },
+    expense: { id: "" }
   });
-  console.log(selectedFilters);
-  const [selectedAccount, setSelectedAccount] = useState({ id: "" });
+  console.log(selectedFilter);
   const [resetDropTitle, setResetDropTitle] = useState({
     account: false,
     transacts: false
@@ -44,6 +42,25 @@ const MainPage = ({ userId }) => {
   const [cardToWhichAdded, setCardToWhichAdded] = useState("");
   const [showModal, setShowModal] = useModal(false);
 
+  const getAccountTransacts = (id) => {
+    return filter(user.transactions, { account: id });
+  };
+  const getTransactByAccount = (data, id) => {
+    return filter(data.transacts, { account: id });
+  };
+  const getTransactsByDate = (data, date) => {
+    return filter(data.transacts, { date });
+  };
+  const setAllItemsToDisplay = () => {
+    if (isEmpty(user) !== true) {
+      setCardBodyItems({
+        account: user.transactions,
+        income: income.transacts,
+        expense: expense.transacts
+      });
+    }
+  };
+
   const fetchUserData = async () => {
     try {
       const user = await getUserData(userId);
@@ -53,88 +70,53 @@ const MainPage = ({ userId }) => {
     }
   };
 
-  // Получаем данные пользователя при монтировании компонента
+  // Получение данных
   useEffect(() => {
     fetchUserData();
-    // eslint-disable-next-line
   }, [userId]);
 
-  // Utils-функции
-
-  const getAccountTransacts = (id) => {
-    return filter(user.transactions, { account: id });
-  };
-
-  const setAllItemsToDisplay = () => {
-    setCardBodyItems({
-      account: user.transactions,
-      income: income.transacts,
-      expense: expense.transacts
-    });
-  };
-
-  // Установка данных согласно фильтрам
+  // [x] Установка обновленных значений
   useEffect(() => {
-    // eslint-disable-next-line
+    setAllItemsToDisplay();
   }, [user.transactions]);
 
   const handleSelectedFilters = (filter) => {
-    setSelectedFilters((prev) => ({
+    setSelectedFilter((prev) => ({
       ...prev,
       [filter.type]: filter
     }));
   };
 
-  // Функция для обработки успешного POST запроса
   const handlePostSuccess = () => {
     fetchUserData();
-    // Получаем обновленные данные пользователя
-
-    // setResetDropTitle((prev) => ({
-    //   ...prev,
-    //   account: true
-    // }));
   };
-
-  // Возвращаем в init значение reset для title Счетов
-  // useEffect(() => {
-  //   setResetDropTitle((prev) => ({
-  //     ...prev,
-  //     account: false
-  //   }));
-  // }, [resetDropTitle.account]);
 
   const handleDelButtonClick = (event) => {
     const transactId = event.currentTarget.id;
-    console.log("Transact ID:", transactId);
 
     deleteUserTransact(user.id, transactId);
     handlePostSuccess();
   };
 
-  // Универсализирует данные для отправки в TableCard, чтобы компонент не был привязан к конкретным переменным.
   const transformedBodyItems = useTransformedBodyItems(
     user,
     cardBodyItems,
     handleDelButtonClick
   );
 
-  // Фильтрует транзакции по типу (расход/доход). Создает под каждый тип массив уникальных дат для возможности отображения транзакций по датам.
-  const filterByUniqNType = useFilterByUniqNType(user, selectedAccount);
-  const { income, expense } = filterByUniqNType;
+  const filterTransactsByUniqNType = useFilterByUniqNType(
+    user,
+    selectedFilter.account.id
+  );
+  const { income, expense } = filterTransactsByUniqNType;
 
-  // Обработчик dropdown.
   const handleDropdownSelect = (eventKey) => {
-    const { id: selAccId } = selectedAccount;
+    const { id: selAccId } = selectedFilter.account;
     const { id, type: cardType, date } = eventKey;
 
     let bodyItems = null;
-    const dataByCardType = filterByUniqNType[cardType];
+    const dataByCardType = filterTransactsByUniqNType[cardType];
 
-    console.log("Called:", "handleDropdownSelect");
-
-    // resetDropTitle отвечает за сброс выбранного ранее элемента в dropdown, который отображается в его title.
-    // При любой смене счета устанавливается default значение для dropdown.
     if (cardType === "account") {
       setResetDropTitle((prev) => ({
         ...prev,
@@ -142,40 +124,38 @@ const MainPage = ({ userId }) => {
       }));
     }
 
-    // Если фильтруем карточку по критерию "Все"
     if (id.includes("all")) {
-      // Выбраны "Все" счета. Выводятся все транзакции всех счетов.
       if (cardType === "account") {
         setAllItemsToDisplay();
-        // Обозначаем что нет конкретного счета для фильтрации
-        setSelectedAccount({ id: "all" });
-        // Если выбрано "Все" для карточек расход/доход
+
+        setSelectedFilter((prev) => ({
+          ...prev,
+          account: { ...prev.account, id: "all" }
+        }));
       } else {
-        // Фильтруем транзакции по типу карточки под выбранный счет
         if (selAccId.includes("account-id-")) {
-          bodyItems = filter(dataByCardType.transacts, {
-            account: selAccId
-          });
-          // В "Счетах" не выбрано конкретного счета. Выводим все транзакции в соответствии с типом карточки где было выбрано "Все"
+          bodyItems = getTransactByAccount(dataByCardType, selAccId);
         } else {
           bodyItems = dataByCardType.transacts;
         }
       }
-      // Выбран конкретный счет для фильтрации
     } else if (id.includes("account")) {
       bodyItems = getAccountTransacts(id);
 
-      // Обновляем транзакции в cards расход/доход под выбранный счет
-      updIncomeExpenseTransacts(id, income, expense, setCardBodyItems);
+      setSelectedFilter((prev) => ({
+        ...prev,
+        account: { ...prev.account, id }
+      }));
 
-      // Обозначаем что сейчас выбран счет и любые фильтрации должны опираться на него
-      setSelectedAccount({ id });
-
-      // Карточки Расход/Доход. Фильтруем транзакции по типу карточки.
+      updIncomeExpenseTransacts(
+        id,
+        income,
+        expense,
+        setCardBodyItems
+      );
     } else if (id.includes("transaction")) {
-      bodyItems = filter(dataByCardType.transacts, { date });
+      bodyItems = getTransactsByDate(dataByCardType, date);
 
-      // Отключаем сброс title в dropdown для отображения выбранной даты для фильтрации
       setResetDropTitle((prev) => ({
         ...prev,
         transacts: false
