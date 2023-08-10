@@ -16,9 +16,12 @@
     // Включить строгие настройки TypeScript
     "esModuleInterop": true,
     // Разрешить импорт модулей в стиле ES6
-    "moduleResolution": "node"
+    "moduleResolution": "node",
     // Отключение ошибок для импортов
-    // "outDir": "dist"
+    "outDir": "./dist",
+    // Создает файлы JS в папке, а не рядом (иначе может заменять исходники)
+    "skipLibCheck": true
+    // Отключение проверок библиотек
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts"]

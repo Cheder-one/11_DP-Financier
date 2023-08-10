@@ -134,7 +134,10 @@ const MainPage = ({ userId }) => {
         }));
       } else {
         if (selAccId.includes("account-id-")) {
-          bodyItems = getTransactByAccount(dataByCardType, selAccId);
+          bodyItems = getTransactByAccount(
+            dataByCardType,
+            selAccId
+          );
         } else {
           bodyItems = dataByCardType.transacts;
         }
