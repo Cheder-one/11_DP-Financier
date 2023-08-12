@@ -25,6 +25,7 @@ import {
   useCardItems,
   useSelectedFilters
 } from "../../hooks";
+import FinancialSummary from "../../layout/financialSummary";
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -172,11 +173,10 @@ const MainPage = ({ userId }) => {
 
       <Row className="mt-3%">
         <Col>
-          <div className="flex justify-center items-center border border-dark h-40vh">
-            <h5>Element</h5>
-          </div>
+          <FinancialSummary />
         </Col>
       </Row>
+
       {cardToWhichAdded === "account" ? (
         <AccountCreationModal
           onSuccess={handlePostSuccess}
