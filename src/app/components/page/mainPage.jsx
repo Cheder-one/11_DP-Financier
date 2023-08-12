@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { filter, includes, isEmpty, keys } from "lodash";
+import { isEmpty, keys } from "lodash";
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,12 @@ import {
 import {
   getUserData,
   updIncExpTransacts,
-  deleteUserTransact
+  deleteUserTransact,
+  isFilterBy,
+  checkIsIncomeExpense,
+  getTransactByAccount,
+  getAccountTransacts,
+  getTransactsByDate
 } from "../../utils";
 import {
   useFilterByUniqNType,
@@ -22,19 +27,6 @@ import {
 } from "../../hooks";
 
 /* eslint-disable react-hooks/exhaustive-deps */
-
-// Move to Utils
-const getAccountTransacts = (user, id) => {
-  return filter(user.transactions, { account: id });
-};
-// Move to Utils
-const getTransactByAccount = (data, id) => {
-  return filter(data.transacts, { account: id });
-};
-// Move to Utils
-const getTransactsByDate = (data, date) => {
-  return filter(data.transacts, { date });
-};
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
@@ -47,7 +39,6 @@ const MainPage = ({ userId }) => {
   });
 
   const { id: selectedAccId } = selectedFilters.account;
-  console.log(selectedFilters);
 
   const setAllItemsToDisplay = (user, { income, expense }) => {
     if (isEmpty(user)) return;
@@ -70,22 +61,9 @@ const MainPage = ({ userId }) => {
     fetchUserData();
   }, [userId]);
 
-  const updAccountFilters = (id) => {
-    setSelectedFilters((prev) => ({
-      ...prev,
-      account: { ...prev.account, id }
-    }));
-  };
-
   const transactsByType = useFilterByUniqNType(user, selectedAccId);
   const { income, expense } = transactsByType;
 
-  // Move to Utils
-  const checkIsIncomeExpense = (type) => {
-    return includes(["income", "expense"], type);
-  };
-
-  // Move to Utils
   const filterTransactsBySelAcc = (accId, dataCardType) => {
     const isAccSelected = accId.startsWith("account-id");
     if (!isAccSelected) {
@@ -95,18 +73,10 @@ const MainPage = ({ userId }) => {
     }
   };
 
-  // Move to Utils
-  const isFilterBy = {
-    all: (id) => id.startsWith("all"),
-    account: (id) => id.startsWith("account"),
-    date: (id) => id.startsWith("transaction")
-  };
-
   const setItemsByFilter = (filters) => {
     for (const key in filters) {
-      const cardFilter = filters[key];
-
-      handleDropdownSelect(cardFilter);
+      const filtersCard = filters[key];
+      handleDropdownSelect(filtersCard);
     }
   };
 
@@ -134,7 +104,6 @@ const MainPage = ({ userId }) => {
     if (isFilterBy.all(id)) {
       if (isFilteringAccCard) {
         setAllItemsToDisplay(user, transactsByType);
-        // updAccountFilters("all");
       } else if (isIncomeExpenseCard) {
         cardItems = filterTransactsBySelAcc(
           selectedAccId,
@@ -142,13 +111,10 @@ const MainPage = ({ userId }) => {
         );
       }
     }
-
     if (isFilterBy.account(id)) {
-      // updAccountFilters(id);
       updIncExpTransacts(id, transactsByType, setCardItems);
       cardItems = getAccountTransacts(user, id);
     }
-
     if (isFilterBy.date(id)) {
       setResetDropTitle({ transacts: false });
       cardItems = getTransactsByDate(dataCardType, date);

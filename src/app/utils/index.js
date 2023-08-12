@@ -24,8 +24,20 @@ import createNewAccount from "./func/create-user-item/createNewAccount";
 import checkOnPropRequired from "./func/validate/checkOnPropRequired";
 import checkIsNewNameUniq from "./func/checkIsNewNameUniq";
 import deleteUserTransact from "./service/deleteUserTransact.ts";
+import isFilterBy from "./func/main-page/isFilterBy";
+import checkIsIncomeExpense from "./func/main-page/checkIsIncomeExpense";
+import {
+  getAccountTransacts,
+  getTransactByAccount,
+  getTransactsByDate
+} from "./func/main-page/getTransactBy";
 
 export {
+  getAccountTransacts,
+  getTransactByAccount,
+  getTransactsByDate,
+  checkIsIncomeExpense,
+  isFilterBy,
   deleteUserTransact,
   checkIsNewNameUniq,
   checkOnPropRequired,

@@ -1,19 +1,8 @@
 import { filter } from "lodash";
-import { Transaction } from "../../../types";
+import { Transaction, TransactsByType } from "../../../types";
 import { Dispatch, SetStateAction } from "react";
 
 // =======Types=======
-interface UniqDate extends Transaction {
-  name: string;
-}
-interface IncomeExpense {
-  transacts: Transaction[];
-  uniqDates: UniqDate[];
-}
-interface TransactsByType {
-  income: IncomeExpense;
-  expense: IncomeExpense;
-}
 type SetCardItemsType = Dispatch<
   SetStateAction<{ income: Transaction[]; expense: Transaction[] }>
 >;

@@ -1,4 +1,26 @@
 // Types
-import { User, Account, Transaction, Category } from "./userTypes";
+import {
+  Icon,
+  Entity,
+  Currency,
+  Account,
+  Category,
+  Transaction,
+  UniqDate,
+  IncomeExpense,
+  TransactsByType,
+  User
+} from "./userTypes";
 
-export { User, Account, Transaction, Category };
+export {
+  Icon,
+  Entity,
+  Currency,
+  Account,
+  Category,
+  Transaction,
+  UniqDate,
+  IncomeExpense,
+  TransactsByType,
+  User
+};

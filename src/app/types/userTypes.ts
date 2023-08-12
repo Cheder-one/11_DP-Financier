@@ -44,6 +44,18 @@ export interface Transaction {
   comment: string;
 }
 
+export interface UniqDate extends Transaction {
+  name: string;
+}
+export interface IncomeExpense {
+  transacts: Transaction[];
+  uniqDates: UniqDate[];
+}
+export interface TransactsByType {
+  income: IncomeExpense;
+  expense: IncomeExpense;
+}
+
 export interface User {
   id: string;
   name: string;

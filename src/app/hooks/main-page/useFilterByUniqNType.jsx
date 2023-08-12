@@ -1,6 +1,6 @@
 import { filter } from "lodash";
 import { useMemo } from "react";
-import { getUniqDates } from "../../utils";
+import { getUniqDates, isFilterBy } from "../../utils";
 
 const useFilterByUniqNType = (user, id) => {
   const filterByUniqAndType = useMemo(() => {
@@ -9,11 +9,9 @@ const useFilterByUniqNType = (user, id) => {
 
     types.forEach((type) => {
       const transacts = filter(user.transactions, { type });
-      // Создает массив уникальных дат транзакций для dropdownList
       let uniqDates = getUniqDates(transacts);
 
-      // Фильтрует транзакции под конкретный счет (если выбран). Создает массив uniqDates.
-      if (id.includes("account-id-")) {
+      if (isFilterBy.account(id)) {
         const accountTransacts = filter(transacts, { account: id });
         uniqDates = getUniqDates(accountTransacts);
       }
