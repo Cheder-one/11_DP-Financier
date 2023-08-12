@@ -8,8 +8,8 @@ const useClickOutside = (
   insideAction: ClickOutsideAction = () => {}
 ) => {
   return useEffect(() => {
-    const handleClickOutside = ({ target }: MouseEvent) => {
-      // @ts-ignore
+    // @ts-ignore
+    const handleClickOutside = ({ target }) => {
       if (!elemRef?.current?.contains(target)) {
         outsideAction();
       } else {

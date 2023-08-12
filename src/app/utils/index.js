@@ -30,7 +30,7 @@ import {
   getAccountTransacts,
   getTransactByAccount,
   getTransactsByDate
-} from "./func/main-page/getTransactBy";
+} from "./func/main-page/getTransactByCond";
 
 export {
   getAccountTransacts,
