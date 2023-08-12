@@ -1,54 +1,37 @@
 import { filter } from "lodash";
+import { Transaction } from "../../../types";
+import { Dispatch, SetStateAction } from "react";
 
 // =======Types=======
-interface Transaction {
-  id: string;
-  amount: string;
-  type: "income" | "expense";
-  account: string;
-  category: string;
-  date: string;
-  comment: string;
-}
-
 interface UniqDate extends Transaction {
   name: string;
 }
-
 interface IncomeExpense {
   transacts: Transaction[];
   uniqDates: UniqDate[];
 }
-
 interface TransactsByType {
   income: IncomeExpense;
   expense: IncomeExpense;
 }
-
-// =======Util=======
-const filterTransactsByAccount = (
-  accId: string,
-  transacts: Transaction[]
-): Transaction[] => {
-  return filter(transacts, { account: accId });
-};
+type SetCardItemsType = Dispatch<
+  SetStateAction<{ income: Transaction[]; expense: Transaction[] }>
+>;
 
 // =======Main=======
 const updIncExpTransacts = (
   accId: string,
   transactsByType: TransactsByType,
-  setCardItems
+  setCardItems: SetCardItemsType
 ) => {
   const { income, expense } = transactsByType;
 
-  const incomeFiltered = filterTransactsByAccount(
-    accId,
-    income.transacts
-  );
-  const expenseFiltered = filterTransactsByAccount(
-    accId,
-    expense.transacts
-  );
+  const incomeFiltered = filter(income.transacts, {
+    account: accId
+  });
+  const expenseFiltered = filter(expense.transacts, {
+    account: accId
+  });
 
   setCardItems((prev) => ({
     ...prev,

@@ -1,18 +1,15 @@
 import { chain } from "lodash";
 import toReadableDate from "./toReadableDate";
+import { Transaction } from "../../types";
 
-interface DataItem {
-  date: string;
-}
-
-interface UniqDateItem extends DataItem {
+interface UniqDateItem extends Transaction {
   name: string;
 }
 
-const getUniqDates = (data: DataItem[]): UniqDateItem => {
+const getUniqDates = (data: Transaction[]): UniqDateItem[] => {
   return chain(data)
     .uniqBy("date")
-    .map((uniq: DataItem) => ({
+    .map((uniq) => ({
       ...uniq,
       name: toReadableDate(uniq.date).dateOnly
     }))

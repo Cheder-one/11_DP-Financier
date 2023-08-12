@@ -5,7 +5,7 @@ import getAvatar from "./func/getAvatar";
 import toReadableDate from "./func/toReadableDate";
 import getUniqDates from "./func/getUniqDates";
 import getDynamicBorderClass from "./styles/getDynamicBorderClass";
-import updIncExpTransacts from "./func/updIncExpTransacts";
+import updIncExpTransacts from "./func/main-page/updIncExpTransacts";
 import getUserData from "./service/getUserData";
 import dataConstants from "./data/dataConstants";
 import updateInputFields from "./func/updateInputFields";
