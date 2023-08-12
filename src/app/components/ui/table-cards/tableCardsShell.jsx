@@ -29,19 +29,37 @@ const TableCardsShell = ({
       <Col md="4" className="mb-3 mb-md-0">
         <IncomeCard
           reset={reset.transacts}
-          {...{ dropList, bodyItems, onSelect, onPostSuccess, addButton }}
+          {...{
+            dropList,
+            bodyItems,
+            onSelect,
+            onPostSuccess,
+            addButton
+          }}
         />
       </Col>
       <Col md="4" className="mb-3 mb-md-0">
         <AccountCard
-          reset={reset.account}
-          {...{ dropList, bodyItems, onSelect, onPostSuccess, addButton }}
+          // reset={reset.account}
+          {...{
+            dropList,
+            bodyItems,
+            onSelect,
+            onPostSuccess,
+            addButton
+          }}
         />
       </Col>
       <Col md="4" className="mb-3 mb-md-0">
         <ExpenseCard
           reset={reset.transacts}
-          {...{ dropList, bodyItems, onSelect, onPostSuccess, addButton }}
+          {...{
+            dropList,
+            bodyItems,
+            onSelect,
+            onPostSuccess,
+            addButton
+          }}
         />
       </Col>
     </Row>
@@ -56,11 +74,12 @@ TableCardsShell.propTypes = {
   }),
   bodyItems: PropTypes.object.isRequired,
   reset: PropTypes.shape({
-    account: PropTypes.bool.isRequired,
+    account: PropTypes.bool,
     transacts: PropTypes.bool.isRequired
   }).isRequired,
   onSelect: PropTypes.func.isRequired,
-  onAddButtonClick: PropTypes.func.isRequired
+  onAddButtonClick: PropTypes.func.isRequired,
+  onPostSuccess: PropTypes.func.isRequired
 };
 
 export default TableCardsShell;

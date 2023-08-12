@@ -36,8 +36,9 @@ AccountCard.propTypes = {
     account: PropTypes.arrayOf(PropTypes.object)
   }).isRequired,
   bodyItems: PropTypes.object.isRequired,
-  reset: PropTypes.bool.isRequired,
+  reset: PropTypes.bool,
   addButton: PropTypes.func.isRequired,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  onPostSuccess: PropTypes.func.isRequired
 };
 export default AccountCard;

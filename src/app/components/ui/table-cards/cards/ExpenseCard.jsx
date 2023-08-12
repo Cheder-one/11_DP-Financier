@@ -39,8 +39,9 @@ ExpenseCard.propTypes = {
   }).isRequired,
   bodyItems: PropTypes.object.isRequired,
   reset: PropTypes.bool.isRequired,
+  addButton: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
-  addButton: PropTypes.func.isRequired
+  onPostSuccess: PropTypes.func.isRequired
 };
 
 export default ExpenseCard;

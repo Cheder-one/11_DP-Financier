@@ -5,7 +5,7 @@ import getAvatar from "./func/getAvatar";
 import toReadableDate from "./func/toReadableDate";
 import getUniqDates from "./func/getUniqDates";
 import getDynamicBorderClass from "./styles/getDynamicBorderClass";
-import updIncomeExpenseTransacts from "./func/updIncomeExpenseTransacts";
+import updIncExpTransacts from "./func/updIncExpTransacts";
 import getUserData from "./service/getUserData";
 import dataConstants from "./data/dataConstants";
 import updateInputFields from "./func/updateInputFields";
@@ -44,7 +44,7 @@ export {
   updateInputFields,
   dataConstants,
   getUserData,
-  updIncomeExpenseTransacts,
+  updIncExpTransacts,
   getDynamicBorderClass,
   getUniqDates,
   toReadableDate,
