@@ -31,8 +31,10 @@ import {
   getTransactByAccount,
   getTransactsByDate
 } from "./func/main-page/getTransactByCond";
+import useWindowInnerWidth from "../hooks/useWindowInnerWidth";
 
 export {
+  useWindowInnerWidth,
   getAccountTransacts,
   getTransactByAccount,
   getTransactsByDate,
