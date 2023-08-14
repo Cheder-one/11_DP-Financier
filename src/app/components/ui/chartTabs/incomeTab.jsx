@@ -81,27 +81,27 @@ const BarsDataset = () => {
     margin: { top: 10, bottom: 60, left: 40, right: 30 }
   };
 
-  const minDistance = 1;
+  // const minDistance = 1;
 
-  const [value, setValue] = useState([10, 20]);
+  // const [value, setValue] = useState([10, 20]);
 
-  const handleChange = (event, newValue, activeThumb) => {
-    if (!Array.isArray(newValue)) {
-      return;
-    }
+  // const handleChange = (event, newValue, activeThumb) => {
+  //   if (!Array.isArray(newValue)) {
+  //     return;
+  //   }
 
-    if (newValue[1] - newValue[0] < minDistance) {
-      if (activeThumb === 0) {
-        const clamped = Math.min(newValue[0], 100 - minDistance);
-        setValue([clamped, clamped + minDistance]);
-      } else {
-        const clamped = Math.max(newValue[1], minDistance);
-        setValue([clamped - minDistance, clamped]);
-      }
-    } else {
-      setValue(newValue);
-    }
-  };
+  //   if (newValue[1] - newValue[0] < minDistance) {
+  //     if (activeThumb === 0) {
+  //       const clamped = Math.min(newValue[0], 100 - minDistance);
+  //       setValue([clamped, clamped + minDistance]);
+  //     } else {
+  //       const clamped = Math.max(newValue[1], minDistance);
+  //       setValue([clamped - minDistance, clamped]);
+  //     }
+  //   } else {
+  //     setValue(newValue);
+  //   }
+  // };
 
   return (
     <div className={getScrollClass(windowWidth)}>
@@ -111,13 +111,12 @@ const BarsDataset = () => {
           {...chartParams}
           xAxis={[
             {
-              label: "dsd",
               dataKey: "day",
               scaleType: "band",
               barGapRatio: 0.2,
-              categoryGapRatio: 0.3,
-              min: value[0],
-              max: value[1]
+              categoryGapRatio: 0.3
+              // min: value[0],
+              // max: value[1]
             }
           ]}
           series={chartParams.series.map((series) => ({
