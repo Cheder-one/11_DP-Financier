@@ -22,7 +22,7 @@ const FinancialSummary = () => {
   };
 
   return (
-    <div className="mt-3 border rounded">
+    <div className=" border rounded">
       <Nav
         variant="tabs"
         defaultActiveKey="income"
