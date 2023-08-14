@@ -127,3 +127,8 @@ body::-webkit-scrollbar-thumb:hover {
   max-height: 11rem;
   overflow-x: hidden;
 }
+
+/* .css-lvzeoz-MuiResponsiveChart-container {
+  transform: scale(2);
+  transition: transform 0.3s ease-in-out;
+} */
