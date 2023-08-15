@@ -106,6 +106,13 @@ const transactSchema = (isCategoryUnique) =>
         "Укажите категорию",
         validateDropdownRequired
       ),
+    currency: yup
+      .object()
+      .test(
+        "currency-required",
+        "Укажите валюту операции",
+        validateDropdownRequired
+      ),
     amount: yup
       .string()
       .matches(

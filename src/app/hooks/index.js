@@ -11,8 +11,10 @@ import useFilterByUniqNType from "./main-page/useFilterByUniqNType.jsx";
 import useRenderCount from "./useRenderCount.jsx";
 import useCardItems from "./main-page/state/useCardItems.jsx";
 import useSelectedFilters from "./main-page/state/useSelectedFilters.jsx";
+import useTransactCrFormInputs from "./main-page/state/useTransactCrFormInputs";
 
 export {
+  useTransactCrFormInputs,
   useCardItems,
   useSelectedFilters,
   useRenderCount,

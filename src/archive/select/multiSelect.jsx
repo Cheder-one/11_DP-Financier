@@ -1,7 +1,7 @@
 // import PropTypes from "prop-types";
 // import CreatableSelect from "react-select/creatable";
 
-// import { getNanoId } from "../../app/utils";
+// import { genNanoId } from "../../app/utils";
 
 // const Multiselect = ({
 //   name,
@@ -14,7 +14,7 @@
 //   error
 // }) => {
 //   const getCategoryId = () => {
-//     return "category-id-" + getNanoId();
+//     return "category-id-" + genNanoId();
 //   };
 
 //   const toInitFormat = (items) => {

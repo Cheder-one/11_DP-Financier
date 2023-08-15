@@ -63,7 +63,7 @@ const DropdownComponent = ({
     onElemAdding(event);
   };
 
-  const handleSubmit = ({ target }) => {
+  const handleInputSubmit = ({ target }) => {
     setIsOpenToAdding(false);
     if (!target.value || error) {
       return;
@@ -74,6 +74,8 @@ const DropdownComponent = ({
   useEffect(() => {
     if (!value) {
       setIsValid(false);
+    } else {
+      setIsValid(true);
     }
   }, [value]);
 
@@ -142,7 +144,7 @@ const DropdownComponent = ({
           inputClass={inputClass}
           placeholder={placeholder}
           onChange={handleInputChange}
-          onSubmit={handleSubmit}
+          onSubmit={handleInputSubmit}
         />
       )}
     </div>

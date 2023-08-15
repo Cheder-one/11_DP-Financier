@@ -1,4 +1,4 @@
-import { Account, Category } from "../../../types/userTypes";
+import { Account, Category } from "../../../../types";
 
 const createNewCategory = ({
   category,

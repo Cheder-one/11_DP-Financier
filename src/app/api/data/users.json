@@ -68,6 +68,7 @@
         "type": "income",
         "account": "account-id-1",
         "category": "category-id-1",
+        "currency": "currency-id-1",
         "date": "2022-03-01T10:00:00Z",
         "comment": ""
       },
@@ -77,6 +78,7 @@
         "type": "expense",
         "account": "account-id-1",
         "category": "category-id-2",
+        "currency": "currency-id-1",
         "date": "2022-03-02T11:00:00Z",
         "comment": ""
       },
@@ -86,6 +88,7 @@
         "type": "income",
         "account": "account-id-2",
         "category": "category-id-1",
+        "currency": "currency-id-1",
         "date": "2022-03-03T12:00:00Z",
         "comment": ""
       },
@@ -95,6 +98,7 @@
         "type": "expense",
         "account": "account-id-2",
         "category": "category-id-2",
+        "currency": "currency-id-1",
         "date": "2022-03-04T13:00:00Z",
         "comment": ""
       },
@@ -104,6 +108,7 @@
         "type": "expense",
         "account": "account-id-1",
         "category": "category-id-1",
+        "currency": "currency-id-1",
         "date": "2022-03-05T14:00:00Z",
         "comment": ""
       },
@@ -113,6 +118,7 @@
         "type": "expense",
         "account": "account-id-1",
         "category": "category-id-1",
+        "currency": "currency-id-1",
         "date": "2022-03-05T14:00:00Z",
         "comment": ""
       }
@@ -221,6 +227,7 @@
         "type": "expense",
         "account": "account-id-3",
         "category": "category-id-3",
+        "currency": "currency-id-1",
         "date": "2022-03-06T15:00:00Z",
         "comment": ""
       }

@@ -16,7 +16,7 @@ import {
   TextField
 } from "../../../common/form";
 import {
-  getNanoId,
+  genNanoId,
   validationSchema,
   updateInputFields,
   postUserCategory,
@@ -26,20 +26,18 @@ import {
   checkIsNewNameUniq
 } from "../../../../utils";
 import { Calculator } from "../../index.js";
-import { useFormValidation } from "../../../../hooks";
+import {
+  useFormValidation,
+  useTransactCrFormInputs
+} from "../../../../hooks";
+import userPropTypes from "../../../../types/userPropTypes";
 const { transactSchema } = validationSchema;
 
 const TransactCreationForm = forwardRef(
   ({ user, onSuccess, cardType }, ref) => {
     const { accounts, categories } = user;
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-    const [inputFields, setInputFields] = useState({
-      account: { id: "", name: "" },
-      category: { id: "", name: "" },
-      date: new Date(),
-      amount: "",
-      comment: ""
-    });
+    const [inputFields, setInputFields] = useTransactCrFormInputs();
     const { category } = inputFields;
 
     const handleInputChange = ({ target }) => {
@@ -78,8 +76,8 @@ const TransactCreationForm = forwardRef(
     const hasErrors = keys(errors).length;
 
     const generateNewIds = () => {
-      const newTransactId = `transaction-id-${getNanoId()}`;
-      const newCategoryId = `category-id-${getNanoId()}`;
+      const newTransactId = `transaction-id-${genNanoId()}`;
+      const newCategoryId = `category-id-${genNanoId()}`;
       return { newTransactId, newCategoryId };
     };
 
@@ -148,6 +146,16 @@ const TransactCreationForm = forwardRef(
               onElemAdding={handleAddNewCategory}
               error={errors.category}
             />
+
+            <DropdownComponent
+              name={"currency"}
+              items={user.currencies}
+              defaultValue={"Валюта операции"}
+              value={inputFields.currency.code}
+              touched={isSubmitClicked}
+              onSelect={handleInputChange}
+              error={errors.currency}
+            />
           </Col>
         </Row>
 
@@ -173,6 +181,7 @@ const TransactCreationForm = forwardRef(
               error={errors.amount}
             />
           </Col>
+
           <Col md={5} className="pb-3 md:pb-0">
             <DatePicker
               name={"date"}
@@ -208,11 +217,7 @@ const TransactCreationForm = forwardRef(
 TransactCreationForm.displayName = TransactCreationForm;
 
 TransactCreationForm.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    accounts: PropTypes.array.isRequired,
-    categories: PropTypes.array.isRequired
-  }).isRequired,
+  user: userPropTypes,
   onSuccess: PropTypes.func.isRequired,
   cardType: PropTypes.string
 };

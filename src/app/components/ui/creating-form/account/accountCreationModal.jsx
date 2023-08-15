@@ -4,8 +4,14 @@ import { useRef } from "react";
 import ModalPopup from "../../../common/modal/modalPopup";
 import AccountCreationForm from "./accountCreationForm";
 import { useEventListener } from "../../../../hooks";
+import userPropTypes from "../../../../types/userPropTypes";
 
-const AccountCreationModal = ({ user, onSuccess, showModal, setShowModal }) => {
+const AccountCreationModal = ({
+  user,
+  onSuccess,
+  showModal,
+  setShowModal
+}) => {
   const accountFormRef = useRef(null);
 
   const handleModalSave = () => {
@@ -44,7 +50,7 @@ const AccountCreationModal = ({ user, onSuccess, showModal, setShowModal }) => {
 };
 
 AccountCreationModal.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: userPropTypes,
   onSuccess: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,
   setShowModal: PropTypes.func.isRequired

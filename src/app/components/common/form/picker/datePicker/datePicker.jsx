@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { PiCalendarFill } from "react-icons/pi";
 import ReactDatePicker, { registerLocale } from "react-datepicker";
 import ru from "date-fns/locale/ru";
 import { useRef, useState } from "react";
@@ -15,8 +16,12 @@ const DatePicker = ({
   onChange
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const calendarRef = useRef(null);
+  const iconRef = useRef(null);
+
+  const toggleCalendarOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   const onInputClick = () => {
     setIsOpen((prev) => !prev);
@@ -32,9 +37,17 @@ const DatePicker = ({
   };
 
   useClickOutside(calendarRef, () => setIsOpen(false));
+  useClickOutside(iconRef, undefined, toggleCalendarOpen);
 
   return (
     <div className={containerClass} ref={calendarRef}>
+      <div className="cursor-pointer" ref={iconRef}>
+        <PiCalendarFill
+          size={37}
+          className="mr-1 border rounded p-1.5"
+        />
+      </div>
+
       <ReactDatePicker
         locale="ru"
         calendarStartDay={1}
@@ -52,7 +65,7 @@ const DatePicker = ({
 };
 
 DatePicker.defaultProps = {
-  // containerClass: "rounded w-fit",
+  containerClass: "flex"
   // childrenClass: "w-28 pl-1"
 };
 

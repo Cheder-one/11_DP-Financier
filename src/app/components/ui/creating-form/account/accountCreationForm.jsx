@@ -15,7 +15,7 @@ import {
   DropdownComponent
 } from "../../../common/form";
 import {
-  getNanoId,
+  genNanoId,
   createNewAccount,
   updateInputFields,
   validationSchema,
@@ -24,6 +24,7 @@ import {
   checkIsNewNameUniq
 } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
+import userPropTypes from "../../../../types/userPropTypes";
 
 const { accountSchema } = validationSchema;
 
@@ -77,8 +78,8 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
   const hasErrors = keys(errors).length;
 
   const generateNewIds = () => {
-    const newAccountId = `account-id-${getNanoId()}`;
-    const newEntityId = `entity-id-${getNanoId()}`;
+    const newAccountId = `account-id-${genNanoId()}`;
+    const newEntityId = `entity-id-${genNanoId()}`;
     return { newAccountId, newEntityId };
   };
 
@@ -210,13 +211,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
 AccountCreationForm.displayName = AccountCreationForm;
 
 AccountCreationForm.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    accounts: PropTypes.array.isRequired,
-    categories: PropTypes.array.isRequired,
-    entities: PropTypes.array.isRequired,
-    currencies: PropTypes.array.isRequired
-  }).isRequired,
+  user: userPropTypes,
   onSuccess: PropTypes.func.isRequired
 };
 

@@ -173,7 +173,7 @@ const MainPage = ({ userId }) => {
 
       <Row className="mt-3%">
         <Col>
-          <FinancialSummary />
+          <FinancialSummary {...{ user }} />
         </Col>
       </Row>
 

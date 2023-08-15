@@ -3,10 +3,10 @@ import { Dropdown, DropdownButton, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
 import { SwitchField } from "../../common/form";
-import { getAvatar } from "../../../utils";
+import { genAvatar } from "../../../utils";
 
 const NavBarDropdown = ({ darkTheme, onSelect }) => {
-  const avatarSrc = useMemo(() => getAvatar(), []);
+  const avatarSrc = useMemo(() => genAvatar(), []);
 
   return (
     <>

@@ -1,16 +1,16 @@
 // Utils
 import themeConfig from "./styles/themeConfig";
 import validationSchema from "./validators/validationSchema";
-import getAvatar from "./func/getAvatar";
-import toReadableDate from "./func/toReadableDate";
+import genAvatar from "./func/generate/genAvatar";
+import toReadableDate from "./func/date/toReadableDate";
 import getUniqDates from "./func/getUniqDates";
 import getDynamicBorderClass from "./styles/getDynamicBorderClass";
 import updIncExpTransacts from "./func/main-page/updIncExpTransacts";
 import getUserData from "./service/getUserData";
 import dataConstants from "./data/dataConstants";
 import updateInputFields from "./func/updateInputFields";
-import getNanoId from "./func/getNanoId";
-import getIdAllItem from "./func/not-universal/getIdAllItem";
+import genNanoId from "./func/generate/genNanoId";
+import getIdAllItem from "./func/specific/getIdAllItem";
 import validateDropdownRequired from "./func/validate/validateDropdownRequired";
 import getAmountByType from "./func/getAmountByType";
 import postUserAccount from "./service/postUserAccount";
@@ -18,9 +18,9 @@ import postUserCategory from "./service/postUserCategory";
 import postUserTransact from "./service/postUserTransact";
 import postUserEntity from "./service/postUserEntity";
 import getTooltipClass from "./styles/getTooltipClass.js";
-import createNewCategory from "./func/create-user-item/createNewCategory";
-import createNewTransact from "./func/create-user-item/createNewTransaction";
-import createNewAccount from "./func/create-user-item/createNewAccount";
+import createNewCategory from "./func/main-page/create-user-item/createNewCategory";
+import createNewTransact from "./func/main-page/create-user-item/createNewTransaction";
+import createNewAccount from "./func/main-page/create-user-item/createNewAccount";
 import checkOnPropRequired from "./func/validate/checkOnPropRequired";
 import checkIsNewNameUniq from "./func/checkIsNewNameUniq";
 import deleteUserTransact from "./service/deleteUserTransact.ts";
@@ -32,8 +32,14 @@ import {
   getTransactsByDate
 } from "./func/main-page/getTransactByCond";
 import useWindowInnerWidth from "../hooks/useWindowInnerWidth";
+import getCurrentMonthName from "./func/date/getCurrentMonthName";
+import countDaysInMonth from "./func/date/countDaysInMonth";
+import extractDateInfo from "./func/date/extractUTCDate";
 
 export {
+  extractDateInfo,
+  countDaysInMonth,
+  getCurrentMonthName,
   useWindowInnerWidth,
   getAccountTransacts,
   getTransactByAccount,
@@ -54,7 +60,7 @@ export {
   getAmountByType,
   validateDropdownRequired,
   getIdAllItem,
-  getNanoId,
+  genNanoId,
   updateInputFields,
   dataConstants,
   getUserData,
@@ -62,7 +68,7 @@ export {
   getDynamicBorderClass,
   getUniqDates,
   toReadableDate,
-  getAvatar,
+  genAvatar,
   validationSchema,
   themeConfig
 };

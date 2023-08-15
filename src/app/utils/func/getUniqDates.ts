@@ -1,5 +1,5 @@
 import { chain } from "lodash";
-import toReadableDate from "./toReadableDate";
+import toReadableDate from "./date/toReadableDate";
 import { Transaction } from "../../types";
 
 interface UniqDateItem extends Transaction {

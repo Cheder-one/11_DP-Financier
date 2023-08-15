@@ -1,19 +1,21 @@
-// import PropTypes from "prop-types";
+// eslint-disable-next-line
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import { CapitalTab, ExpenseTab, IncomeTab } from "../components/ui";
+import userPropTypes from "../types/userPropTypes";
 
-const FinancialSummary = () => {
+const FinancialSummary = ({ user }) => {
   const [activeTab, setActiveTab] = useState("income");
 
   const renderActiveTab = () => {
     switch (activeTab) {
       case "income":
-        return <IncomeTab />;
+        return <IncomeTab user={user} />;
       case "expense":
-        return <ExpenseTab />;
+        return <ExpenseTab user={user} />;
       case "capital":
-        return <CapitalTab />;
+        return <CapitalTab user={user} />;
     }
   };
 
@@ -44,7 +46,7 @@ const FinancialSummary = () => {
 };
 
 FinancialSummary.propTypes = {
-  //
+  user: userPropTypes
 };
 
 export default FinancialSummary;
