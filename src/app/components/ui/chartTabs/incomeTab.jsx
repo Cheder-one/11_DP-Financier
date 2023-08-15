@@ -6,7 +6,6 @@ import {
   getCurrentMonthName,
   useWindowInnerWidth
 } from "../../../utils";
-import { Box } from "@mui/material";
 import userPropTypes from "../../../types/userPropTypes";
 import { filter, find, lowerCase, range } from "lodash";
 
