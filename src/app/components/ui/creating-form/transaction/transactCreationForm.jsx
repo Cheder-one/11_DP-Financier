@@ -187,16 +187,8 @@ const TransactCreationForm = forwardRef(
               name={"date"}
               value={inputFields.date}
               onChange={handleInputChange}
-            >
-              <Form.Control
-                className={errors?.date ? "is-invalid" : "is-valid"}
-              />
-            </DatePicker>
-            {errors.date && (
-              <div className="text-sm text-danger pt-1 mb-3">
-                {errors.date}
-              </div>
-            )}
+              error={errors.date}
+            />
           </Col>
         </Row>
 

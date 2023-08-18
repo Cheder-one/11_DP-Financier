@@ -1,4 +1,4 @@
-const extractDateInfo = (utcDate: string) => {
+const extractUTCDate = (utcDate: Date) => {
   const date = new Date(utcDate);
   return {
     day: date.getDate(),
@@ -7,4 +7,4 @@ const extractDateInfo = (utcDate: string) => {
   };
 };
 
-export default extractDateInfo;
+export default extractUTCDate;

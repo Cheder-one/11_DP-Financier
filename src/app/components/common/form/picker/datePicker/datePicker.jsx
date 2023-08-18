@@ -5,6 +5,7 @@ import ru from "date-fns/locale/ru";
 import { useRef, useState } from "react";
 
 import { useClickOutside } from "../../../../../hooks";
+import { Form } from "react-bootstrap";
 registerLocale("ru", ru);
 
 const DatePicker = ({
@@ -13,6 +14,9 @@ const DatePicker = ({
   children,
   containerClass,
   childrenClass,
+  showIcon,
+  isMonthYearPicker,
+  error,
   onChange
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,33 +43,46 @@ const DatePicker = ({
   useClickOutside(calendarRef, () => setIsOpen(false));
   useClickOutside(iconRef, undefined, toggleCalendarOpen);
 
+  const renderDefaultChildren = (
+    <Form.Control className={error ? "is-invalid" : "is-valid"} />
+  );
+
   return (
-    <div className={containerClass} ref={calendarRef}>
-      <div className="cursor-pointer" ref={iconRef}>
-        <PiCalendarFill
-          size={37}
-          className="mr-1 border rounded p-1.5"
+    <>
+      <div className={containerClass} ref={calendarRef}>
+        {showIcon && (
+          <div className="cursor-pointer" ref={iconRef}>
+            <PiCalendarFill
+              size={37}
+              className="mr-1 border rounded p-1.5"
+            />
+          </div>
+        )}
+        <ReactDatePicker
+          locale="ru"
+          calendarStartDay={1}
+          todayButton="Сегодня"
+          dateFormat="dd.MM.yyyy"
+          open={isOpen}
+          selected={value}
+          customInput={children || renderDefaultChildren}
+          className={childrenClass}
+          showMonthYearPicker={isMonthYearPicker}
+          onChange={handleDateChange}
+          onInputClick={onInputClick}
         />
       </div>
-
-      <ReactDatePicker
-        locale="ru"
-        calendarStartDay={1}
-        todayButton="Сегодня"
-        dateFormat="dd.MM.yyyy"
-        open={isOpen}
-        selected={value}
-        customInput={children}
-        className={childrenClass}
-        onChange={handleDateChange}
-        onInputClick={onInputClick}
-      />
-    </div>
+      {error && (
+        <div className="text-sm text-danger pt-1 mb-3">{error}</div>
+      )}
+    </>
   );
 };
 
 DatePicker.defaultProps = {
-  containerClass: "flex"
+  containerClass: "flex",
+  isMonthYearPicker: false,
+  showIcon: true
   // childrenClass: "w-28 pl-1"
 };
 
@@ -78,6 +95,9 @@ DatePicker.propTypes = {
     PropTypes.object,
     PropTypes.oneOf([null])
   ]).isRequired,
+  showIcon: PropTypes.bool,
+  isMonthYearPicker: PropTypes.bool,
+  error: PropTypes.string,
   onChange: PropTypes.func.isRequired
 };
 

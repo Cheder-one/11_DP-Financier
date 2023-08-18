@@ -128,7 +128,7 @@ body::-webkit-scrollbar-thumb:hover {
   overflow-x: hidden;
 }
 
-/* .css-lvzeoz-MuiResponsiveChart-container {
-  transform: scale(2);
-  transition: transform 0.3s ease-in-out;
-} */
+/* Chart. Цвет текста Легенды */
+.recharts-legend-item-text {
+  color: #000 !important;
+}

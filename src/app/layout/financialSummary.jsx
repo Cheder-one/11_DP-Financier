@@ -11,7 +11,13 @@ const FinancialSummary = ({ user }) => {
   const renderActiveTab = () => {
     switch (activeTab) {
       case "income":
-        return <IncomeTab user={user} />;
+        return (
+          <IncomeTab
+            user={user}
+            chartTitle={"Доходы за "}
+            averageLine={false}
+          />
+        );
       case "expense":
         return <ExpenseTab user={user} />;
       case "capital":

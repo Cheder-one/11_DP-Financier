@@ -32,14 +32,14 @@ import {
   getTransactsByDate
 } from "./func/main-page/getTransactByCond";
 import useWindowInnerWidth from "../hooks/useWindowInnerWidth";
-import getCurrentMonthName from "./func/date/getCurrentMonthName";
+import getMonthName from "./func/date/getMonthName";
 import countDaysInMonth from "./func/date/countDaysInMonth";
-import extractDateInfo from "./func/date/extractUTCDate";
+import extractUTCDate from "./func/date/extractUTCDate";
 
 export {
-  extractDateInfo,
+  extractUTCDate,
   countDaysInMonth,
-  getCurrentMonthName,
+  getMonthName,
   useWindowInnerWidth,
   getAccountTransacts,
   getTransactByAccount,

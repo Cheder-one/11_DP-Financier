@@ -7,7 +7,7 @@ const useTransactCrFormInputs = () => {
     currency: {
       id: "currency-id-1",
       name: "Российский Рубль (RUB)",
-      code: "RUB"
+      code: "₽"
     },
     date: new Date(),
     amount: "",

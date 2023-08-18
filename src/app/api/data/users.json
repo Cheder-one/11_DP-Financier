@@ -46,6 +46,7 @@
         "id": "category-id-1",
         "type": "category",
         "name": "Зарплата",
+        "color": "#10b981",
         "accounts": ["account-id-1"],
         "transactions": [
           "transaction-id-1",
@@ -57,6 +58,7 @@
         "id": "category-id-2",
         "type": "category",
         "name": "Аренда",
+        "color": "#06b6d4",
         "accounts": ["account-id-2"],
         "transactions": ["transaction-id-2"]
       }
@@ -119,7 +121,267 @@
         "account": "account-id-1",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-05T14:00:00Z",
+        "date": "2022-03-06T14:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-7",
+        "amount": "10000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-07T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-8",
+        "amount": "10000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-08T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-9",
+        "amount": "5000",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-09T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-10",
+        "amount": "-750",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-10T16:30:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-32",
+        "amount": "-750",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-10T16:30:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-11",
+        "amount": "180000",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-11T09:15:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-12",
+        "amount": "-800",
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-12T11:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-13",
+        "amount": "25000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-13T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-14",
+        "amount": "-900",
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-14T14:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-15",
+        "amount": "12000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-15T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-16",
+        "amount": "-600",
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-16T16:30:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-17",
+        "amount": "14000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-17T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-18",
+        "amount": "-700",
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-18T11:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-19",
+        "amount": "16000",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-19T09:15:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-20",
+        "amount": "-800",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-20T14:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-21",
+        "amount": "18000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-21T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-22",
+        "amount": "-1000",
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-22T11:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-23",
+        "amount": "20000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-23T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-24",
+        "amount": "-1100",
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-24T14:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-25",
+        "amount": "22000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-25T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-26",
+        "amount": "-1200",
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-26T16:30:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-27",
+        "amount": "24000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-27T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-28",
+        "amount": "-1300",
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-28T11:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-29",
+        "amount": "26000",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-29T09:15:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-30",
+        "amount": "-1400",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2022-03-30T14:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-31",
+        "amount": "28000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2022-03-31T12:00:00Z",
         "comment": ""
       }
     ],
@@ -139,52 +401,57 @@
       {
         "id": "currency-id-1",
         "name": "Российский Рубль (RUB)",
-        "code": "RUB"
+        "code": "₽"
       },
       {
         "id": "currency-id-2",
         "name": "Доллар США (USD)",
-        "code": "USD"
+        "code": "$"
       },
       {
         "id": "currency-id-3",
         "name": "Евро (EUR)",
-        "code": "EUR"
-      },
-      {
-        "id": "currency-id-4",
-        "name": "Британский Фунт (GBP)",
-        "code": "GBP"
-      },
-      {
-        "id": "currency-id-5",
-        "name": "Японская Йена (JPY)",
-        "code": "JPY"
-      },
-      {
-        "id": "currency-id-6",
-        "name": "Швейцарский Франк (CHF)",
-        "code": "CHF"
-      },
-      {
-        "id": "currency-id-7",
-        "name": "Канадский Доллар (CAD)",
-        "code": "CAD"
-      },
-      {
-        "id": "currency-id-8",
-        "name": "Австралийский Доллар (AUD)",
-        "code": "AUD"
+        "code": "€"
       },
       {
         "id": "currency-id-9",
         "name": "Китайский Юань (CNY)",
-        "code": "CNY"
+        "code": "¥ (CNY)"
+      },
+      {
+        "id": "currency-id-11",
+        "name": "Турецкая Лира (TRY)",
+        "code": "₺"
+      },
+      {
+        "id": "currency-id-4",
+        "name": "Британский Фунт (GBP)",
+        "code": "£"
+      },
+      {
+        "id": "currency-id-5",
+        "name": "Японская Йена (JPY)",
+        "code": "¥ (JPY)"
+      },
+      {
+        "id": "currency-id-6",
+        "name": "Швейцарский Франк (CHF)",
+        "code": "₣"
+      },
+      {
+        "id": "currency-id-7",
+        "name": "Канадский Доллар (CAD)",
+        "code": "C$"
+      },
+      {
+        "id": "currency-id-8",
+        "name": "Австралийский Доллар (AUD)",
+        "code": "A$"
       },
       {
         "id": "currency-id-10",
         "name": "Индийская Рупия (INR)",
-        "code": "INR"
+        "code": "₹"
       }
     ]
   },
@@ -216,6 +483,7 @@
         "id": "category-id-3",
         "type": "category",
         "name": "Кредит",
+        "color": "#f43f5e",
         "accounts": ["account-id-3"],
         "transactions": ["transaction-id-6"]
       }
@@ -248,52 +516,57 @@
       {
         "id": "currency-id-1",
         "name": "Российский Рубль (RUB)",
-        "code": "RUB"
+        "code": "₽"
       },
       {
         "id": "currency-id-2",
         "name": "Доллар США (USD)",
-        "code": "USD"
+        "code": "$"
       },
       {
         "id": "currency-id-3",
         "name": "Евро (EUR)",
-        "code": "EUR"
-      },
-      {
-        "id": "currency-id-4",
-        "name": "Британский Фунт (GBP)",
-        "code": "GBP"
-      },
-      {
-        "id": "currency-id-5",
-        "name": "Японская Йена (JPY)",
-        "code": "JPY"
-      },
-      {
-        "id": "currency-id-6",
-        "name": "Швейцарский Франк (CHF)",
-        "code": "CHF"
-      },
-      {
-        "id": "currency-id-7",
-        "name": "Канадский Доллар (CAD)",
-        "code": "CAD"
-      },
-      {
-        "id": "currency-id-8",
-        "name": "Австралийский Доллар (AUD)",
-        "code": "AUD"
+        "code": "€"
       },
       {
         "id": "currency-id-9",
         "name": "Китайский Юань (CNY)",
-        "code": "CNY"
+        "code": "¥ (CNY)"
+      },
+      {
+        "id": "currency-id-11",
+        "name": "Турецкая Лира (TRY)",
+        "code": "₺"
+      },
+      {
+        "id": "currency-id-4",
+        "name": "Британский Фунт (GBP)",
+        "code": "£"
+      },
+      {
+        "id": "currency-id-5",
+        "name": "Японская Йена (JPY)",
+        "code": "¥ (JPY)"
+      },
+      {
+        "id": "currency-id-6",
+        "name": "Швейцарский Франк (CHF)",
+        "code": "₣"
+      },
+      {
+        "id": "currency-id-7",
+        "name": "Канадский Доллар (CAD)",
+        "code": "C$"
+      },
+      {
+        "id": "currency-id-8",
+        "name": "Австралийский Доллар (AUD)",
+        "code": "A$"
       },
       {
         "id": "currency-id-10",
         "name": "Индийская Рупия (INR)",
-        "code": "INR"
+        "code": "₹"
       }
     ]
   }
