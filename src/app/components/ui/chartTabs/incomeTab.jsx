@@ -1,6 +1,8 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
-import { filter, isEmpty, pick, range } from "lodash";
 import { PiCalendarFill } from "react-icons/pi";
+import { Col, Form, Row } from "react-bootstrap";
+import { filter, find, isEmpty, pick, range, values } from "lodash";
 import {
   Area,
   Bar,
@@ -10,41 +12,51 @@ import {
   ComposedChart,
   Legend,
   Line,
+  ReferenceArea,
+  ReferenceDot,
+  ReferenceLine,
   Tooltip,
   XAxis,
   YAxis
 } from "recharts";
 
 import {
-  dataConstants,
   extractUTCDate,
   countDaysInMonth,
   getMonthName,
   useWindowInnerWidth
 } from "../../../utils";
-import { DatePicker, DropdownComponent } from "../../common/form";
+import { DatePicker } from "../../common/form";
 import userPropTypes from "../../../types/userPropTypes";
-import { useState } from "react";
-import { Col, Form, Row } from "react-bootstrap";
 
-const { MONTHS } = dataConstants;
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="border rounded bg-white px-2 pt-2">
+        <p className="label">{`Дата: ${label}`}</p>
+        {payload.map((data) => {
+          const categoryColor =
+            data.dataKey === "avg" ? data.stroke : data.fill;
 
-// Генерация случайного числа в заданном диапазоне
-function getRandomValue(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// Move to Utils
-const getScrollClass = (windowWidth) => {
-  return windowWidth > 800 ? "" : "overflow-scroll";
+          return (
+            <p
+              key={data.dataKey}
+              className="intro"
+              style={{ color: categoryColor }}
+            >
+              {`${data.name} : ${data.value} ${data.unit}`}
+            </p>
+          );
+        })}
+      </div>
+    );
+  }
+  return null;
 };
-
-const currentMonth = getMonthName();
-
 const IncomeTab = ({ user, chartTitle, averageLine }) => {
-  const [isAverageEnable, setIsAverageEnable] = useState(averageLine);
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [windowWidth] = useWindowInnerWidth();
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isAverageEnable, setIsAverageEnable] = useState(averageLine);
   const { transactions, categories, currencies } = user;
 
   const selectedMonth = getMonthName(selectedDate);
@@ -53,45 +65,15 @@ const IncomeTab = ({ user, chartTitle, averageLine }) => {
   const handleIsAverageChange = () => {
     setIsAverageEnable((prev) => !prev);
   };
-
-  // Генерация данных
-  const generateData = () => {
-    const data = [];
-    for (let day = 1; day <= 30; day++) {
-      const products = getRandomValue(50, 200);
-      const transport = getRandomValue(20, 100);
-      const housing = getRandomValue(100, 500);
-      const rest = getRandomValue(10, 150);
-      const health = getRandomValue(5, 50);
-      const items = [products, transport, housing, rest, health];
-      const average = items.reduce((a, b) => a + b, 0) / items.length;
-
-      data.push({
-        date: day,
-        day: `${selectedMonth.name} ${day}`,
-        products,
-        transport,
-        housing,
-        rest,
-        health,
-        average
-      });
-    }
-    return data;
-  };
-
-  const data = generateData();
-
   const handleMonthChange = ({ target }) => {
     setSelectedDate(target.value);
   };
 
   const daysInMonth = countDaysInMonth();
-  const halfOfMonth = Math.floor(daysInMonth / 2);
   const monthDaysArray = range(1, daysInMonth + 1);
-
   const incomeTransacts = filter(transactions, { type: "income" });
 
+  // Okay
   const transactsSelectedMonth = incomeTransacts.filter(
     (transact) => {
       const transactDate = extractUTCDate(transact.date);
@@ -102,27 +84,74 @@ const IncomeTab = ({ user, chartTitle, averageLine }) => {
     }
   );
 
-  const chartData = monthDaysArray.map((day) => {
-    let transactionForDay = transactsSelectedMonth.find(
-      (transact) => {
-        const transactionDay = extractUTCDate(transact.date).day;
-        return transactionDay === day;
-      }
+  const defineCategoryName = (id) => {
+    const category = find(categories, { id });
+    return category.name;
+  };
+  const defineCurrencyName = (id) => {
+    const currency = find(currencies, { id });
+    return currency.code;
+  };
+
+  const categoryNames = categories.map((category) => category.name);
+
+  // Создаем объект для агрегации данных
+  const aggregatedData = {};
+
+  // Проходимся по массиву транзакций и группируем данные
+  transactsSelectedMonth.forEach((transact) => {
+    const transactDay = extractUTCDate(transact.date).day;
+    const category = defineCategoryName(transact.category);
+
+    if (!aggregatedData[transactDay]) {
+      aggregatedData[transactDay] = {
+        date: transactDay,
+        day: `${selectedMonth.name} ${transactDay}`
+      };
+    }
+
+    if (!aggregatedData[transactDay][category]) {
+      aggregatedData[transactDay][category] = 0;
+    }
+
+    aggregatedData[transactDay][category] += parseInt(
+      transact.amount
     );
-
-    const desiredKeys = ["amount", "category", "currency"];
-    const pickedKeys = pick(transactionForDay, desiredKeys);
-
-    transactionForDay = {
-      [pickedKeys.category]: pickedKeys.amount
-    };
-
-    return {
-      date: day,
-      day: `${selectedMonth.name} ${day}`,
-      ...(!isEmpty(transactionForDay) ? transactionForDay : [])
-    };
   });
+
+  // После агрегации, добавляем пустые значения для дней, в которых нет транзакций
+  monthDaysArray.forEach((day) => {
+    if (!aggregatedData[day]) {
+      aggregatedData[day] = {
+        date: day,
+        day: `${selectedMonth.name} ${day}`
+      };
+    }
+  });
+
+  // Преобразуем объект агрегированных данных в массив
+  const chartData = values(aggregatedData);
+
+  // Добавляем среднее значение трат за день
+  const average = {};
+  chartData.forEach((transactDayData) => {
+    for (const key in transactDayData) {
+      const keyVal = transactDayData[key];
+
+      if (!average[transactDayData.day]) {
+        average[transactDayData.day] = 0;
+      }
+
+      for (const name of categoryNames) {
+        if (name === key) {
+          average[transactDayData.day] += parseInt(keyVal);
+        }
+      }
+    }
+    transactDayData.avg = average[transactDayData.day] / 2;
+  });
+
+  console.log(chartData);
 
   // [
   //   {
@@ -136,21 +165,12 @@ const IncomeTab = ({ user, chartTitle, averageLine }) => {
   //   }
   // ]
 
-  const getCategoryName = (id) => {
-    const category = find(categories, { id });
-    return category.name;
-  };
-  const getCurrencyName = (id) => {
-    const currency = find(currencies, { id });
-    return currency.code;
-  };
-
   const ChartComponent = isAverageEnable ? ComposedChart : BarChart;
 
   return (
-    <div className={getScrollClass(windowWidth)}>
+    <>
       <Row>
-        <Col xs={{ offset: 3, span: 6 }}>
+        <Col md={{ offset: 3, span: 6 }}>
           <div className="flex justify-center items-center decoration-green-500 underline underline-offset-3">
             <h5 className="mb-2 font-light cursor-default pr-1">
               {chartTitle}
@@ -176,44 +196,40 @@ const IncomeTab = ({ user, chartTitle, averageLine }) => {
         </Col>
 
         <Col
-          xs={{ span: 3 }}
+          md={{ span: 3 }}
           className="flex justify-center items-center"
         >
           <Form.Check
             id="average-line"
             type="switch"
             label="AverageLine"
+            defaultChecked
             onClick={handleIsAverageChange}
           />
         </Col>
       </Row>
 
       <ChartComponent
+        data={chartData}
         barGap={1}
         // barSize={5}
         barCategoryGap={5}
         height={300}
         width={windowWidth - 32}
-        data={data}
         margin={{
           top: 10,
           bottom: 10,
           left: 0,
-          right: 50
+          right: 60
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="day" scale="auto" />
         <YAxis />
-        <Tooltip />
-        <Legend />
-        <Brush
-          height={25}
-          dataKey="date"
-          stroke="#3b82f6"
-          startIndex={halfOfMonth}
-        />
+        <Tooltip content={<CustomTooltip />} />
 
+        <Legend />
+        <Brush height={25} dataKey="date" stroke="#3b82f6" />
         {categories.map((category) => (
           <Bar
             key={category.id}
@@ -221,29 +237,29 @@ const IncomeTab = ({ user, chartTitle, averageLine }) => {
             fill={category.color || "#82ca9d"}
           />
         ))}
-        <Bar dataKey="transport" fill="#0074D9" />
-        <Bar dataKey="housing" fill="#2ECC40" />
-        <Bar dataKey="rest" fill="#FFDC00" />
-        <Bar dataKey="health" fill="#B10DC9" />
         {isAverageEnable && (
-          <Area
-            type="monotone"
-            dataKey="average"
-            fill="#8884d8"
-            stroke="#ff7300"
-          />
+          <>
+            <Area
+              type="step"
+              dataKey="avg"
+              fill="#8884d8"
+              stroke="#f97316"
+            />
+          </>
         )}
       </ChartComponent>
-    </div>
+    </>
   );
 };
 
 IncomeTab.defaultProps = {
-  //
+  averageLine: true
 };
 
 IncomeTab.propTypes = {
-  user: userPropTypes
+  user: userPropTypes,
+  chartTitle: PropTypes.string,
+  averageLine: PropTypes.bool
 };
 
 export default IncomeTab;

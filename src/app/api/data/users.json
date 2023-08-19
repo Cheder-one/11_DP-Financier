@@ -71,17 +71,7 @@
         "account": "account-id-1",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-01T10:00:00Z",
-        "comment": ""
-      },
-      {
-        "id": "transaction-id-2",
-        "amount": "-1000",
-        "type": "expense",
-        "account": "account-id-1",
-        "category": "category-id-2",
-        "currency": "currency-id-1",
-        "date": "2022-03-02T11:00:00Z",
+        "date": "2023-03-01T10:00:00Z",
         "comment": ""
       },
       {
@@ -91,7 +81,27 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-03T12:00:00Z",
+        "date": "2023-03-01T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-33",
+        "amount": "10000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-03-01T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-2",
+        "amount": "-1000",
+        "type": "expense",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-03-02T11:00:00Z",
         "comment": ""
       },
       {
@@ -101,7 +111,7 @@
         "account": "account-id-2",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-04T13:00:00Z",
+        "date": "2023-03-04T13:00:00Z",
         "comment": ""
       },
       {
@@ -111,7 +121,7 @@
         "account": "account-id-1",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-05T14:00:00Z",
+        "date": "2023-03-05T14:00:00Z",
         "comment": ""
       },
       {
@@ -121,7 +131,7 @@
         "account": "account-id-1",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-06T14:00:00Z",
+        "date": "2023-03-06T14:00:00Z",
         "comment": ""
       },
       {
@@ -131,7 +141,17 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-07T12:00:00Z",
+        "date": "2023-03-07T12:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-31",
+        "amount": "5000",
+        "type": "income",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-03-07T12:00:00Z",
         "comment": ""
       },
       {
@@ -141,7 +161,7 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-08T12:00:00Z",
+        "date": "2023-03-08T12:00:00Z",
         "comment": ""
       },
       {
@@ -151,7 +171,7 @@
         "account": "account-id-1",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-09T12:00:00Z",
+        "date": "2023-03-09T12:00:00Z",
         "comment": ""
       },
       {
@@ -161,7 +181,7 @@
         "account": "account-id-2",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-10T16:30:00Z",
+        "date": "2023-03-10T16:30:00Z",
         "comment": ""
       },
       {
@@ -171,7 +191,7 @@
         "account": "account-id-2",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-10T16:30:00Z",
+        "date": "2023-03-10T16:30:00Z",
         "comment": ""
       },
       {
@@ -181,7 +201,7 @@
         "account": "account-id-1",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-11T09:15:00Z",
+        "date": "2023-03-11T09:15:00Z",
         "comment": ""
       },
       {
@@ -191,7 +211,7 @@
         "account": "account-id-1",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-12T11:00:00Z",
+        "date": "2023-03-12T11:00:00Z",
         "comment": ""
       },
       {
@@ -201,7 +221,7 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-13T12:00:00Z",
+        "date": "2023-03-13T12:00:00Z",
         "comment": ""
       },
       {
@@ -211,7 +231,7 @@
         "account": "account-id-1",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-14T14:00:00Z",
+        "date": "2023-03-14T14:00:00Z",
         "comment": ""
       },
       {
@@ -221,7 +241,7 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-15T12:00:00Z",
+        "date": "2023-03-15T12:00:00Z",
         "comment": ""
       },
       {
@@ -231,7 +251,7 @@
         "account": "account-id-1",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-16T16:30:00Z",
+        "date": "2023-03-16T16:30:00Z",
         "comment": ""
       },
       {
@@ -241,7 +261,7 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-17T12:00:00Z",
+        "date": "2023-03-17T12:00:00Z",
         "comment": ""
       },
       {
@@ -251,7 +271,7 @@
         "account": "account-id-1",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-18T11:00:00Z",
+        "date": "2023-03-18T11:00:00Z",
         "comment": ""
       },
       {
@@ -261,7 +281,7 @@
         "account": "account-id-1",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-19T09:15:00Z",
+        "date": "2023-03-19T09:15:00Z",
         "comment": ""
       },
       {
@@ -271,7 +291,7 @@
         "account": "account-id-2",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-20T14:00:00Z",
+        "date": "2023-03-20T14:00:00Z",
         "comment": ""
       },
       {
@@ -281,7 +301,7 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-21T12:00:00Z",
+        "date": "2023-03-21T12:00:00Z",
         "comment": ""
       },
       {
@@ -291,7 +311,7 @@
         "account": "account-id-1",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-22T11:00:00Z",
+        "date": "2023-03-22T11:00:00Z",
         "comment": ""
       },
       {
@@ -301,7 +321,7 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-23T12:00:00Z",
+        "date": "2023-03-23T12:00:00Z",
         "comment": ""
       },
       {
@@ -311,7 +331,7 @@
         "account": "account-id-1",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-24T14:00:00Z",
+        "date": "2023-03-24T14:00:00Z",
         "comment": ""
       },
       {
@@ -321,7 +341,7 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-25T12:00:00Z",
+        "date": "2023-03-25T12:00:00Z",
         "comment": ""
       },
       {
@@ -331,7 +351,7 @@
         "account": "account-id-1",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-26T16:30:00Z",
+        "date": "2023-03-26T16:30:00Z",
         "comment": ""
       },
       {
@@ -341,7 +361,7 @@
         "account": "account-id-2",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-27T12:00:00Z",
+        "date": "2023-03-27T12:00:00Z",
         "comment": ""
       },
       {
@@ -351,7 +371,7 @@
         "account": "account-id-1",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-28T11:00:00Z",
+        "date": "2023-03-28T11:00:00Z",
         "comment": ""
       },
       {
@@ -361,7 +381,7 @@
         "account": "account-id-1",
         "category": "category-id-1",
         "currency": "currency-id-1",
-        "date": "2022-03-29T09:15:00Z",
+        "date": "2023-03-29T09:15:00Z",
         "comment": ""
       },
       {
@@ -371,17 +391,7 @@
         "account": "account-id-2",
         "category": "category-id-2",
         "currency": "currency-id-1",
-        "date": "2022-03-30T14:00:00Z",
-        "comment": ""
-      },
-      {
-        "id": "transaction-id-31",
-        "amount": "28000",
-        "type": "income",
-        "account": "account-id-2",
-        "category": "category-id-1",
-        "currency": "currency-id-1",
-        "date": "2022-03-31T12:00:00Z",
+        "date": "2023-03-30T14:00:00Z",
         "comment": ""
       }
     ],
@@ -496,7 +506,7 @@
         "account": "account-id-3",
         "category": "category-id-3",
         "currency": "currency-id-1",
-        "date": "2022-03-06T15:00:00Z",
+        "date": "2023-03-06T15:00:00Z",
         "comment": ""
       }
     ],
