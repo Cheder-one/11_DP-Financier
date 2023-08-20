@@ -29,7 +29,7 @@ const FinancialSummary = ({ user }) => {
           <IncomeTab
             user={user}
             chartTitle={"Доходы за "}
-            quotes={actualQuotes}
+            actualQuotes={actualQuotes}
           />
         );
       case "expense":

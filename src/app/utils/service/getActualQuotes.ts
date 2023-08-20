@@ -4,7 +4,7 @@ const getActualQuotes = async () => {
   try {
     const request = await axios.get("api/quotesData");
     const { quotesData } = request.data;
-    return quotesData;
+    return quotesData[0];
   } catch (err) {
     console.error("Ошибка при получении обновленных котировок:", err);
   }

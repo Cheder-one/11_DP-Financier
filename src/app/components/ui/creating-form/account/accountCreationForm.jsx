@@ -33,7 +33,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
   const [inputFields, setInputFields] = useState({
     name: "",
     entity: { id: "", name: "" },
-    currency: { id: "", name: "", code: "" },
+    currency: { id: "", name: "", symbol: "" },
     iconName: "VscBlank",
     iconColor: "#00000",
     balance: "",
@@ -137,7 +137,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
             name={"currency"}
             items={user.currencies}
             defaultValue={"Валюта счета"}
-            value={inputFields.currency.code}
+            value={inputFields.currency.symbol}
             touched={isSubmitClicked}
             onSelect={handleInputChange}
             error={errors.currency}

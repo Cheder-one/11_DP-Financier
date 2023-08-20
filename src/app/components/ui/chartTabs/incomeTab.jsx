@@ -1,5 +1,5 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { PiCalendarFill } from "react-icons/pi";
 import { Col, Form, Row } from "react-bootstrap";
 import { filter, find, range, values } from "lodash";
@@ -9,11 +9,18 @@ import {
   countDaysInMonth,
   getMonthName
 } from "../../../utils";
-import { DatePicker } from "../../common/form";
 import userPropTypes from "../../../types/userPropTypes";
+import { DatePicker } from "../../common/form";
 import { MixedChart } from "../../common/chart";
 
-const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
+/* eslint-disable react/prop-types */
+
+const IncomeTab = ({
+  user,
+  chartTitle,
+  averageLine,
+  actualQuotes
+}) => {
   const [isAverageEnable, setIsAverageEnable] = useState(averageLine);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { transactions, categories, currencies } = user;
@@ -31,6 +38,32 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
   const daysInMonth = countDaysInMonth();
   const monthDaysArray = range(1, daysInMonth + 1);
   const incomeTransacts = filter(transactions, { type: "income" });
+  const categoryNames = categories.map((category) => category.name);
+
+  // Utils
+  const defineCategoryName = (id) => {
+    const category = find(categories, { id });
+    return category.name;
+  };
+  // Utils
+  const getCurrencyData = (id) => {
+    const currency = find(currencies, { id });
+    return currency;
+  };
+  // Utils
+  const convertToRub = (currencyData, value) => {
+    const quotes = actualQuotes.Valute;
+    const { code } = currencyData;
+    let convertedAmount = 0;
+
+    for (const valuta in quotes) {
+      const { CharCode, Value } = quotes[valuta];
+      if (code === CharCode) {
+        convertedAmount = parseInt(value) * Value;
+      }
+    }
+    return parseInt(convertedAmount);
+  };
 
   // Okay
   const transactsSelectedMonth = incomeTransacts.filter(
@@ -43,17 +76,6 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
     }
   );
 
-  const defineCategoryName = (id) => {
-    const category = find(categories, { id });
-    return category.name;
-  };
-  const defineCurrencyName = (id) => {
-    const currency = find(currencies, { id });
-    return currency.code;
-  };
-
-  const categoryNames = categories.map((category) => category.name);
-
   // Создаем объект для агрегации данных
   const aggregatedData = {};
 
@@ -61,6 +83,8 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
   transactsSelectedMonth.forEach((transact) => {
     const transactDay = extractUTCDate(transact.date).day;
     const category = defineCategoryName(transact.category);
+    const currency = getCurrencyData(transact.currency);
+    const amount = parseInt(transact.amount);
 
     if (!aggregatedData[transactDay]) {
       aggregatedData[transactDay] = {
@@ -73,9 +97,12 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
       aggregatedData[transactDay][category] = 0;
     }
 
-    aggregatedData[transactDay][category] += parseInt(
-      transact.amount
-    );
+    if (currency.code === "RUB") {
+      aggregatedData[transactDay][category] += amount;
+    } else {
+      const convertedAmount = convertToRub(currency, amount);
+      aggregatedData[transactDay][category] += convertedAmount;
+    }
   });
 
   // После агрегации, добавляем пустые значения для дней, в которых нет транзакций
@@ -181,6 +208,7 @@ IncomeTab.propTypes = {
   user: userPropTypes,
   chartTitle: PropTypes.string,
   averageLine: PropTypes.bool
+  // actualQuotes: PropTypes.object.isRequired
 };
 
 export default IncomeTab;

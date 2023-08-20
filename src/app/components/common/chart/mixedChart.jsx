@@ -11,15 +11,19 @@ import {
   XAxis,
   YAxis
 } from "recharts";
+import numeral from "numeral";
 
 import CustomTooltip from "./custom/customTooltip";
 import { useWindowInnerWidth } from "../../../utils";
-import { useState } from "react";
 
 const MixedChart = ({ chartData, categories, averageLine }) => {
   const [windowWidth] = useWindowInnerWidth();
 
   const ChartComponent = averageLine ? ComposedChart : BarChart;
+
+  const tickFormatterYAxis = (value) => {
+    return numeral(value).format("0.0a");
+  };
 
   return (
     <ChartComponent
@@ -38,7 +42,7 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="day" scale="auto" />
-      <YAxis />
+      <YAxis tickFormatter={tickFormatterYAxis} />
       <Tooltip content={<CustomTooltip />} />
 
       <Legend />
@@ -62,6 +66,12 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
       )}
     </ChartComponent>
   );
+};
+
+MixedChart.propTypes = {
+  chartData: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
+  averageLine: PropTypes.bool
 };
 
 export default MixedChart;

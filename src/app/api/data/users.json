@@ -86,11 +86,11 @@
       },
       {
         "id": "transaction-id-33",
-        "amount": "10000",
+        "amount": "1000",
         "type": "income",
         "account": "account-id-2",
         "category": "category-id-2",
-        "currency": "currency-id-1",
+        "currency": "currency-id-2",
         "date": "2023-03-01T12:00:00Z",
         "comment": ""
       },
@@ -411,57 +411,68 @@
       {
         "id": "currency-id-1",
         "name": "Российский Рубль (RUB)",
-        "code": "₽"
+        "code": "RUB",
+        "symbol": "₽"
       },
       {
         "id": "currency-id-2",
         "name": "Доллар США (USD)",
-        "code": "$"
+        "code": "USD",
+        "symbol": "$"
       },
       {
         "id": "currency-id-3",
         "name": "Евро (EUR)",
-        "code": "€"
+        "code": "EUR",
+        "symbol": "€"
       },
       {
         "id": "currency-id-9",
         "name": "Китайский Юань (CNY)",
-        "code": "¥ (CNY)"
+        "code": "CNY",
+        "symbol": "¥ (CNY)"
       },
       {
         "id": "currency-id-11",
         "name": "Турецкая Лира (TRY)",
-        "code": "₺"
+        "code": "TRY",
+        "symbol": "₺"
       },
       {
         "id": "currency-id-4",
         "name": "Британский Фунт (GBP)",
-        "code": "£"
+        "code": "GBP",
+        "symbol": "£"
       },
       {
         "id": "currency-id-5",
         "name": "Японская Йена (JPY)",
-        "code": "¥ (JPY)"
+        "code": "JPY",
+        "symbol": "¥ (JPY)"
       },
       {
         "id": "currency-id-6",
         "name": "Швейцарский Франк (CHF)",
-        "code": "₣"
+        "code": "CHF",
+        "symbol": "₣"
       },
       {
         "id": "currency-id-7",
         "name": "Канадский Доллар (CAD)",
-        "code": "C$"
+        "code": "CAD",
+        "symbol": "C$"
       },
       {
         "id": "currency-id-8",
         "name": "Австралийский Доллар (AUD)",
-        "code": "A$"
+        "code": "AUD",
+        "symbol": "A$"
       },
       {
         "id": "currency-id-10",
         "name": "Индийская Рупия (INR)",
-        "code": "₹"
+        "code": "INR",
+        "symbol": "₹"
       }
     ]
   },
@@ -526,57 +537,68 @@
       {
         "id": "currency-id-1",
         "name": "Российский Рубль (RUB)",
-        "code": "₽"
+        "code": "RUB",
+        "symbol": "₽"
       },
       {
         "id": "currency-id-2",
         "name": "Доллар США (USD)",
-        "code": "$"
+        "code": "USD",
+        "symbol": "$"
       },
       {
         "id": "currency-id-3",
         "name": "Евро (EUR)",
-        "code": "€"
+        "code": "EUR",
+        "symbol": "€"
       },
       {
         "id": "currency-id-9",
         "name": "Китайский Юань (CNY)",
-        "code": "¥ (CNY)"
+        "code": "CNY",
+        "symbol": "¥ (CNY)"
       },
       {
         "id": "currency-id-11",
         "name": "Турецкая Лира (TRY)",
-        "code": "₺"
+        "code": "TRY",
+        "symbol": "₺"
       },
       {
         "id": "currency-id-4",
         "name": "Британский Фунт (GBP)",
-        "code": "£"
+        "code": "GBP",
+        "symbol": "£"
       },
       {
         "id": "currency-id-5",
         "name": "Японская Йена (JPY)",
-        "code": "¥ (JPY)"
+        "code": "JPY",
+        "symbol": "¥ (JPY)"
       },
       {
         "id": "currency-id-6",
         "name": "Швейцарский Франк (CHF)",
-        "code": "₣"
+        "code": "CHF",
+        "symbol": "₣"
       },
       {
         "id": "currency-id-7",
         "name": "Канадский Доллар (CAD)",
-        "code": "C$"
+        "code": "CAD",
+        "symbol": "C$"
       },
       {
         "id": "currency-id-8",
         "name": "Австралийский Доллар (AUD)",
-        "code": "A$"
+        "code": "AUD",
+        "symbol": "A$"
       },
       {
         "id": "currency-id-10",
         "name": "Индийская Рупия (INR)",
-        "code": "₹"
+        "code": "INR",
+        "symbol": "₹"
       }
     ]
   }

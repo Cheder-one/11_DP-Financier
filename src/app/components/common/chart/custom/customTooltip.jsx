@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import numeral from "numeral";
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -8,6 +9,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         {payload.map((data) => {
           const categoryColor =
             data.dataKey === "avg" ? data.stroke : data.fill;
+          const amount = numeral(data.value).format("0,0");
 
           return (
             <p
@@ -15,7 +17,7 @@ const CustomTooltip = ({ active, payload, label }) => {
               className="intro"
               style={{ color: categoryColor }}
             >
-              {`${data.name} : ${data.value} ${data.unit}`}
+              {`${data.name} : ${amount} ₽`}
             </p>
           );
         })}

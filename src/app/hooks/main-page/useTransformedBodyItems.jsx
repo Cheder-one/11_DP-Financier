@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { find, keys } from "lodash";
 import { Button } from "react-bootstrap";
 import { LiaWindowCloseSolid as CloseX } from "react-icons/lia";
+import numeral from "numeral";
 
 const getTransactionCategory = (item, user) => {
   return find(user.categories, { id: item.category }).name;
@@ -30,12 +31,21 @@ const useTransformedBodyItems = (
     keys(cardBodyItems).forEach((key) => {
       const card = cardBodyItems[key];
 
-      const updatedCard = card.map((item) => ({
-        ...item,
-        firstCol: item.amount,
-        secondCol: getTransactionCategory(item, user),
-        thirdCol: renderDelButton(item, handleDelButtonClick)
-      }));
+      const updatedCard = card.map((item) => {
+        const amount = numeral(item.amount).format("0,0");
+        const getCurrencyData = (id) => {
+          return find(user.currencies, { id });
+        };
+
+        return {
+          ...item,
+          firstCol: `${amount} ${
+            getCurrencyData(item.currency).symbol
+          }`,
+          secondCol: getTransactionCategory(item, user),
+          thirdCol: renderDelButton(item, handleDelButtonClick)
+        };
+      });
 
       updatedCards[key] = updatedCard;
     });
