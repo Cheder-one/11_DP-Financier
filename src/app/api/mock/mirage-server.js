@@ -2,24 +2,30 @@ import { remove } from "lodash";
 import { createServer, Model } from "miragejs";
 
 import users from "../data/users.json";
+import quotesData from "../data/quotesData.json";
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({
     environment,
 
     models: {
-      user: Model
+      user: Model,
+      quotesData: Model
     },
 
     seeds(server) {
       server.db.loadData({
-        users
+        users,
+        quotesData
       });
     },
 
     routes() {
       this.namespace = "api";
 
+      // this.passthrough("https://www.cbr-xml-daily.ru/**");
+
+      // Маршрут для получения всех user's
       this.get("/users", (schema) => {
         return schema.users.all();
       });
@@ -34,6 +40,11 @@ export function makeServer({ environment = "development" } = {}) {
         },
         { timing: 500 }
       );
+
+      // Маршрут получения актуальных котировок
+      this.get("/quotesData", (schema) => {
+        return schema.quotesData.all();
+      });
 
       // Маршрут создания счета
       this.post("/users/:user_id/accounts", (schema, request) => {
@@ -83,30 +94,7 @@ export function makeServer({ environment = "development" } = {}) {
         return user;
       });
 
-      // // Маршрут для удаления транзакций
-      // this.delete(
-      //   "/users/:user_id/transactions/:transaction_id",
-      //   (schema, request) => {
-      //     const userId = request.params.user_id;
-      //     const transactionId = request.params.transaction_id;
-      //     const user = schema.users.find(userId);
-
-      //     // Найти индекс транзакции в массиве транзакций пользователя
-      //     const transactionIndex = user.transactions.findIndex(
-      //       (t) => t.id === transactionId
-      //     );
-
-      //     // Если транзакция существует, удалить ее из массива
-      //     if (transactionIndex !== -1) {
-      //       user.transactions.splice(transactionIndex, 1);
-      //       user.save();
-      //     }
-
-      //     // Вернуть обновленные данные пользователя
-      //     return user;
-      //   }
-      // );
-
+      // Маршрут для удаления транзакций
       this.delete(
         "/users/:user_id/transactions/:transaction_id",
         (schema, request) => {

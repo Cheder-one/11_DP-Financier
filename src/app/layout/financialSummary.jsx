@@ -1,26 +1,42 @@
 // eslint-disable-next-line
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { CapitalTab, ExpenseTab, IncomeTab } from "../components/ui";
 import userPropTypes from "../types/userPropTypes";
+import { getActualQuotes } from "../utils";
 
 const FinancialSummary = ({ user }) => {
+  const [actualQuotes, setActualQuotes] = useState([]);
   const [activeTab, setActiveTab] = useState("income");
+
+  const handleSelect = (eventKey) => {
+    setActiveTab(eventKey);
+  };
+
+  const fetchActualQuotes = async () => {
+    const actualQuotes = await getActualQuotes();
+    setActualQuotes(actualQuotes);
+  };
+  useEffect(() => {
+    fetchActualQuotes();
+  }, []);
 
   const renderActiveTab = () => {
     switch (activeTab) {
       case "income":
-        return <IncomeTab user={user} chartTitle={"Доходы за "} />;
+        return (
+          <IncomeTab
+            user={user}
+            chartTitle={"Доходы за "}
+            quotes={actualQuotes}
+          />
+        );
       case "expense":
         return <ExpenseTab user={user} />;
       case "capital":
         return <CapitalTab user={user} />;
     }
-  };
-
-  const handleSelect = (eventKey) => {
-    setActiveTab(eventKey);
   };
 
   return (

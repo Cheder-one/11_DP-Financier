@@ -35,8 +35,10 @@ import useWindowInnerWidth from "../hooks/useWindowInnerWidth";
 import getMonthName from "./func/date/getMonthName";
 import countDaysInMonth from "./func/date/countDaysInMonth";
 import extractUTCDate from "./func/date/extractUTCDate";
+import getActualQuotes from "./service/getActualQuotes";
 
 export {
+  getActualQuotes,
   extractUTCDate,
   countDaysInMonth,
   getMonthName,

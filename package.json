@@ -2,10 +2,12 @@
   "name": "dp-financier",
   "private": true,
   "version": "0.0.0",
+  "proxy": "http://localhost:5173",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "upd": "node updateQuotesData.js",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -20,6 +22,8 @@
     "lodash": "^4.17.21",
     "mathjs": "^11.9.1",
     "nanoid": "^4.0.2",
+    "node-cron": "^3.0.2",
+    "node-fetch": "^3.3.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",

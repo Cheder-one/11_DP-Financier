@@ -51,12 +51,8 @@ const MainPage = ({ userId }) => {
   };
 
   const fetchUserData = async () => {
-    try {
-      const user = await getUserData(userId);
-      setUser(user);
-    } catch (err) {
-      console.error(err);
-    }
+    const user = await getUserData(userId);
+    setUser(user);
   };
   useEffect(() => {
     fetchUserData();

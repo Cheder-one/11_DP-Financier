@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { PiCalendarFill } from "react-icons/pi";
 import { Col, Form, Row } from "react-bootstrap";
-import { filter, find, isEmpty, pick, range, values } from "lodash";
+import { filter, find, range, values } from "lodash";
 import {
   Area,
   Bar,
@@ -11,10 +11,6 @@ import {
   CartesianGrid,
   ComposedChart,
   Legend,
-  Line,
-  ReferenceArea,
-  ReferenceDot,
-  ReferenceLine,
   Tooltip,
   XAxis,
   YAxis
@@ -24,10 +20,12 @@ import {
   extractUTCDate,
   countDaysInMonth,
   getMonthName,
-  useWindowInnerWidth
+  useWindowInnerWidth,
+  getActualQuotes
 } from "../../../utils";
 import { DatePicker } from "../../common/form";
 import userPropTypes from "../../../types/userPropTypes";
+import axios from "axios";
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -53,7 +51,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   }
   return null;
 };
-const IncomeTab = ({ user, chartTitle, averageLine }) => {
+const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
   const [windowWidth] = useWindowInnerWidth();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isAverageEnable, setIsAverageEnable] = useState(averageLine);
@@ -61,6 +59,7 @@ const IncomeTab = ({ user, chartTitle, averageLine }) => {
 
   const selectedMonth = getMonthName(selectedDate);
   const extractedDate = extractUTCDate(selectedDate);
+  console.log(quotes);
 
   const handleIsAverageChange = () => {
     setIsAverageEnable((prev) => !prev);
