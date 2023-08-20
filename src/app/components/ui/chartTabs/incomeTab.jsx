@@ -1,65 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { PiCalendarFill } from "react-icons/pi";
 import { Col, Form, Row } from "react-bootstrap";
 import { filter, find, range, values } from "lodash";
-import {
-  Area,
-  Bar,
-  BarChart,
-  Brush,
-  CartesianGrid,
-  ComposedChart,
-  Legend,
-  Tooltip,
-  XAxis,
-  YAxis
-} from "recharts";
 
 import {
   extractUTCDate,
   countDaysInMonth,
-  getMonthName,
-  useWindowInnerWidth,
-  getActualQuotes
+  getMonthName
 } from "../../../utils";
 import { DatePicker } from "../../common/form";
 import userPropTypes from "../../../types/userPropTypes";
-import axios from "axios";
+import { MixedChart } from "../../common/chart";
 
-const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="border rounded bg-white px-2 pt-2">
-        <p className="label">{`Дата: ${label}`}</p>
-        {payload.map((data) => {
-          const categoryColor =
-            data.dataKey === "avg" ? data.stroke : data.fill;
-
-          return (
-            <p
-              key={data.dataKey}
-              className="intro"
-              style={{ color: categoryColor }}
-            >
-              {`${data.name} : ${data.value} ${data.unit}`}
-            </p>
-          );
-        })}
-      </div>
-    );
-  }
-  return null;
-};
 const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
-  const [windowWidth] = useWindowInnerWidth();
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [isAverageEnable, setIsAverageEnable] = useState(averageLine);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const { transactions, categories, currencies } = user;
 
   const selectedMonth = getMonthName(selectedDate);
   const extractedDate = extractUTCDate(selectedDate);
-  console.log(quotes);
 
   const handleIsAverageChange = () => {
     setIsAverageEnable((prev) => !prev);
@@ -150,8 +110,6 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
     transactDayData.avg = average[transactDayData.day] / 2;
   });
 
-  console.log(chartData);
-
   // [
   //   {
   //     date: day,
@@ -163,8 +121,6 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
   //     health: 8
   //   }
   // ]
-
-  const ChartComponent = isAverageEnable ? ComposedChart : BarChart;
 
   return (
     <>
@@ -208,45 +164,11 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
         </Col>
       </Row>
 
-      <ChartComponent
-        data={chartData}
-        barGap={1}
-        // barSize={5}
-        barCategoryGap={5}
-        height={300}
-        width={windowWidth - 32}
-        margin={{
-          top: 10,
-          bottom: 10,
-          left: 0,
-          right: 60
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="day" scale="auto" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-
-        <Legend />
-        <Brush height={25} dataKey="date" stroke="#3b82f6" />
-        {categories.map((category) => (
-          <Bar
-            key={category.id}
-            dataKey={category.name}
-            fill={category.color || "#82ca9d"}
-          />
-        ))}
-        {isAverageEnable && (
-          <>
-            <Area
-              type="step"
-              dataKey="avg"
-              fill="#8884d8"
-              stroke="#f97316"
-            />
-          </>
-        )}
-      </ChartComponent>
+      <MixedChart
+        chartData={chartData}
+        categories={categories}
+        averageLine={isAverageEnable}
+      />
     </>
   );
 };

@@ -9,6 +9,5 @@ const getActualQuotes = async () => {
     console.error("Ошибка при получении обновленных котировок:", err);
   }
 };
-getActualQuotes();
 
 export default getActualQuotes;

@@ -46,6 +46,7 @@ const Calculator = ({ name, onEval }) => {
   const handleEval = () => {
     try {
       const result = evaluate(display);
+      console.log(display);
 
       setDisplay(result.toString());
       setIsError(false);
@@ -77,7 +78,10 @@ const Calculator = ({ name, onEval }) => {
         onChange={handleInputChange}
         inputRef={inputRef}
       />
-      <div className="numpad grid grid-cols-2 pb-4" onClick={handleClick}>
+      <div
+        className="numpad grid grid-cols-2 pb-4"
+        onClick={handleClick}
+      >
         <div className="grid grid-cols-3 gap-2 mx-auto">
           {NUMPAD.map((num) => (
             <button key={num} className="w-8 h-5" value={num}>
