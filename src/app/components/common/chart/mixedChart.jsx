@@ -13,7 +13,6 @@ import {
 } from "recharts";
 import numeral from "numeral";
 
-import CustomTooltip from "./custom/customTooltip";
 import { useWindowInnerWidth } from "../../../utils";
 
 const MixedChart = ({ chartData, categories, averageLine }) => {
@@ -23,6 +22,10 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
 
   const tickFormatterYAxis = (value) => {
     return numeral(value).format("0.0a");
+  };
+
+  const tooltipFormatter = (value, name, props) => {
+    return numeral(value).format("0,0") + " ₽";
   };
 
   return (
@@ -43,7 +46,7 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="day" scale="auto" />
       <YAxis tickFormatter={tickFormatterYAxis} />
-      <Tooltip content={<CustomTooltip />} />
+      <Tooltip formatter={tooltipFormatter} />
 
       <Legend />
       <Brush height={25} dataKey="date" stroke="#3b82f6" />
