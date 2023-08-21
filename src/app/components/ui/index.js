@@ -17,13 +17,11 @@ import TableCardsShell from "./table-cards/tableCardsShell";
 import Calculator from "./calculator";
 import Footer from "./footer";
 import Spinner from "./spinner";
-import IncomeTab from "./chartTabs/incomeTab";
-import ExpenseTab from "./chartTabs/expenseTab";
+import ChartTab from "./chartTabs/chartTab";
 import CapitalTab from "./chartTabs/capitalTab";
 
 export {
-  IncomeTab,
-  ExpenseTab,
+  ChartTab,
   CapitalTab,
   AccountCreationForm,
   AccountCreationModal,

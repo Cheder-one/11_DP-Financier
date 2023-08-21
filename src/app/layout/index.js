@@ -1,6 +1,6 @@
 import Login from "./login";
 import Main from "./main";
 import Welcome from "./welcome";
-import FinancialCharts from "./financialSummary";
+import FinancialSummary from "./financialSummary";
 
-export { FinancialCharts, Login, Main, Welcome };
+export { FinancialSummary, Login, Main, Welcome };

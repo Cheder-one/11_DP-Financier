@@ -106,7 +106,7 @@
       },
       {
         "id": "transaction-id-4",
-        "amount": "-500",
+        "amount": "-50000",
         "type": "expense",
         "account": "account-id-2",
         "category": "category-id-2",

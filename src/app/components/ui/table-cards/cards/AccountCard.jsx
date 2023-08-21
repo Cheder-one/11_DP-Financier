@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import TableCard from "../../../common/card/tableCard";
+import { TableCard } from "../../../common/card";
 import CardDropdown from "../dropdown/cardDropdown";
 
 const AccountCard = ({

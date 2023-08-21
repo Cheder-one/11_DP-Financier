@@ -14,11 +14,14 @@ import userPropTypes from "../../../types/userPropTypes";
 import { DatePicker } from "../../common/form";
 import { MixedChart } from "../../common/chart";
 
-/* eslint-disable react/prop-types */
-
-// Utils
-
-const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
+const ChartTab = ({
+  user,
+  chartTitle,
+  averageLine,
+  // eslint-disable-next-line
+  quotes,
+  type
+}) => {
   const [isAverageEnable, setIsAverageEnable] = useState(averageLine);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { transactions, categories, currencies } = user;
@@ -28,7 +31,8 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
 
   const daysInMonth = countDaysInMonth();
   const monthDaysArray = range(1, daysInMonth + 1);
-  const incomeTransacts = filter(transactions, { type: "income" });
+  const incomeTransacts =
+    type === "common" ? transactions : filter(transactions, { type });
   const categoryNames = categories.map((category) => category.name);
 
   const handleIsAverageChange = () => {
@@ -109,11 +113,22 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
     transactDayData.avg = average[transactDayData.day] / 2;
   });
 
+  const getChartTitleClass = () => {
+    return (
+      "flex justify-center items-center underline underline-offset-3 " +
+      (type === "income"
+        ? " decoration-green-500"
+        : type === "expense"
+        ? " decoration-rose-500"
+        : " decoration-blue-500")
+    );
+  };
+
   return (
     <>
       <Row>
         <Col md={{ offset: 3, span: 6 }}>
-          <div className="flex justify-center items-center decoration-green-500 underline underline-offset-3">
+          <div className={getChartTitleClass()}>
             <h5 className="mb-2 font-light cursor-default pr-1">
               {chartTitle}
             </h5>
@@ -124,7 +139,9 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
               isMonthYearPicker={true}
               onChange={handleMonthChange}
             >
-              <div className="flex justify-center items-center decoration-green-500 underline underline-offset-3 cursor-pointer ">
+              <div
+                className={getChartTitleClass() + " cursor-pointer "}
+              >
                 <h5 className="font-light select-none">
                   {selectedMonth.name}
                 </h5>
@@ -145,7 +162,7 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
             id="average-line"
             type="switch"
             label="AverageLine"
-            defaultChecked
+            defaultChecked={averageLine}
             onClick={handleIsAverageChange}
           />
         </Col>
@@ -160,15 +177,16 @@ const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
   );
 };
 
-IncomeTab.defaultProps = {
+ChartTab.defaultProps = {
   averageLine: true
 };
 
-IncomeTab.propTypes = {
+ChartTab.propTypes = {
   user: userPropTypes,
   chartTitle: PropTypes.string,
-  averageLine: PropTypes.bool
-  // quotes: PropTypes.object.isRequired
+  averageLine: PropTypes.bool,
+  // quotes: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired
 };
 
-export default IncomeTab;
+export default ChartTab;

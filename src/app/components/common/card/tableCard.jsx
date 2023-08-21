@@ -13,7 +13,7 @@ import { OverlayTooltip } from "../tooltip";
 
 const TableCard = ({ md, route, title, body }) => {
   return (
-    <Card className="p-0">
+    <Card className="p-0 bg-gray-50">
       <Card.Body className="p-0">
         <Row className="card-header mx-auto border p-0 py-1">
           <Col
