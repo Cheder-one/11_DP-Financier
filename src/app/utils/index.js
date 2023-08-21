@@ -36,8 +36,10 @@ import getMonthName from "./func/date/getMonthName";
 import countDaysInMonth from "./func/date/countDaysInMonth";
 import extractUTCDate from "./func/date/extractUTCDate";
 import getActualQuotes from "./service/getActualQuotes";
+import convertToRub from "./func/convertToRub";
 
 export {
+  convertToRub,
   getActualQuotes,
   extractUTCDate,
   countDaysInMonth,

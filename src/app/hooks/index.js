@@ -12,8 +12,10 @@ import useRenderCount from "./useRenderCount.jsx";
 import useCardItems from "./main-page/state/useCardItems.jsx";
 import useSelectedFilters from "./main-page/state/useSelectedFilters.jsx";
 import useTransactCrFormInputs from "./main-page/state/useTransactCrFormInputs";
+import useActualQuotes from "./main-page/state/useActualQuotes";
 
 export {
+  useActualQuotes,
   useTransactCrFormInputs,
   useCardItems,
   useSelectedFilters,

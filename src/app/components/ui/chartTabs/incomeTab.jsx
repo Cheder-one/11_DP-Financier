@@ -7,7 +7,8 @@ import { filter, find, range, values } from "lodash";
 import {
   extractUTCDate,
   countDaysInMonth,
-  getMonthName
+  getMonthName,
+  convertToRub
 } from "../../../utils";
 import userPropTypes from "../../../types/userPropTypes";
 import { DatePicker } from "../../common/form";
@@ -15,18 +16,20 @@ import { MixedChart } from "../../common/chart";
 
 /* eslint-disable react/prop-types */
 
-const IncomeTab = ({
-  user,
-  chartTitle,
-  averageLine,
-  actualQuotes
-}) => {
+// Utils
+
+const IncomeTab = ({ user, chartTitle, averageLine, quotes }) => {
   const [isAverageEnable, setIsAverageEnable] = useState(averageLine);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { transactions, categories, currencies } = user;
 
   const selectedMonth = getMonthName(selectedDate);
   const extractedDate = extractUTCDate(selectedDate);
+
+  const daysInMonth = countDaysInMonth();
+  const monthDaysArray = range(1, daysInMonth + 1);
+  const incomeTransacts = filter(transactions, { type: "income" });
+  const categoryNames = categories.map((category) => category.name);
 
   const handleIsAverageChange = () => {
     setIsAverageEnable((prev) => !prev);
@@ -35,37 +38,6 @@ const IncomeTab = ({
     setSelectedDate(target.value);
   };
 
-  const daysInMonth = countDaysInMonth();
-  const monthDaysArray = range(1, daysInMonth + 1);
-  const incomeTransacts = filter(transactions, { type: "income" });
-  const categoryNames = categories.map((category) => category.name);
-
-  // Utils
-  const defineCategoryName = (id) => {
-    const category = find(categories, { id });
-    return category.name;
-  };
-  // Utils
-  const getCurrencyData = (id) => {
-    const currency = find(currencies, { id });
-    return currency;
-  };
-  // Utils
-  const convertToRub = (currencyData, value) => {
-    const quotes = actualQuotes.Valute;
-    const { code } = currencyData;
-    let convertedAmount = 0;
-
-    for (const valuta in quotes) {
-      const { CharCode, Value } = quotes[valuta];
-      if (code === CharCode) {
-        convertedAmount = parseInt(value) * Value;
-      }
-    }
-    return parseInt(convertedAmount);
-  };
-
-  // Okay
   const transactsSelectedMonth = incomeTransacts.filter(
     (transact) => {
       const transactDate = extractUTCDate(transact.date);
@@ -82,8 +54,8 @@ const IncomeTab = ({
   // Проходимся по массиву транзакций и группируем данные
   transactsSelectedMonth.forEach((transact) => {
     const transactDay = extractUTCDate(transact.date).day;
-    const category = defineCategoryName(transact.category);
-    const currency = getCurrencyData(transact.currency);
+    const category = find(categories, { id: transact.category });
+    const currency = find(currencies, { id: transact.currency });
     const amount = parseInt(transact.amount);
 
     if (!aggregatedData[transactDay]) {
@@ -93,15 +65,15 @@ const IncomeTab = ({
       };
     }
 
-    if (!aggregatedData[transactDay][category]) {
-      aggregatedData[transactDay][category] = 0;
+    if (!aggregatedData[transactDay][category.name]) {
+      aggregatedData[transactDay][category.name] = 0;
     }
 
     if (currency.code === "RUB") {
-      aggregatedData[transactDay][category] += amount;
+      aggregatedData[transactDay][category.name] += amount;
     } else {
-      const convertedAmount = convertToRub(currency, amount);
-      aggregatedData[transactDay][category] += convertedAmount;
+      const convertedAmount = convertToRub(currency, amount, quotes);
+      aggregatedData[transactDay][category.name] += convertedAmount;
     }
   });
 
@@ -136,18 +108,6 @@ const IncomeTab = ({
     }
     transactDayData.avg = average[transactDayData.day] / 2;
   });
-
-  // [
-  //   {
-  //     date: day,
-  //     day: `${selectedMonth.name} ${day}`,
-  //     products: 181,
-  //     transport: 41,
-  //     housing: 384,
-  //     rest: 53,
-  //     health: 8
-  //   }
-  // ]
 
   return (
     <>
@@ -208,7 +168,7 @@ IncomeTab.propTypes = {
   user: userPropTypes,
   chartTitle: PropTypes.string,
   averageLine: PropTypes.bool
-  // actualQuotes: PropTypes.object.isRequired
+  // quotes: PropTypes.object.isRequired
 };
 
 export default IncomeTab;
