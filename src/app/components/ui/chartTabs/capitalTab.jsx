@@ -22,7 +22,6 @@ const CapitalTab = ({ user, quotes }) => {
   const { accounts, currencies } = user;
   const { width: parentWidth, ref: parentRef } = useResizeDetector();
 
-  // TODO Общий капитал свести к сумме в рублях
   // TODO Балансы счетов оставить в их валюте
 
   // TODO Реализовать предложение о конвертации валюты, если валюта счета и валюта транзакции расхожи
@@ -30,9 +29,13 @@ const CapitalTab = ({ user, quotes }) => {
 
   // TODO Добавить редактирование цвета для категории и счета
 
+  const findCurrency = (id) => {
+    return find(currencies, { id });
+  };
+
   const accsInRubEquivalent = accounts.map((account) => {
     const { currency, balance } = account;
-    const currencyCode = find(currencies, { id: currency }).code;
+    const currencyCode = findCurrency(currency).code;
     return {
       ...account,
       balance: convertToRub(currencyCode, balance, quotes)
@@ -51,17 +54,22 @@ const CapitalTab = ({ user, quotes }) => {
     accountsData.reduce((result, obj) => merge(result, obj), {})
   );
 
+  const chartCategories = accounts.map((account) => {
+    const { currency, icon } = account;
+    return {
+      id: account.id,
+      name: account.name,
+      unit: findCurrency(currency).symbol,
+      color: icon.color
+    };
+  });
+
   const renderCapitalSubtitle = (
     <span className="font-space-mono-bold text-lg text-green-500">
       {numeral(totalAccountsBalance).format("0,0_")}
       <span className="font-bold text-sm"> руб</span>
     </span>
   );
-
-  // key={account.id}
-  // dataKey={account.name}
-  // unit={account.unit}
-  // fill={account.color}
 
   return (
     <div className="px-3 pb-3">
@@ -75,7 +83,7 @@ const CapitalTab = ({ user, quotes }) => {
         >
           <HorizontalBar
             chartData={mergedAccsData}
-            categories={[]}
+            categories={chartCategories}
             width={parentWidth}
           />
         </SummaryCard>

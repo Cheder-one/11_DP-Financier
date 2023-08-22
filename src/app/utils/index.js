@@ -40,8 +40,10 @@ import convertToRub from "./func/convertToRub";
 import tickAxisFormatter from "./func/formatter/tickAxisFormatter copy";
 import tooltipFormatter from "./func/formatter/tooltipFormatter";
 import setRusNumeralsLocal from "./service/setRusNumeralsLocal";
+import getChartTitleClass from "./styles/getChartTitleClass";
 
 export {
+  getChartTitleClass,
   setRusNumeralsLocal,
   tooltipFormatter,
   tickAxisFormatter,

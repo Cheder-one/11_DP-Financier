@@ -48,6 +48,7 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
         <Bar
           key={category.id}
           dataKey={category.name}
+          unit={category.unit}
           fill={category.color || "#82ca9d"}
         />
       ))}

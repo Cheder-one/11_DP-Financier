@@ -8,7 +8,8 @@ import {
   extractUTCDate,
   countDaysInMonth,
   getMonthName,
-  convertToRub
+  convertToRub,
+  getChartTitleClass
 } from "../../../utils";
 import { DatePicker } from "../../common/form";
 import { MixedChart } from "../../common/chart";
@@ -112,17 +113,6 @@ const ChartTab = ({
     }
     transactDayData.avg = average[transactDayData.day] / 2;
   });
-
-  const getChartTitleClass = () => {
-    return (
-      "flex justify-center items-center underline underline-offset-3 " +
-      (type === "income"
-        ? " decoration-green-500"
-        : type === "expense"
-        ? " decoration-rose-500"
-        : " decoration-blue-500")
-    );
-  };
 
   return (
     <>

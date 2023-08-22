@@ -17,10 +17,8 @@ import {
 const HorizontalBar = ({ chartData, categories, width }) => {
   const [windowWidth] = useWindowInnerWidth();
 
-  const tooltipFormatter = (value, name, props) => {
-    return value;
-    const currency = value.split(" ")[1];
-    return `${numeral(value).format("0,0")} ${currency}`;
+  const tooltipFormatter = (value) => {
+    return `${numeral(value).format("0,0")} `;
   };
 
   return (
@@ -45,14 +43,6 @@ const HorizontalBar = ({ chartData, categories, width }) => {
           fill={category.color}
         />
       ))}
-
-      <Bar dataKey="Сбербанк" stackId="a" fill="#8884d8" />
-      <Bar
-        dataKey="Альфа-банк"
-        stackId="a"
-        unit={"her"}
-        fill="#82ca9d"
-      />
     </BarChart>
   );
 };
