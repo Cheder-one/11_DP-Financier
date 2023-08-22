@@ -11,28 +11,22 @@ import {
   XAxis,
   YAxis
 } from "recharts";
-import numeral from "numeral";
 
-import { useWindowInnerWidth } from "../../../utils";
+import {
+  tickAxisFormatter,
+  tooltipFormatter,
+  useWindowInnerWidth
+} from "../../../utils";
 
 const MixedChart = ({ chartData, categories, averageLine }) => {
   const [windowWidth] = useWindowInnerWidth();
 
   const ChartComponent = averageLine ? ComposedChart : BarChart;
 
-  const tickFormatterYAxis = (value) => {
-    return numeral(value).format("0.0a");
-  };
-
-  const tooltipFormatter = (value, name, props) => {
-    return numeral(value).format("0,0") + " ₽";
-  };
-
   return (
     <ChartComponent
       data={chartData}
       barGap={1}
-      // barSize={5}
       barCategoryGap={5}
       height={300}
       width={windowWidth - 32}
@@ -45,7 +39,7 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="day" scale="auto" />
-      <YAxis tickFormatter={tickFormatterYAxis} />
+      <YAxis tickFormatter={tickAxisFormatter} />
       <Tooltip formatter={tooltipFormatter} />
 
       <Legend />

@@ -24,7 +24,6 @@ import {
   checkIsNewNameUniq
 } from "../../../../utils";
 import { useFormValidation } from "../../../../hooks";
-import userPropTypes from "../../../../types/userPropTypes";
 
 const { accountSchema } = validationSchema;
 
@@ -211,7 +210,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
 AccountCreationForm.displayName = AccountCreationForm;
 
 AccountCreationForm.propTypes = {
-  user: userPropTypes,
+  user: PropTypes.object.isRequired,
   onSuccess: PropTypes.func.isRequired
 };
 

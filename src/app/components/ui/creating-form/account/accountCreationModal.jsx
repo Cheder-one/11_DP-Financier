@@ -4,7 +4,6 @@ import { useRef } from "react";
 import ModalPopup from "../../../common/modal/modalPopup";
 import AccountCreationForm from "./accountCreationForm";
 import { useEventListener } from "../../../../hooks";
-import userPropTypes from "../../../../types/userPropTypes";
 
 const AccountCreationModal = ({
   user,
@@ -50,7 +49,7 @@ const AccountCreationModal = ({
 };
 
 AccountCreationModal.propTypes = {
-  user: userPropTypes,
+  user: PropTypes.object.isRequired,
   onSuccess: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,
   setShowModal: PropTypes.func.isRequired

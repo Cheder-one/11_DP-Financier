@@ -37,8 +37,14 @@ import countDaysInMonth from "./func/date/countDaysInMonth";
 import extractUTCDate from "./func/date/extractUTCDate";
 import getActualQuotes from "./service/getActualQuotes";
 import convertToRub from "./func/convertToRub";
+import tickAxisFormatter from "./func/formatter/tickAxisFormatter copy";
+import tooltipFormatter from "./func/formatter/tooltipFormatter";
+import setRusNumeralsLocal from "./service/setRusNumeralsLocal";
 
 export {
+  setRusNumeralsLocal,
+  tooltipFormatter,
+  tickAxisFormatter,
   convertToRub,
   getActualQuotes,
   extractUTCDate,

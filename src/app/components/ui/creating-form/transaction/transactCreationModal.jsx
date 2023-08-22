@@ -4,7 +4,6 @@ import { useRef } from "react";
 import ModalPopup from "../../../common/modal/modalPopup";
 import TransactCreationForm from "./transactCreationForm";
 import { useEventListener } from "../../../../hooks";
-import userPropTypes from "../../../../types/userPropTypes";
 
 const TransactCreationModal = ({
   user,
@@ -56,7 +55,7 @@ const TransactCreationModal = ({
 };
 
 TransactCreationModal.propTypes = {
-  user: userPropTypes,
+  user: PropTypes.object.isRequired,
   cardType: PropTypes.string.isRequired,
   onSuccess: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,

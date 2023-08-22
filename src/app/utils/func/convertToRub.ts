@@ -1,18 +1,16 @@
-import { Currency } from "../../types";
-import getActualQuotes from "../service/getActualQuotes";
-
 const convertToRub = (
-  currencyData: Currency,
+  currencyCode: string,
   value: number,
   actualQuotes: object
 ) => {
+  if (currencyCode === "RUB") return value;
+
   const quotes = actualQuotes.Valute;
-  const { code } = currencyData;
   let convertedAmount = 0;
 
   for (const valuta in quotes) {
     const { CharCode, Value } = quotes[valuta];
-    if (code === CharCode) {
+    if (currencyCode === CharCode) {
       convertedAmount = parseInt(value) * Value;
     }
   }

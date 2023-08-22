@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import { CapitalTab, ChartTab } from "../components/ui";
-import userPropTypes from "../types/userPropTypes";
 import { useActualQuotes } from "../hooks";
 
-const FinancialSummary = ({ user }) => {
+const FinanceSummary = ({ user }) => {
   const actualQuotes = useActualQuotes();
   const [activeTab, setActiveTab] = useState("common");
 
@@ -44,7 +43,7 @@ const FinancialSummary = ({ user }) => {
           />
         );
       case "capital":
-        return <CapitalTab user={user} />;
+        return <CapitalTab user={user} quotes={actualQuotes} />;
     }
   };
 
@@ -74,8 +73,8 @@ const FinancialSummary = ({ user }) => {
   );
 };
 
-FinancialSummary.propTypes = {
-  user: userPropTypes
+FinanceSummary.propTypes = {
+  user: PropTypes.object.isRequired
 };
 
-export default FinancialSummary;
+export default FinanceSummary;

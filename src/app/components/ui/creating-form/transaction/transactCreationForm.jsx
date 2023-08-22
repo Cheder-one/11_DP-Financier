@@ -30,7 +30,6 @@ import {
   useFormValidation,
   useTransactCrFormInputs
 } from "../../../../hooks";
-import userPropTypes from "../../../../types/userPropTypes";
 const { transactSchema } = validationSchema;
 
 const TransactCreationForm = forwardRef(
@@ -209,7 +208,7 @@ const TransactCreationForm = forwardRef(
 TransactCreationForm.displayName = TransactCreationForm;
 
 TransactCreationForm.propTypes = {
-  user: userPropTypes,
+  user: PropTypes.object.isRequired,
   onSuccess: PropTypes.func.isRequired,
   cardType: PropTypes.string
 };

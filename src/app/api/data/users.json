@@ -31,7 +31,7 @@
         "type": "account",
         "name": "Альфа-банк",
         "entity": "entity-id-3",
-        "currency": "currency-id-1",
+        "currency": "currency-id-2",
         "balance": "80000",
         "transactions": ["transaction-id-3", "transaction-id-4"],
         "icon": {

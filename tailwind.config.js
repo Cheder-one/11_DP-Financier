@@ -15,7 +15,12 @@ export default {
         "gray-light": "#DEE2E6"
       },
       fontFamily: {
-        "space-mono-bold": ["'Space Mono'", "monospace"]
+        // "space-mono": ["Space Mono", "monospace"],
+        "space-mono-bold": ["Space Mono", "monospace"]
+      },
+      fontWeight: {
+        bold: 700,
+        normal: 400
       },
       height: {
         "0vh": "0vh",

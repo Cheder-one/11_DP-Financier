@@ -25,7 +25,7 @@ import {
   useCardItems,
   useSelectedFilters
 } from "../../hooks";
-import FinancialSummary from "../../layout/financialSummary";
+import FinanceSummary from "../../layout/financeSummary";
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -169,7 +169,7 @@ const MainPage = ({ userId }) => {
 
       <Row className="mt-3%">
         <Col>
-          <FinancialSummary {...{ user }} />
+          <FinanceSummary {...{ user }} />
         </Col>
       </Row>
 

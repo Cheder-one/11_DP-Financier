@@ -10,7 +10,6 @@ import {
   getMonthName,
   convertToRub
 } from "../../../utils";
-import userPropTypes from "../../../types/userPropTypes";
 import { DatePicker } from "../../common/form";
 import { MixedChart } from "../../common/chart";
 
@@ -61,6 +60,7 @@ const ChartTab = ({
     const category = find(categories, { id: transact.category });
     const currency = find(currencies, { id: transact.currency });
     const amount = parseInt(transact.amount);
+    const { code: currCode } = currency;
 
     if (!aggregatedData[transactDay]) {
       aggregatedData[transactDay] = {
@@ -73,10 +73,10 @@ const ChartTab = ({
       aggregatedData[transactDay][category.name] = 0;
     }
 
-    if (currency.code === "RUB") {
+    if (currCode === "RUB") {
       aggregatedData[transactDay][category.name] += amount;
     } else {
-      const convertedAmount = convertToRub(currency, amount, quotes);
+      const convertedAmount = convertToRub(currCode, amount, quotes);
       aggregatedData[transactDay][category.name] += convertedAmount;
     }
   });
@@ -182,7 +182,7 @@ ChartTab.defaultProps = {
 };
 
 ChartTab.propTypes = {
-  user: userPropTypes,
+  user: PropTypes.object.isRequired,
   chartTitle: PropTypes.string,
   averageLine: PropTypes.bool,
   // quotes: PropTypes.object.isRequired,

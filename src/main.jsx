@@ -6,6 +6,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { BrowserRouter } from "react-router-dom";
 import { makeServer } from "./app/api/mock/mirage-server.js";
 import "react-toastify/dist/ReactToastify.css";
+import { setRusNumeralsLocal } from "./app/utils/index.js";
+
+setRusNumeralsLocal();
 
 if (process.env.NODE_ENV === "development") {
   makeServer({ environment: "development" });
