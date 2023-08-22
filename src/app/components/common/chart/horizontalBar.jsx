@@ -33,7 +33,6 @@ const HorizontalBar = ({ chartData, categories, width }) => {
       <XAxis type="number" tickFormatter={tickAxisFormatter} />
       <YAxis dataKey="name" type="category" tick={false} />
       <Tooltip formatter={tooltipFormatter} />
-      {/* <Legend /> */}
       {categories.map((category) => (
         <Bar
           stackId="a"

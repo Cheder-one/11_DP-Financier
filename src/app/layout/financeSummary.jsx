@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import { CapitalTab, ChartTab } from "../components/ui";
 import { useActualQuotes } from "../hooks";
+import Marquee from "react-fast-marquee";
 
 const FinanceSummary = ({ user }) => {
   const actualQuotes = useActualQuotes();

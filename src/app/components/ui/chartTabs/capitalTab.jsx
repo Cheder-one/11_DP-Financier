@@ -6,26 +6,16 @@ import { HorizontalBar } from "../../common/chart";
 import { SummaryCard } from "../../common/card";
 import { castArray, find, merge } from "lodash";
 import { convertToRub } from "../../../utils";
-
-const data = [
-  {
-    name: "Счета",
-    value1: "10000",
-    value2: "5000",
-    value3: "70000",
-    value4: "30000",
-    value5: "20000"
-  }
-];
+import CustomChartLegend from "../../common/legend/customChartLegend";
 
 const CapitalTab = ({ user, quotes }) => {
   const { accounts, currencies } = user;
   const { width: parentWidth, ref: parentRef } = useResizeDetector();
 
-  // TODO Балансы счетов оставить в их валюте
+  // TODO Добавить сноску с курсами валют
 
-  // TODO Реализовать предложение о конвертации валюты, если валюта счета и валюта транзакции расхожи
   // TODO Добавить изменение баланса счета при транзакциях
+  // TODO Реализовать предложение о конвертации по текущему или выбранному курсу, если валюта счета и валюта транзакции расхожи
 
   // TODO Добавить редактирование цвета для категории и счета
 
@@ -47,7 +37,7 @@ const CapitalTab = ({ user, quotes }) => {
   );
 
   const accountsData = accsInRubEquivalent.map((account) => ({
-    name: "Счета",
+    name: "Счета:",
     [account.name]: account.balance
   }));
   const mergedAccsData = castArray(
@@ -71,6 +61,9 @@ const CapitalTab = ({ user, quotes }) => {
     </span>
   );
 
+  const data = [{ label: "Сбербанк" }, { label: "Альфа-банк" }];
+  const colors = ["blue", "green", "red"];
+
   return (
     <div className="px-3 pb-3">
       <div className="flex gap-3">
@@ -86,6 +79,8 @@ const CapitalTab = ({ user, quotes }) => {
             categories={chartCategories}
             width={parentWidth}
           />
+
+          <CustomChartLegend {...{ data, colors }} />
         </SummaryCard>
 
         <SummaryCard title={"Топ 5 расходов"} />

@@ -26,6 +26,7 @@ import {
   useSelectedFilters
 } from "../../hooks";
 import FinanceSummary from "../../layout/financeSummary";
+import MarqueeComponent from "../common/marquee/MarqueeComponent";
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -166,13 +167,13 @@ const MainPage = ({ userId }) => {
         onPostSuccess={handleSelectedFilters}
         onAddButtonClick={handleAddButtonClick}
       />
-
-      <Row className="mt-3%">
+      <Row className="mt-3">
         <Col>
           <FinanceSummary {...{ user }} />
         </Col>
       </Row>
 
+      <MarqueeComponent />
       {cardToWhichAdded === "account" ? (
         <AccountCreationModal
           onSuccess={handlePostSuccess}
