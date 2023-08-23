@@ -13,4 +13,10 @@ const QuotesTabComponent = ({ chunkedData, title, md }) => {
   );
 };
 
+QuotesTabComponent.propTypes = {
+  chunkedData: PropTypes.array.isRequired,
+  title: PropTypes.object,
+  md: PropTypes.array
+};
+
 export default QuotesTabComponent;

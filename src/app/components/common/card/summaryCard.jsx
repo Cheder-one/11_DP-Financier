@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const SummaryCard = ({ title, subtitle, children, parentRef }) => {
   return (
     <div className="border rounded h-80 w-1/3" ref={parentRef}>
@@ -11,6 +13,13 @@ const SummaryCard = ({ title, subtitle, children, parentRef }) => {
       {children}
     </div>
   );
+};
+
+SummaryCard.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  children: PropTypes.node,
+  parentRef: PropTypes.func
 };
 
 export default SummaryCard;

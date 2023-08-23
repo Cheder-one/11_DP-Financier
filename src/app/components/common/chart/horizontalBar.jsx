@@ -1,11 +1,11 @@
+import PropTypes from "prop-types";
 import {
   BarChart,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  Legend
+  Tooltip
 } from "recharts";
 import numeral from "numeral";
 
@@ -44,6 +44,12 @@ const HorizontalBar = ({ chartData, categories, width }) => {
       ))}
     </BarChart>
   );
+};
+
+HorizontalBar.propTypes = {
+  chartData: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
+  width: PropTypes.number
 };
 
 export default HorizontalBar;

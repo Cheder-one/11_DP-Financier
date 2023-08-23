@@ -4,7 +4,7 @@ import { useResizeDetector } from "react-resize-detector";
 
 import { HorizontalBar } from "../../common/chart";
 import { SummaryCard } from "../../common/card";
-import { castArray, find, merge } from "lodash";
+import { chain, find, merge } from "lodash";
 import { convertToRub } from "../../../utils";
 import ChartLegend from "../../common/legend/chartLegend";
 
@@ -23,7 +23,7 @@ const CapitalTab = ({ user, quotes }) => {
     return find(currencies, { id });
   };
 
-  const accsInRubEquivalent = accounts.map((account) => {
+  const accountsInRubEquiv = accounts.map((account) => {
     const { currency, balance } = account;
     const currencyCode = findCurrency(currency).code;
     return {
@@ -31,32 +31,32 @@ const CapitalTab = ({ user, quotes }) => {
       balance: convertToRub(currencyCode, balance, quotes)
     };
   });
-  const totalAccountsBalance = accsInRubEquivalent.reduce(
+
+  const accountsCapital = accountsInRubEquiv.reduce(
     (sum, n) => sum + parseInt(n.balance),
     0
   );
 
-  const accountsData = accsInRubEquivalent.map((account) => ({
-    name: "Счета:",
-    [account.name]: account.balance
-  }));
-  const mergedAccsData = castArray(
-    accountsData.reduce((result, obj) => merge(result, obj), {})
-  );
+  const chartData = chain(accountsInRubEquiv)
+    .map((account) => ({
+      [account.name]: account.balance
+    }))
+    .reduce((result, obj) => merge(result, obj), {
+      name: "Счета:"
+    })
+    .castArray()
+    .value();
 
   const chartCategories = accounts.map((account) => {
-    const { currency, icon } = account;
-    return {
-      id: account.id,
-      name: account.name,
-      unit: findCurrency(currency).symbol,
-      color: icon.color
-    };
+    const { id, name, currency, icon } = account;
+    const unit = findCurrency(currency).symbol;
+
+    return { id, name, unit, color: icon.color };
   });
 
   const renderCapitalSubtitle = (
     <span className="font-space-mono font-bold text-lg text-green-500">
-      {numeral(totalAccountsBalance).format("0,0_")}
+      {numeral(accountsCapital).format("0,0_")}
       <span className="font-bold text-sm"> руб</span>
     </span>
   );
@@ -75,7 +75,7 @@ const CapitalTab = ({ user, quotes }) => {
           parentRef={parentRef}
         >
           <HorizontalBar
-            chartData={mergedAccsData}
+            chartData={chartData}
             categories={chartCategories}
             width={parentWidth}
           />

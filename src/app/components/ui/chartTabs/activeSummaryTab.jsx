@@ -65,7 +65,7 @@ const ActiveSummaryTab = ({
 ActiveSummaryTab.propTypes = {
   user: PropTypes.object.isRequired,
   chunkedData: PropTypes.array.isRequired,
-  // actualQuotes: PropTypes.object.isRequired,
+  actualQuotes: PropTypes.object.isRequired,
   activeTab: PropTypes.string.isRequired
 };
 

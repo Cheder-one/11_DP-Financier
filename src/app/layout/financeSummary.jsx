@@ -1,11 +1,12 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { Nav } from "react-bootstrap";
-import { chunk, pick, values } from "lodash";
+import { chunk, isEmpty, pick, values } from "lodash";
 
 import { useActualQuotes } from "../hooks";
 import { getExchangeRateClass } from "../utils";
 import { ActiveSummaryTab } from "../components/ui/chartTabs";
+import { Spinner } from "../components/ui";
 
 const FinanceSummary = ({ user }) => {
   const { currencies } = user;
@@ -68,16 +69,20 @@ const FinanceSummary = ({ user }) => {
         </Nav.Item>
       </Nav>
 
-      <div className="mt-3">
-        {
-          <ActiveSummaryTab
-            user={user}
-            chunkedData={chunkedTableData}
-            actualQuotes={actualQuotes}
-            activeTab={activeTab}
-          />
-        }
-      </div>
+      {!isEmpty(actualQuotes) ? (
+        <div className="mt-3">
+          {
+            <ActiveSummaryTab
+              user={user}
+              chunkedData={chunkedTableData}
+              actualQuotes={actualQuotes}
+              activeTab={activeTab}
+            />
+          }
+        </div>
+      ) : (
+        <Spinner className="flex justify-center items-center h-30vh" />
+      )}
     </div>
   );
 };
