@@ -4,7 +4,6 @@ import { Nav } from "react-bootstrap";
 import { chunk, pick, values } from "lodash";
 
 import { useActualQuotes } from "../hooks";
-
 import { getExchangeRateClass } from "../utils";
 import { ActiveSummaryTab } from "../components/ui/chartTabs";
 
@@ -17,29 +16,31 @@ const FinanceSummary = ({ user }) => {
     setActiveTab(eventKey);
   };
 
-  const userCurCodes = currencies.map((cur) => cur.code);
   const userExchangeRates = values(
-    pick(actualQuotes.Valute, userCurCodes)
+    pick(
+      actualQuotes.Valute,
+      currencies.map((cur) => cur.code)
+    )
   );
 
-  const tableData = userExchangeRates.map(
-    ({ ID, CharCode, Value, Previous }) => {
-      Value = Value.toFixed(2);
-      Previous = Previous.toFixed(2);
+  const tableData = userExchangeRates.map((exchRate) => {
+    let { ID, CharCode, Value, Previous } = exchRate;
+    Value = Value.toFixed(2);
+    Previous = Previous.toFixed(2);
 
-      const renderSecondCol = (
-        <span className={getExchangeRateClass(Value, Previous)}>
-          {Value}
-        </span>
-      );
-      return {
-        id: ID,
-        firstCol: CharCode,
-        secondCol: renderSecondCol,
-        thirdCol: Previous
-      };
-    }
-  );
+    const renderSecondCol = (
+      <span className={getExchangeRateClass(Value, Previous)}>
+        {Value}
+      </span>
+    );
+    return {
+      id: ID,
+      firstCol: CharCode,
+      secondCol: renderSecondCol,
+      thirdCol: Previous
+    };
+  });
+
   const chunkedTableData = chunk(tableData, tableData.length / 2);
 
   return (
@@ -64,9 +65,6 @@ const FinanceSummary = ({ user }) => {
         </Nav.Item>
         <Nav.Item className="ml-auto">
           <Nav.Link eventKey="quotes">Котировки</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="settings">Настройки</Nav.Link>
         </Nav.Item>
       </Nav>
 
