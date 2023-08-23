@@ -42,14 +42,18 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
       <YAxis tickFormatter={tickAxisFormatter} />
       <Tooltip formatter={tooltipFormatter} />
 
-      <Legend />
+      <Legend
+        formatter={(value, entry, index) => (
+          <span className="text-sm mt-3">{value}</span>
+        )}
+      />
       <Brush height={25} dataKey="date" stroke="#3b82f6" />
       {categories.map((category) => (
         <Bar
           key={category.id}
           dataKey={category.name}
           unit={category.unit}
-          fill={category.color || "#82ca9d"}
+          fill={category.color || "#8884d8"}
         />
       ))}
       {averageLine && (

@@ -6,7 +6,7 @@ import { HorizontalBar } from "../../common/chart";
 import { SummaryCard } from "../../common/card";
 import { castArray, find, merge } from "lodash";
 import { convertToRub } from "../../../utils";
-import CustomChartLegend from "../../common/legend/customChartLegend";
+import ChartLegend from "../../common/legend/chartLegend";
 
 const CapitalTab = ({ user, quotes }) => {
   const { accounts, currencies } = user;
@@ -55,7 +55,7 @@ const CapitalTab = ({ user, quotes }) => {
   });
 
   const renderCapitalSubtitle = (
-    <span className="font-space-mono-bold text-lg text-green-500">
+    <span className="font-space-mono font-bold text-lg text-green-500">
       {numeral(totalAccountsBalance).format("0,0_")}
       <span className="font-bold text-sm"> руб</span>
     </span>
@@ -80,7 +80,7 @@ const CapitalTab = ({ user, quotes }) => {
             width={parentWidth}
           />
 
-          <CustomChartLegend {...{ data, colors }} />
+          <ChartLegend {...{ data, colors }} />
         </SummaryCard>
 
         <SummaryCard title={"Топ 5 расходов"} />

@@ -118,7 +118,7 @@ const ChartTab = ({
     <>
       <Row>
         <Col md={{ offset: 3, span: 6 }}>
-          <div className={getChartTitleClass()}>
+          <div className={getChartTitleClass(type)}>
             <h5 className="mb-2 font-light cursor-default pr-1">
               {chartTitle}
             </h5>
@@ -130,7 +130,9 @@ const ChartTab = ({
               onChange={handleMonthChange}
             >
               <div
-                className={getChartTitleClass() + " cursor-pointer "}
+                className={
+                  getChartTitleClass(type) + " cursor-pointer "
+                }
               >
                 <h5 className="font-light select-none">
                   {selectedMonth.name}

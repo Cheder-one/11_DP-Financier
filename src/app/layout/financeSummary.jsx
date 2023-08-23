@@ -1,12 +1,15 @@
-// eslint-disable-next-line
-import PropTypes from "prop-types";
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { Nav } from "react-bootstrap";
-import { CapitalTab, ChartTab } from "../components/ui";
+import { chunk, pick, values } from "lodash";
+
 import { useActualQuotes } from "../hooks";
-import Marquee from "react-fast-marquee";
+
+import { getExchangeRateClass } from "../utils";
+import { ActiveSummaryTab } from "../components/ui/chartTabs";
 
 const FinanceSummary = ({ user }) => {
+  const { currencies } = user;
   const actualQuotes = useActualQuotes();
   const [activeTab, setActiveTab] = useState("common");
 
@@ -14,39 +17,30 @@ const FinanceSummary = ({ user }) => {
     setActiveTab(eventKey);
   };
 
-  const renderActiveTab = () => {
-    switch (activeTab) {
-      case "common":
-        return (
-          <ChartTab
-            user={user}
-            chartTitle={"Операции за "}
-            quotes={actualQuotes}
-            type={activeTab}
-          />
-        );
-      case "income":
-        return (
-          <ChartTab
-            user={user}
-            chartTitle={"Доходы за "}
-            quotes={actualQuotes}
-            type={activeTab}
-          />
-        );
-      case "expense":
-        return (
-          <ChartTab
-            user={user}
-            chartTitle={"Расходы за "}
-            quotes={actualQuotes}
-            type={activeTab}
-          />
-        );
-      case "capital":
-        return <CapitalTab user={user} quotes={actualQuotes} />;
+  const userCurCodes = currencies.map((cur) => cur.code);
+  const userExchangeRates = values(
+    pick(actualQuotes.Valute, userCurCodes)
+  );
+
+  const tableData = userExchangeRates.map(
+    ({ ID, CharCode, Value, Previous }) => {
+      Value = Value.toFixed(2);
+      Previous = Previous.toFixed(2);
+
+      const renderSecondCol = (
+        <span className={getExchangeRateClass(Value, Previous)}>
+          {Value}
+        </span>
+      );
+      return {
+        id: ID,
+        firstCol: CharCode,
+        secondCol: renderSecondCol,
+        thirdCol: Previous
+      };
     }
-  };
+  );
+  const chunkedTableData = chunk(tableData, tableData.length / 2);
 
   return (
     <div className="border rounded">
@@ -68,8 +62,24 @@ const FinanceSummary = ({ user }) => {
         <Nav.Item>
           <Nav.Link eventKey="capital">Капитал</Nav.Link>
         </Nav.Item>
+        <Nav.Item className="ml-auto">
+          <Nav.Link eventKey="quotes">Котировки</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="settings">Настройки</Nav.Link>
+        </Nav.Item>
       </Nav>
-      <div className="mt-3">{renderActiveTab()}</div>
+
+      <div className="mt-3">
+        {
+          <ActiveSummaryTab
+            user={user}
+            chunkedData={chunkedTableData}
+            actualQuotes={actualQuotes}
+            activeTab={activeTab}
+          />
+        }
+      </div>
     </div>
   );
 };

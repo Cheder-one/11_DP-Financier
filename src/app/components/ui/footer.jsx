@@ -5,7 +5,7 @@ import { Divider } from "../common/typography";
 const Footer = () => {
   return (
     <>
-      {/* <Divider className="mt-5" /> */}
+      <Divider className="mt-5" />
       <footer className="bg-light py-3 ">
         <Container className="flex flex-column flex-sm-row justify-between items-center p-0">
           <p className="m-0 text-center text-sm-start">

@@ -9,9 +9,9 @@ const convertToRub = (
   let convertedAmount = 0;
 
   for (const valuta in quotes) {
-    const { CharCode, Value } = quotes[valuta];
+    const { CharCode, Value, Nominal } = quotes[valuta];
     if (currencyCode === CharCode) {
-      convertedAmount = parseInt(value) * Value;
+      convertedAmount = (parseInt(value) * Value) / Nominal;
     }
   }
   return parseInt(convertedAmount);

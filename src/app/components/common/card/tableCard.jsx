@@ -20,15 +20,24 @@ const TableCard = ({ md, route, title, body }) => {
             md={md[0]}
             className="flex justify-center items-center text-inherit"
           >
-            <Link
-              to={route}
-              className="text-inherit cursor-pointer"
-              style={{ textUnderlineOffset: "3px" }}
-            >
-              {title?.first}
-            </Link>
+            {route ? (
+              <Link
+                to={route}
+                className="text-inherit cursor-pointer"
+                style={{ textUnderlineOffset: "3px" }}
+              >
+                {title?.first}
+              </Link>
+            ) : (
+              <Col
+                md={md[0]}
+                className="flex justify-center items-center text-inherit cursor-default"
+              >
+                {title?.first}
+              </Col>
+            )}
           </Col>
-          <Col md={md[1]} className="mx-auto p-0">
+          <Col md={md[1]} className="flex justify-center p-0">
             {title?.second}
           </Col>
           <Col
@@ -76,7 +85,7 @@ const TableCard = ({ md, route, title, body }) => {
 TableCard.propTypes = {
   md: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  route: PropTypes.string.isRequired,
+  route: PropTypes.string,
   body: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 

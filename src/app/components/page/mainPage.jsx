@@ -167,13 +167,14 @@ const MainPage = ({ userId }) => {
         onPostSuccess={handleSelectedFilters}
         onAddButtonClick={handleAddButtonClick}
       />
-      <Row className="mt-3">
+      <Row className="mt-3%">
         <Col>
           <FinanceSummary {...{ user }} />
         </Col>
       </Row>
 
-      <MarqueeComponent />
+      {/* <MarqueeComponent /> */}
+
       {cardToWhichAdded === "account" ? (
         <AccountCreationModal
           onSuccess={handlePostSuccess}

@@ -46,7 +46,6 @@ const Calculator = ({ name, onEval }) => {
   const handleEval = () => {
     try {
       const result = evaluate(display);
-      console.log(display);
 
       setDisplay(result.toString());
       setIsError(false);
@@ -67,10 +66,10 @@ const Calculator = ({ name, onEval }) => {
   useFocus(inputRef);
 
   return (
-    <div className="calculator w-44 rounded bg-[#EBEAE6] font-space-mono-bold select-none border-1 border-gray-300">
+    <div className="calculator w-44 rounded bg-[#EBEAE6] font-space-mono font-bold select-none border-1 border-gray-300">
       <TextField
-        containerClass={"px-2 py-3"}
-        childrenClass={"text-right"}
+        containerClass={"px-2 py-3 "}
+        childrenClass={"text-right font-space-mono font-bold"}
         name={"calculator"}
         value={display}
         placeholder={isError ? "Error" : "0"}

@@ -1,4 +1,4 @@
-// Utils
+// _Utils
 import themeConfig from "./styles/themeConfig";
 import validationSchema from "./validators/validationSchema";
 import genAvatar from "./func/generate/genAvatar";
@@ -41,8 +41,10 @@ import tickAxisFormatter from "./func/formatter/tickAxisFormatter copy";
 import tooltipFormatter from "./func/formatter/tooltipFormatter";
 import setRusNumeralsLocal from "./service/setRusNumeralsLocal";
 import getChartTitleClass from "./styles/getChartTitleClass";
+import getExchangeRateClass from "./styles/getExchangeRateClass";
 
 export {
+  getExchangeRateClass,
   getChartTitleClass,
   setRusNumeralsLocal,
   tooltipFormatter,

@@ -1,4 +1,4 @@
-const CustomChartLegend = ({ data, colors }) => {
+const ChartLegend = ({ data, colors }) => {
   return (
     <div className="items-center mt-3">
       {data.map((item, index) => (
@@ -14,4 +14,4 @@ const CustomChartLegend = ({ data, colors }) => {
   );
 };
 
-export default CustomChartLegend;
+export default ChartLegend;
