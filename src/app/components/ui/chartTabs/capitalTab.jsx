@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useResizeDetector } from "react-resize-detector";
 
-import { HorizontalBar } from "../../common/chart";
+import { CircularChart, HorizontalBar } from "../../common/chart";
 import { SummaryCard, SummaryCardSubtitle } from "../../common/card";
 import { chain, find, merge } from "lodash";
 import { convertToRub } from "../../../utils";
@@ -9,10 +9,21 @@ import ChartLegend from "../../common/legend/chartLegend";
 
 const CapitalTab = ({ user, quotes }) => {
   const { accounts, currencies } = user;
-  const { width: parentWidth, ref: parentRef } = useResizeDetector();
+  const {
+    width: pieWidth,
+    height: pieHeight,
+    ref: pieParentRef
+  } = useResizeDetector();
+  const {
+    width: horizWidth,
+    ref: horizParentRef
+    //
+  } = useResizeDetector();
 
   // TODO Добавить редактирование цвета для категории и счета
   // TODO Реализовать Топ 5 в виде PieChart
+
+  // TODO Добавить кнопку функций для карточки
 
   // TODO Добавить изменение баланса счета при транзакциях
   // TODO Реализовать предложение о конвертации по текущему или выбранному курсу, если валюта счета и валюта транзакции расхожи
@@ -59,7 +70,7 @@ const CapitalTab = ({ user, quotes }) => {
     <div className="px-3 pb-3">
       <div className="flex gap-3">
         <SummaryCard
-          title={"Топ 5 доходов"}
+          title={"Топ 5 доходов/мес"}
           subtitle={
             <SummaryCardSubtitle
               text={"Всего:"}
@@ -67,8 +78,14 @@ const CapitalTab = ({ user, quotes }) => {
               type="income"
             />
           }
+          parentRef={pieParentRef}
         >
-          Content
+          <CircularChart
+            chartData={chartData}
+            categories={chartCategories}
+            height={pieHeight}
+            width={pieWidth}
+          />
         </SummaryCard>
 
         <SummaryCard
@@ -79,19 +96,19 @@ const CapitalTab = ({ user, quotes }) => {
               type="capital"
             />
           }
-          parentRef={parentRef}
+          parentRef={horizParentRef}
         >
           <HorizontalBar
-            containerClass={"pt-2"}
+            containerClass={"pt-0.5"}
             chartData={chartData}
             categories={chartCategories}
-            width={parentWidth}
+            width={horizWidth}
           />
           <ChartLegend data={chartCategories} />
         </SummaryCard>
 
         <SummaryCard
-          title={"Топ 5 расходов"}
+          title={"Топ 5 расходов/мес"}
           subtitle={
             <SummaryCardSubtitle
               text={"Всего:"}

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const ChartLegend = ({ data }) => {
   return (
-    <div className="items-center mt-3">
+    <div className="items-center mt-2">
       {data.map((item) => (
         <div key={item.id} className="flex items-center mr-4">
           <div
