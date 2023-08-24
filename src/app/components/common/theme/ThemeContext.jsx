@@ -6,17 +6,14 @@ import {
 } from "darkreader";
 
 import { themeConfig } from "../../../utils";
+import { useLocalStorage } from "../../../hooks";
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [darkTheme, setDarkTheme] = useState(() =>
-    JSON.parse(localStorage.getItem("darkTheme"))
-  );
-
-  useEffect(() => {
-    localStorage.setItem("darkTheme", JSON.stringify(darkTheme));
-  }, [darkTheme]);
+  const [darkTheme, setDarkTheme] = useLocalStorage({
+    darkTheme: false
+  });
 
   const handleToggleTheme = () => {
     setDarkTheme((prevDarkTheme) => !prevDarkTheme);

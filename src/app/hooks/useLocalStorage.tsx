@@ -7,14 +7,16 @@ interface ItemObj {
 
 const useLocalStorage = (item: ItemObj) => {
   const name = keys(item)[0];
-  const [elem, setElem] = useState(() =>
-    // @ts-ignore
-    JSON.parse(localStorage.getItem(name))
-  );
+  const value = item[name];
+  // @ts-ignore
+  const itemInStorage = JSON.parse(localStorage.getItem(name));
+  const initVal = itemInStorage === null ? value : itemInStorage;
+
+  const [elem, setElem] = useState(initVal);
 
   useEffect(() => {
     localStorage.setItem(name, JSON.stringify(elem));
-  }, [elem]);
+  }, [name, elem]);
 
   return [elem, setElem];
 };
