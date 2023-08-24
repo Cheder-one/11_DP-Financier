@@ -30,7 +30,7 @@ const HorizontalBar = ({
     <div className={containerClass}>
       <BarChart
         width={width - 10 || windowWidth}
-        height={50}
+        height={70}
         data={chartData}
         layout="vertical"
         margin={{ left: -50 }}

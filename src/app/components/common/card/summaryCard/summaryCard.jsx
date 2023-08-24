@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 const SummaryCard = ({ title, subtitle, children, parentRef }) => {
   return (
     <div
-      className="overflow-y-auto border rounded h-45vh w-1/3 pb-3"
+      className="w-full h-58vh mt-3 border rounded md:w-1/3 mt-md-0 overflow-y-auto"
       ref={parentRef}
     >
       <div className="bg-gray-100 px-3 py-2 mb-3">
         <div className="flex justify-between pb-1">
           <div className="text-lg font-light">{title}</div>
-          <button className="border rounded px-2">*</button>
         </div>
         {subtitle}
       </div>

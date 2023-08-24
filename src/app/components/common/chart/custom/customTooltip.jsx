@@ -5,7 +5,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
       <div className="border rounded bg-white px-2 pt-2">
-        <p className="label">{`Дата: ${label}`}</p>
+        <p className="label">{`${label}`}</p>
         {payload.map((data) => {
           const categoryColor =
             data.dataKey === "avg" ? data.stroke : data.fill;

@@ -42,8 +42,10 @@ import tooltipFormatter from "./func/formatter/tooltipFormatter";
 import setRusNumeralsLocal from "./service/setRusNumeralsLocal";
 import getChartTitleClass from "./styles/getChartTitleClass";
 import getExchangeRateClass from "./styles/getExchangeRateClass";
+import getSubtitleClass from "./styles/getSubtitleClass";
 
 export {
+  getSubtitleClass,
   getExchangeRateClass,
   getChartTitleClass,
   setRusNumeralsLocal,

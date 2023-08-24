@@ -20,13 +20,12 @@ const CapitalTab = ({ user, quotes }) => {
     //
   } = useResizeDetector();
 
-  // TODO Добавить редактирование цвета для категории и счета
-  // TODO Реализовать Топ 5 в виде PieChart
-
-  // TODO Добавить кнопку функций для карточки
+  // TODO Реализовать получение реальных данных в PieChart
 
   // TODO Добавить изменение баланса счета при транзакциях
   // TODO Реализовать предложение о конвертации по текущему или выбранному курсу, если валюта счета и валюта транзакции расхожи
+
+  // TODO Добавить редактирование цвета для категории и счета
 
   const findCurrency = (id) => {
     return find(currencies, { id });
@@ -63,63 +62,64 @@ const CapitalTab = ({ user, quotes }) => {
     return { id, name, unit, color: icon.color };
   });
 
-  const data = [{ label: "Сбербанк" }, { label: "Альфа-банк" }];
-  const colors = ["blue", "green", "red"];
-
   return (
-    <div className="px-3 pb-3">
-      <div className="flex gap-3">
-        <SummaryCard
-          title={"Топ 5 доходов/мес"}
-          subtitle={
-            <SummaryCardSubtitle
-              text={"Всего:"}
-              value={150000}
-              type="income"
-            />
-          }
-          parentRef={pieParentRef}
-        >
-          <CircularChart
-            chartData={chartData}
-            categories={chartCategories}
-            height={pieHeight}
-            width={pieWidth}
+    <div className="md:flex md:gap-3 md:px-3 md:pb-3">
+      <SummaryCard
+        title={"Топ 5 доходов/мес"}
+        subtitle={
+          <SummaryCardSubtitle
+            text={"Всего:"}
+            value={150000}
+            type="income"
           />
-        </SummaryCard>
+        }
+        parentRef={pieParentRef}
+      >
+        <CircularChart
+          chartData={chartData}
+          categories={chartCategories}
+          height={pieHeight}
+          width={pieWidth}
+        />
+        <ChartLegend data={chartCategories} />
+      </SummaryCard>
 
-        <SummaryCard
-          title={"Личный капитал"}
-          subtitle={
-            <SummaryCardSubtitle
-              value={accountsCapital}
-              type="capital"
-            />
-          }
-          parentRef={horizParentRef}
-        >
-          <HorizontalBar
-            containerClass={"pt-0.5"}
-            chartData={chartData}
-            categories={chartCategories}
-            width={horizWidth}
+      <SummaryCard
+        title={"Личный капитал"}
+        subtitle={
+          <SummaryCardSubtitle
+            value={accountsCapital}
+            type="capital"
           />
-          <ChartLegend data={chartCategories} />
-        </SummaryCard>
+        }
+        parentRef={horizParentRef}
+      >
+        <HorizontalBar
+          containerClass={"pt-4 pb-3"}
+          chartData={chartData}
+          categories={chartCategories}
+          width={horizWidth}
+        />
+        <ChartLegend data={chartCategories} />
+      </SummaryCard>
 
-        <SummaryCard
-          title={"Топ 5 расходов/мес"}
-          subtitle={
-            <SummaryCardSubtitle
-              text={"Всего:"}
-              value={100000}
-              type="expense"
-            />
-          }
-        >
-          Content
-        </SummaryCard>
-      </div>
+      <SummaryCard
+        title={"Топ 5 расходов/мес"}
+        subtitle={
+          <SummaryCardSubtitle
+            text={"Всего:"}
+            value={100000}
+            type="expense"
+          />
+        }
+      >
+        <CircularChart
+          chartData={chartData}
+          categories={chartCategories}
+          height={pieHeight}
+          width={pieWidth}
+        />
+      </SummaryCard>
     </div>
   );
 };
