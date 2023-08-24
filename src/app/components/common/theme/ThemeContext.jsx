@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState, useCallback, useEffect, createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import {
   enable as enableDarkMode,
   disable as disableDarkMode
@@ -18,9 +18,9 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem("darkTheme", JSON.stringify(darkTheme));
   }, [darkTheme]);
 
-  const handleToggleTheme = useCallback(() => {
+  const handleToggleTheme = () => {
     setDarkTheme((prevDarkTheme) => !prevDarkTheme);
-  }, []);
+  };
 
   useEffect(() => {
     darkTheme ? enableDarkMode(themeConfig) : disableDarkMode();

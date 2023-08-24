@@ -13,6 +13,7 @@ import {
 } from "../../../utils";
 import { DatePicker } from "../../common/form";
 import { MixedChart } from "../../common/chart";
+import { useLocalStorage } from "../../../hooks";
 
 const ChartTab = ({
   user,
@@ -22,9 +23,9 @@ const ChartTab = ({
   quotes,
   type
 }) => {
-  const [isAverageEnable, setIsAverageEnable] = useState(averageLine);
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const { transactions, categories, currencies } = user;
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isAverage, setIsAverage] = useLocalStorage({ averageLine });
 
   const selectedMonth = getMonthName(selectedDate);
   const extractedDate = extractUTCDate(selectedDate);
@@ -35,9 +36,10 @@ const ChartTab = ({
     type === "common" ? transactions : filter(transactions, { type });
   const categoryNames = categories.map((category) => category.name);
 
-  const handleIsAverageChange = () => {
-    setIsAverageEnable((prev) => !prev);
+  const toggleAverageLine = () => {
+    setIsAverage((prev) => !prev);
   };
+
   const handleMonthChange = ({ target }) => {
     setSelectedDate(target.value);
   };
@@ -154,8 +156,8 @@ const ChartTab = ({
             id="average-line"
             type="switch"
             label="AverageLine"
-            defaultChecked={averageLine}
-            onClick={handleIsAverageChange}
+            defaultChecked={isAverage}
+            onClick={toggleAverageLine}
           />
         </Col>
       </Row>
@@ -163,7 +165,7 @@ const ChartTab = ({
       <MixedChart
         chartData={chartData}
         categories={categories}
-        averageLine={isAverageEnable}
+        averageLine={isAverage}
       />
     </>
   );

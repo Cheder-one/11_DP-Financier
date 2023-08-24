@@ -23,7 +23,8 @@ import {
   useFilterByUniqNType,
   useTransformedBodyItems,
   useCardItems,
-  useSelectedFilters
+  useSelectedFilters,
+  useActualQuotes
 } from "../../hooks";
 import FinanceSummary from "../../layout/financeSummary";
 import MarqueeComponent from "../common/marquee/MarqueeComponent";
@@ -32,6 +33,7 @@ import MarqueeComponent from "../common/marquee/MarqueeComponent";
 
 const MainPage = ({ userId }) => {
   const [user, setUser] = useState({});
+  const actualQuotes = useActualQuotes();
   const [cardItems, setCardItems] = useCardItems();
   const [selectedFilters, setSelectedFilters] = useSelectedFilters();
   const [cardToWhichAdded, setCardToWhichAdded] = useState("");
@@ -169,11 +171,11 @@ const MainPage = ({ userId }) => {
       />
       <Row className="mt-3%">
         <Col>
-          <FinanceSummary {...{ user }} />
+          <FinanceSummary {...{ user, actualQuotes }} />
         </Col>
       </Row>
 
-      {/* <MarqueeComponent /> */}
+      <MarqueeComponent {...{ user, actualQuotes }} />
 
       {cardToWhichAdded === "account" ? (
         <AccountCreationModal

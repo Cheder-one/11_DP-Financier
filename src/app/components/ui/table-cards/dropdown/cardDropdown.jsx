@@ -7,7 +7,13 @@ import { useClickOutside } from "../../../../hooks";
 import { getIdAllItem } from "../../../../utils";
 
 /* eslint-disable react-hooks/exhaustive-deps */
-const CardDropdown = ({ items, type, onSelect, onPostSuccess, reset }) => {
+const CardDropdown = ({
+  items,
+  type,
+  onSelect,
+  onPostSuccess,
+  reset
+}) => {
   const ALL_ITEM = getIdAllItem(type);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(ALL_ITEM);
@@ -81,6 +87,7 @@ CardDropdown.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   type: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
+  onPostSuccess: PropTypes.func,
   reset: PropTypes.bool
 };
 

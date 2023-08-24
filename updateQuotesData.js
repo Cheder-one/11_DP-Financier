@@ -13,7 +13,7 @@ async function updateQuotesData() {
     // Save the updated data to a file
     fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
 
-    console.log("Currency data updated successfully.");
+    console.log("Node running. Currency data updated successfully.");
   } catch (error) {
     console.error("An error occurred:", error);
   }
@@ -22,7 +22,11 @@ async function updateQuotesData() {
 // Обновление данных при запуске скрипта
 updateQuotesData();
 
-// Планирование обновления данных каждый день в 00:00
-cron.schedule("0 0 * * *", () => {
+// Задает обновление данных в 12:00, 18:00 и 00:00
+cron.schedule("0 0,6,12,18 * * *", () => {
   updateQuotesData();
 });
+
+// cron.schedule("20 10 * * *", () => {
+//   updateQuotesData();
+// });

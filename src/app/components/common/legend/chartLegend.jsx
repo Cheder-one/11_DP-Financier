@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const ChartLegend = ({ data, colors }) => {
   return (
     <div className="items-center mt-3">
@@ -12,6 +14,11 @@ const ChartLegend = ({ data, colors }) => {
       ))}
     </div>
   );
+};
+
+ChartLegend.propTypes = {
+  data: PropTypes.array.isRequired
+  // colors: PropTypes.array.isRequired
 };
 
 export default ChartLegend;

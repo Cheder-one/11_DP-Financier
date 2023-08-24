@@ -10,7 +10,9 @@ import NavBarDropdown from "./navBarDropdown";
 
 const NavBar = () => {
   const { darkTheme, handleToggleTheme } = useContext(ThemeContext);
-  const [activeLink, setActiveLink] = useState(useLocation().pathname);
+  const [activeLink, setActiveLink] = useState(
+    useLocation().pathname
+  );
   const prevHrefRef = useRef();
 
   useEffect(() => {
@@ -36,7 +38,12 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar bg="light" expand="sm" onClick={handleClick}>
+    <Navbar
+      bg="light"
+      // expand="sm"
+      className="py-1"
+      onClick={handleClick}
+    >
       <HeaderContainer className="mx-4">
         <Navbar.Brand as={Link} to={"/"} className="mt-0.5">
           <img
@@ -50,7 +57,11 @@ const NavBar = () => {
         </Navbar.Brand>
 
         <Nav className="sm:mr-auto my-2 my-lg-0">
-          <Nav.Link as={Link} to={"/main"} active={activeLink === "/main"}>
+          <Nav.Link
+            as={Link}
+            to={"/main"}
+            active={activeLink === "/main"}
+          >
             Главная
           </Nav.Link>
           <Nav.Link
@@ -69,7 +80,10 @@ const NavBar = () => {
           </Nav.Link>
         </Nav>
 
-        <NavBarDropdown onSelect={handleItemSelect} {...{ darkTheme }} />
+        <NavBarDropdown
+          onSelect={handleItemSelect}
+          {...{ darkTheme }}
+        />
       </HeaderContainer>
     </Navbar>
   );

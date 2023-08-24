@@ -3,14 +3,12 @@ import PropTypes from "prop-types";
 import { Nav } from "react-bootstrap";
 import { chunk, isEmpty, pick, values } from "lodash";
 
-import { useActualQuotes } from "../hooks";
 import { getExchangeRateClass } from "../utils";
 import { ActiveSummaryTab } from "../components/ui/chartTabs";
 import { Spinner } from "../components/ui";
 
-const FinanceSummary = ({ user }) => {
+const FinanceSummary = ({ user, actualQuotes }) => {
   const { currencies } = user;
-  const actualQuotes = useActualQuotes();
   const [activeTab, setActiveTab] = useState("common");
 
   const handleSelect = (eventKey) => {
@@ -81,14 +79,18 @@ const FinanceSummary = ({ user }) => {
           }
         </div>
       ) : (
-        <Spinner className="flex justify-center items-center h-30vh" />
+        <Spinner
+          text={"Загрузка котировок"}
+          className="flex justify-center items-center h-30vh"
+        />
       )}
     </div>
   );
 };
 
 FinanceSummary.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  actualQuotes: PropTypes.object.isRequired
 };
 
 export default FinanceSummary;

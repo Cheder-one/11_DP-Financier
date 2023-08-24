@@ -12,8 +12,6 @@ const CapitalTab = ({ user, quotes }) => {
   const { accounts, currencies } = user;
   const { width: parentWidth, ref: parentRef } = useResizeDetector();
 
-  // TODO Добавить сноску с курсами валют
-
   // TODO Добавить изменение баланса счета при транзакциях
   // TODO Реализовать предложение о конвертации по текущему или выбранному курсу, если валюта счета и валюта транзакции расхожи
 
