@@ -1,4 +1,5 @@
 import TableCard from "./tableCard";
-import SummaryCard from "./summaryCard";
+import SummaryCard from "./summaryCard/summaryCard";
+import SummaryCardSubtitle from "./summaryCard/summaryCardSubtitle";
 
-export { TableCard, SummaryCard };
+export { SummaryCardSubtitle, TableCard, SummaryCard };

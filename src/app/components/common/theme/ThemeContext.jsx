@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState, useEffect, createContext } from "react";
+import { useEffect, createContext } from "react";
 import {
   enable as enableDarkMode,
   disable as disableDarkMode

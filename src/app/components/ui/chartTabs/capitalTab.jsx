@@ -1,9 +1,8 @@
-import numeral from "numeral";
 import PropTypes from "prop-types";
 import { useResizeDetector } from "react-resize-detector";
 
 import { HorizontalBar } from "../../common/chart";
-import { SummaryCard } from "../../common/card";
+import { SummaryCard, SummaryCardSubtitle } from "../../common/card";
 import { chain, find, merge } from "lodash";
 import { convertToRub } from "../../../utils";
 import ChartLegend from "../../common/legend/chartLegend";
@@ -12,10 +11,11 @@ const CapitalTab = ({ user, quotes }) => {
   const { accounts, currencies } = user;
   const { width: parentWidth, ref: parentRef } = useResizeDetector();
 
+  // TODO Добавить редактирование цвета для категории и счета
+  // TODO Реализовать Топ 5 в виде PieChart
+
   // TODO Добавить изменение баланса счета при транзакциях
   // TODO Реализовать предложение о конвертации по текущему или выбранному курсу, если валюта счета и валюта транзакции расхожи
-
-  // TODO Добавить редактирование цвета для категории и счета
 
   const findCurrency = (id) => {
     return find(currencies, { id });
@@ -52,36 +52,56 @@ const CapitalTab = ({ user, quotes }) => {
     return { id, name, unit, color: icon.color };
   });
 
-  const renderCapitalSubtitle = (
-    <span className="font-space-mono font-bold text-lg text-green-500">
-      {numeral(accountsCapital).format("0,0_")}
-      <span className="font-bold text-sm"> руб</span>
-    </span>
-  );
-
   const data = [{ label: "Сбербанк" }, { label: "Альфа-банк" }];
   const colors = ["blue", "green", "red"];
 
   return (
     <div className="px-3 pb-3">
       <div className="flex gap-3">
-        <SummaryCard title={"Топ 5 доходов"} />
+        <SummaryCard
+          title={"Топ 5 доходов"}
+          subtitle={
+            <SummaryCardSubtitle
+              text={"Всего:"}
+              value={150000}
+              type="income"
+            />
+          }
+        >
+          Content
+        </SummaryCard>
 
         <SummaryCard
           title={"Личный капитал"}
-          subtitle={renderCapitalSubtitle}
+          subtitle={
+            <SummaryCardSubtitle
+              value={accountsCapital}
+              type="capital"
+            />
+          }
           parentRef={parentRef}
         >
           <HorizontalBar
+            containerClass={"pt-2"}
             chartData={chartData}
             categories={chartCategories}
             width={parentWidth}
           />
-
-          <ChartLegend {...{ data, colors }} />
+          <ChartLegend data={chartCategories} />
         </SummaryCard>
 
-        <SummaryCard title={"Топ 5 расходов"} />
+        <SummaryCard
+          title={"Топ 5 расходов"}
+          subtitle={
+            <SummaryCardSubtitle
+              text={"Всего:"}
+              value={100000}
+              type="expense"
+            />
+          }
+        >
+          Content
+        </SummaryCard>
       </div>
     </div>
   );
