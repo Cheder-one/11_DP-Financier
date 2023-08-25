@@ -14,8 +14,10 @@ import useSelectedFilters from "./main-page/state/useSelectedFilters.jsx";
 import useTransactCrFormInputs from "./main-page/state/useTransactCrFormInputs";
 import useActualQuotes from "./main-page/state/useActualQuotes";
 import useLocalStorage from "./useLocalStorage";
+import useResizeListener from "./useResizeListener";
 
 export {
+  useResizeListener,
   useLocalStorage,
   useActualQuotes,
   useTransactCrFormInputs,

@@ -2,13 +2,20 @@ import PropTypes from "prop-types";
 
 import { CapitalTab, ChartTab } from "..";
 import { QuotesTabComponent } from ".";
+import { useState } from "react";
 
-const ActiveSummaryTab = ({
+const ActiveChartTab = ({
   user,
   chunkedData,
   actualQuotes,
   activeTab
 }) => {
+  const [pickedDate, setPickedDate] = useState(new Date());
+
+  const handleDateChange = (date) => {
+    setPickedDate(date);
+  };
+
   const renderFirstColTitle = (
     <span className="font-space-mono font-bold">RUB/X</span>
   );
@@ -18,32 +25,40 @@ const ActiveSummaryTab = ({
       case "common":
         return (
           <ChartTab
-            user={user}
+            {...{ user, pickedDate }}
             chartTitle={"Операции за "}
             quotes={actualQuotes}
             type={activeTab}
+            onDateChange={handleDateChange}
           />
         );
       case "income":
         return (
           <ChartTab
-            user={user}
+            {...{ user, pickedDate }}
             chartTitle={"Доходы за "}
             quotes={actualQuotes}
             type={activeTab}
+            onDateChange={handleDateChange}
           />
         );
       case "expense":
         return (
           <ChartTab
-            user={user}
+            {...{ user, pickedDate }}
             chartTitle={"Расходы за "}
             quotes={actualQuotes}
             type={activeTab}
+            onDateChange={handleDateChange}
           />
         );
       case "capital":
-        return <CapitalTab user={user} quotes={actualQuotes} />;
+        return (
+          <CapitalTab
+            {...{ user, pickedDate }}
+            quotes={actualQuotes}
+          />
+        );
       case "quotes":
         return (
           <QuotesTabComponent
@@ -62,11 +77,11 @@ const ActiveSummaryTab = ({
   return renderActiveTab(activeTab);
 };
 
-ActiveSummaryTab.propTypes = {
+ActiveChartTab.propTypes = {
   user: PropTypes.object.isRequired,
   chunkedData: PropTypes.array.isRequired,
   actualQuotes: PropTypes.object.isRequired,
   activeTab: PropTypes.string.isRequired
 };
 
-export default ActiveSummaryTab;
+export default ActiveChartTab;

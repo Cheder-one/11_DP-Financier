@@ -6,6 +6,7 @@ import {
   Brush,
   CartesianGrid,
   ComposedChart,
+  Customized,
   Legend,
   Tooltip,
   XAxis,
@@ -23,50 +24,77 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
 
   const ChartComponent = averageLine ? ComposedChart : BarChart;
 
-  return (
-    <ChartComponent
-      data={chartData}
-      barGap={1}
-      barCategoryGap={5}
-      height={300}
-      width={windowWidth - 32}
-      margin={{
-        top: 10,
-        bottom: 10,
-        left: 0,
-        right: 60
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="day" scale="auto" />
-      <YAxis tickFormatter={tickAxisFormatter} />
-      <Tooltip formatter={tooltipFormatter} />
+  const ChartEndLabel = (props) => {
+    const { x, y, width, value } = props;
 
-      <Legend
-        formatter={(value, entry, index) => (
-          <span className="text-sm mt-3">{value}</span>
-        )}
-      />
-      <Brush height={25} dataKey="date" stroke="#3b82f6" />
-      {categories.map((category) => (
-        <Bar
-          key={category.id}
-          dataKey={category.name}
-          unit={category.unit}
-          fill={category.color || "#8884d8"}
+    const textStyle = {
+      fill: "rgba(0, 128, 0, 0.6)",
+      fontFamily: "Arial",
+      fontSize: 14,
+      fontWeight: "bold",
+      textAnchor: "end"
+    };
+
+    return (
+      <g>
+        <text x={x + width - 10} y={y + 0} style={textStyle}>
+          {value}
+        </text>
+      </g>
+    );
+  };
+
+  return (
+    <>
+      <ChartComponent
+        data={chartData}
+        barGap={1}
+        barCategoryGap={5}
+        height={300}
+        width={windowWidth - 32}
+        margin={{
+          top: 10,
+          bottom: 10,
+          left: 0,
+          right: 60
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="day" scale="auto" />
+        <YAxis tickFormatter={tickAxisFormatter} />
+        <Tooltip formatter={tooltipFormatter} />
+
+        <Legend
+          formatter={(value, entry, index) => (
+            <span className="text-sm mt-3">{value}</span>
+          )}
         />
-      ))}
-      {averageLine && (
-        <>
-          <Area
-            type="step"
-            dataKey="avg"
-            fill="#8884d8"
-            stroke="#f97316"
+        <Brush height={25} dataKey="date" stroke="#3b82f6" />
+        {categories.map((category) => (
+          <Bar
+            key={category.id}
+            dataKey={category.name}
+            unit={category.unit}
+            fill={category.color || "#8884d8"}
           />
-        </>
-      )}
-    </ChartComponent>
+        ))}
+        {averageLine && (
+          <>
+            <Area
+              type="step"
+              dataKey="avg"
+              fill="#8884d8"
+              stroke="#f97316"
+            />
+          </>
+        )}
+        <Customized
+          component={<ChartEndLabel value={"Всего: 100k"} />}
+          x={-60}
+          y={30}
+        />
+      </ChartComponent>
+    </>
   );
 };
 

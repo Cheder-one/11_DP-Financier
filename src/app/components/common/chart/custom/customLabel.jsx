@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const CustomLabel = ({
   cx,
   cy,
@@ -23,6 +25,17 @@ const CustomLabel = ({
       {`${(percent * 100).toFixed(0)}%`}
     </text>
   );
+};
+
+CustomLabel.propTypes = {
+  cx: PropTypes.number,
+  cy: PropTypes.number,
+  midAngle: PropTypes.number,
+  innerRadius: PropTypes.number,
+  outerRadius: PropTypes.number,
+  percent: PropTypes.number,
+  index: PropTypes.number,
+  payload: PropTypes.object
 };
 
 export default CustomLabel;

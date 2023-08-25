@@ -43,8 +43,10 @@ import setRusNumeralsLocal from "./service/setRusNumeralsLocal";
 import getChartTitleClass from "./styles/getChartTitleClass";
 import getExchangeRateClass from "./styles/getExchangeRateClass";
 import getSubtitleClass from "./styles/getSubtitleClass";
+import getTransactsByMonth from "./func/getTransactsByMonth";
 
 export {
+  getTransactsByMonth,
   getSubtitleClass,
   getExchangeRateClass,
   getChartTitleClass,

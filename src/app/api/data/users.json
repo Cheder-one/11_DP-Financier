@@ -393,6 +393,187 @@
         "currency": "currency-id-1",
         "date": "2023-03-30T14:00:00Z",
         "comment": ""
+      },
+
+      {
+        "id": "transaction-id-34",
+        "amount": "26000",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-08-01T09:15:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-35",
+        "amount": "-11400",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2023-08-02T14:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-36",
+        "amount": "800",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-08-03T10:30:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-37",
+        "amount": "-12000",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2023-08-04T16:45:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-38",
+        "amount": "15000",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2023-08-05T08:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-39",
+        "amount": "-1800",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-08-06T12:20:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-40",
+        "amount": "300",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2023-08-07T09:30:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-41",
+        "amount": "-11200",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-08-08T14:15:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-42",
+        "amount": "18000",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2023-08-09T08:45:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-43",
+        "amount": "-1600",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-08-10T11:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-44",
+        "amount": "500",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2023-08-11T10:30:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-45",
+        "amount": "-11800",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-08-12T15:20:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-46",
+        "amount": "24000",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2023-08-13T09:00:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-47",
+        "amount": "-1700",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-08-14T12:45:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-48",
+        "amount": "1200",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2023-08-15T08:30:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-49",
+        "amount": "-1900",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-08-16T14:10:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-50",
+        "amount": "16000",
+        "type": "income",
+        "account": "account-id-1",
+        "category": "category-id-1",
+        "currency": "currency-id-1",
+        "date": "2023-08-17T07:45:00Z",
+        "comment": ""
+      },
+      {
+        "id": "transaction-id-51",
+        "amount": "-11000",
+        "type": "expense",
+        "account": "account-id-2",
+        "category": "category-id-2",
+        "currency": "currency-id-1",
+        "date": "2023-08-18T13:30:00Z",
+        "comment": ""
       }
     ],
     "entities": [
@@ -601,5 +782,18 @@
         "symbol": "₹"
       }
     ]
+  },
+  {
+    "id": "user-id-3",
+    "name": "Null",
+    "email": "Null@example.com",
+    "password": "Null123",
+    "gender": "male",
+    "avatarUrl": "https://avatars.dicebear.com/api/avataaars/rfrdyg.svg",
+    "accounts": [],
+    "categories": [],
+    "transactions": [],
+    "entities": [],
+    "currencies": []
   }
 ]

@@ -18,7 +18,7 @@ import Calculator from "./calculator";
 import Footer from "./footer";
 import Spinner from "./spinner";
 import ChartTab from "./chartTabs/chartTab";
-import CapitalTab from "./chartTabs/capitalTab";
+import CapitalTab from "./chartTabs/capitalTab/capitalTab";
 
 export {
   ChartTab,

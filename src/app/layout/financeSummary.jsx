@@ -4,7 +4,7 @@ import { Nav } from "react-bootstrap";
 import { chunk, isEmpty, pick, values } from "lodash";
 
 import { getExchangeRateClass } from "../utils";
-import { ActiveSummaryTab } from "../components/ui/chartTabs";
+import { ActiveChartTab } from "../components/ui/chartTabs";
 import { Spinner } from "../components/ui";
 
 const FinanceSummary = ({ user, actualQuotes }) => {
@@ -70,7 +70,7 @@ const FinanceSummary = ({ user, actualQuotes }) => {
       {!isEmpty(actualQuotes) ? (
         <div className="mt-3">
           {
-            <ActiveSummaryTab
+            <ActiveChartTab
               user={user}
               chunkedData={chunkedTableData}
               actualQuotes={actualQuotes}

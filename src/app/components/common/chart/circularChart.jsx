@@ -1,24 +1,15 @@
 import PropTypes from "prop-types";
-import { PieChart, Pie, Legend, Tooltip, Cell } from "recharts";
+import { PieChart, Pie, Tooltip, Cell } from "recharts";
 import CustomLabel from "./custom/customLabel";
 
 const CircularChart = ({ chartData, categories, width, height }) => {
   const data = [
-    { name: "Продукты", value: 400 },
-    { name: "Такси ", value: 300 },
-    { name: "Кофе", value: 300 },
-    { name: "Транспорт ", value: 200 },
-    { name: "Жилье ", value: 500 },
-    { name: "Other", value: 1000 }
-  ];
-
-  const COLORS = [
-    "#0088FE",
-    "#00C49F",
-    "#FFBB28",
-    "#FF8042",
-    "#A83279",
-    "#5F5A8D"
+    { name: "Продукты", value: 400, color: "#0088FE" },
+    { name: "Такси ", value: 300, color: "#00C49F" },
+    { name: "Кофе", value: 300, color: "#FFBB28" },
+    { name: "Транспорт ", value: 200, color: "#FF8042" },
+    { name: "Жилье ", value: 500, color: "#A83279" },
+    { name: "Other", value: 1000, color: "#5F5A8D" }
   ];
 
   const cx = width / 2.05;
@@ -38,16 +29,20 @@ const CircularChart = ({ chartData, categories, width, height }) => {
         paddingAngle={5}
         fill="#8884d8"
       >
-        {data.map((entry, index) => (
-          <Cell
-            key={`cell-${index}`}
-            fill={COLORS[index % COLORS.length]}
-          />
+        {data.map((item) => (
+          <Cell key={item} fill={item.color} />
         ))}
       </Pie>
       <Tooltip />
     </PieChart>
   );
+};
+
+CircularChart.propTypes = {
+  chartData: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number
 };
 
 export default CircularChart;

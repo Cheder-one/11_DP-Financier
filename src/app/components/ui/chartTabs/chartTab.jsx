@@ -9,7 +9,8 @@ import {
   countDaysInMonth,
   getMonthName,
   convertToRub,
-  getChartTitleClass
+  getChartTitleClass,
+  getTransactsByMonth
 } from "../../../utils";
 import { DatePicker } from "../../common/form";
 import { MixedChart } from "../../common/chart";
@@ -19,39 +20,35 @@ const ChartTab = ({
   user,
   chartTitle,
   averageLine,
+  pickedDate,
   // eslint-disable-next-line
   quotes,
-  type
+  type,
+  onDateChange
 }) => {
   const { transactions, categories, currencies } = user;
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [isAverage, setIsAverage] = useLocalStorage({ averageLine });
 
-  const selectedMonth = getMonthName(selectedDate);
-  const extractedDate = extractUTCDate(selectedDate);
-
   const daysInMonth = countDaysInMonth();
+  const selectedMonth = getMonthName(pickedDate);
   const monthDaysArray = range(1, daysInMonth + 1);
-  const incomeTransacts =
-    type === "common" ? transactions : filter(transactions, { type });
   const categoryNames = categories.map((category) => category.name);
+  // prettier-ignore
+  const transactsByType = type === "common"
+    ? transactions
+    : filter(transactions, { type });
 
   const toggleAverageLine = () => {
     setIsAverage((prev) => !prev);
   };
 
   const handleMonthChange = ({ target }) => {
-    setSelectedDate(target.value);
+    onDateChange(target.value);
   };
 
-  const transactsSelectedMonth = incomeTransacts.filter(
-    (transact) => {
-      const transactDate = extractUTCDate(transact.date);
-      return (
-        transactDate.month === extractedDate.month &&
-        transactDate.year === extractedDate.year
-      );
-    }
+  const transactsSelectedMonth = getTransactsByMonth(
+    transactsByType,
+    pickedDate
   );
 
   // Создаем объект для агрегации данных
@@ -126,7 +123,7 @@ const ChartTab = ({
             </h5>
             <DatePicker
               name={"date"}
-              value={selectedDate}
+              value={pickedDate}
               showIcon={false}
               isMonthYearPicker={true}
               onChange={handleMonthChange}
