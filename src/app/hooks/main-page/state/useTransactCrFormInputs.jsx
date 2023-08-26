@@ -11,7 +11,7 @@ const useTransactCrFormInputs = () => {
       symbol: "₽"
     },
     date: new Date(),
-    amount: "",
+    value: "",
     comment: ""
   });
 

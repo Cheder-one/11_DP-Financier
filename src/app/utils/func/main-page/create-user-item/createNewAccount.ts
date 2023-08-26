@@ -5,7 +5,7 @@ const createNewAccount = ({
   name,
   entity,
   currency,
-  balance,
+  value,
   iconName,
   iconColor,
   comment
@@ -14,12 +14,12 @@ const createNewAccount = ({
   name: string;
   entity: Entity;
   currency: Currency;
-  balance: string;
+  value: string;
   iconName: string;
   iconColor: string;
   comment: string;
 }) => {
-  const absoluteNum = Math.abs(parseFloat(balance));
+  const absoluteNum = Math.abs(parseFloat(value));
   const cleanBalance = String(absoluteNum);
 
   const newAccount = {
@@ -28,7 +28,7 @@ const createNewAccount = ({
     name: name.trim(),
     entity: entity.id,
     currency: currency.id,
-    balance: cleanBalance,
+    value: cleanBalance,
     transactions: [],
     icon: { name: iconName, color: iconColor },
     comment

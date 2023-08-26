@@ -14,7 +14,7 @@ const userPropTypes = PropTypes.shape({
       name: PropTypes.string.isRequired,
       entity: PropTypes.string.isRequired,
       currency: PropTypes.string.isRequired,
-      balance: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
       transactions: PropTypes.arrayOf(PropTypes.string.isRequired)
         .isRequired,
       icon: PropTypes.shape({
@@ -38,7 +38,7 @@ const userPropTypes = PropTypes.shape({
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      amount: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
       type: PropTypes.oneOf(["income", "expense"]).isRequired,
       account: PropTypes.string.isRequired,
       category: PropTypes.string.isRequired,

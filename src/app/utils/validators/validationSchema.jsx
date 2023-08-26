@@ -75,7 +75,7 @@ const accountSchema = (isAccountUniq, isEntityUnique) =>
         "Укажите валюту счета",
         validateDropdownRequired
       ),
-    balance: yup
+    value: yup
       .string()
       .matches(
         /^(?=\S+$)[^a-zA-Zа-яА-Я]*$/,
@@ -113,7 +113,7 @@ const transactSchema = (isCategoryUnique) =>
         "Укажите валюту операции",
         validateDropdownRequired
       ),
-    amount: yup
+    value: yup
       .string()
       .matches(
         /^(?=\S+$)[^a-zA-Zа-яА-Яё]*$/,

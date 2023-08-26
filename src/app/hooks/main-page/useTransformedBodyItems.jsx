@@ -32,14 +32,14 @@ const useTransformedBodyItems = (
       const card = cardBodyItems[key];
 
       const updatedCard = card.map((item) => {
-        const amount = numeral(item.amount).format("0,0");
+        const value = numeral(item.value).format("0,0");
         const getCurrencyData = (id) => {
           return find(user.currencies, { id });
         };
 
         return {
           ...item,
-          firstCol: `${amount} ${
+          firstCol: `${value} ${
             getCurrencyData(item.currency).symbol
           }`,
           secondCol: getTransactionCategory(item, user),

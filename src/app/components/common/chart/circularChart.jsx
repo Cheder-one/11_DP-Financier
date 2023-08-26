@@ -1,25 +1,21 @@
 import PropTypes from "prop-types";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
 import CustomLabel from "./custom/customLabel";
-import { tooltipFormatter } from "../../../utils";
+import CustomTooltipPieChart from "./custom/customTooltipPieChart";
 
-const CircularChart = ({ chartData, width, height }) => {
+const CircularChart = ({ chartData, width, height, tooltip }) => {
   // const cx = width / 2.05;
   // const cy = height / 3.15;
 
-  // const data = [
-  //   { name: "Сбербанк", value: 90000, color: "#82ca9d" },
-  //   { name: "Альфа-банк", value: 7576935, color: "#FF6F61" },
-  //   { name: "ВТБ", value: 500000, color: "#8884d8" },
-  //   { name: "Газпромбанк", value: 300000, color: "#83a6ed" },
-  //   { name: "Тинькофф", value: 2500000, color: "#8dd1e1" },
-  //   { name: "Росбанк", value: 1500000, color: "#ffc658" }
-  // ];
+  const parsedChartData = chartData.map((item) => ({
+    ...item,
+    value: Math.abs(parseInt(item.value))
+  }));
 
   return (
     <PieChart width={width} height={height / 1.5}>
       <Pie
-        data={chartData}
+        data={parsedChartData}
         dataKey="value"
         nameKey="name"
         cx="50%"
@@ -35,7 +31,7 @@ const CircularChart = ({ chartData, width, height }) => {
           <Cell key={item} fill={item.color} />
         ))}
       </Pie>
-      <Tooltip formatter={tooltipFormatter} />
+      {tooltip || <Tooltip content={CustomTooltipPieChart} />}
     </PieChart>
   );
 };
@@ -43,7 +39,8 @@ const CircularChart = ({ chartData, width, height }) => {
 CircularChart.propTypes = {
   chartData: PropTypes.array.isRequired,
   width: PropTypes.number,
-  height: PropTypes.number
+  height: PropTypes.number,
+  tooltip: PropTypes.node
 };
 
 export default CircularChart;

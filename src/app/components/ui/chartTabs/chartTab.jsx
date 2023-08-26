@@ -59,7 +59,7 @@ const ChartTab = ({
     const transactDay = extractUTCDate(transact.date).day;
     const category = find(categories, { id: transact.category });
     const currency = find(currencies, { id: transact.currency });
-    const amount = parseInt(transact.amount);
+    const value = parseInt(transact.value);
     const { code: currCode } = currency;
 
     if (!aggregatedData[transactDay]) {
@@ -74,9 +74,9 @@ const ChartTab = ({
     }
 
     if (currCode === "RUB") {
-      aggregatedData[transactDay][category.name] += amount;
+      aggregatedData[transactDay][category.name] += value;
     } else {
-      const convertedAmount = convertToRub(currCode, amount, quotes);
+      const convertedAmount = convertToRub(currCode, value, quotes);
       aggregatedData[transactDay][category.name] += convertedAmount;
     }
   });

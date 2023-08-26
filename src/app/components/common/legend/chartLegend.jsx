@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 
 const ChartLegend = ({ data, containerClass }) => {
-  console.log(data);
   const getContainerClass = () => {
     return (
       containerClass + " gap-1 flex flex-wrap justify-center pb-3"

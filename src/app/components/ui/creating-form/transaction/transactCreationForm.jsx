@@ -164,20 +164,17 @@ const TransactCreationForm = forwardRef(
               iconClass={"p-1.5"}
               defaultValue={<BiSolidCalculator size={23} />}
             >
-              <Calculator
-                name={"amount"}
-                onEval={handleInputChange}
-              />
+              <Calculator name={"value"} onEval={handleInputChange} />
             </DropdownSheet>
           </Col>
           <Col md={6}>
             <TextField
-              name={"amount"}
+              name={"value"}
               placeholder={"Сумма"}
-              value={inputFields.amount}
+              value={inputFields.value}
               isSubmit={isSubmitClicked}
               onChange={handleInputChange}
-              error={errors.amount}
+              error={errors.value}
             />
           </Col>
 

@@ -35,7 +35,7 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
     currency: { id: "", name: "", symbol: "" },
     iconName: "VscBlank",
     iconColor: "#00000",
-    balance: "",
+    value: "",
     comment: ""
   });
   const { entity } = inputFields;
@@ -181,12 +181,12 @@ const AccountCreationForm = forwardRef(({ user, onSuccess }, ref) => {
               <TextField
                 containerClass={"mb-0"}
                 label={"Баланс"}
-                name={"balance"}
-                value={inputFields.balance}
+                name={"value"}
+                value={inputFields.value}
                 floating={true}
                 isSubmit={isSubmitClicked}
                 onChange={handleInputChange}
-                error={errors.balance}
+                error={errors.value}
               />
             </Col>
           </Row>

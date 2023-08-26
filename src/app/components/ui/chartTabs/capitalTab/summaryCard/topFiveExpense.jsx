@@ -4,40 +4,50 @@ import {
   SummaryCard,
   SummaryCardSubtitle
 } from "../../../../common/card";
-import { CircularChart } from "../../../../common/chart";
+import {
+  CircularChart,
+  CustomTooltipPieChart
+} from "../../../../common/chart";
 import ChartLegend from "../../../../common/legend/chartLegend";
+import { Tooltip } from "recharts";
 
 const TopFiveExpense = ({
   chartData,
-  chartCategories,
+  subtitleValue,
   pieHeight,
   pieWidth
 }) => {
+  const renderTooltip = (
+    <Tooltip
+      content={<CustomTooltipPieChart negativeValue={true} />}
+    />
+  );
+
   return (
     <SummaryCard
       title={"Топ 5 расходов/мес"}
       subtitle={
         <SummaryCardSubtitle
           text={"Всего:"}
-          value={100000}
+          value={subtitleValue}
           type="expense"
         />
       }
     >
       <CircularChart
         chartData={chartData}
-        categories={chartCategories}
         height={pieHeight}
         width={pieWidth}
+        tooltip={renderTooltip}
       />
-      <ChartLegend data={chartCategories} />
+      <ChartLegend data={chartData} />
     </SummaryCard>
   );
 };
 
 TopFiveExpense.propTypes = {
   chartData: PropTypes.array.isRequired,
-  chartCategories: PropTypes.array.isRequired,
+  subtitleValue: PropTypes.number.isRequired,
   pieHeight: PropTypes.number,
   pieWidth: PropTypes.number,
   pieParentRef: PropTypes.func

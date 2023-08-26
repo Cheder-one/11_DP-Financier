@@ -9,6 +9,7 @@ import ChartLegend from "../../../../common/legend/chartLegend";
 
 const TopFiveIncome = ({
   chartData,
+  subtitleValue,
   pieHeight,
   pieWidth,
   pieParentRef
@@ -19,7 +20,7 @@ const TopFiveIncome = ({
       subtitle={
         <SummaryCardSubtitle
           text={"Всего:"}
-          value={150000}
+          value={subtitleValue}
           type="income"
         />
       }
@@ -37,6 +38,7 @@ const TopFiveIncome = ({
 
 TopFiveIncome.propTypes = {
   chartData: PropTypes.array.isRequired,
+  subtitleValue: PropTypes.number.isRequired,
   pieHeight: PropTypes.number,
   pieWidth: PropTypes.number,
   pieParentRef: PropTypes.func.isRequired

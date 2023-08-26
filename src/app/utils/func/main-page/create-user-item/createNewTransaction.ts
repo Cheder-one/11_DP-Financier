@@ -3,7 +3,7 @@ import getAmountByType from "../../getAmountByType";
 
 interface NewTransaction {
   newTransactId: string;
-  amount: string;
+  value: string;
   cardType: string;
   account: Account;
   category: Category;
@@ -13,7 +13,7 @@ interface NewTransaction {
 }
 
 const createNewTransact = ({
-  amount,
+  value,
   account,
   category,
   currency,
@@ -24,7 +24,7 @@ const createNewTransact = ({
 }: NewTransaction) => {
   const newTransaction = {
     id: newTransactId,
-    amount: getAmountByType(amount, cardType),
+    value: getAmountByType(value, cardType),
     type: cardType,
     account: account.id,
     category: category.id,

@@ -21,7 +21,7 @@ export interface Account {
   name: string;
   entity: string;
   currency: string;
-  balance: string;
+  value: string;
   transactions: string[];
   icon: Icon;
   comment: string;
@@ -37,7 +37,7 @@ export interface Category {
 
 export interface Transaction {
   id: string;
-  amount: string;
+  value: string;
   type: "income" | "expense";
   account: string;
   category: string;
