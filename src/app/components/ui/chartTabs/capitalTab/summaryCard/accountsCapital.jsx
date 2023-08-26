@@ -23,7 +23,7 @@ const AccountsCapital = ({
       parentRef={horizParentRef}
     >
       <HorizontalBar
-        containerClass={"pt-4 pb-3"}
+        containerClass={"pt-5 pb-3"}
         chartData={chartData}
         categories={chartCategories}
         width={horizWidth}

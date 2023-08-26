@@ -9,7 +9,6 @@ import ChartLegend from "../../../../common/legend/chartLegend";
 
 const TopFiveIncome = ({
   chartData,
-  chartCategories,
   pieHeight,
   pieWidth,
   pieParentRef
@@ -28,18 +27,16 @@ const TopFiveIncome = ({
     >
       <CircularChart
         chartData={chartData}
-        categories={chartCategories}
         height={pieHeight}
         width={pieWidth}
       />
-      <ChartLegend data={chartCategories} />
+      <ChartLegend data={chartData} />
     </SummaryCard>
   );
 };
 
 TopFiveIncome.propTypes = {
   chartData: PropTypes.array.isRequired,
-  chartCategories: PropTypes.array.isRequired,
   pieHeight: PropTypes.number,
   pieWidth: PropTypes.number,
   pieParentRef: PropTypes.func.isRequired

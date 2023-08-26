@@ -1,27 +1,29 @@
 import PropTypes from "prop-types";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
 import CustomLabel from "./custom/customLabel";
+import { tooltipFormatter } from "../../../utils";
 
-const CircularChart = ({ chartData, categories, width, height }) => {
-  const data = [
-    { name: "Продукты", value: 400, color: "#0088FE" },
-    { name: "Такси ", value: 300, color: "#00C49F" },
-    { name: "Кофе", value: 300, color: "#FFBB28" },
-    { name: "Транспорт ", value: 200, color: "#FF8042" },
-    { name: "Жилье ", value: 500, color: "#A83279" },
-    { name: "Other", value: 1000, color: "#5F5A8D" }
-  ];
+const CircularChart = ({ chartData, width, height }) => {
+  // const cx = width / 2.05;
+  // const cy = height / 3.15;
 
-  const cx = width / 2.05;
-  const cy = height / 3.15;
+  // const data = [
+  //   { name: "Сбербанк", value: 90000, color: "#82ca9d" },
+  //   { name: "Альфа-банк", value: 7576935, color: "#FF6F61" },
+  //   { name: "ВТБ", value: 500000, color: "#8884d8" },
+  //   { name: "Газпромбанк", value: 300000, color: "#83a6ed" },
+  //   { name: "Тинькофф", value: 2500000, color: "#8dd1e1" },
+  //   { name: "Росбанк", value: 1500000, color: "#ffc658" }
+  // ];
 
   return (
     <PieChart width={width} height={height / 1.5}>
       <Pie
-        cx={cx}
-        cy={cy}
-        data={data}
+        data={chartData}
         dataKey="value"
+        nameKey="name"
+        cx="50%"
+        cy="50%"
         label={<CustomLabel />}
         labelLine={false}
         innerRadius={60}
@@ -29,18 +31,17 @@ const CircularChart = ({ chartData, categories, width, height }) => {
         paddingAngle={5}
         fill="#8884d8"
       >
-        {data.map((item) => (
+        {chartData.map((item) => (
           <Cell key={item} fill={item.color} />
         ))}
       </Pie>
-      <Tooltip />
+      <Tooltip formatter={tooltipFormatter} />
     </PieChart>
   );
 };
 
 CircularChart.propTypes = {
   chartData: PropTypes.array.isRequired,
-  categories: PropTypes.array.isRequired,
   width: PropTypes.number,
   height: PropTypes.number
 };
