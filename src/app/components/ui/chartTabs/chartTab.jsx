@@ -15,6 +15,7 @@ import {
 import { DatePicker } from "../../common/form";
 import { MixedChart } from "../../common/chart";
 import { useLocalStorage } from "../../../hooks";
+import convertRubToCurrency from "../../../utils/func/formatter/convertRubToCurrency";
 
 const ChartTab = ({
   user,
@@ -60,7 +61,7 @@ const ChartTab = ({
     const category = find(categories, { id: transact.category });
     const currency = find(currencies, { id: transact.currency });
     const value = parseInt(transact.value);
-    const { code: currCode } = currency;
+    const { code } = currency;
 
     if (!aggregatedData[transactDay]) {
       aggregatedData[transactDay] = {
@@ -73,10 +74,10 @@ const ChartTab = ({
       aggregatedData[transactDay][category.name] = 0;
     }
 
-    if (currCode === "RUB") {
+    if (code === "RUB") {
       aggregatedData[transactDay][category.name] += value;
     } else {
-      const convertedAmount = convertToRub(currCode, value, quotes);
+      const convertedAmount = convertToRub(value, code, quotes);
       aggregatedData[transactDay][category.name] += convertedAmount;
     }
   });

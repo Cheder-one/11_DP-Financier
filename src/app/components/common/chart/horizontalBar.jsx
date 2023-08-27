@@ -1,3 +1,4 @@
+import numeral from "numeral";
 import PropTypes from "prop-types";
 import {
   BarChart,
@@ -7,7 +8,6 @@ import {
   CartesianGrid,
   Tooltip
 } from "recharts";
-import numeral from "numeral";
 
 import {
   tickAxisFormatter,
@@ -18,12 +18,17 @@ const HorizontalBar = ({
   chartData,
   categories,
   width,
-  containerClass
+  containerClass,
+  formatter
 }) => {
   const [windowWidth] = useWindowInnerWidth();
 
-  const tooltipFormatter = (value) => {
-    return `${numeral(value).format("0,0")} `;
+  const tooltipFormatter = (value, name, props, index, entry) => {
+    if (typeof formatter === "function") {
+      return formatter(value, name, props, index, entry);
+    } else {
+      return `${numeral(value).format("0,0")} `;
+    }
   };
 
   return (
@@ -57,7 +62,8 @@ HorizontalBar.propTypes = {
   chartData: PropTypes.array.isRequired,
   categories: PropTypes.array.isRequired,
   width: PropTypes.number,
-  containerClass: PropTypes.string
+  containerClass: PropTypes.string,
+  formatter: PropTypes.func
 };
 
 export default HorizontalBar;

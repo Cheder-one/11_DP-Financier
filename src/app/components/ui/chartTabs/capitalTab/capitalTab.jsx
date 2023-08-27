@@ -1,17 +1,12 @@
 import PropTypes from "prop-types";
-import {
-  chain,
-  filter,
-  find,
-  fromPairs,
-  map,
-  merge,
-  sortBy,
-  sumBy,
-  toPairs
-} from "lodash";
+import { filter, find, map, sortBy, sumBy, toPairs } from "lodash";
 
-import { convertToRub, getTransactsByMonth } from "../../../../utils";
+import {
+  convertToRub,
+  getTransactsByMonth,
+  transformArrFromPairs,
+  transformArrObjToPairs
+} from "../../../../utils";
 import TopFiveIncome from "./summaryCard/topFiveIncome";
 import TopFiveExpense from "./summaryCard/topFiveExpense";
 import AccountsCapital from "./summaryCard/accountsCapital";
@@ -22,52 +17,48 @@ const CapitalTab = ({ user, pickedDate, quotes }) => {
   const [pieHeight, pieWidth, pieParentRef] = useResizeListener();
   const { accounts, transactions, categories, currencies } = user;
 
-  // TODO Отображать общую сумму в CardSubtitle
-
-  // TODO Отображать значки счетов в Легенде
-  // TODO При выборе цвета, менять цвет ведерка
+  // TODO Отображать сумму на счету в оригинальной валюте (CapitalTab)
 
   // TODO Доделать отображение общей суммы за месяц в ChartEndLabel
 
+  // TODO Конвертировать транзакции в валюту счета (предлагать курс или делать по текущему)
+  /// (если валюта счета и валюта транзакции расхожи)
+
   // TODO Добавить изменение баланса счета при транзакциях
-  // TODO Реализовать предложение о конвертации по текущему или выбранному курсу, если валюта счета и валюта транзакции расхожи
+
+  // TODO Отображать значки счетов в Легенде
+  // TODO При выборе цвета, менять цвет ведерка
   // TODO Добавить редактирование цвета для категории и счета
 
-  const allCategories = map(categories, "id");
-
-  const findCurrency = (id) => {
-    return find(currencies, { id });
-  };
-
-  // To Utils
   const convertDataToRub = (data) => {
     return data.map((item) => {
       const { currency, value } = item;
-      const currencyCode = findCurrency(currency).code;
+      const currencyCode = find(currencies, { id: currency }).code;
+
       return {
         ...item,
-        value: convertToRub(currencyCode, value, quotes)
+        value: convertToRub(value, currencyCode, quotes)
       };
     });
   };
 
+  const transactTypes = ["income", "expense"];
   const accountsInRub = convertDataToRub(accounts);
-  const accountsCapital = accountsInRub.reduce(
-    (sum, n) => sum + parseInt(n.value),
-    0
-  );
-
   const transactsInRub = convertDataToRub(transactions);
-  const transactsByType = ["income", "expense"].map((type) => {
+
+  const transactsByType = transactTypes.map((type) => {
     return { [type]: filter(transactsInRub, { type }) };
   }, {});
 
   const transactsCurMonth = transactsByType.reduce(
-    (result, transactsByType) => {
-      const [type, transacts] = toPairs(transactsByType)[0];
-      const monthTrncts = getTransactsByMonth(transacts, pickedDate);
+    (result, transact) => {
+      const [type, transacts] = toPairs(transact)[0];
+      const monthTransacts = getTransactsByMonth(
+        transacts,
+        pickedDate
+      );
 
-      result[`${type}Month`] = monthTrncts;
+      result[`${type}Month`] = monthTransacts;
       return result;
     },
     {}
@@ -82,6 +73,8 @@ const CapitalTab = ({ user, pickedDate, quotes }) => {
       return sum;
     }, 0);
   };
+
+  const allCategories = map(categories, "id");
 
   const getMonthSumEachCategory = (monthTransacts) => {
     const result = allCategories.map((categoryId) => {
@@ -108,19 +101,10 @@ const CapitalTab = ({ user, pickedDate, quotes }) => {
     (a) => a.value
   );
 
-  const totalIncome = sumBy(incomeCategorsByDesc, "value");
-  const totalExpense = sumBy(expenseCategorsByDesc, "value");
+  const totalMonthIncome = sumBy(incomeCategorsByDesc, "value");
+  const totalMonthExpense = sumBy(expenseCategorsByDesc, "value");
 
-  // To Utils
-  const transformArrObjToPairs = (data) => {
-    return data.map((item) => toPairs(item));
-  };
-  // To Utils
-  const transformArrFromPairs = (data) => {
-    return data.map((item) => fromPairs(item));
-  };
-  // To Utils
-  const getRestCategorsTotal = (data) => {
+  const calcRestCategorsTotal = (data) => {
     return data.reduce(
       (sum, [, value]) => sum + parseInt(value[1]),
       0
@@ -136,7 +120,7 @@ const CapitalTab = ({ user, pickedDate, quotes }) => {
 
     const restData = {
       name: "Other",
-      value: getRestCategorsTotal(data),
+      value: calcRestCategorsTotal(data),
       color: "#9ca3af"
     };
 
@@ -150,28 +134,13 @@ const CapitalTab = ({ user, pickedDate, quotes }) => {
   const pieChartIncomeData = getTopFiveCategories("income");
   const pieChartExpenseData = getTopFiveCategories("expense");
 
-  const horizChartData = chain(accountsInRub)
-    .map((account) => ({
-      [account.name]: account.value
-    }))
-    .reduce((result, obj) => merge(result, obj), {
-      name: "Счета:"
-    })
-    .castArray()
-    .value();
-
-  const horizChartCategors = accounts.map((account) => {
-    const { id, name, currency, icon } = account;
-    const unit = findCurrency(currency).symbol;
-
-    return { id, name, unit, color: icon.color };
-  });
+  console.log(accountsInRub);
 
   return (
     <div className="md:flex md:gap-3 md:px-3 md:pb-3">
       <TopFiveIncome
         chartData={pieChartIncomeData}
-        subtitleValue={totalIncome}
+        subtitleValue={totalMonthIncome}
         {...{
           pieHeight,
           pieWidth,
@@ -179,17 +148,16 @@ const CapitalTab = ({ user, pickedDate, quotes }) => {
         }}
       />
       <AccountsCapital
-        chartData={horizChartData}
-        chartCategories={horizChartCategors}
         {...{
-          accountsCapital,
+          user,
+          accountsInRub,
           horizWidth,
           horizParentRef
         }}
       />
       <TopFiveExpense
         chartData={pieChartExpenseData}
-        subtitleValue={totalExpense}
+        subtitleValue={totalMonthExpense}
         {...{
           pieHeight,
           pieWidth

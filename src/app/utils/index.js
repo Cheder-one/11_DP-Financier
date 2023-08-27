@@ -36,7 +36,7 @@ import getMonthName from "./func/date/getMonthName";
 import countDaysInMonth from "./func/date/countDaysInMonth";
 import extractUTCDate from "./func/date/extractUTCDate";
 import getActualQuotes from "./service/getActualQuotes";
-import convertToRub from "./func/convertToRub";
+import convertToRub from "./func/formatter/convertToRub";
 import tickAxisFormatter from "./func/formatter/tickAxisFormatter copy";
 import tooltipFormatter from "./func/formatter/tooltipFormatter";
 import setRusNumeralsLocal from "./service/setRusNumeralsLocal";
@@ -44,8 +44,14 @@ import getChartTitleClass from "./styles/getChartTitleClass";
 import getExchangeRateClass from "./styles/getExchangeRateClass";
 import getSubtitleClass from "./styles/getSubtitleClass";
 import getTransactsByMonth from "./func/getTransactsByMonth";
+import convertRubToCurrency from "./func/formatter/convertRubToCurrency";
+import transformArrFromPairs from "./func/formatter/transformArrFromPairs";
+import transformArrObjToPairs from "./func/formatter/transformArrObjToPairs";
 
 export {
+  transformArrObjToPairs,
+  transformArrFromPairs,
+  convertRubToCurrency,
   getTransactsByMonth,
   getSubtitleClass,
   getExchangeRateClass,
