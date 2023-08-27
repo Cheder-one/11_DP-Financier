@@ -29,7 +29,7 @@ const AccountsCapital = ({
     const { id, name, currency, icon } = account;
     const { symbol: unit } = find(currencies, { id: currency });
 
-    return { id, name, unit, color: icon.color };
+    return { id, name, unit, icon: icon.name, color: icon.color };
   });
 
   const getFormattedData = (data) => {
@@ -60,7 +60,7 @@ const AccountsCapital = ({
       }
       parentRef={horizParentRef}
     >
-      <div className="pt-3 pb-3">
+      <div className="pt-4 pb-3">
         <div className="font-light pl-3 pb-3">Пропорции счетов:</div>
         <HorizontalBar
           chartData={chartRubEquivData}

@@ -40,7 +40,7 @@ const FinanceSummary = ({ user, actualQuotes }) => {
     };
   });
 
-  const chunkedTableData = chunk(tableData, tableData.length / 2);
+  const chunkedQuotesData = chunk(tableData, tableData.length / 2);
 
   return (
     <div className="border rounded">
@@ -72,7 +72,7 @@ const FinanceSummary = ({ user, actualQuotes }) => {
           {
             <ActiveChartTab
               user={user}
-              chunkedData={chunkedTableData}
+              chunkedData={chunkedQuotesData}
               actualQuotes={actualQuotes}
               activeTab={activeTab}
             />

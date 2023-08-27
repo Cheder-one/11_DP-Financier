@@ -13,7 +13,7 @@
         "name": "Сбербанк",
         "entity": "entity-id-3",
         "currency": "currency-id-1",
-        "value": "90000",
+        "value": "1500000",
         "transactions": [
           "transaction-id-1",
           "transaction-id-2",
@@ -32,7 +32,7 @@
         "name": "Альфа-банк",
         "entity": "entity-id-3",
         "currency": "currency-id-2",
-        "value": "80000",
+        "value": "20000",
         "transactions": ["transaction-id-3", "transaction-id-4"],
         "icon": {
           "name": "VscBlank",

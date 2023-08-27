@@ -6,7 +6,6 @@ import {
   Brush,
   CartesianGrid,
   ComposedChart,
-  Customized,
   Legend,
   Tooltip,
   XAxis,
@@ -23,26 +22,6 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
   const [windowWidth] = useWindowInnerWidth();
 
   const ChartComponent = averageLine ? ComposedChart : BarChart;
-
-  const ChartEndLabel = (props) => {
-    const { x, y, width, value } = props;
-
-    const textStyle = {
-      fill: "rgba(0, 128, 0, 0.6)",
-      fontFamily: "Arial",
-      fontSize: 14,
-      fontWeight: "bold",
-      textAnchor: "end"
-    };
-
-    return (
-      <g>
-        <text x={x + width - 10} y={y + 0} style={textStyle}>
-          {value}
-        </text>
-      </g>
-    );
-  };
 
   return (
     <>
@@ -88,11 +67,11 @@ const MixedChart = ({ chartData, categories, averageLine }) => {
             />
           </>
         )}
-        <Customized
+        {/* <Customized
           component={<ChartEndLabel value={"Всего: 100k"} />}
           x={-60}
           y={30}
-        />
+        /> */}
       </ChartComponent>
     </>
   );

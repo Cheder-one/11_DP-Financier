@@ -1,7 +1,12 @@
 import PropTypes from "prop-types";
 import { IconContext } from "react-icons";
 
-const IconProvider = ({ iconClass, squareSize, value, defaultValue }) => {
+const IconProvider = ({
+  value,
+  defaultValue,
+  iconClass,
+  squareSize
+}) => {
   return (
     <div
       className={

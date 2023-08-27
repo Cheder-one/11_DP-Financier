@@ -1,19 +1,23 @@
 import PropTypes from "prop-types";
 import { find } from "lodash";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
 
 import { IconTable } from "../../../ui/index.js";
 import { iconsArray } from "../../../../assets/icons/iconsImport.jsx";
 import DropdownSheet from "../dropdown/drop-sheet/dropdownSheet.jsx";
 
-const IconPicker = ({ name, value, color, className, drop, onChange }) => {
+const IconPicker = ({
+  name,
+  value,
+  color,
+  className,
+  drop,
+  onChange
+}) => {
   const dropdownSheetRef = useRef(null);
 
-  const SelectedIcon = useMemo(
-    () => find(iconsArray, { name: value }),
-    [value]
-  );
+  const SelectedIcon = find(iconsArray, { name: value });
 
   const handleItemSelect = (Icon) => {
     onChange({
