@@ -1,6 +1,6 @@
 import numeral from "numeral";
 import PropTypes from "prop-types";
-import { chain, find, merge } from "lodash";
+import { chain, find, merge, sortBy } from "lodash";
 
 import {
   SummaryCard,
@@ -23,7 +23,9 @@ const AccountsCapital = ({
     0
   );
 
-  const chartCategories = accounts.map((account) => {
+  const accountsRubAsc = sortBy(accountsInRub, (a) => a.value);
+
+  const chartCategories = accountsRubAsc.map((account) => {
     const { id, name, currency, icon } = account;
     const { symbol: unit } = find(currencies, { id: currency });
 

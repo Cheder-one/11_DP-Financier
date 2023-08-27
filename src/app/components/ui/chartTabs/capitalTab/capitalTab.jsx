@@ -17,8 +17,6 @@ const CapitalTab = ({ user, pickedDate, quotes }) => {
   const [pieHeight, pieWidth, pieParentRef] = useResizeListener();
   const { accounts, transactions, categories, currencies } = user;
 
-  // TODO Отображать сумму на счету в оригинальной валюте (CapitalTab)
-
   // TODO Доделать отображение общей суммы за месяц в ChartEndLabel
 
   // TODO Конвертировать транзакции в валюту счета (предлагать курс или делать по текущему)
@@ -133,8 +131,6 @@ const CapitalTab = ({ user, pickedDate, quotes }) => {
 
   const pieChartIncomeData = getTopFiveCategories("income");
   const pieChartExpenseData = getTopFiveCategories("expense");
-
-  console.log(accountsInRub);
 
   return (
     <div className="md:flex md:gap-3 md:px-3 md:pb-3">

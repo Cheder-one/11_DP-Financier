@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 import { PiCalendarFill } from "react-icons/pi";
 import { Col, Form, Row } from "react-bootstrap";
 import { filter, find, range, values } from "lodash";
@@ -15,14 +14,12 @@ import {
 import { DatePicker } from "../../common/form";
 import { MixedChart } from "../../common/chart";
 import { useLocalStorage } from "../../../hooks";
-import convertRubToCurrency from "../../../utils/func/formatter/convertRubToCurrency";
 
 const ChartTab = ({
   user,
   chartTitle,
   averageLine,
   pickedDate,
-  // eslint-disable-next-line
   quotes,
   type,
   onDateChange
@@ -177,8 +174,10 @@ ChartTab.propTypes = {
   user: PropTypes.object.isRequired,
   chartTitle: PropTypes.string,
   averageLine: PropTypes.bool,
-  // quotes: PropTypes.object.isRequired,
-  type: PropTypes.string.isRequired
+  pickedDate: PropTypes.instanceOf(Date).isRequired,
+  quotes: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
+  onDateChange: PropTypes.func.isRequired
 };
 
 export default ChartTab;
