@@ -17,11 +17,12 @@ const CapitalTab = ({ user, pickedDate, quotes }) => {
   const [pieHeight, pieWidth, pieParentRef] = useResizeListener();
   const { accounts, transactions, categories, currencies } = user;
 
-  // TODO Добавить изменение баланса счета при операциях
+  // TODO Добавить обновление суммы Топ 5 при транзакциях
 
   // TODO Конвертировать транзакции в валюту счета, если валюта счета и валюта транзакции расхожи (предлагать курс или делать по текущему)
 
-  // TODO Добавить редактирование цвета для категории и счета
+  // TODO Реализовать возможность редактирования цвета
+  // для категории и счета
 
   const convertDataToRub = (data) => {
     return data.map((item) => {

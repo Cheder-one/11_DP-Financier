@@ -1,4 +1,4 @@
-import { Account, Category } from "../../../../types";
+import { Category } from "../../../../types";
 
 const createNewCategory = ({
   category,
@@ -6,7 +6,6 @@ const createNewCategory = ({
   newTransactId
 }: {
   category: Category;
-  account: Account;
   newCategoryId: string;
   newTransactId: string;
 }) => {

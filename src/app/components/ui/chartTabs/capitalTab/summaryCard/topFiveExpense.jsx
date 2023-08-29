@@ -28,7 +28,7 @@ const TopFiveExpense = ({
       title={"Топ 5 расходов/мес"}
       subtitle={
         <SummaryCardSubtitle
-          text={"Всего:"}
+          text={"Все:"}
           value={subtitleValue}
           type="expense"
         />

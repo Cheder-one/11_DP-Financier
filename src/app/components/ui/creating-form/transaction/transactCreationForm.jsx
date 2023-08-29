@@ -36,7 +36,8 @@ const TransactCreationForm = forwardRef(
   ({ user, onSuccess, cardType }, ref) => {
     const { accounts, categories } = user;
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-    const [inputFields, setInputFields] = useTransactCrFormInputs();
+    const [inputFields, setInputFields] =
+      useTransactCrFormInputs(user);
     const { category } = inputFields;
 
     const handleInputChange = ({ target }) => {

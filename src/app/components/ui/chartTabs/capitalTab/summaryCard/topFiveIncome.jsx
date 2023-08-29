@@ -19,7 +19,7 @@ const TopFiveIncome = ({
       title={"Топ 5 доходов/мес"}
       subtitle={
         <SummaryCardSubtitle
-          text={"Всего:"}
+          text={"Все:"}
           value={subtitleValue}
           type="income"
         />

@@ -1,8 +1,9 @@
-import { remove } from "lodash";
+import { findIndex, remove } from "lodash";
 import { createServer, Model } from "miragejs";
 
 import users from "../data/users.json";
 import quotesData from "../data/quotesData.json";
+import { evaluate } from "mathjs";
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({
@@ -71,14 +72,53 @@ export function makeServer({ environment = "development" } = {}) {
       });
 
       // Маршрут создания транзакции
+      // this.post("/users/:user_id/transactions", (schema, request) => {
+      //   const userId = request.params.user_id;
+      //   const user = schema.users.find(userId);
+
+      //   const newTransaction = JSON.parse(request.requestBody);
+
+      //   user.transactions.push(newTransaction);
+      //   user.save();
+      //   return user;
+      // });
+
       this.post("/users/:user_id/transactions", (schema, request) => {
         const userId = request.params.user_id;
         const user = schema.users.find(userId);
 
         const newTransaction = JSON.parse(request.requestBody);
+        const accountId = newTransaction.account;
 
-        user.transactions.push(newTransaction);
-        user.save();
+        const accountIndex = findIndex(user.accounts, {
+          id: accountId
+        });
+
+        if (accountIndex !== -1) {
+          const account = user.accounts[accountIndex];
+
+          // Обновляем баланс в зависимости от типа транзакции
+          if (newTransaction.type === "expense") {
+            const balance = evaluate(
+              `${account.value} - ${Math.abs(newTransaction.value)}`
+            );
+            account.value = String(balance);
+          }
+          if (newTransaction.type === "income") {
+            const balance = evaluate(
+              `${account.value} + ${newTransaction.value}`
+            );
+            account.value = String(balance);
+          }
+
+          // Добавляем транзакцию в массив транзакций счета
+          account.transactions.push(newTransaction);
+
+          // Обновляем данные счета в объекте пользователя
+          user.accounts[accountIndex] = account;
+          user.save();
+        }
+
         return user;
       });
 
