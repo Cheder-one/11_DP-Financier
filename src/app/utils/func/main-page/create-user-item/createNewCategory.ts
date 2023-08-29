@@ -2,7 +2,6 @@ import { Account, Category } from "../../../../types";
 
 const createNewCategory = ({
   category,
-  account,
   newCategoryId,
   newTransactId
 }: {
@@ -15,7 +14,6 @@ const createNewCategory = ({
     id: newCategoryId,
     type: "category",
     name: category.name.trim(),
-    accounts: [account.id],
     transactions: [newTransactId]
   };
 

@@ -47,7 +47,6 @@
         "type": "category",
         "name": "Зарплата",
         "color": "#10b981",
-        "accounts": ["account-id-1"],
         "transactions": [
           "transaction-id-1",
           "transaction-id-3",
@@ -59,7 +58,6 @@
         "type": "category",
         "name": "Аренда",
         "color": "#06b6d4",
-        "accounts": ["account-id-2"],
         "transactions": ["transaction-id-2"]
       }
     ],
@@ -686,7 +684,6 @@
         "type": "category",
         "name": "Кредит",
         "color": "#f43f5e",
-        "accounts": ["account-id-3"],
         "transactions": ["transaction-id-6"]
       }
     ],

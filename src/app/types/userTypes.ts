@@ -31,7 +31,6 @@ export interface Category {
   id: string;
   type: "category";
   name: string;
-  accounts: string[];
   transactions: string[];
 }
 
